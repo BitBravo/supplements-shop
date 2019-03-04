@@ -29,15 +29,32 @@
     <title>Supplements Maroc</title>
 </head>
 
-<body class="container">
+<body>
+
+    {{!-- The navbar. --}}
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper container">
+                <a href="#" class="brand-logo">Supplements Maroc</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="javascript:void(0)">Home</a></li>
+                    <li><a href="javascript:void(0)">Search</a></li>
+                    <li><a href="javascript:void(0)">About Us</a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-phone"></i></a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-shopping-cart"></i></a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-user-cog"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 
     {{!-- The main content of the page. --}}
-    <main>
+    <main class="container">
         {{{body}}}
     </main>
 
     {{!-- The footer's partial. --}}
-    <footer>
+    <footer class="container">
         <div>
 
             {{!-- The footer's text. --}}
