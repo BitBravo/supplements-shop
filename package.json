@@ -1,11 +1,12 @@
 {
-  "name": "supplments-maroc-store",
+  "name": "supplements-maroc",
   "version": "1.0.0",
   "description": "Online store for selling workout-related protein products.",
-  "main": "src/app.js",
+  "main": "app.js",
   "scripts": {
-    "install": "npm install && bower install",
-    "start": "node ./src/app.js"
+    "init": "npm install && bower install",
+    "start": "node ./app.js",
+    "dev": "npx nodemon ./app.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,10 @@
   },
   "homepage": "https://github.com/EOussama/supplments-maroc-store#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }
