@@ -1,47 +1,52 @@
 /**
  * 
- * @name:       supplements-maroc-store
+ * @name:       supplements-maroc
  * @version:    1.0.0
  * @author:     EOussama
- * @license     MIT
- * @source:     https://github.com/EOussama/supplements-maroc-store
+ * @license     GPL-3.0
+ * @source:     https://github.com/EOussama/supplements-maroc
  * 
- * Supplements 
+ * Online store for selling workout-related protein products.
  * 
  */
+
 
 // Importing the dependancies.
 const
     path = require('path'),
     express = require('express'),
+    exphbs = require('express-handlebars'),
     app = express(),
     routers = {
         index: require('./routes/index'),
-        topist: require('./routes/search')
+        search: require('./routes/search')
     };
 
 
 // Setting up the app.
 app.set('port', process.env.PORT || 3000);
 app.set('ip', process.env.IP || '127.0.0.1');
-app.set("view engine", "ejs");
 
 
+// Setting up handlebars.
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
-// Static assets.
+
+// Static assets.s
 app.use('/assets', express.static(path.join(__dirname + '/public')));
 app.use('/assets', express.static(path.join(__dirname + '/bower_components')));
 
 
 // Routing.
 app.use(routers.index);
-app.use('/topist', routers.topist);
+app.use('/search', routers.search);
 
 
 // Error redirecting.
 app.get('*', (req, res) => {
 
-    // Rendering the error.ejs template.
+    // Rendering the error page.
     return res.render('error');
 });
 
@@ -50,5 +55,5 @@ app.get('*', (req, res) => {
 app.listen(app.get('port'), app.get('ip'), () => {
 
     // Logging.
-    console.log(`Supplements Maroc has successfully started on port ${app.get('port')}`);
+    console.log(`Supplements Maroc has successfully started on port ${app.get('port')}.`);
 });
