@@ -4,6 +4,7 @@
   "description": "Online store for selling workout-related protein products.",
   "main": "src/app.js",
   "scripts": {
+    "install": "npm install && bower install",
     "start": "node ./src/app.js"
   },
   "repository": {
@@ -19,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/EOussama/supplments-maroc-store/issues"
   },
-  "homepage": "https://github.com/EOussama/supplments-maroc-store#readme"
+  "homepage": "https://github.com/EOussama/supplments-maroc-store#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
