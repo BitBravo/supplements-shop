@@ -1,0 +1,38 @@
+.carousel {
+    height: 500px;
+}
+
+.scroll-down-section {
+    position: relative;
+}
+
+.scroll-down-section .scroll-down-heading {
+    font-weight: 200;
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 10%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.scroll-down-section .fa-angle-down {
+    cursor: pointer;
+    font-size: 80px;
+    left: 50%;
+    opacity: .3;
+    top: 20%;
+    transform: translateX(-50%);
+    position: absolute;
+    z-index: 1;
+}
+
+.scroll-down-section .scroll-down-background {
+    background-image: url("/assets/img/backgrounds/scroll-down-bg.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 1200px;
+    opacity: .3;
+    width: 100%;
+    z-index: 0;
+}
