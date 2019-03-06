@@ -40,12 +40,16 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/search">Search</a></li>
                     <li><a href="javascript:void(0)">About Us</a></li>
-                    <li><a href="javascript:void(0)"><i class="fa fa-phone"></i></a></li>
+                    <li><a href="javascript:void(0)" data-target="phone-number-dropdown" id="phone-dropdown-trigger"><i class="fa fa-phone"></i></a></li>
                     <li><a href="javascript:void(0)"><i class="fa fa-shopping-cart"></i></a></li>
                     <li><a href="javascript:void(0)"><i class="fa fa-user-cog"></i></a></li>
                 </ul>
             </div>
         </nav>
+
+        <ul id='phone-number-dropdown' class='dropdown-content'>
+            <li><a href="javascript:void(0)">06123456789</a></li>
+        </ul>
     </div>
 
     {{!-- The main content of the page. --}}
@@ -63,6 +67,9 @@
             </p>
         </div>
     </footer>
+
+    {{!-- JQuery Script. --}}
+    <script src="/assets/jquery/dist/jquery.min.js"></script>
 
     {{!-- Materialize Script. --}}
     <script src="/assets/materialize/dist/js/materialize.min.js"></script>
