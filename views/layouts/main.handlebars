@@ -59,13 +59,33 @@
     </main>
 
     {{!-- The footer's partial. --}}
-    <footer class="container">
-        <div>
-
-            {{!-- The footer's text. --}}
-            <p>
-                <strong>Supplements Maroc</strong> by <a href="https://github.com/EOussama">Oussama Essamadi</a>.
-            </p>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">About Us</h5>
+                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer
+                        content.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                <b>Supplements Maroc</b> &copy; {{date}}
+                <a class="grey-text text-lighten-4 right" href="javascript:void(0)">
+                    <i class="fa fa-phone footer-phone-number-icon"></i>
+                    <b>06123456789</b>
+                </a>
+            </div>
         </div>
     </footer>
 

@@ -33,7 +33,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 
-// Static assets.s
+// Static assets.
 app.use('/assets', express.static(path.join(__dirname + '/public')));
 app.use('/assets', express.static(path.join(__dirname + '/bower_components')));
 
