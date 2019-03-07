@@ -1,32 +1,35 @@
 {
-  "name": "supplements-maroc",
-  "version": "1.0.0",
-  "description": "Online store for selling workout-related protein products.",
-  "main": "app.js",
-  "scripts": {
-    "init": "npm install && bower install",
-    "start": "node ./app.js",
-    "dev": "npx nodemon ./app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/EOussama/supplments-maroc-store.git"
-  },
-  "keywords": [
-    "store",
-    "e-commerce"
-  ],
-  "author": "EOussama (Oussama Essamadi at oussama.essamadi@gmail.com)",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/EOussama/supplments-maroc-store/issues"
-  },
-  "homepage": "https://github.com/EOussama/supplments-maroc-store#readme",
-  "dependencies": {
-    "express": "^4.16.4",
-    "express-handlebars": "^3.0.2"
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.10"
-  }
+	"name": "supplements-maroc",
+	"version": "1.0.0",
+	"description": "Online store for selling workout-related protein products.",
+	"main": "app.js",
+	"scripts": {
+		"init": "npm install && bower install",
+		"start": "node ./app.js",
+		"dev": "npx nodemon ./app.js",
+		"sass" : "npx gulp sass"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/EOussama/supplments-maroc-store.git"
+	},
+	"keywords": [
+		"store",
+		"e-commerce"
+	],
+	"author": "EOussama (Oussama Essamadi at oussama.essamadi@gmail.com)",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/EOussama/supplments-maroc-store/issues"
+	},
+	"homepage": "https://github.com/EOussama/supplments-maroc-store#readme",
+	"dependencies": {
+		"express": "^4.16.4",
+		"express-handlebars": "^3.0.2"
+	},
+	"devDependencies": {
+		"gulp": "^4.0.0",
+		"gulp-sass": "^4.0.2",
+		"nodemon": "^1.18.10"
+	}
 }
