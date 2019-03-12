@@ -10,7 +10,7 @@ sass.compiler = require('node-sass');
 
 // The task responsible on compiling sass.
 gulp.task('sass', function () {
-    return gulp.src('./sass/**/*.scss')
+    return gulp.src('./sass/main.scss')
         .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
         .pipe(gulp.dest('./public/css'));
 });
