@@ -7,7 +7,8 @@
 		"init": "npm install && bower install",
 		"start": "node ./app.js",
 		"dev": "npx nodemon ./app.js",
-		"sass" : "npx gulp sass"
+		"sass" : "npx gulp sass",
+		"sass:watch": "npx gulp sass:watch"
 	},
 	"repository": {
 		"type": "git",
