@@ -2,6 +2,20 @@
     font-size: 20px;
 }
 
+.nav-social {
+    opacity: .3;
+    transition-duration: .3s;
+    transition-property: opacity;
+
+    &:hover {
+        opacity: .8;
+    }
+
+    &:not(:last-of-type) {
+        margin-right: 20px;
+    }
+}
+
 .nav-phone {
     font-size: 18px;
     margin-right: 8px;
