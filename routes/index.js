@@ -25,7 +25,7 @@ function getCopyrightDate() {
         currentYear = (new Date()).getFullYear();
 
     // The resuting date range.
-    let properRange = (foundingYear == currentYear) ? '2019' : `${foundingYear} - ${currentYear}`;
+    let properRange = (foundingYear == currentYear) ? foundingYear : `${foundingYear} - ${currentYear}`;
 
 
     // Returning the proper date range.

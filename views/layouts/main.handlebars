@@ -16,8 +16,8 @@
     {{!-- The favicon. --}}
     <link rel="icon" href="/assets/img/favicon.png">
 
-    {{!-- Font Awesome. --}}
-    <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css">
+    {{!-- Material Icons. --}}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     {{!-- Materialize Stylesheet. --}}
     <link rel="stylesheet" href="/assets/materialize/dist/css/materialize.min.css">
@@ -33,24 +33,26 @@
 
     {{!-- The navbar. --}}
     <div class="navbar-fixed">
-        <nav>
+        <nav class="nav-extended">
             <div class="nav-wrapper container">
-                <a href="#" class="brand-logo">Supplements Maroc</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/search">Search</a></li>
-                    <li><a href="javascript:void(0)">About Us</a></li>
-                    <li><a href="javascript:void(0)" data-target="phone-number-dropdown" id="phone-dropdown-trigger"><i
-                                class="fa fa-phone"></i></a></li>
-                    <li><a href="javascript:void(0)"><i class="fa fa-shopping-cart"></i></a></li>
-                    <li><a href="javascript:void(0)"><i class="fa fa-user-cog"></i></a></li>
-                </ul>
+                <a class="right" href="javascript:void(0)">
+                    <b>06123456789</b>
+                    <i class="material-icons">local_phone</i>
+                </a>
             </div>
+            <nav>
+                <div class="nav-wrapper container">
+                    <a href="#" class="brand-logo">Supplements Maroc</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/search">Search</a></li>
+                        <li><a href="javascript:void(0)">About Us</a></li>
+                        <li><a href="javascript:void(0)"><i class="material-icons">shopping_cart</i></a></li>
+                        <li><a href="javascript:void(0)"><i class="material-icons">settings</i></a></li>
+                    </ul>
+                </div>
+            </nav>
         </nav>
-
-        <ul id='phone-number-dropdown' class='dropdown-content'>
-            <li><a href="javascript:void(0)">06123456789</a></li>
-        </ul>
     </div>
 
     {{!-- The main content of the page. --}}
@@ -81,10 +83,6 @@
         <div class="footer-copyright">
             <div class="container">
                 <b>Supplements Maroc</b> &copy; {{date}}
-                <a class="grey-text text-lighten-4 right" href="javascript:void(0)">
-                    <i class="fa fa-phone footer-phone-number-icon"></i>
-                    <b>06123456789</b>
-                </a>
             </div>
         </div>
     </footer>
