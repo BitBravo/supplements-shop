@@ -1,33 +1,35 @@
 .scroll-down-section {
+    height: 1200px;
     position: relative;
 
     .scroll-down-heading {
         font-weight: 200;
-        left: 50%;
-        position: absolute;
+        margin-bottom: 80px;
         text-align: center;
-        top: 10%;
-        transform: translateX(-50%);
         z-index: 1;
     }
 
-    .fa-angle-down {
-        cursor: pointer;
-        font-size: 80px;
-        left: 50%;
+    .fa-caret-down {
         opacity: .3;
-        top: 20%;
-        transform: translateX(-50%);
-        position: absolute;
-        z-index: 1;
     }
 
-    .scroll-down-background {
+    .scroll-down-section-content {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 500px;
+        justify-content: center;
+        width: auto;
+    }
+
+    &::before {
         background-image: url("/assets/img/backgrounds/scroll-down-bg.jpeg");
         background-repeat: no-repeat;
         background-size: cover;
-        height: 1200px;
-        opacity: .3;
+        content : "";
+        filter: grayscale(80%);
+        height: 100%;
+        position: absolute;
         width: 100%;
         z-index: 0;
     }
