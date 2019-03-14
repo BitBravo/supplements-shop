@@ -2,4 +2,24 @@
 @import "colors.scss";
 @import "footer.scss";
 @import "nav.scss";
+@import "product-carousel.scss";
 @import "search.scss";
+
+main {
+    padding-bottom: 350px;
+    
+    position: relative;
+
+    &::before {
+        background-attachment: fixed;
+        background-image: url("/assets/img/backgrounds/main-bg.jpg");
+        background-repeat: repeat-y;
+        background-size: cover;
+        content : "";
+        height: 100%;
+        opacity: .1;
+        position: absolute;
+        width: 100%;
+        z-index: -1;
+    }
+}
