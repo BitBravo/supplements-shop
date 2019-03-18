@@ -1,3 +1,17 @@
-.footer-phone-number-icon {
-    margin-right: 10px;
+footer#about {
+
+    .footer-phone-number-icon {
+        margin-right: 10px;
+    }
+
+    ul.contact-list a {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .fa, .fab {
+            margin-right: 15px;
+        }
+    }
 }
