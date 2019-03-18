@@ -20,7 +20,7 @@
         align-items: center;
         display: flex;
         flex-direction: column;
-        height: 600px;
+        height: 580px;
         justify-content: center;
         width: auto;
 
@@ -30,6 +30,10 @@
             input {
                 padding-top: 4px;
                 font-size: 22px;
+
+                &:focus {
+                    background-color: transparent;
+                }
             }
 
             .autocomplete, .autocomplete:focus {
@@ -40,7 +44,7 @@
     }
 
     &::before {
-        background-image: url("/assets/img/backgrounds/search-bg.jpeg");
+        background-image: url("/assets/img/backgrounds/search-bg.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         content : "";
