@@ -5,13 +5,24 @@ footer#about {
     }
 
     ul.contact-list a {
+        align-items: center;
         display: flex;
         flex-direction: row;
-        align-items: center;
         margin-bottom: 10px;
 
         .fa, .fab {
             margin-right: 15px;
+        }
+    }
+
+    .shipping-footer {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        span {
+            margin-right: 10px;
         }
     }
 }
