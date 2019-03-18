@@ -25,4 +25,15 @@ footer#about {
             margin-right: 10px;
         }
     }
+
+    .amana-logo {
+        border-radius: 6px;
+        filter: grayscale(60%);
+        transition-duration: .3s;
+        transition-property: filter;
+
+        &:hover {
+            filter: grayscale(10%);
+        }
+    }
 }
