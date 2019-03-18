@@ -1,5 +1,8 @@
 $('document').ready(() => {
 
+    // Fading out the scroll to top button by default.
+    $('#scroll-to-top').fadeOut(0);
+
     // Initializing the carousel.
     $('.carousel.carousel-slider').carousel({
         fullWidth: true,
