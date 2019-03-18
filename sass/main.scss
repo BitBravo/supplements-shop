@@ -4,10 +4,10 @@
 @import "nav.scss";
 @import "product-carousel.scss";
 @import "search.scss";
+@import "scroll-to-top.scss";
 
 main {
     padding-bottom: 350px;
-    
     position: relative;
 
     &::before {
