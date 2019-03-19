@@ -1,4 +1,64 @@
 .product-carousel {
-    height: 400px;
+    height: auto;
     margin-top: 350px;
+    padding: 30px 0 50px 0;
+
+    .row {
+        display: flex;
+        
+        .card {
+            cursor: pointer;
+            height: 100%;
+            transition: border .3s;
+            
+            &:hover {
+                border-left: 10px solid $color-light-dark;
+            }
+    
+            img {
+                margin-top: 30px;
+            }
+
+            .card-action a {
+                color: $color-dark-dark !important;
+                transition-duration: .3s;
+                transition-property: color;
+
+                &:hover {
+                    color: $color-light-dark !important;
+                }
+            }
+
+            .price-tag {
+                display: flex;
+                flex-direction: row;
+                text-align: center;
+                text-transform: uppercase;
+                
+                .price {
+                    border: 1px solid $color-light;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 2px 15px;
+                    width: 100%;
+
+                    span:first-of-type {
+                        text-decoration: line-through;
+                        font-style: italic;
+                    }
+
+                    span:last-of-type {
+                        font-weight: bold;
+                    }
+                }
+
+                .discount {
+                    display: flex;
+                    flex-direction: column;
+                    font-weight: bold;
+                    padding: 2px 15px;
+                }
+            }
+        }
+    }
 }
