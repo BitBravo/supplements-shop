@@ -7,7 +7,8 @@
 		"init": "npm install && bower install",
 		"start": "node ./app.js",
 		"dev": "npx nodemon ./app.js",
-		"sass" : "npx gulp sass",
+		"database": "node ./database.js",
+		"sass": "npx gulp sass",
 		"sass:watch": "npx gulp sass:watch"
 	},
 	"repository": {
@@ -26,7 +27,8 @@
 	"homepage": "https://github.com/EOussama/supplments-maroc-store#readme",
 	"dependencies": {
 		"express": "^4.16.4",
-		"express-handlebars": "^3.0.2"
+		"express-handlebars": "^3.0.2",
+		"mysql": "^2.16.0"
 	},
 	"devDependencies": {
 		"gulp": "^4.0.0",
