@@ -53,7 +53,6 @@ CREATE TABLE IF NOT EXISTS `Brands` (
     `BrandID`           SMALLINT NOT NULL AUTO_INCREMENT,
     `BrandName`         VARCHAR(50) NOT NULL,
     `Logo`              VARCHAR(300) NOT NULL,
-    `Website`           VARCHAR(100) NOT NULL,
 
     CONSTRAINT pk_brands_id PRIMARY KEY (`BrandID`)
 );
@@ -118,6 +117,9 @@ CREATE TABLE IF NOT EXISTS `Products` (
     `ProductName`       VARCHAR(80) NOT NULL,
     `CategoryID`        SMALLINT NOT NULL,
     `Description`       TEXT NOT NULL,
+    `NutritionInfo`     VARCHAR(100) NOT NULL,
+    `Usage`             TEXT NOT NULL,
+    `Warning`           TEXT NOT NULL,
     `BrandID`           SMALLINT NOT NULL,
     `TasteID`           SMALLINT NOT NULL,
     `AddedDate`         DATETIME NOT NULL DEFAULT NOW(),
@@ -127,34 +129,6 @@ CREATE TABLE IF NOT EXISTS `Products` (
     CONSTRAINT fk_products_cat FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`),
     CONSTRAINT fk_products_brd FOREIGN KEY (`BrandID`) REFERENCES `Brands` (`BrandID`),
     CONSTRAINT fk_products_tst FOREIGN KEY (`TasteID`) REFERENCES `Tastes` (`TasteID`)
-);
-
--- NutritionDoseType
-CREATE TABLE IF NOT EXISTS `NutritionDoseType` (
-    `DoseTypeID`        TINYINT NOT NULL AUTO_INCREMENT,
-    `DoseName`          VARCHAR(15) NOT NULL,
-
-    CONSTRAINT pk_nutrition_dose_type_id PRIMARY KEY (`DoseTypeID`)
-);
-
--- NutritionInfo
-CREATE TABLE IF NOT EXISTS `NutritionInfo` (
-    `ProductID`         INT NOT NULL,
-    `NumDose`           TINYINT NOT NULL,
-    `ValPerDose`        SMALLINT NOT NULL,
-    `DoseTypeID`        TINYINT NOT NULL,
-    `Calories`          SMALLINT NOT NULL,
-    `Protein`           SMALLINT NOT NULL,
-    `Glucides`          SMALLINT NOT NULL,
-    `Liptides`          SMALLINT NOT NULL,
-    `Sugar`             SMALLINT NOT NULL,
-    `Carbohydrates`     SMALLINT NOT NULL,
-    `Calcium`           SMALLINT NOT NULL,
-    `Fer`               SMALLINT NOT NULL,
-
-    CONSTRAINT pk_nutrition_info_id PRIMARY KEY (`ProductID`),
-    CONSTRAINT fk_nutrition_info_id FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`),
-    CONSTRAINT fk_nutrition_info_dt FOREIGN KEY (`DoseTypeID`) REFERENCES `NutritionDoseType` (`DoseTypeID`)
 );
 
 -- PriceHistory.
@@ -214,3 +188,7 @@ CREATE TABLE IF NOT EXISTS `OrdersDetails` (
     CONSTRAINT fk_order_details_id FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`),
     CONSTRAINT fk_order_details_ts FOREIGN KEY (`TasteID`) REFERENCES `Tastes` (`TasteID`)
 );
+
+/**
+    Data insertion.
+*/
