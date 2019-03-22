@@ -1,13 +1,19 @@
 .error-section {
-    position: relative;
-    height: 200px;
+    align-items: center;
+    display: flex;
+    height: 600px;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 65px;
     
     .error-content {
-        left: 50%;
-        position: absolute;
+        padding: 70px 40px;
         text-align: center;
-        top: 200px;
-        transform: translateX(-50%);
+        width: 500px;
+
+        .fa {
+            margin-right: 15px;
+        }
 
         .btn {
             position: relative;
