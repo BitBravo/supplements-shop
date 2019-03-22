@@ -52,7 +52,7 @@ router.get('/', function (req, res) {
 
         // Rendering the search page.
         res.render('index', {
-            data: data
+            Data: data
         });
     });
 });
