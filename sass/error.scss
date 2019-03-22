@@ -1,0 +1,17 @@
+.error-section {
+    position: relative;
+    height: 200px;
+    
+    .error-content {
+        left: 50%;
+        position: absolute;
+        text-align: center;
+        top: 200px;
+        transform: translateX(-50%);
+
+        .btn {
+            position: relative;
+            width: 100%;
+        }
+    }
+}

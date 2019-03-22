@@ -48,4 +48,9 @@ $('document').ready(() => {
             scrollTop: 0
         }, 300);
     });
+
+    // The back button click.
+    $('.back-btn').on('click', () => {
+        history.back();
+    });
 });
