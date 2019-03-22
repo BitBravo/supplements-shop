@@ -27,9 +27,10 @@ USE `db_supp_maroc`;
 
 -- Config.
 CREATE TABLE IF NOT EXISTS `Config` (
-    `Password`          VARCHAR(100) NOT NULL DEFAULT 'gegZB8pTU4ge5crW',
-    `PhoneNumber`       VARCHAR(20) NOT NULL,
-    `MobileNumber`      VARCHAR(20) NOT NULL,
+    `Password`          VARCHAR(100) NOT NULL,
+    `PrimaryNumber`     VARCHAR(20) NOT NULL,
+    `SecondaryNumber`   VARCHAR(20) NOT NULL,
+    `FixedNumber`       VARCHAR(20) NOT NULL,
     `Email`             VARCHAR(50) NOT NULL,
     `Facebook`          NVARCHAR(100),
     `Instagram`         NVARCHAR(100),
@@ -192,3 +193,14 @@ CREATE TABLE IF NOT EXISTS `OrdersDetails` (
 /**
     Data insertion.
 */
+
+INSERT INTO `Config` VALUES (
+    'w4jkPd5ePA5kBaAA', 
+    '0656975326', 
+    '0680016480', 
+    '05********', 
+    'supplementsmaroc@gmail.com', 
+    'Suppléments Maroc|https://www.facebook.com/supplemaroc/',
+    '|',
+    '|'
+);
