@@ -2,13 +2,15 @@
 const
     express = require('express'),
     mysql = require('mysql'),
-    router = express.Router(),
+    database = require('./../helpers/database'),
+    getCopyrightDate = require('./../helpers/copyright'),
     conn = mysql.createConnection({
-        database: 'db_supp_maroc',
-        host: 'localhost',
-        password: 'Upe385LGvkhJv5KN',
-        user: 'root'
-    });
+        database: database.name,
+        host: database.host,
+        password: database.password,
+        user: database.user
+    }),
+    router = express.Router();
 
 
 // Connecting to the database.
@@ -50,30 +52,13 @@ router.get('/', function (req, res) {
         // Getting the proper copyright date.
         data.CopyrightDate = getCopyrightDate();
 
-        // Rendering the search page.
+        // Rendering the index page.
         res.render('index', {
             Data: data
         });
     });
 });
 
-
-/**
- * Gets the proper copyright date.
- */
-function getCopyrightDate() {
-
-    // The variable dates.
-    const
-        foundingYear = 2019,
-        currentYear = (new Date()).getFullYear();
-
-    // The resuting date range.
-    let properRange = (foundingYear == currentYear) ? foundingYear : `${foundingYear} - ${currentYear}`;
-
-    // Returning the proper date range.
-    return properRange;
-}
 
 // Exporting the route.
 module.exports = router;
