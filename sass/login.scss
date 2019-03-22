@@ -1,0 +1,24 @@
+.login-section {
+    align-items: center;
+    display: flex;
+    height: 850px;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 65px;
+    
+    .login-content {
+        padding: 70px 40px;
+        text-align: center;
+        width: 500px;
+
+        img {
+            margin-bottom: 80px;
+            width: 300px;
+        }
+
+        .btn {
+            position: relative;
+            width: 100%;
+        }
+    }
+}
