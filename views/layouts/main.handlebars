@@ -39,20 +39,20 @@
             <div class="nav-wrapper container">
 
                 {{!-- Social icons. --}}
-                <a class="left nav-social grey-text" href="https://www.facebook.com" target="_blank">
+                <a class="left nav-social grey-text" href="{{data.Config.Facebook.Link}}" target="_blank">
                     <i class="fab fa-facebook-f"></i>
                 </a>
-                <a class="left nav-social grey-text" href="https://www.instagram.com" target="_blank">
+                <a class="left nav-social grey-text" href="{{data.Config.Instagram.Link}}" target="_blank">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a class="left nav-social grey-text" href="https://www.youtube.com" target="_blank">
+                <a class="left nav-social grey-text" href="{{data.Config.Youtube.Link}}" target="_blank">
                     <i class="fab fa-youtube"></i>
                 </a>
 
                 {{!-- Phone number. --}}
                 <a class="right grey-text" href="javascript:void(0)">
                     <i class="fa fa-phone nav-phone nav-icon"></i>
-                    <b>06123456789</b>
+                    <b>{{data.Config.Phone.Primary}}</b>
                 </a>
             </div>
 
@@ -109,37 +109,43 @@
                         <li>
                             <a class="grey-text text-lighten-3" href="#!">
                                 <i class="fa fa-mobile fa-lg"></i>
-                                <span>06123456789</span>
+                                <span>{{data.Config.Phone.Primary}}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="grey-text text-lighten-3" href="#!">
+                                <i class="fa fa-mobile fa-lg"></i>
+                                <span>{{data.Config.Phone.Secondary}}</span>
                             </a>
                         </li>
                         <li>
                             <a class="grey-text text-lighten-3" href="#!">
                                 <i class="fa fa-phone fa-lg"></i>
-                                <span>05123456789</span>
+                                <span>{{data.Config.Phone.Fixed}}</span>
                             </a>
                         </li>
                         <li>
-                            <a class="grey-text text-lighten-3" href="#!">
+                            <a class="grey-text text-lighten-3" href="mailto:{{data.Config.Email}}">
                                 <i class="fa fa-at fa-lg"></i>
-                                <span>name@gmail.com</span>
+                                <span>{{data.Config.Email}}</span>
                             </a>
                         </li>
                         <li>
-                            <a class="grey-text text-lighten-3" href="#!">
+                            <a class="grey-text text-lighten-3" href="{{data.Config.Facebook.Link}}" target="_blank">
                                 <i class="fab fa-facebook fa-lg"></i>
-                                <span>facebook_page_name</span>
+                                <span>{{data.Config.Facebook.Name}}</span>
                             </a>
                         </li>
                         <li>
-                            <a class="grey-text text-lighten-3" href="#!">
+                            <a class="grey-text text-lighten-3" href="{{data.Config.Instagram.Link}}" target="_blank">
                                 <i class="fab fa-instagram fa-lg"></i>
-                                <span>instagram_page_name</span>
+                                <span>{{data.Config.Instagram.Name}}</span>
                             </a>
                         </li>
                         <li>
-                            <a class="grey-text text-lighten-3" href="#!">
+                            <a class="grey-text text-lighten-3" href="{{data.Config.Youtube.Link}}" target="_blank">
                                 <i class="fab fa-youtube fa-lg"></i>
-                                <span>youtube_channel_name</span>
+                                <span>{{data.Config.Youtube.Name}}</span>
                             </a>
                         </li>
                     </ul>
@@ -174,9 +180,9 @@
         </div>
         <div class="footer-copyright grey darken-4">
             <div class="container">
-                <b>Supplements Maroc</b> &copy; {{date}}
+                <b>Supplements Maroc</b> &copy; {{data.CopyrightDate}}
 
-                <a class="right grey-text shipping-footer" href="http://www.amana-colis.ma/">
+                <a class="right grey-text shipping-footer" href="http://www.amana-colis.ma/" target="_blank">
                     <span>Shipping via</span>
                     <img class="amana-logo" src="/assets/img/logos/amana-logo.png" alt="Amana logo.">
                 </a>
