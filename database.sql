@@ -142,15 +142,6 @@ CREATE TABLE IF NOT EXISTS `PriceHistory` (
     CONSTRAINT fk_price_history_id FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`)
 );
 
--- Features.
-CREATE TABLE IF NOT EXISTS `Featured` (
-    `ProductID`         INT NOT NULL,
-    `Index`             TINYINT NOT NULL,
-
-    CONSTRAINT pk_featured_id PRIMARY KEY (`ProductID`),
-    CONSTRAINT fk_featured_id FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`)
-);
-
 -- OrderStates.
 CREATE TABLE IF NOT EXISTS `OrderStates` (
     `StateID`       TINYINT NOT NULL AUTO_INCREMENT,
