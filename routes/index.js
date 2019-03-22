@@ -17,7 +17,7 @@ const
 conn.connect();
 
 
-// Setting up search route.
+// Setting up index route.
 router.get('/', function (req, res) {
 
     const data = {};
