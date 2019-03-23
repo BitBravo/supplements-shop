@@ -192,6 +192,6 @@ INSERT INTO `Config` VALUES (
     '05********', 
     'supplementsmaroc@gmail.com', 
     'Suppléments Maroc|https://www.facebook.com/supplemaroc/',
-    '|',
+    'supplementmaroc|https://www.instagram.com/supplementmaroc/',
     '|'
 );
