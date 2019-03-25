@@ -58,12 +58,12 @@ CREATE TABLE IF NOT EXISTS `Brands` (
     CONSTRAINT pk_brands_id PRIMARY KEY (`BrandID`)
 );
 
--- Tastes.
-CREATE TABLE IF NOT EXISTS `Tastes` (
-    `TasteID`           SMALLINT NOT NULL AUTO_INCREMENT,
-    `TasteName`         VARCHAR(30) NOT NULL,
+-- Flavors.
+CREATE TABLE IF NOT EXISTS `Flavors` (
+    `FlavorID`           SMALLINT NOT NULL AUTO_INCREMENT,
+    `FlavorName`         VARCHAR(30) NOT NULL,
 
-    CONSTRAINT pk_tastes_id PRIMARY KEY (`TasteID`)
+    CONSTRAINT pk_flavor_id PRIMARY KEY (`FlavorID`)
 );
 
 -- Categories.
@@ -122,14 +122,14 @@ CREATE TABLE IF NOT EXISTS `Products` (
     `Usage`             TEXT NOT NULL,
     `Warning`           TEXT NOT NULL,
     `BrandID`           SMALLINT NOT NULL,
-    `TasteID`           SMALLINT NOT NULL,
+    `FlavorID`           SMALLINT NOT NULL,
     `AddedDate`         DATETIME NOT NULL DEFAULT NOW(),
     `Quantity`          SMALLINT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_products_id PRIMARY KEY (`ProductID`),
     CONSTRAINT fk_products_cat FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`),
     CONSTRAINT fk_products_brd FOREIGN KEY (`BrandID`) REFERENCES `Brands` (`BrandID`),
-    CONSTRAINT fk_products_tst FOREIGN KEY (`TasteID`) REFERENCES `Tastes` (`TasteID`)
+    CONSTRAINT fk_products_tst FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
 );
 
 -- PriceHistory.
@@ -174,11 +174,11 @@ CREATE TABLE IF NOT EXISTS `OrdersDetails` (
     `OrderId`           INT NOT NULL,
     `ProductID`         INT NOT NULL,
     `Quantity`          SMALLINT NOT NULL DEFAULT 1,
-    `TasteID`           SMALLINT NOT NULL,
+    `FlavorID`           SMALLINT NOT NULL,
 
     CONSTRAINT pk_orders_details_id PRIMARY KEY (`OrderDetailsID`),
     CONSTRAINT fk_order_details_id FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`),
-    CONSTRAINT fk_order_details_ts FOREIGN KEY (`TasteID`) REFERENCES `Tastes` (`TasteID`)
+    CONSTRAINT fk_order_details_ts FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
 );
 
 /**
