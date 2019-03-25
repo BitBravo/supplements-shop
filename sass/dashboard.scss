@@ -1,0 +1,14 @@
+section.dashboard {
+    
+    .collection-item {
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-light-lighten;
+        }
+
+        .fa {
+            margin-right: 20px;
+        }
+    }
+}
