@@ -27,9 +27,10 @@ const
     }),
     app = express(),
     routers = {
+        dashboard: require('./routes/dashboard'),
         index: require('./routes/index'),
-        search: require('./routes/search'),
-        login: require('./routes/login')
+        login: require('./routes/login'),
+        search: require('./routes/search')
     };
 
 
@@ -51,6 +52,7 @@ app.use('/assets', express.static(path.join(__dirname + '/bower_components')));
 // Routing.
 app.use(routers.index);
 app.use('/search', routers.search);
+app.use('/dashboard', routers.dashboard);
 app.use('/login', routers.login);
 
 
