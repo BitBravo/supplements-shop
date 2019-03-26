@@ -26,7 +26,7 @@ router.get('/', function (req, res) {
         SELECT COUNT(*) AS `ProductsNum` FROM `Products`;\
         SELECT COUNT(*) AS `MailNum` FROM `Mail`;\
         SELECT COUNT(*) AS `OrdersNum` FROM `Orders`;\
-        SELECT SUM() AS `TotalRevenue` FROM `Orders` WHERE `StateID` = 2;\
+        SELECT \'0,00 MAD\' AS `TotalRevenue`;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
