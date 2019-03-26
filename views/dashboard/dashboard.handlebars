@@ -116,65 +116,40 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col s3">
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="card-panel teal">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Mollitia, sequi!</div>
+                <div class="col s12">
+                    <div class="card-panel">
+                        <div class="row valign-wrapper">
+                            <div class="col s11">
+                                <h4 class="grey-text">
+                                    <i class="fa fa-chart-line"></i>
+                                    Orders graph
+                                </h4>
+                            </div>
+                            <div class="col s1">
+                                <!-- Dropdown Trigger -->
+                                <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
+
+                                <!-- Dropdown Structure -->
+                                <ul id='dropdown1' class='dropdown-content'>
+                                    <li><a href="#!">one</a></li>
+                                    <li><a href="#!">two</a></li>
+                                    <li class="divider" tabindex="-1"></li>
+                                    <li><a href="#!">three</a></li>
+                                    <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+                                    <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <canvas id="orders-chart"></canvas>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="card-panel teal">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Mollitia, sequi!</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s9">
-                    <canvas id="orders-chart"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<script src="/assets/chart.js/dist/Chart.bundle.min.js"></script>
-<script>
-    var ctx = document.getElementById('orders-chart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'Mars', 'April', 'May', 'June', 'Jule', 'August', 'Septembre', 'October', 'Novembre', 'Decembre'],
-            datasets: [{
-                label: 'Orders per month',
-                data: [10, 3, 6, 12, 7, 3, 15, 20, 22, 15, 10, 13],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-</script>
+
