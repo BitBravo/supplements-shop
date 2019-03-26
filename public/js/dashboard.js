@@ -42,5 +42,11 @@ $('document').ready(() => {
                     }
                 }
             });
+
+        // Setting up the orders dropdown.
+        $('.orders-dropdown-trigger').dropdown({
+            constrainWidth: false,
+            coverTrigger: false 
+        });
     }
 });
