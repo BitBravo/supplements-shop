@@ -195,3 +195,5 @@ INSERT INTO `Config` VALUES (
     'supplementmaroc|https://www.instagram.com/supplementmaroc/',
     '|'
 );
+
+INSERT INTO `OrderStates` VALUES ('Issued'), ('Delivered'), ('Cancelled'), ('Rejected');
