@@ -55,7 +55,7 @@
         <div class="col s10 dashboard-grid">
             <div class="row">
                 <div class="col s3">
-                    <div class="card-panel grey-text">
+                    <div class="card-panel card-label grey-text">
                         <div class="row valign-wrapper">
                             <div class="col"><i class="fa fa-funnel-dollar fa-lg"></i></div>
                             <div class="col">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="col s3">
-                    <div class="card-panel grey-text">
+                    <div class="card-panel card-label grey-text">
                         <div class="row valign-wrapper">
                             <div class="col"><i class="fa fa-outdent fa-lg"></i></div>
                             <div class="col">
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="col s3">
-                    <div class="card-panel grey-text">
+                    <div class="card-panel card-label grey-text">
                         <div class="row valign-wrapper">
                             <div class="col"><i class="fa fa-envelope fa-lg"></i></div>
                             <div class="col">
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div class="col s3">
-                    <div class="card-panel grey-text">
+                    <div class="card-panel card-label grey-text">
                         <div class="row valign-wrapper">
                             <div class="col"><i class="fa fa-prescription-bottle fa-lg"></i></div>
                             <div class="col">
@@ -119,23 +119,22 @@
                 <div class="col s12">
                     <div class="card-panel">
                         <div class="row valign-wrapper">
-                            <div class="col s10">
+                            <div class="col s9">
                                 <h4 class="grey-text">
                                     <i class="fa fa-chart-line"></i>
                                     Orders graph
                                 </h4>
                             </div>
-                            <div class="col s2 right-align">
-                                <!-- Dropdown Trigger -->
-                                <a class='orders-dropdown-trigger btn' href='#' data-target='orders-dropdown'>Last month <i class="fa fa-cheveron-down"></i></a>
-
-                                <!-- Dropdown Structure -->
-                                <ul id='orders-dropdown' class='dropdown-content'>
-                                    <li><a href="#!">Last week</a></li>
-                                    <li><a href="#!">Last month</a></li>
-                                    <li><a href="#!">Last year</a></li>
-                                    <li><a href="#!">All time</a></li>
-                                </ul>
+                            <div class="col s3 right-align">
+                                <div class="input-field">
+                                    <select>
+                                        <option value="1">Last week</option>
+                                        <option value="2">Last month</option>
+                                        <option value="3">Last year</option>
+                                        <option value="4">All time</option>
+                                    </select>
+                                    <label>Filter by</label>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
