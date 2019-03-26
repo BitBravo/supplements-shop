@@ -1,10 +1,13 @@
 section.dashboard {
-    
+    padding: 150px 0 100px 0;
+
     .collection-item {
         cursor: pointer;
+        transition-duration: .3s;
+        transition-property: background-color;
 
         &:hover {
-            background-color: $color-light-lighten;
+            background-color: $color-light;
         }
 
         .fa {
