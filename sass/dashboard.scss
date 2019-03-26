@@ -18,14 +18,11 @@ section.dashboard {
     .dashboard-grid {
         padding: 0 150px;
 
-        .card-panel {
+        .card-label {
             
-            .row {
-
-                span {
-                    font-size: 30px;
-                    font-weight: bold;
-                }
+            span {
+                font-size: 30px;
+                font-weight: bold;
             }
         }
     }
