@@ -196,4 +196,4 @@ INSERT INTO `Config` VALUES (
     '|'
 );
 
-INSERT INTO `OrderStates` VALUES ('Issued'), ('Delivered'), ('Cancelled'), ('Rejected');
+INSERT INTO `OrderStates` (`StateName`) VALUES ('Issued'), ('Delivered'), ('Cancelled'), ('Rejected');
