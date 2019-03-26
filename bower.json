@@ -1,26 +1,27 @@
 {
-	"name": "supplements-maroc",
-	"description": "Online store for selling workout-related protein products.",
-	"main": "app.js",
-	"authors": [
-		"EOussama (Oussama Essamadi at oussama.essamadi@gmail.com)"
-	],
-	"license": "GPL-3.0",
-	"keywords": [
-		"store",
-		"e-commerce"
-	],
-	"homepage": "https://github.com/EOussama/supplments-maroc-store",
-	"ignore": [
-		"**/.*",
-		"node_modules",
-		"bower_components",
-		"test",
-		"tests"
-	],
-	"dependencies": {
-		"materialize": "^1.0.0",
-		"jquery": "^3.3.1",
-		"fontawesome": "^5.7.2"
-	}
+  "name": "supplements-maroc",
+  "description": "Online store for selling workout-related protein products.",
+  "main": "app.js",
+  "authors": [
+    "EOussama (Oussama Essamadi at oussama.essamadi@gmail.com)"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "store",
+    "e-commerce"
+  ],
+  "homepage": "https://github.com/EOussama/supplments-maroc-store",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^1.0.0",
+    "jquery": "^3.3.1",
+    "fontawesome": "^5.7.2",
+    "chart.js": "^2.8.0"
+  }
 }

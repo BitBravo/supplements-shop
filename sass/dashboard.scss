@@ -14,4 +14,19 @@ section.dashboard {
             margin-right: 20px;
         }
     }
+
+    .dashboard-grid {
+        padding: 0 150px;
+
+        .card-panel {
+            
+            .row {
+
+                span {
+                    font-size: 30px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 }
