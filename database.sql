@@ -153,6 +153,7 @@ CREATE TABLE IF NOT EXISTS `OrderStates` (
 -- Orders.
 CREATE TABLE IF NOT EXISTS `Orders` (
     `OrderID`           INT NOT NULL AUTO_INCREMENT,
+    `OrderReference`    VARCHAR(50) NOT NULL UNIQUE,
     `OrderDate`         DATETIME NOT NULL DEFAULT NOW(),
     `Firstname`         VARCHAR(50) NOT NULL,
     `Lastname`          VARCHAR(50) NOT NULL,
