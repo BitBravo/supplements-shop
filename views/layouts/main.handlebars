@@ -38,32 +38,39 @@
             {{!-- Upper navbar. --}}
             <div class="nav-wrapper container">
 
-                {{!-- Social icons. --}}
-                <a class="left nav-social grey-text" href="{{Data.Config.Facebook.Link}}" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a class="left nav-social grey-text" href="{{Data.Config.Instagram.Link}}" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a class="left nav-social grey-text" href="{{Data.Config.Youtube.Link}}" target="_blank">
-                    <i class="fab fa-youtube"></i>
-                </a>
+                <div class="left">
+                    <a href="/" class="brand-logo">SM</a>
+                </div>
+                <div class="right">
 
-                {{!-- Phone number. --}}
-                <a class="right grey-text" href="javascript:void(0)">
-                    <i class="fa fa-phone nav-phone nav-icon"></i>
-                    <b>{{Data.Config.Phone.Primary}}</b>
-                </a>
+                    {{!-- Phone number. --}}
+                    <a class="grey-text" href="javascript:void(0)">
+                        <i class="fa fa-phone nav-phone nav-icon"></i>
+                        <b>{{Data.Config.Phone.Primary}}</b>
+                    </a>
+
+                    {{!-- Social icons. --}}
+                    <a class="left nav-social grey-text" href="{{Data.Config.Facebook.Link}}" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="left nav-social grey-text" href="{{Data.Config.Instagram.Link}}" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="left nav-social grey-text" href="{{Data.Config.Youtube.Link}}" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
             </div>
 
             {{!-- Lower navbar. --}}
             <nav class="grey darken-3">
                 <div class="nav-wrapper container">
-                    <a href="/" class="brand-logo">Supplements Maroc</a>
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <ul class="left hide-on-med-and-down">
                         <li><a href="/">Home</a></li>
                         <li><a href="/search">Search</a></li>
                         <li><a href="javascript:void(0)" id="btn-about">About Us</a></li>
+                    </ul>
+                    <ul class="right hide-on-med-and-down">
                         <li>
                             <a href="javascript:void(0)" id="cart-button">
                                 <i class="fa fa-shopping-cart nav-icon"></i>
