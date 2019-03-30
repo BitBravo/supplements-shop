@@ -27,22 +27,25 @@
         margin-right: 8px;
     }
 
-    .search-field{
-        margin-right: 10px;
+    .search-field {
+        opacity: 0;
         transition-duration: .3s;
-        transition-property: width;
+        transition-property: opacity width;
         width: 0;
-
+        
         input {
             color: $color-light;
             padding: 0 10px;
+
+            &:focus {
+                border-bottom: none !important;
+                box-shadow: none !important;
+            }
         }
 
-        &:focus {
-            box-shadow: none;
-        }
 
         &.field-visible {
+            opacity: 1;
             width: 250px;
         }
     }
