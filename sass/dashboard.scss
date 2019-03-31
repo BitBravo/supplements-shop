@@ -10,6 +10,10 @@ section.dashboard {
             background-color: $color-light;
         }
 
+        &.active-page {
+            background-color: $color-light;
+        }
+
         .fa {
             margin-right: 20px;
         }
