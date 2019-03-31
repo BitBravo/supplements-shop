@@ -7,6 +7,7 @@ $('document').ready(() => {
         ordersTarget = $('#orders-chart'),
         revenueTarget = $('#revenue-chart');
 
+    // Setting up the orders' chart.
     if (ordersTarget.length) {
 
         const
@@ -32,6 +33,7 @@ $('document').ready(() => {
             });
     }
 
+    // Setting up the revenue's chart.
     if (revenueTarget.length) {
 
         const
