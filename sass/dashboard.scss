@@ -9,11 +9,7 @@ section.dashboard {
             transition-duration: .3s;
             transition-property: background-color;
     
-            &:hover {
-                background-color: $color-light;
-            }
-    
-            &.active-page {
+            &:hover, &.active-page {
                 background-color: $color-light;
             }
     
