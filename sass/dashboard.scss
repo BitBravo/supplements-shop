@@ -1,23 +1,28 @@
 section.dashboard {
     padding: 150px 0 100px 0;
 
-    .collection-item {
-        cursor: pointer;
-        transition-duration: .3s;
-        transition-property: background-color;
+    .collection {
 
-        &:hover {
-            background-color: $color-light;
-        }
-
-        &.active-page {
-            background-color: $color-light;
-        }
-
-        .fa {
-            margin-right: 20px;
+        .collection-item {
+            color: $color-dark;
+            cursor: pointer;
+            transition-duration: .3s;
+            transition-property: background-color;
+    
+            &:hover {
+                background-color: $color-light;
+            }
+    
+            &.active-page {
+                background-color: $color-light;
+            }
+    
+            .fa {
+                margin-right: 20px;
+            }
         }
     }
+
 
     .dashboard-grid {
         padding: 0 150px;
