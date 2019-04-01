@@ -26,6 +26,7 @@
 	"homepage": "https://github.com/EOussama/supplments-maroc-store#readme",
 	"dependencies": {
 		"body-parser": "^1.18.3",
+		"dotenv": "^7.0.0",
 		"express": "^4.16.4",
 		"express-handlebars": "^3.0.2",
 		"express-session": "^1.15.6",

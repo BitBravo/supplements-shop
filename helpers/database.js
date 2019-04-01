@@ -3,7 +3,7 @@
  */
 module.exports = {
     name: 'db_supp_maroc',
-    host: 'localhost',
-    password: 'Upe385LGvkhJv5KN',
-    user: 'root'
+    host: process.env.DB_HOSTNAME,
+    password: process.env.DB_PASSWORD,
+    user: process.env.DB_USERNAME
 };

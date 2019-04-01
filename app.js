@@ -18,6 +18,7 @@ const
     bodyParser = require('body-parser'),
     exphbs = require('express-handlebars'),
     mysql = require('mysql'),
+    dotenv = require('dotenv').config(),
     database = require('./helpers/database'),
     login = require('./helpers/login'),
     getCopyrightDate = require('./helpers/copyright'),
