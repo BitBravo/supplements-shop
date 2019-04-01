@@ -1,0 +1,199 @@
+<section class="dashboard">
+    <div class="row">
+        <aside class="col s2">
+            <ul class="collection z-depth-1">
+                <a href="/dashboard">
+                    <li class="collection-item">
+                        <div>
+                            <fa class="fa fa-columns fa-lg"></fa> Dashboard
+                        </div>
+
+                    </li>
+                </a>
+                <a href="/dashboard/orders">
+                    <li class="collection-item">
+                        <div>
+                            <fa class="fa fa-outdent fa-lg"></fa> Orders
+                            <span class="new badge">3</span>
+                        </div>
+                    </li>
+                </a>
+                <a href="/dashboard/mail">
+                    <li class="collection-item active-page">
+                        <div>
+                            <fa class="fa fa-envelope fa-lg"></fa> Mail
+                            <span class="new badge">18</span>
+                        </div>
+                    </li>
+                </a>
+                <a href="/dashboard/products">
+                    <li class="collection-item">
+                        <div>
+                            <fa class="fa fa-prescription-bottle fa-lg"></fa> Products
+                        </div>
+                    </li>
+                </a>
+                <a href="/dashboard/brands">
+                    <li class="collection-item">
+                        <div>
+                            <fa class="fa fa-copyright fa-lg"></fa> Brands
+                        </div>
+                    </li>
+                </a>
+                <a href="/dashboard/categories">
+                    <li class="collection-item">
+                        <div>
+                            <fa class="fa fa-layer-group fa-lg"></fa> Categories
+                        </div>
+                    </li>
+                </a>
+                <a href="/dashboard/flavors">
+                    <li class="collection-item">
+                        <div>
+                            <fa class="fa fa-grin-tongue fa-lg"></fa> Flavors
+                        </div>
+                    </li>
+                </a>
+                <a href="/dashboard/coupons">
+                    <li class="collection-item">
+                        <div>
+                            <fa class="fa fa-tag fa-lg"></fa> Coupons
+                        </div>
+                    </li>
+                </a>
+                <a href="/dashboard/config">
+                    <li class="collection-item">
+                        <div>
+                            <fa class="fa fa-cog fa-lg"></fa> Config
+                        </div>
+                    </li>
+                </a>
+            </ul>
+        </aside>
+
+        <div class="col s10 dashboard-grid">
+            <div class="row">
+                <div class="col s3">
+                    <div class="card-panel card-label grey-text">
+                        <div class="row valign-wrapper">
+                            <div class="col"><i class="fa fa-funnel-dollar fa-lg"></i></div>
+                            <div class="col">
+                                <h6>Revenue</h6>
+                            </div>
+                        </div>
+                        <div class="row valign-wrapper">
+                            <div class="col s12">
+                                <span>{{ Data.TotalRevenue }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="card-panel card-label grey-text">
+                        <div class="row valign-wrapper">
+                            <div class="col"><i class="fa fa-outdent fa-lg"></i></div>
+                            <div class="col">
+                                <h6>Orders</h6>
+                            </div>
+                        </div>
+                        <div class="row valign-wrapper">
+                            <div class="col s12">
+                                <span>{{ Data.OrdersNum }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="card-panel card-label grey-text">
+                        <div class="row valign-wrapper">
+                            <div class="col"><i class="fa fa-envelope fa-lg"></i></div>
+                            <div class="col">
+                                <h6>Mail</h6>
+                            </div>
+                        </div>
+                        <div class="row valign-wrapper">
+                            <div class="col s12">
+                                <span>{{ Data.MailNum }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="card-panel card-label grey-text">
+                        <div class="row valign-wrapper">
+                            <div class="col"><i class="fa fa-prescription-bottle fa-lg"></i></div>
+                            <div class="col">
+                                <h6>Products</h6>
+                            </div>
+                        </div>
+                        <div class="row valign-wrapper">
+                            <div class="col s12">
+                                <span>{{ Data.ProductsNum }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="card-panel">
+                        <div class="row valign-wrapper">
+                            <div class="col s9">
+                                <h4 class="grey-text">
+                                    <i class="fa fa-chart-line"></i>
+                                    Orders graph
+                                </h4>
+                            </div>
+                            <div class="col s3 right-align">
+                                <div class="input-field">
+                                    <select>
+                                        <option value="1">Last week</option>
+                                        <option value="2">Last month</option>
+                                        <option value="3">Last year</option>
+                                        <option value="4">All time</option>
+                                    </select>
+                                    <label>Filter by</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <canvas id="orders-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="card-panel">
+                        <div class="row valign-wrapper">
+                            <div class="col s9">
+                                <h4 class="grey-text">
+                                    <i class="fa fa-money-bill"></i>
+                                    Revenue chart
+                                </h4>
+                            </div>
+                            <div class="col s3 right-align">
+                                <div class="input-field">
+                                    <select>
+                                        <option value="1">Last week</option>
+                                        <option value="2">Last month</option>
+                                        <option value="3">Last year</option>
+                                        <option value="4">All time</option>
+                                    </select>
+                                    <label>Filter by</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <canvas id="revenue-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
