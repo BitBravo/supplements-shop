@@ -19,6 +19,7 @@ const
     exphbs = require('express-handlebars'),
     mysql = require('mysql'),
     database = require('./helpers/database'),
+    login = require('./helpers/login'),
     getCopyrightDate = require('./helpers/copyright'),
     conn = mysql.createConnection({
         database: database.name,
@@ -47,7 +48,7 @@ app.use(session({
     secret: '2gQqHgF2NuH3KGJP',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: false }
 }));
 
 
@@ -71,21 +72,7 @@ conn.connect();
 
 
 // The login-in middleware.
-app.use(function (req, res, next) {
-
-    if (req.url.toLowerCase().indexOf('dashboard') !== -1) {
-        
-        if (req.session.loggedIn) {
-
-            next();
-        } else {
-
-            res.redirect('/login');
-        }
-    } else {
-        next();
-    }
-});
+app.use(login);
 
 
 // Routing.
