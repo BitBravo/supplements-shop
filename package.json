@@ -25,9 +25,12 @@
 	},
 	"homepage": "https://github.com/EOussama/supplments-maroc-store#readme",
 	"dependencies": {
+		"body-parser": "^1.18.3",
 		"express": "^4.16.4",
 		"express-handlebars": "^3.0.2",
-		"mysql": "^2.16.0"
+		"express-session": "^1.15.6",
+		"mysql": "^2.16.0",
+		"sha1": "^1.1.1"
 	},
 	"devDependencies": {
 		"gulp": "^4.0.0",

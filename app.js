@@ -15,6 +15,7 @@
 const
     path = require('path'),
     express = require('express'),
+    bodyParser = require('body-parser'),
     exphbs = require('express-handlebars'),
     mysql = require('mysql'),
     database = require('./helpers/database'),
@@ -25,6 +26,7 @@ const
         password: database.password,
         user: database.user
     }),
+    session = require('express-session'),
     app = express(),
     routers = {
         dashboard: require('./routes/dashboard'),
@@ -39,6 +41,21 @@ app.set('port', process.env.PORT || 3000);
 app.set('ip', process.env.IP || '127.0.0.1');
 
 
+// Setting up sessions.
+app.set('trust proxy', 1);
+app.use(session({
+    secret: '2gQqHgF2NuH3KGJP',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
+
+
+// Setting up Body Parser.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
 // Setting up handlebars.
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
@@ -51,6 +68,24 @@ app.use('/assets', express.static(path.join(__dirname + '/bower_components')));
 
 // Connecting to the database.
 conn.connect();
+
+
+// The login-in middleware.
+app.use(function (req, res, next) {
+
+    if (req.url.toLowerCase().indexOf('dashboard') !== -1) {
+        
+        if (req.session.loggedIn) {
+
+            next();
+        } else {
+
+            res.redirect('/login');
+        }
+    } else {
+        next();
+    }
+});
 
 
 // Routing.
