@@ -1,7 +1,7 @@
 /**
  * Gets the proper copyright date.
  */
-function getCopyrightDate() {
+module.exports = () => {
 
     // The variable dates.
     const
@@ -13,6 +13,5 @@ function getCopyrightDate() {
 
     // Returning the proper date range.
     return properRange;
-}
+};
 
-module.exports = getCopyrightDate;
