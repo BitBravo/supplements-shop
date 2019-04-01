@@ -1,6 +1,7 @@
 // Importing the dependancies.
 const
     express = require('express'),
+    sha1 = require('sha1'),
     mysql = require('mysql'),
     database = require('./../helpers/database'),
     getCopyrightDate = require('./../helpers/copyright'),
@@ -10,11 +11,12 @@ const
         password: database.password,
         user: database.user
     })
-    router = express.Router();
+router = express.Router();
 
 
 // Connecting to the database.
 conn.connect();
+
 
 // Setting up login route.
 router.get('/', function (req, res) {
@@ -58,9 +60,21 @@ router.get('/', function (req, res) {
     });
 });
 
+
 // Setting up the login request.
 router.post('/', function (req, res) {
-    return 0;
+
+    const sentPassword = sha1(req.body.password);
+
+    conn.query('SELECT `Password` FROM `Config`;', (error, results) => {
+
+        // Checking if the there are any errors.
+        if (error) throw error;
+
+        res.json({
+            allow: sentPassword === results[0].Password
+        });
+    });
 });
 
 
