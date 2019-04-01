@@ -32,6 +32,12 @@ section.dashboard {
 
     &.dashboard-mail {
 
+        tr {
+            th:first-of-type, td:first-of-type {
+                width: 200px;
+            }
+        }
+
         .mail-control-buttons .fas {
             cursor: pointer;
             font-size: 22px;
