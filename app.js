@@ -49,15 +49,15 @@ app.use('/assets', express.static(path.join(__dirname + '/public')));
 app.use('/assets', express.static(path.join(__dirname + '/bower_components')));
 
 
+// Connecting to the database.
+conn.connect();
+
+
 // Routing.
 app.use(routers.index);
 app.use('/search', routers.search);
 app.use('/dashboard', routers.dashboard);
 app.use('/login', routers.login);
-
-
-// Connecting to the database.
-conn.connect();
 
 
 // Error redirecting.
