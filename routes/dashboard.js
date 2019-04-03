@@ -124,5 +124,12 @@ router.get('/mail', function (req, res) {
 });
 
 
+// Setting up the mail reception route.
+router.post('/mail', function(req, res) {
+
+    res.json({ x: 2 });
+});
+
+
 // Exporting the route.
 module.exports = router;

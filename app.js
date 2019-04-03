@@ -14,11 +14,13 @@
 // Importing the dependancies.
 const
     path = require('path'),
+    dotenv = require('dotenv-extended').load({
+        overrideProcessEnv: true
+    }),
     express = require('express'),
     bodyParser = require('body-parser'),
     exphbs = require('express-handlebars'),
     mysql = require('mysql'),
-    dotenv = require('dotenv').config(),
     database = require('./helpers/database'),
     login = require('./helpers/login'),
     getCopyrightDate = require('./helpers/copyright'),

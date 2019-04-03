@@ -69,8 +69,8 @@
                     <ul class="left hide-on-med-and-down">
                         <li><a href="/">Home</a></li>
                         <li><a href="/search">Search</a></li>
-                        <li><a href="javascript:void(0)" id="btn-contact">Contact Us</a></li>
-                        <li><a href="javascript:void(0)" id="btn-about">About Us</a></li>
+                        <li><a href="javascript:void(0)" id="contact-btn">Contact Us</a></li>
+                        <li><a href="javascript:void(0)" id="about-btn">About Us</a></li>
                     </ul>
                     <ul class="right hide-on-med-and-down">
                         <li>
@@ -94,6 +94,44 @@
                 </div>
             </nav>
         </nav>
+    </div>
+
+    {{!-- Contact Modal. --}}
+    <div id="contact-modal" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col s12">
+                    <h4>Contact Us</h4>
+                </div>
+            </div>
+
+            <div class="row message-content">
+                <form id="contact-form" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="message-username" type="text" class="validate" data-length="100" name="username" required>
+                            <label for="message-username">Username</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="message-email" type="email" class="validate" data-length="80" required>
+                            <label for="message-email" name="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="message-message" class="materialize-textarea" data-length="1000"
+                                rows="5" name="message"></textarea>
+                            <label for="message-message">Textarea</label>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a id="send-btn" class="waves-effect waves-green btn-flat">Send</a>
+    </div>
     </div>
 
     {{!-- Scroll back to top button. --}}
@@ -220,13 +258,16 @@
 
     {{!-- The main script. --}}
     <script src="/assets/js/main.js"></script>
-    
+
+    {{!-- The contact script. --}}
+    <script src="/assets/js/contact.js"></script>
+
     {{!-- The login script. --}}
     <script src="/assets/js/login.js"></script>
 
     {{!-- The dashboard script. --}}
     <script src="/assets/js/dashboard.js"></script>
-    
+
     {{!-- The mail script. --}}
     <script src="/assets/js/mail.js"></script>
 </body>
