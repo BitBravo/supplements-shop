@@ -3,6 +3,9 @@ $('document').ready(() => {
     // Fading out the scroll to top button by default.
     $('#scroll-to-top').fadeOut(0);
 
+    // Initializing the modals.
+    $('.modal').modal();
+
     // Initializing the header carousel.
     $('.carousel.carousel-slider').carousel({
         fullWidth: true,
@@ -31,8 +34,13 @@ $('document').ready(() => {
         $('#search-field').toggleClass('field-visible');
     });
 
+    // Opening up the contact modal.
+    $('#contact-btn').on('click', () => {
+        (M.Modal.getInstance($('#contact-modal'))).open();
+    });
+
     // Scrolling to the about section.
-    $('#btn-about').on('click', () => {
+    $('#about-btn').on('click', () => {
         $([document.documentElement, document.body]).animate({
             scrollTop: $("#about").offset().top
         }, 500);
