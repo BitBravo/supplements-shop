@@ -6,9 +6,11 @@ $('document').ready(() => {
     });
 
     // Sending the message.
-    $('#send-btn').on('click', () => {
+    $('#contact-form').on('submit', (e) => {
 
-        $.post('dashboard/mail', $('#contact-form').serialize(), (data) => {
+        e.preventDefault();
+        
+        $.post('dashboard/mail', $(e.target).serialize(), (data) => {
 
             console.log(data);
         });
