@@ -1,5 +1,6 @@
 @import "carousel.scss";
 @import "colors.scss";
+@import "contact.scss";
 @import "dashboard.scss";
 @import "error.scss";
 @import "extra-info.scss";
@@ -23,12 +24,5 @@ main {
         position: absolute;
         width: 100%;
         z-index: -1;
-    }
-}
-
-#contact-modal {
-
-    .message-content {
-        margin-top: 100px;
     }
 }
