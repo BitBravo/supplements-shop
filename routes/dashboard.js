@@ -76,10 +76,7 @@ router.get('/mail', function (req, res) {
 
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
-        SELECT COUNT(*) AS `ProductsNum` FROM `Products`;\
-        SELECT COUNT(*) AS `MailNum` FROM `Mail`;\
-        SELECT COUNT(*) AS `OrdersNum` FROM `Orders`;\
-        SELECT \'0,00 MAD\' AS `TotalRevenue`;\
+        SELECT * FROM `Mail`;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -107,12 +104,10 @@ router.get('/mail', function (req, res) {
                         Link: results[0][0].Youtube.split('|')[1]
                     },
                 },
-                ProductsNum: results[1][0].ProductsNum,
-                MailNum: results[2][0].MailNum,
-                OrdersNum: results[3][0].OrdersNum,
-                TotalRevenue: results[4][0].TotalRevenue
+                Mail: truncateMessages(results[1])
             };
 
+            console.log(data.Mail);
             // Getting the proper copyright date.
             data.CopyrightDate = getCopyrightDate();
 
@@ -121,6 +116,18 @@ router.get('/mail', function (req, res) {
                 Data: data
             });
         });
+
+    function truncateMessages(mail) {
+
+        for (const m of mail) {
+
+            if (m.Message.length > 80) {
+                m.Message = m.Message.substring(0, 80) + '...';
+            }
+        }
+
+        return mail;
+    }
 });
 
 
@@ -136,7 +143,12 @@ router.post('/mail', function (req, res) {
     stmt = mysql.format("INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, NOW(), ?);", ['Mail', 'SenderEmail', 'SenderName', 'Message', 'IssueDate', 'Read', mail.email, mail.username, mail.message, 0]);
 
     conn.query(stmt, (error, results) => {
-        if (error) throw error;
+
+        let isSent = true;
+
+        if (error) isSent = false;
+
+        res.json({ sent: isSent });
     });
 });
 

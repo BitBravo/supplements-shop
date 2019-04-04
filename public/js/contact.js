@@ -14,7 +14,13 @@ $('document').ready(() => {
         // Sending the mail to the server.
         $.post('/dashboard/mail', $(e.target).serialize(), (data) => {
 
-            console.log(data);
+            if (data.sent === true) {
+
+                M.toast({html: 'Message sent!'});
+            } else {
+
+                M.toast({html: 'Something went wrong!'});
+            }
         });
     });
 });
