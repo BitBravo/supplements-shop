@@ -11,7 +11,7 @@
                         <div class="col s9">
                             <h4 class="grey-text">
                                 <i class="fa fa-envelope"></i>
-                                Mail [5]
+                                Mail [{{ Data.Mail.length }}]
                             </h4>
                         </div>
                         <div class="col s3 right-align">
@@ -44,6 +44,7 @@
                                 </thead>
 
                                 <tbody>
+                                    {{#each Data.Mail}}
                                     <tr>
                                         <td>
                                             <label>
@@ -52,68 +53,13 @@
                                             </label>
                                         </td>
                                         <td>
-                                            <b>Sender Name</b>
+                                            <b>{{this.SenderName}}</b>
                                         </td>
                                         <td>
-                                            Subject
+                                            {{this.Message}}
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <b>Sender Name</b>
-                                        </td>
-                                        <td>
-                                            Subject
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <b>Sender Name</b>
-                                        </td>
-                                        <td>
-                                            Subject
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <b>Sender Name</b>
-                                        </td>
-                                        <td>
-                                            Subject
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="checkbox" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <b>Sender Name</b>
-                                        </td>
-                                        <td>
-                                            Subject
-                                        </td>
-                                    </tr>
+                                    {{/each}}
                                 </tbody>
                             </table>
                         </div>
