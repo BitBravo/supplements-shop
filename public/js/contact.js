@@ -8,9 +8,11 @@ $('document').ready(() => {
     // Sending the message.
     $('#contact-form').on('submit', (e) => {
 
+        // Preventing the page from reloading.
         e.preventDefault();
-        
-        $.post('dashboard/mail', $(e.target).serialize(), (data) => {
+
+        // Sending the mail to the server.
+        $.post('/dashboard/mail', $(e.target).serialize(), (data) => {
 
             console.log(data);
         });
