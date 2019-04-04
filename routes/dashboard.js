@@ -125,9 +125,19 @@ router.get('/mail', function (req, res) {
 
 
 // Setting up the mail reception route.
-router.post('/mail', function(req, res) {
+router.post('/mail', function (req, res) {
 
-    res.send('Mailing...');
+    const mail = {
+        username: req.body.username,
+        email: req.body.email,
+        message: req.body.message
+    };
+
+    stmt = mysql.format("INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, NOW(), ?);", ['Mail', 'SenderEmail', 'SenderName', 'Message', 'IssueDate', 'Read', mail.email, mail.username, mail.message, 0]);
+
+    conn.query(stmt, (error, results) => {
+        if (error) throw error;
+    });
 });
 
 
