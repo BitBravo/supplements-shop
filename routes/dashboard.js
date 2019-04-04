@@ -27,6 +27,7 @@ router.get('/', function (req, res) {
         SELECT COUNT(*) AS `MailNum` FROM `Mail`;\
         SELECT COUNT(*) AS `OrdersNum` FROM `Orders`;\
         SELECT \'0,00 MAD\' AS `TotalRevenue`;\
+        SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -57,7 +58,8 @@ router.get('/', function (req, res) {
                 ProductsNum: results[1][0].ProductsNum,
                 MailNum: results[2][0].MailNum,
                 OrdersNum: results[3][0].OrdersNum,
-                TotalRevenue: results[4][0].TotalRevenue
+                TotalRevenue: results[4][0].TotalRevenue,
+                NewMail: results[5][0].NewMail
             };
 
             // Getting the proper copyright date.
@@ -77,6 +79,7 @@ router.get('/mail', function (req, res) {
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Mail`;\
+        SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -104,7 +107,8 @@ router.get('/mail', function (req, res) {
                         Link: results[0][0].Youtube.split('|')[1]
                     },
                 },
-                Mail: truncateMessages(results[1])
+                Mail: truncateMessages(results[1]),
+                NewMail: results[2][0].NewMail
             };
 
             console.log(data.Mail);
