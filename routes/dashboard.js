@@ -127,7 +127,6 @@ router.get('/mail', function (req, res) {
 // Setting up the mail reception route.
 router.post('/mail', function(req, res) {
 
-    console.log('Mailing...');
     res.send('Mailing...');
 });
 
