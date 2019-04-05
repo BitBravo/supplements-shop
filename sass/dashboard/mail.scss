@@ -1,14 +1,17 @@
 .dashboard-mail {
 
     tr {
-        cursor: pointer;
-        
+
         th:first-of-type, td:first-of-type {
             width: 200px;
         }
-
+        
         th:nth-of-type(2), td:nth-of-type(2) {
             width: 250px;
+        }
+        
+        &.mail {
+            cursor: pointer;
         }
 
         &.new {
@@ -30,5 +33,9 @@
         &:hover {
             opacity: .6;
         }
+    }
+
+    .mail-content {
+        margin-top: 70px;
     }
 }

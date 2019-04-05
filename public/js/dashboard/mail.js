@@ -1,5 +1,8 @@
 $('document').ready(() => {
 
+    // Initializing the modal.
+    //$('.modal').modal();
+
     // Select all.
     $('#select-all-mail-btn').on('change', (e) => {
         $.each($('table tr td:first-of-type input'), (index, value) => {
@@ -25,5 +28,13 @@ $('document').ready(() => {
 
             default: location.href = '/dashboard/mail/0';
         }
+    });
+
+    // Opening the mail modal.
+    $('tr.mail').on('click', function () {
+
+        const mailId = $(this).data('id');
+
+        (M.Modal.getInstance($('#mail-modal'))).open();
     });
 });
