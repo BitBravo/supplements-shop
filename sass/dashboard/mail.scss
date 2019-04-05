@@ -37,5 +37,11 @@
 
     .mail-content {
         margin-top: 70px;
+
+        textarea {
+            margin-top: 50px;
+            min-height: 300px;
+            resize: none;
+        }
     }
 }
