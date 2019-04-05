@@ -34,11 +34,6 @@ $('document').ready(() => {
         $('#search-field').toggleClass('field-visible');
     });
 
-    // Opening up the contact modal.
-    $('#contact-btn').on('click', () => {
-        (M.Modal.getInstance($('#contact-modal'))).open();
-    });
-
     // Scrolling to the about section.
     $('#about-btn').on('click', () => {
         $([document.documentElement, document.body]).animate({

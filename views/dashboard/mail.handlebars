@@ -45,7 +45,7 @@
 
                                 <tbody>
                                     {{#each Data.Mail }}
-                                    <tr class="{{ isMsgNew this.Read }} grey-text">
+                                    <tr class="{{ isMsgNew this.Read }} grey-text mail" data-id="{{ this.MailID }}">
                                         <td>
                                             <label>
                                                 <input type="checkbox" />
@@ -68,4 +68,18 @@
             </div>
         </div>
     </div>
+
+    <div id="mail-modal" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4><i class="fa fa-envelope"></i> Mail</h4>
+
+            <div class="mail-content">
+                <p>A bunch of text</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
 </section>

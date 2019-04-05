@@ -5,6 +5,11 @@ $('document').ready(() => {
         $('.message-content input').characterCounter();
     });
 
+    // Opening up the contact modal.
+    $('#contact-btn').on('click', () => {
+        (M.Modal.getInstance($('#contact-modal'))).open();
+    });
+    
     // Sending the message.
     $('#contact-form').on('submit', (e) => {
 
