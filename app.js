@@ -14,9 +14,7 @@
 // Importing the dependancies.
 const
     path = require('path'),
-    dotenv = require('dotenv-extended').load({
-        overrideProcessEnv: true
-    }),
+    dotenv = require('dotenv-extended').load({ overrideProcessEnv: true }),
     express = require('express'),
     bodyParser = require('body-parser'),
     exphbs = require('express-handlebars'),
@@ -33,7 +31,7 @@ const
     session = require('express-session'),
     app = express(),
     routers = {
-        dashboard: require('./routes/dashboard'),
+        dashboard: require('./routes/dashboard/dashboard'),
         index: require('./routes/index'),
         login: require('./routes/login'),
         search: require('./routes/search')
