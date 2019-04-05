@@ -44,8 +44,8 @@
                                 </thead>
 
                                 <tbody>
-                                    {{#each Data.Mail}}
-                                    <tr>
+                                    {{#each Data.Mail }}
+                                    <tr class="{{ isMsgNew this.Read }} grey-text">
                                         <td>
                                             <label>
                                                 <input type="checkbox" />
@@ -53,10 +53,10 @@
                                             </label>
                                         </td>
                                         <td>
-                                            <b>{{this.SenderName}}</b>
+                                            <b>{{ this.SenderName }}</b>
                                         </td>
                                         <td>
-                                            {{this.Message}}
+                                            {{ this.Message }}
                                         </td>
                                     </tr>
                                     {{/each}}
