@@ -78,7 +78,7 @@ router.get('/mail', function (req, res) {
 
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
-        SELECT * FROM `Mail`;\
+        SELECT * FROM `Mail` ORDER BY `IssueDate` DESC;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
     ', (error, results) => {
 
