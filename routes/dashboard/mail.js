@@ -23,7 +23,6 @@ router.get('/:mode', function (req, res) {
 
     const mode = req.params.mode > 2 ? 2 : req.params.mode < 0 ? 0 : req.params.mode;
 
-    console.log('QUERY: ' + 'SELECT * FROM `Mail` ' + (mode === 0 ? '' : (mode === 1 ? 'WHERE `Read` = 0' : 'WHERE `Read` = 1')) + ' ORDER BY `IssueDate` DESC;');
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Mail` ' + (mode == 0 ? '' : (mode == 1 ? 'WHERE `Read` = 1' : 'WHERE `Read` = 0')) + ' ORDER BY `IssueDate` DESC;\

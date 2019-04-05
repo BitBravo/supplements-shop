@@ -1,0 +1,34 @@
+.dashboard-mail {
+
+    tr {
+        cursor: pointer;
+        
+        th:first-of-type, td:first-of-type {
+            width: 200px;
+        }
+
+        th:nth-of-type(2), td:nth-of-type(2) {
+            width: 250px;
+        }
+
+        &.new {
+            color: $color-dark !important;
+        }
+    }
+
+    .mail-control-buttons .fas {
+        cursor: pointer;
+        font-size: 22px;
+        opacity: .4;
+        transition-duration: .3s;
+        transition-property: opacity;
+        
+        &:not(:last-of-type) {
+            margin-right: 10px;
+        }
+
+        &:hover {
+            opacity: .6;
+        }
+    }
+}
