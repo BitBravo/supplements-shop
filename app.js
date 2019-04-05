@@ -61,7 +61,10 @@ app.use(bodyParser.json());
 
 
 // Setting up handlebars.
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs({ 
+    defaultLayout: 'main',
+    helpers: require('./helpers/hbs')
+ }));
 app.set('view engine', 'handlebars');
 
 
