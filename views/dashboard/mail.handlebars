@@ -16,10 +16,10 @@
                         </div>
                         <div class="col s3 right-align">
                             <div class="input-field">
-                                <select>
-                                    <option value="1">All</option>
-                                    <option value="1">Read</option>
-                                    <option value="2">Unread</option>
+                                <select id="mail-mode-select">
+                                    <option value="1" {{select Data.Mode 0}}>All</option>
+                                    <option value="2" {{select Data.Mode 1}}>Read</option>
+                                    <option value="3" {{select Data.Mode 2}}>Unread</option>
                                 </select>
                                 <label>Show</label>
                             </div>
