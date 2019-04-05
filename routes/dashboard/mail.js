@@ -18,6 +18,22 @@ const
 conn.connect();
 
 
+// Setting up the mail retrieval route.
+router.get('/read/:id', function (req, res) {
+
+    const mailId = req.params.id;
+
+    stmt = mysql.format("SELECT * FROM ?? WHERE ?? = ?;", ['Mail', 'MailID', mailId]);
+
+    conn.query(stmt, (error, results) => {
+
+        if (error) throw error;
+
+        res.json({ ...results[0] });
+    });
+});
+
+
 // Setting up the mail route.
 router.get('/:mode', function (req, res) {
 
@@ -82,7 +98,7 @@ router.get('/:mode', function (req, res) {
 });
 
 
-// Setting up the mail reception route.
+// Setting up the mail creation route.
 router.post('/', function (req, res) {
 
     const mail = {

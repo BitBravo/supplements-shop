@@ -33,8 +33,23 @@ $('document').ready(() => {
     // Opening the mail modal.
     $('tr.mail').on('click', function () {
 
+        // Getting the mail ID.
         const mailId = $(this).data('id');
 
-        (M.Modal.getInstance($('#mail-modal'))).open();
+        // Requesting the e-mail's content.
+        $.get('/dashboard/mail/read/' + mailId, (email) => {
+
+            console.log(email);
+            $('.mail-content').html(`
+                <h5>
+                    Sender: ${email.SenderName} <span class="grey-text">(${email.SenderEmail})</span>
+                    <br>
+                    <small class="grey-text">Issue Date: ${email.IssueDate}</small>
+                </h5>
+                <hr>
+                <textarea height="auto" sizeable=false readonly>${email.Message}</textarea>
+            `);
+            (M.Modal.getInstance($('#mail-modal'))).open();
+        });
     });
 });
