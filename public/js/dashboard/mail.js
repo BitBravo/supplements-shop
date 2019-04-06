@@ -42,7 +42,7 @@ $('document').ready(() => {
             console.log(email);
             $('.mail-content').html(`
                 <h5>
-                    Sender: ${email.SenderName} <span class="grey-text">(${email.SenderEmail})</span>
+                    ${email.SenderName} <span class="grey-text">(${email.SenderEmail})</span>
                     <br>
                     <small class="grey-text">Issue Date: ${email.IssueDate}</small>
                 </h5>
