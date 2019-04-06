@@ -132,10 +132,35 @@ router.post('/', function (req, res) {
 });
 
 
-// Setting up the mail update route.
-router.put('/', function(req, res) {
+// Setting up the mail update (read) route.
+router.delete('/', function (req, res) {
 
-    console.log(req.body);
+    const ids = req.body['ids[]'];
+
+    stmt = mysql.format("UPDATE ?? SET ?? = ? WHERE ?? IN (?);", ['Mail', 'Read', 1, 'MailID', ids]);
+
+    conn.query(stmt, (error, results) => {
+
+        if (error) throw error;
+
+        res.send();
+    });
+});
+
+
+// Setting up the mail update (unread) route.
+router.put('/', function (req, res) {
+
+    const ids = req.body['ids[]'];
+
+    stmt = mysql.format("UPDATE ?? SET ?? = ? WHERE ?? IN (?);", ['Mail', 'Read', 0, 'MailID', ids]);
+
+    conn.query(stmt, (error, results) => {
+
+        if (error) throw error;
+
+        res.send();
+    });
 });
 
 
