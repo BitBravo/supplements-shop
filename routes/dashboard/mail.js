@@ -132,5 +132,12 @@ router.post('/', function (req, res) {
 });
 
 
+// Setting up the mail update route.
+router.put('/', function(req, res) {
+
+    console.log(req.body);
+});
+
+
 // Exporting the route.
 module.exports = router;
