@@ -1,7 +1,28 @@
 $('document').ready(() => {
 
-    // Initializing the modal.
-    //$('.modal').modal();
+    // Marking selected messages as read.
+    $('#email-read-btn').on('click', () => {
+
+        const selectedEmails = getSelectedEmails();
+        
+        $.ajax({
+            url: '/dashboard/mail',
+            type: 'PUT',
+            data: { ids: selectedEmails }
+        });
+    });
+    
+    // Marking selected messages as unread.
+    $('#email-unread-btn').on('click', () => {
+        
+        const selectedEmails = getSelectedEmails();
+
+        $.ajax({
+            url: '/dashboard/mail',
+            type: 'PUT',
+            data: { ids: selectedEmails }
+        });
+    });
 
     // Select all.
     $('#select-all-mail-btn').on('change', (e) => {
@@ -31,6 +52,11 @@ $('document').ready(() => {
     });
 
     // Opening the mail modal.
+    $('tr.mail label').on('click', function (e) {
+
+        e.stopPropagation();
+    });
+
     $('tr.mail').on('click', function () {
 
         // Getting the mail ID.
@@ -57,4 +83,21 @@ $('document').ready(() => {
             (M.Modal.getInstance($('#mail-modal'))).open();
         });
     });
+
+    /**
+     * Returns a list of selected emails' IDs.
+     */
+    function getSelectedEmails() {
+
+        const selectedEmails = [];
+
+        $.each($('table tr td:first-of-type input'), (index, value) => {
+
+            if (value.checked) {
+                selectedEmails.push($(value).closest('tr').data('id'));
+            }
+        });
+
+        return selectedEmails;
+    }
 });
