@@ -4,20 +4,22 @@ $('document').ready(() => {
     $('#email-read-btn').on('click', () => {
 
         const selectedEmails = getSelectedEmails();
-        
+
         $.ajax({
             url: '/dashboard/mail',
             type: 'DELETE',
             data: { ids: selectedEmails },
             success: () => {
-                 M.toast({html: 'Message(s) marked as read!'})
+
+                toggleReadStatus(selectedEmails, true);
+                M.toast({ html: 'Message(s) marked as read!' });
             }
         });
     });
-    
+
     // Marking selected messages as unread.
     $('#email-unread-btn').on('click', () => {
-        
+
         const selectedEmails = getSelectedEmails();
 
         $.ajax({
@@ -25,13 +27,22 @@ $('document').ready(() => {
             type: 'PUT',
             data: { ids: selectedEmails },
             success: () => {
-                 M.toast({html: 'Message(s) marked as unread!'})
+
+                toggleReadStatus(selectedEmails, false);
+                M.toast({ html: 'Message(s) marked as unread!' });
             }
         });
     });
 
     // Select all.
     $('#select-all-mail-btn').on('change', (e) => {
+
+        if (e.target.checked) {
+            $('#select-all-label').text('Unselect all');
+        } else {
+            $('#select-all-label').text('Select all');
+        }
+
         $.each($('table tr td:first-of-type input'), (index, value) => {
 
             value.checked = e.target.checked;
@@ -41,7 +52,7 @@ $('document').ready(() => {
     // Mail mode selection.
     $('#mail-mode-select').on('change', (e) => {
 
-        switch(e.target.value) {
+        switch (e.target.value) {
 
             case '2': {
                 location.href = '/dashboard/mail/1';
@@ -105,5 +116,26 @@ $('document').ready(() => {
         });
 
         return selectedEmails;
+    }
+
+    /**
+     * Toggles the read status for a select group of emails.
+     * 
+     * @param {Array<Int>} ids The ids of the emails to toggle the read status for.
+     * @param {Boolean} status The status to toggle to.
+     */
+    function toggleReadStatus(ids, status) {
+
+        $.each($('table tr'), (index, value) => {
+
+            if (ids.includes($(value).data('id'))) {
+
+                if (status === true) {
+                    $(value).removeClass('new');
+                } else {
+                    $(value).addClass('new');
+                }
+            }
+        });
     }
 });
