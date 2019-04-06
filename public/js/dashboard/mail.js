@@ -7,8 +7,11 @@ $('document').ready(() => {
         
         $.ajax({
             url: '/dashboard/mail',
-            type: 'PUT',
-            data: { ids: selectedEmails }
+            type: 'DELETE',
+            data: { ids: selectedEmails },
+            success: () => {
+                 M.toast({html: 'Message(s) marked as read!'})
+            }
         });
     });
     
@@ -20,7 +23,10 @@ $('document').ready(() => {
         $.ajax({
             url: '/dashboard/mail',
             type: 'PUT',
-            data: { ids: selectedEmails }
+            data: { ids: selectedEmails },
+            success: () => {
+                 M.toast({html: 'Message(s) marked as unread!'})
+            }
         });
     });
 
@@ -51,7 +57,7 @@ $('document').ready(() => {
         }
     });
 
-    // Opening the mail modal.
+    // Preventing the modal from opening when checking a checkbox.
     $('tr.mail label').on('click', function (e) {
 
         e.stopPropagation();
