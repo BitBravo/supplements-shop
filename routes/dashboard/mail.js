@@ -2,6 +2,7 @@
 const
     express = require('express'),
     mysql = require('mysql'),
+    moment = require('moment'),
     database = require('../../helpers/database'),
     getCopyrightDate = require('../../helpers/copyright'),
     conn = mysql.createConnection({
@@ -18,6 +19,10 @@ const
 conn.connect();
 
 
+// Setting the local timezone.
+moment.locale();
+
+
 // Setting up the mail retrieval route.
 router.get('/read/:id', function (req, res) {
 
@@ -29,6 +34,7 @@ router.get('/read/:id', function (req, res) {
 
         if (error) throw error;
 
+        results[0].IssueDate = moment(results[0].IssueDate).format('Do MMMM YYYY');
         res.json({ ...results[0] });
     });
 });
