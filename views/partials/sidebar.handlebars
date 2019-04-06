@@ -19,7 +19,10 @@
         <li class="collection-item">
             <div>
                 <fa class="fa fa-envelope fa-lg"></fa> Mail
-                <span class="new badge">{{ NewMail }}</span>
+
+                {{#if NewMail }}
+                    <span class="new badge">{{ NewMail }}</span>
+                {{/if}}
             </div>
         </li>
     </a>
