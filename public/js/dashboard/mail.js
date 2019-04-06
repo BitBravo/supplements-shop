@@ -39,7 +39,10 @@ $('document').ready(() => {
         // Requesting the e-mail's content.
         $.get('/dashboard/mail/read/' + mailId, (email) => {
 
-            console.log(email);
+            // Marking as read.
+            $(this).removeClass('new');
+
+            // Displaying the email's information.
             $('.mail-content').html(`
                 <h5>
                     ${email.SenderName} <span class="grey-text">(${email.SenderEmail})<small class="grey-text right">${email.IssueDate}</small></span>
@@ -47,7 +50,10 @@ $('document').ready(() => {
                 </h5>
                 <hr>
                 <textarea height="auto" sizeable=false readonly>${email.Message}</textarea>
+                <input type="hidden" value="${mailId}">
             `);
+
+            // Opening the email modal.
             (M.Modal.getInstance($('#mail-modal'))).open();
         });
     });

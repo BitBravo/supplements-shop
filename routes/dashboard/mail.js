@@ -28,14 +28,20 @@ router.get('/read/:id', function (req, res) {
 
     const mailId = req.params.id;
 
-    stmt = mysql.format("SELECT * FROM ?? WHERE ?? = ?;", ['Mail', 'MailID', mailId]);
+    stmt = mysql.format("\
+        SELECT * FROM ?? WHERE ?? = ?;\
+        UPDATE ?? SET ?? = ? WHERE ?? = ?;\
+        ", [
+            'Mail', 'MailID', mailId,
+            'Mail', 'Read', 1, 'MailID', mailId
+        ]);
 
     conn.query(stmt, (error, results) => {
 
         if (error) throw error;
 
-        results[0].IssueDate = moment(results[0].IssueDate).format('HH:MM - MMMM Do YYYY');
-        res.json({ ...results[0] });
+        results[0][0].IssueDate = moment(results[0][0].IssueDate).format('HH:MM - MMMM Do YYYY');
+        res.json({ ...results[0][0] });
     });
 });
 
