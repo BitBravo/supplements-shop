@@ -20,7 +20,7 @@ conn.connect();
 
 
 // Setting the local timezone.
-moment.locale();
+moment.locale('ar-ma');
 
 
 // Setting up the mail retrieval route.
@@ -34,7 +34,7 @@ router.get('/read/:id', function (req, res) {
 
         if (error) throw error;
 
-        results[0].IssueDate = moment(results[0].IssueDate).format('Do MMMM YYYY');
+        results[0].IssueDate = moment(results[0].IssueDate).format('HH:MM - MMMM Do YYYY');
         res.json({ ...results[0] });
     });
 });

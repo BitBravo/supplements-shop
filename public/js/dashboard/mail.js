@@ -42,9 +42,8 @@ $('document').ready(() => {
             console.log(email);
             $('.mail-content').html(`
                 <h5>
-                    ${email.SenderName} <span class="grey-text">(${email.SenderEmail})</span>
+                    ${email.SenderName} <span class="grey-text">(${email.SenderEmail})<small class="grey-text right">${email.IssueDate}</small></span>
                     <br>
-                    <small class="grey-text">Issue Date: ${email.IssueDate}</small>
                 </h5>
                 <hr>
                 <textarea height="auto" sizeable=false readonly>${email.Message}</textarea>
