@@ -20,61 +20,118 @@
                             <form action="/dashboard/config" method="POST">
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="primary-phone-number" type="tel" class="validate" value="{{ Data.Config.Phone.Primary }}" name="primary-phone" required>
+                                        <input id="primary-phone-number" type="tel" class="validate"
+                                            value="{{ Data.Config.Phone.Primary }}" name="primary-phone" required>
                                         <label for="primary-phone-number">Primary phone number</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="secondary-phone-number" type="tel" class="validate" value="{{ Data.Config.Phone.Secondary }}" name="secondary-phone" required>
+                                        <input id="secondary-phone-number" type="tel" class="validate"
+                                            value="{{ Data.Config.Phone.Secondary }}" name="secondary-phone" required>
                                         <label for="secondary-phone-number">Secondary phone number</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="fixed-phone-number" type="tel" class="validate" value="{{ Data.Config.Phone.Fixed }}" name="fixed-phone" required>
+                                        <input id="fixed-phone-number" type="tel" class="validate"
+                                            value="{{ Data.Config.Phone.Fixed }}" name="fixed-phone" required>
                                         <label for="fixed-phone-number">Fixed phone number</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="email" type="email" class="validate" value="{{ Data.Config.Email }}" name="email" required>
+                                        <input id="email" type="email" class="validate" value="{{ Data.Config.Email }}"
+                                            name="email" required>
                                         <label for="email">Email</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <input id="facebook-page" type="text" class="validate" value="{{ Data.Config.Facebook.Name }}" name="facebook-name" required>
+                                        <input id="facebook-page" type="text" class="validate"
+                                            value="{{ Data.Config.Facebook.Name }}" name="facebook-name" required>
                                         <label for="facebook-page">Facebook page name</label>
                                     </div>
                                     <div class="input-field col s6">
-                                        <input id="facebook-url" type="url" class="validate" value="{{ Data.Config.Facebook.Link }}" name="facebook-url" required>
+                                        <input id="facebook-url" type="url" class="validate"
+                                            value="{{ Data.Config.Facebook.Link }}" name="facebook-url" required>
                                         <label for="facebook-url">Facebook page url</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <input id="instagram-page" type="text" class="validate" value="{{ Data.Config.Instagram.Name }}" name="instagram-name" required>
+                                        <input id="instagram-page" type="text" class="validate"
+                                            value="{{ Data.Config.Instagram.Name }}" name="instagram-name" required>
                                         <label for="instagram-page">Instagram page name</label>
                                     </div>
                                     <div class="input-field col s6">
-                                        <input id="instagram-url" type="url" class="validate" value="{{ Data.Config.Instagram.Link }}" name="instagram-url" required>
+                                        <input id="instagram-url" type="url" class="validate"
+                                            value="{{ Data.Config.Instagram.Link }}" name="instagram-url" required>
                                         <label for="instagram-url">Instagram page url</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <input id="youtube-channel" type="text" class="validate" value="{{ Data.Config.Youtube.Name }}" name="youtube-name" required>
+                                        <input id="youtube-channel" type="text" class="validate"
+                                            value="{{ Data.Config.Youtube.Name }}" name="youtube-name" required>
                                         <label for="youtube-channel">Youtube channel name</label>
                                     </div>
                                     <div class="input-field col s6">
-                                        <input id="youtube-url" type="url" class="validate" value="{{ Data.Config.Youtube.Link }}" name="youtube-url" required>
+                                        <input id="youtube-url" type="url" class="validate"
+                                            value="{{ Data.Config.Youtube.Link }}" name="youtube-url" required>
                                         <label for="youtube-url">Youtube channel text</label>
                                     </div>
                                 </div>
                                 <div class="row form-controls">
                                     <div class="col s12 center-align">
-                                        <input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3" value="Submit">
+                                        <input type="submit"
+                                            class="btn btn-large waves-effect waves-light grey lighten-3"
+                                            value="Submit">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card-panel">
+                    <div class="row valign-wrapper">
+                        <div class="col s12">
+                            <h4 class="grey-text">
+                                <i class="fa fa-key"></i>
+                                Password
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <form action="/dashboard/config" method="POST">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="password" type="password" class="validate" name="password" required>
+                                        <label for="password">New Password</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="password-conf" type="password" class="validate" name="password-conf"
+                                            required>
+                                        <label for="password-conf">Password confirmation</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="password-old" type="password" class="validate" name="password-old"
+                                            required>
+                                        <label for="password-old">Old password</label>
+                                    </div>
+                                </div>
+                                <div class="row form-controls">
+                                    <div class="col s12 center-align">
+                                        <input type="submit"
+                                            class="btn btn-large waves-effect waves-light grey lighten-3"
+                                            value="Submit">
                                     </div>
                                 </div>
                             </form>
