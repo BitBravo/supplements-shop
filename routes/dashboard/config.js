@@ -65,5 +65,13 @@ router.get('/', function (req, res) {
 });
 
 
+// Setting up the config update route.
+router.post('/', function (req, res) {
+
+    console.log(req.body);
+    res.render('dashboard/config');
+});
+
+
 // Exporting the route.
 module.exports = router;
