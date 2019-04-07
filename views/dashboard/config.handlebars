@@ -106,18 +106,11 @@
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <form action="/dashboard/config" method="POST">
+                            <form action="/dashboard/config?_method=PUT" method="POST">
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="password" type="password" class="validate" name="password" required>
                                         <label for="password">New Password</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <input id="password-conf" type="password" class="validate" name="password-conf"
-                                            required>
-                                        <label for="password-conf">Password confirmation</label>
                                     </div>
                                 </div>
                                 <div class="row">

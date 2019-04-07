@@ -16,6 +16,7 @@ const
     path = require('path'),
     dotenv = require('dotenv-extended').load({ overrideProcessEnv: true }),
     express = require('express'),
+    methodOverride = require('method-override'),
     bodyParser = require('body-parser'),
     exphbs = require('express-handlebars'),
     mysql = require('mysql'),
@@ -51,6 +52,10 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }));
+
+
+// Setting up method override.
+app.use(methodOverride('_method'));
 
 
 // Setting up Body Parser.

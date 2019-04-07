@@ -113,13 +113,13 @@ router.get('/:mode', function (req, res) {
 // Setting up the mail creation route.
 router.post('/', function (req, res) {
 
-    const mail = {
-        username: req.body.username,
-        email: req.body.email,
-        message: req.body.message
-    };
-
-    stmt = mysql.format("INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, NOW(), ?);", ['Mail', 'SenderEmail', 'SenderName', 'Message', 'IssueDate', 'Read', mail.email, mail.username, mail.message, 0]);
+    const
+        mail = {
+            username: req.body.username,
+            email: req.body.email,
+            message: req.body.message
+        },
+        stmt = mysql.format("INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, NOW(), ?);", ['Mail', 'SenderEmail', 'SenderName', 'Message', 'IssueDate', 'Read', mail.email, mail.username, mail.message, 0]);
 
     conn.query(stmt, (error, results) => {
 
@@ -135,9 +135,9 @@ router.post('/', function (req, res) {
 // Setting up the mail update (read) route.
 router.delete('/', function (req, res) {
 
-    const ids = req.body['ids[]'];
-
-    stmt = mysql.format("UPDATE ?? SET ?? = ? WHERE ?? IN (?);", ['Mail', 'Read', 1, 'MailID', ids]);
+    const
+        ids = req.body['ids[]'],
+        stmt = mysql.format("UPDATE ?? SET ?? = ? WHERE ?? IN (?);", ['Mail', 'Read', 1, 'MailID', ids]);
 
     conn.query(stmt, (error, results) => {
 
@@ -151,9 +151,9 @@ router.delete('/', function (req, res) {
 // Setting up the mail update (unread) route.
 router.put('/', function (req, res) {
 
-    const ids = req.body['ids[]'];
-
-    stmt = mysql.format("UPDATE ?? SET ?? = ? WHERE ?? IN (?);", ['Mail', 'Read', 0, 'MailID', ids]);
+    const
+        ids = req.body['ids[]'],
+        stmt = mysql.format("UPDATE ?? SET ?? = ? WHERE ?? IN (?);", ['Mail', 'Read', 0, 'MailID', ids]);
 
     conn.query(stmt, (error, results) => {
 

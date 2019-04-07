@@ -30,6 +30,7 @@
 		"express": "^4.16.4",
 		"express-handlebars": "^3.0.2",
 		"express-session": "^1.15.6",
+		"method-override": "^3.0.0",
 		"moment": "^2.24.0",
 		"mysql": "^2.16.0",
 		"sha1": "^1.1.1"
