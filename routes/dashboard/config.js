@@ -1,6 +1,7 @@
 // Importing the dependancies.
 const
     express = require('express'),
+    sha1 = require('sha1'),
     mysql = require('mysql'),
     database = require('../../helpers/database'),
     getCopyrightDate = require('../../helpers/copyright'),
@@ -68,7 +69,7 @@ router.get('/', function (req, res) {
 // Setting up the config update route.
 router.post('/', function (req, res) {
 
-    stmt = mysql.format("UPDATE ?? \
+    const stmt = mysql.format("UPDATE ?? \
                         SET ?? = ?, \
                         ?? = ?, \
                         ?? = ?, \
@@ -76,15 +77,15 @@ router.post('/', function (req, res) {
                         ?? = ?, \
                         ?? = ?, \
                         ?? = ?;", [
-                            'Config',
-                            'PrimaryNumber', req.body['primary-phone'],
-                            'SecondaryNumber', req.body['secondary-phone'],
-                            'FixedNumber', req.body['fixed-phone'],
-                            'Email', req.body['email'],
-                            'Facebook', req.body['facebook-name'] + '|' + req.body['facebook-url'],
-                            'Instagram', req.body['instagram-name'] + '|' + req.body['instagram-url'],
-                            'Youtube', req.body['youtube-name'] + '|' + req.body['youtube-url']
-                        ]);
+            'Config',
+            'PrimaryNumber', req.body['primary-phone'],
+            'SecondaryNumber', req.body['secondary-phone'],
+            'FixedNumber', req.body['fixed-phone'],
+            'Email', req.body['email'],
+            'Facebook', req.body['facebook-name'] + '|' + req.body['facebook-url'],
+            'Instagram', req.body['instagram-name'] + '|' + req.body['instagram-url'],
+            'Youtube', req.body['youtube-name'] + '|' + req.body['youtube-url']
+        ]);
 
     conn.query(stmt, (error, results) => {
 
@@ -92,6 +93,37 @@ router.post('/', function (req, res) {
         if (error) throw error;
 
         // redirecting to the config page.
+        res.redirect('/dashboard/config');
+    });
+
+});
+
+
+// Setting up the password update route.
+router.put('/', function (req, res) {
+
+    const
+        newPassword = req.body['password'],
+        currPassword = req.body['password-old'];
+
+    conn.query('SELECT `Password` FROM `Config`;', (error, results) => {
+
+        // Checking if the there are any errors.
+        if (error) throw error;
+        
+        if (sha1(currPassword) === results[0].Password) {
+    
+            const 
+                hashedPassword = sha1(newPassword),
+                stmt = mysql.format("UPDATE ?? SET ?? = ?;", ['Config', 'Password', hashedPassword]);
+
+            conn.query(stmt, (error, results) => {
+
+                // Throwing the error.
+                if (error) throw error;
+            });
+        }
+
         res.redirect('/dashboard/config');
     });
 
