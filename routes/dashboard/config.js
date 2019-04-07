@@ -68,8 +68,33 @@ router.get('/', function (req, res) {
 // Setting up the config update route.
 router.post('/', function (req, res) {
 
-    console.log(req.body);
-    res.render('dashboard/config');
+    stmt = mysql.format("UPDATE ?? \
+                        SET ?? = ?, \
+                        ?? = ?, \
+                        ?? = ?, \
+                        ?? = ?, \
+                        ?? = ?, \
+                        ?? = ?, \
+                        ?? = ?;", [
+                            'Config',
+                            'PrimaryNumber', req.body['primary-phone'],
+                            'SecondaryNumber', req.body['secondary-phone'],
+                            'FixedNumber', req.body['fixed-phone'],
+                            'Email', req.body['email'],
+                            'Facebook', req.body['facebook-name'] + '|' + req.body['facebook-url'],
+                            'Instagram', req.body['instagram-name'] + '|' + req.body['instagram-url'],
+                            'Youtube', req.body['youtube-name'] + '|' + req.body['youtube-url']
+                        ]);
+
+    conn.query(stmt, (error, results) => {
+
+        // Checking if the there are any errors.
+        if (error) throw error;
+
+        // redirecting to the config page.
+        res.redirect('/dashboard/config');
+    });
+
 });
 
 
