@@ -11,10 +11,6 @@ const
         user: database.user,
         multipleStatements: true
     }),
-    routes = {
-        mail: require('./mail'),
-        config: require('./config')
-    },
     router = express.Router();
 
 
@@ -22,20 +18,11 @@ const
 conn.connect();
 
 
-// Routing dashboard related routes.
-router.use('/mail', routes.mail);
-router.use('/config', routes.config);
-
-
-// Setting up dashboard route.
+// Setting up the config route.
 router.get('/', function (req, res) {
 
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
-        SELECT COUNT(*) AS `ProductsNum` FROM `Products`;\
-        SELECT COUNT(*) AS `MailNum` FROM `Mail`;\
-        SELECT COUNT(*) AS `OrdersNum` FROM `Orders`;\
-        SELECT \'0,00 MAD\' AS `TotalRevenue`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
     ', (error, results) => {
 
@@ -64,18 +51,14 @@ router.get('/', function (req, res) {
                         Link: results[0][0].Youtube.split('|')[1]
                     },
                 },
-                ProductsNum: results[1][0].ProductsNum,
-                MailNum: results[2][0].MailNum,
-                OrdersNum: results[3][0].OrdersNum,
-                TotalRevenue: results[4][0].TotalRevenue,
-                NewMail: results[5][0].NewMail
+                NewMail: results[1][0].NewMail
             };
 
             // Getting the proper copyright date.
             data.CopyrightDate = getCopyrightDate();
 
-            // Rendering the dashboard page.
-            res.render('dashboard/dashboard', {
+            // Rendering the config page.
+            res.render('dashboard/config', {
                 Data: data
             });
         });
