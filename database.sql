@@ -190,11 +190,11 @@ INSERT INTO `Config` VALUES (
     'w4jkPd5ePA5kBaAA', 
     '0656975326', 
     '0680016480', 
-    '05********', 
+    '0500000000', 
     'supplementsmaroc@gmail.com', 
     'Suppléments Maroc|https://www.facebook.com/supplemaroc/',
     'supplementmaroc|https://www.instagram.com/supplementmaroc/',
-    '|'
+    'supmar|https://www.youtube.com/'
 );
 
 INSERT INTO `OrderStates` (`StateName`) VALUES ('Issued'), ('Delivered'), ('Cancelled'), ('Rejected');
