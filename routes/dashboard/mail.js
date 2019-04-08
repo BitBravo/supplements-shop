@@ -5,6 +5,7 @@ const
     moment = require('moment'),
     database = require('../../helpers/database'),
     getCopyrightDate = require('../../helpers/copyright'),
+    login = require('./../../helpers/login'),
     conn = mysql.createConnection({
         database: database.name,
         host: database.host,
@@ -24,7 +25,7 @@ moment.locale('ar-ma');
 
 
 // Setting up the mail retrieval route.
-router.get('/read/:id', function (req, res) {
+router.get('/read/:id', login, function (req, res) {
 
     const mailId = req.params.id;
 
@@ -47,7 +48,7 @@ router.get('/read/:id', function (req, res) {
 
 
 // Setting up the mail route.
-router.get('/:mode', function (req, res) {
+router.get('/:mode', login, function (req, res) {
 
     const mode = req.params.mode > 2 ? 2 : req.params.mode < 0 ? 0 : req.params.mode;
 
@@ -133,7 +134,7 @@ router.post('/', function (req, res) {
 
 
 // Setting up the mail update (read) route.
-router.delete('/', function (req, res) {
+router.delete('/', login, function (req, res) {
 
     const
         ids = req.body['ids[]'],
@@ -149,7 +150,7 @@ router.delete('/', function (req, res) {
 
 
 // Setting up the mail update (unread) route.
-router.put('/', function (req, res) {
+router.put('/', login, function (req, res) {
 
     const
         ids = req.body['ids[]'],

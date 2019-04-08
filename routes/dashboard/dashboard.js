@@ -4,6 +4,7 @@ const
     mysql = require('mysql'),
     database = require('../../helpers/database'),
     getCopyrightDate = require('../../helpers/copyright'),
+    login = require('./../../helpers/login'),
     conn = mysql.createConnection({
         database: database.name,
         host: database.host,
@@ -30,7 +31,7 @@ router.use('/config', routes.config);
 
 
 // Setting up dashboard route.
-router.get('/', function (req, res) {
+router.get('/', login, function (req, res) {
 
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
