@@ -4,6 +4,7 @@ const
     mysql = require('mysql'),
     database = require('../../helpers/database'),
     getCopyrightDate = require('../../helpers/copyright'),
+    login = require('./../../helpers/login'),
     conn = mysql.createConnection({
         database: database.name,
         host: database.host,
@@ -16,6 +17,10 @@ const
 
 // Connecting to the database.
 conn.connect();
+
+
+// Using the login middleware.
+router.use(login);
 
 
 // Setting up the brands route.

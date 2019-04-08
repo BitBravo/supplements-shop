@@ -80,10 +80,6 @@ app.use('/assets', express.static(path.join(__dirname + '/bower_components')));
 conn.connect();
 
 
-// The login-in middleware.
-app.use(login);
-
-
 // Routing.
 app.use(routers.index);
 app.use('/search', routers.search);
