@@ -1,10 +1,15 @@
 .dashboard-brands {
-    
-    #brands-creation-tab {
+    padding-bottom: 50px;
+
+    #brands-creation-tab, #brands-edition-tab {
 
         input[type=submit] {
             width: 200px;
         }
+    }
+
+    #brands-edition-tab {
+        overflow: auto;
     }
 
     .materialboxed {

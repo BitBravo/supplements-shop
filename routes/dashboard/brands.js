@@ -24,6 +24,7 @@ router.get('/', function (req, res) {
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
+        SELECT * FROM `Brands`;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -51,7 +52,8 @@ router.get('/', function (req, res) {
                         Link: results[0][0].Youtube.split('|')[1]
                     },
                 },
-                NewMail: results[1][0].NewMail
+                NewMail: results[1][0].NewMail,
+                Brands: results[2]
             };
 
             // Getting the proper copyright date.
@@ -69,7 +71,7 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
 
     const
-        stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Brands', 'BrandName', 'Logo', req.body['brand-name'], req.body['brand-image']]);
+        stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Brands', 'BrandName', 'Logo', req.body['brand-name'], req.body['brand-logo']]);
 
     conn.query(stmt, (error, results) => {
 
@@ -80,6 +82,24 @@ router.post('/', function (req, res) {
             res.redirect('/dashboard/brands');
         });
 });
+
+
+// Setting up the brand edition route.
+router.put('/', function (req, res) {
+
+    const
+        stmt = conn.format('UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;', ['Brands', 'BrandName', req.body['brand-name'], 'Logo', req.body['brand-logo'], 'BrandID', req.body['brand-id']]);
+
+    conn.query(stmt, (error, results) => {
+
+            // Checking if the there are any errors.
+            if (error) throw error;
+
+            // Rendering the brands page.
+            res.redirect('/dashboard/brands');
+        });
+});
+
 
 // Exporting the route.
 module.exports = router;
