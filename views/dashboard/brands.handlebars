@@ -11,7 +11,7 @@
                         <div class="col s12">
                             <h4 class="grey-text">
                                 <i class="fa fa-copyright"></i>
-                                Brands
+                                Brands [{{ Data.Brands.length }}]
                             </h4>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                                         <ul class="collapsible">
                                             {{#each Data.Brands }}
                                             <li>
-                                                <div class="collapsible-header">{{ this.BrandName }}</div>
+                                                <div class="collapsible-header"><i class="fa fa-edit grey-text"></i> {{ this.BrandName }}</div>
                                                 <div class="collapsible-body">
                                                     <form action="/dashboard/brands?_method=PUT" method="POST">
                                                         <div class="row">
