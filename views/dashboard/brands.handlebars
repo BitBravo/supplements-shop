@@ -21,7 +21,39 @@
                                 <li class="tab col s6"><a href="#brands-creation-tab">Add a new brand</a></li>
                                 <li class="tab col s6"><a href="#brands-edition-tab">Edit an existing brand</a></li>
                             </ul>
-                            <div id="brands-creation-tab" class="col s12">Creation</div>
+                            <div id="brands-creation-tab" class="col s12">
+                                <div class="row">
+                                    <div class="col s6">
+                                        <img id="brands-creation-preview" class="materialboxed" width="650"
+                                            src="/assets/img/backgrounds/placeholder.jpg" alt="Brand image" required>
+                                    </div>
+                                    <div class="col s6">
+                                        <form action="/dashboard/brands" method="POST">
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="brand-name" type="text" name="brand-name"
+                                                        class="validate" data-length="50" required>
+                                                    <label for="brand-name">Brand name</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="brand-image" type="url" name="brand-image"
+                                                        data-length="300" class="validate">
+                                                    <label for="brand-image">Brand image</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col s12 center-align">
+                                                    <input type="submit"
+                                                        class="btn btn-large waves-effect waves-light grey lighten-3"
+                                                        value="Add">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="brands-edition-tab" class="col s12">Edition</div>
                         </div>
                     </div>

@@ -1,9 +1,7 @@
 $('document').ready(() => {
 
     // Initializing the character counter.
-    $(document).ready(function () {
-        $('.message-content input').characterCounter();
-    });
+    $('.message-content input').characterCounter();
 
     // Opening up the contact modal.
     $('#contact-btn').on('click', () => {
