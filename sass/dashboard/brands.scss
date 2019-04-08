@@ -1,15 +1,11 @@
 .dashboard-brands {
-    padding-bottom: 50px;
 
     #brands-creation-tab, #brands-edition-tab {
+        overflow-y: auto;
 
         input[type=submit] {
             width: 200px;
         }
-    }
-
-    #brands-edition-tab {
-        overflow: auto;
     }
 
     .materialboxed {

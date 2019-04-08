@@ -18,16 +18,12 @@
                     <div class="row">
                         <div class="col s12">
                             <ul id="brands-tabs" class="tabs">
-                                <li class="tab col s6"><a href="#brands-creation-tab">Add a new brand</a></li>
                                 <li class="tab col s6"><a href="#brands-edition-tab">Edit an existing brand</a></li>
+                                <li class="tab col s6"><a href="#brands-creation-tab">Add a new brand</a></li>
                             </ul>
                             <div id="brands-creation-tab" class="col s12">
                                 <div class="row">
-                                    <div class="col s6">
-                                        <img id="brands-creation-preview" class="materialboxed" width="650"
-                                            src="/assets/img/backgrounds/placeholder.jpg" alt="Brand image" required>
-                                    </div>
-                                    <div class="col s6">
+                                    <div class="col s12">
                                         <form action="/dashboard/brands" method="POST">
                                             <div class="row">
                                                 <div class="input-field col s12">
@@ -41,6 +37,12 @@
                                                     <input id="brand-logo" type="url" name="brand-logo"
                                                         data-length="300" class="validate">
                                                     <label for="brand-logo">Brand logo</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col s12">
+                                                    <img id="brands-creation-preview" class="materialboxed"
+                                                        src="/assets/img/backgrounds/placeholder.jpg" alt="Brand image">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -60,14 +62,15 @@
                                         <ul class="collapsible">
                                             {{#each Data.Brands }}
                                             <li>
-                                                <div class="collapsible-header"><i class="fa fa-edit grey-text"></i> {{ this.BrandName }}</div>
+                                                <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
+                                                    {{ this.BrandName }}</div>
                                                 <div class="collapsible-body">
                                                     <form action="/dashboard/brands?_method=PUT" method="POST">
                                                         <div class="row">
                                                             <div class="input-field col s12">
                                                                 <input id="brand-name-{{ this.BrandID }}" type="text"
-                                                                    name="brand-name" class="validate" data-length="50" value="{{ this.BrandName }}"
-                                                                    required>
+                                                                    name="brand-name" class="validate" data-length="50"
+                                                                    value="{{ this.BrandName }}" required>
                                                                 <label for="brand-name-{{ this.BrandID }}">Brand
                                                                     name</label>
                                                             </div>
@@ -75,8 +78,8 @@
                                                         <div class="row">
                                                             <div class="input-field col s12">
                                                                 <input id="brand-logo-{{ this.BrandID }}" type="text"
-                                                                    name="brand-logo" class="validate" data-length="300" value="{{ this.Logo }}"
-                                                                    required>
+                                                                    name="brand-logo" class="validate" data-length="300"
+                                                                    value="{{ this.Logo }}" required>
                                                                 <label for="brand-logo-{{ this.BrandID }}">Brand
                                                                     logo</label>
                                                             </div>
