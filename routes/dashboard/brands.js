@@ -18,7 +18,7 @@ const
 conn.connect();
 
 
-// Setting up the config route.
+// Setting up the brands route.
 router.get('/', function (req, res) {
 
     conn.query('\
@@ -57,13 +57,29 @@ router.get('/', function (req, res) {
             // Getting the proper copyright date.
             data.CopyrightDate = getCopyrightDate();
 
-            // Rendering the config page.
+            // Rendering the brands page.
             res.render('dashboard/brands', {
                 Data: data
             });
         });
 });
 
+
+// Setting the brand creation route.
+router.post('/', function (req, res) {
+
+    const
+        stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Brands', 'BrandName', 'Logo', req.body['brand-name'], req.body['brand-image']]);
+
+    conn.query(stmt, (error, results) => {
+
+            // Checking if the there are any errors.
+            if (error) throw error;
+
+            // Rendering the brands page.
+            res.redirect('/dashboard/brands');
+        });
+});
 
 // Exporting the route.
 module.exports = router;
