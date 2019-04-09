@@ -112,7 +112,14 @@ router.put('/', function (req, res) {
 router.delete('/', function (req, res) {
 
     const
-        stmt = conn.format('DELETE FROM ?? WHERE ?? = ?;', ['Categories', 'CategoryID', req.body.categoryId]);
+        stmt = conn.format('\
+        DELETE FROM ?? WHERE ?? = ?; \
+        DELETE FROM ?? WHERE ?? = ?; \
+        ', 
+        [
+            'Categories', 'CategoryParent', req.body.categoryId,
+            'Categories', 'CategoryID', req.body.categoryId
+        ]);
 
     conn.query(stmt, (error, results) => {
 
