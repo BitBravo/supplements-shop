@@ -12,12 +12,6 @@ const
         user: database.user,
         multipleStatements: true
     }),
-    routes = {
-        mail: require('./mail'),
-        brands: require('./brands'),
-        flavors: require('./flavors'),
-        config: require('./config')
-    },
     router = express.Router();
 
 
@@ -25,23 +19,17 @@ const
 conn.connect();
 
 
-// Routing dashboard related routes.
-router.use('/mail', routes.mail);
-router.use('/brands', routes.brands);
-router.use('/flavors', routes.flavors);
-router.use('/config', routes.config);
+// Using the login middleware.
+router.use(login);
 
 
-// Setting up dashboard route.
-router.get('/', login, function (req, res) {
+// Setting up the flavors route.
+router.get('/', function (req, res) {
 
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
-        SELECT COUNT(*) AS `ProductsNum` FROM `Products`;\
-        SELECT COUNT(*) AS `MailNum` FROM `Mail`;\
-        SELECT COUNT(*) AS `OrdersNum` FROM `Orders`;\
-        SELECT \'0,00 MAD\' AS `TotalRevenue`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
+        SELECT * FROM `Flavors`;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -69,21 +57,71 @@ router.get('/', login, function (req, res) {
                         Link: results[0][0].Youtube.split('|')[1]
                     },
                 },
-                ProductsNum: results[1][0].ProductsNum,
-                MailNum: results[2][0].MailNum,
-                OrdersNum: results[3][0].OrdersNum,
-                TotalRevenue: results[4][0].TotalRevenue,
-                NewMail: results[5][0].NewMail
+                NewMail: results[1][0].NewMail,
+                Flavors: results[2]
             };
 
             // Getting the proper copyright date.
             data.CopyrightDate = getCopyrightDate();
 
-            // Rendering the dashboard page.
-            res.render('dashboard/dashboard', {
+            // Rendering the flavors page.
+            res.render('dashboard/flavors', {
                 Data: data
             });
         });
+});
+
+
+// Setting the flavor creation route.
+router.post('/', function (req, res) {
+
+    const
+        stmt = conn.format('INSERT INTO ?? (??) VALUES (?);', ['Flavors', 'FlavorName', req.body['flavor-name']]);
+
+    conn.query(stmt, (error, results) => {
+
+        // Checking if the there are any errors.
+        if (error) throw error;
+
+        // Rendering the flavors page.
+        res.redirect('/dashboard/flavors');
+    });
+});
+
+
+// Setting up the flavor edition route.
+router.put('/', function (req, res) {
+
+    const
+        stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', ['Flavors', 'FlavorName', req.body['flavor-name'], 'FlavorID', req.body['flavor-id']]);
+
+    conn.query(stmt, (error, results) => {
+
+        // Checking if the there are any errors.
+        if (error) throw error;
+
+        // Rendering the flavors page.
+        res.redirect('/dashboard/flavors');
+    });
+});
+
+
+// Setting up the flavor deletion route.
+router.delete('/', function (req, res) {
+
+    const
+        stmt = conn.format('DELETE FROM ?? WHERE ?? = ?;', ['Flavors', 'FlavorID', req.body.flavorId]);
+
+    conn.query(stmt, (error, results) => {
+
+        let success = true;
+
+        // Checking if the there are any errors.
+        if (error) success = false;
+
+        // Rendering the flavors page.
+        res.json({ success: success });
+    });
 });
 
 

@@ -1,28 +1,19 @@
 $('document').ready(() => {
 
     // Initializing tabs.
-    $('.dashboard-brands .tabs').tabs({
+    $('.dashboard-flavors .tabs').tabs({
         duration: 50,
         swipeable: true
     });
 
     // Initializing the character counter.
-    $('#brands-creation-tab input, #brands-edition-tab input').characterCounter();
-
-    // Initializing the brand image box.
-    $('.dashboard-brands .materialboxed').materialbox();
+    $('#flavors-creation-tab input, #flavors-edition-tab input').characterCounter();
 
     // Initializing the collapsibles.
-    $('.dashboard-brands .collapsible').collapsible();
-
-    // Loading the image preview.
-    $('#brand-logo').on('change', function () {
-
-        $('#brands-creation-preview').attr('src', $(this).val());
-    });
+    $('.dashboard-flavors .collapsible').collapsible();
 
     // Deleting a brand.
-    $('.dashboard-brands .btn-brand-delete').on('click', function () {
+    $('.dashboard-flavors .btn-brand-delete').on('click', function () {
 
         // Getting the brand ID.
         const brandId = $(this).attr('data-brand-id');
