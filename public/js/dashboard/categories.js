@@ -20,8 +20,12 @@ $('document').ready(() => {
 
         if (e.target.checked === true) {
             $('#parent-categories-select').slideDown();
+            $('#category-parent-par').attr('name', '');
+            $('#category-parent-sub').attr('name', 'category-parent');
         } else {
             $('#parent-categories-select').slideUp();
+            $('#category-parent-par').attr('name', 'category-parent');
+            $('#category-parent-sub').attr('name', '');
         }
     });
 
