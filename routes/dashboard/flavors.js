@@ -119,7 +119,6 @@ router.delete('/', function (req, res) {
         // Checking if the there are any errors.
         if (error) success = false;
 
-        // Rendering the flavors page.
         res.json({ success: success });
     });
 });

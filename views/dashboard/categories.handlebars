@@ -1,4 +1,4 @@
-<section class="dashboard dashboard-brands">
+<section class="dashboard dashboard-categories">
     <div class="row">
         <aside class="col s2">
             {{> sidebar NewMail=Data.NewMail }}
@@ -10,39 +10,27 @@
                     <div class="row valign-wrapper">
                         <div class="col s12">
                             <h4 class="grey-text">
-                                <i class="fa fa-copyright"></i>
-                                Brands [{{ Data.Brands.length }}]
+                                <i class="fa fa-layer-group"></i>
+                                Categories [{{ Data.Categories.length }}]
                             </h4>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <ul id="brands-tabs" class="tabs">
-                                <li class="tab col s6"><a href="#brands-edition-tab">Edit an existing brand</a></li>
-                                <li class="tab col s6"><a href="#brands-creation-tab">Add a new brand</a></li>
+                            <ul id="categories-tabs" class="tabs">
+                                <li class="tab col s6"><a href="#categories-edition-tab">Edit an existing category</a>
+                                </li>
+                                <li class="tab col s6"><a href="#categories-creation-tab">Add a new category</a></li>
                             </ul>
-                            <div id="brands-creation-tab" class="col s12">
+                            <div id="categories-creation-tab" class="col s12">
                                 <div class="row">
                                     <div class="col s12">
-                                        <form action="/dashboard/brands" method="POST">
+                                        <form action="/dashboard/categories" method="POST">
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input id="brand-name" type="text" name="brand-name"
+                                                    <input id="category-name" type="text" name="category-name"
                                                         class="validate" data-length="50" required>
-                                                    <label for="brand-name">Brand name</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <input id="brand-logo" type="url" name="brand-logo"
-                                                        data-length="300" class="validate">
-                                                    <label for="brand-logo">Brand logo</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col s12">
-                                                    <img id="brands-creation-preview" class="materialboxed"
-                                                        src="/assets/img/backgrounds/placeholder.jpg" alt="Brand image">
+                                                    <label for="category-name">Category name</label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -56,44 +44,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="brands-edition-tab" class="col s12">
+                            <div id="categories-edition-tab" class="col s12">
                                 <div class="row">
                                     <div class="col s12">
-                                        {{#if Data.Brands}}
+                                        {{#if Data.Categories}}
                                         <ul class="collapsible">
-                                            {{#each Data.Brands }}
+                                            {{#each Data.Categories }}
                                             <li>
                                                 <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
-                                                    {{ this.BrandName }}</div>
+                                                    {{ this.CategoryName }}</div>
                                                 <div class="collapsible-body">
-                                                    <form action="/dashboard/brands?_method=PUT" method="POST">
+                                                    <form action="/dashboard/categories?_method=PUT" method="POST">
                                                         <div class="row">
                                                             <div class="input-field col s12">
-                                                                <input id="brand-name-{{ this.BrandID }}" type="text"
-                                                                    name="brand-name" class="validate" data-length="50"
-                                                                    value="{{ this.BrandName }}" required>
-                                                                <label for="brand-name-{{ this.BrandID }}">Brand
+                                                                <input id="category-name-{{ this.CategoryID }}"
+                                                                    type="text" name="category-name" class="validate"
+                                                                    data-length="50" value="{{ this.FlavorName }}"
+                                                                    required>
+                                                                <label
+                                                                    for="category-name-{{ this.CategoryID }}">Category
                                                                     name</label>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="input-field col s12">
-                                                                <input id="brand-logo-{{ this.BrandID }}" type="text"
-                                                                    name="brand-logo" class="validate" data-length="300"
-                                                                    value="{{ this.Logo }}" required>
-                                                                <label for="brand-logo-{{ this.BrandID }}">Brand
-                                                                    logo</label>
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" name="brand-id" value="{{ this.BrandID }}">
+                                                        <input type="hidden" name="category-id"
+                                                            value="{{ this.CategoryID }}">
                                                         <div class="row">
                                                             <div class="col s6 center-align">
                                                                 <input type="submit"
                                                                     class="btn btn-large waves-effect waves-light grey lighten-3"
                                                                     value="Edit">
                                                             </div>
-                                                            <div class="col s6 center-align btn-brand-delete"
-                                                                data-brand-id="{{ this.BrandID }}">
+                                                            <div class="col s6 center-align btn-category-delete"
+                                                                data-category-id="{{ this.CategoryID }}">
                                                                 <input type="button"
                                                                     class="btn btn-large waves-effect waves-light grey lighten-3"
                                                                     value="Delete">
@@ -106,7 +88,7 @@
                                         </ul>
                                         {{else}}
                                         <ul class="collection">
-                                            <li class="collection-item center-align">There are no existing brands</li>
+                                            <li class="collection-item center-align">There are no existing categories</li>
                                         </ul>
                                         {{/if}}
                                     </div>
