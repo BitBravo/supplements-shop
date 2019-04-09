@@ -76,7 +76,9 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
 
     const
-        stmt = conn.format('INSERT INTO ?? (??) VALUES (?);', ['Flavors', 'FlavorName', req.body['flavor-name']]);
+        categoryName = req.body['category-name'],
+        categoryParent = req.body['category-parent'] == 0 ? null : req.body['category-parent'],
+        stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Categories', 'CategoryName', 'CategoryParent', categoryName, categoryParent]);
 
     conn.query(stmt, (error, results) => {
 
@@ -110,7 +112,7 @@ router.put('/', function (req, res) {
 router.delete('/', function (req, res) {
 
     const
-        stmt = conn.format('DELETE FROM ?? WHERE ?? = ?;', ['Flavors', 'FlavorID', req.body.flavorId]);
+        stmt = conn.format('DELETE FROM ?? WHERE ?? = ?;', ['Categories', 'CategoryID', req.body.categoryId]);
 
     conn.query(stmt, (error, results) => {
 

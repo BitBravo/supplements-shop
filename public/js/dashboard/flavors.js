@@ -12,10 +12,10 @@ $('document').ready(() => {
     // Initializing the collapsibles.
     $('.dashboard-flavors .collapsible').collapsible();
 
-    // Deleting a brand.
+    // Deleting a flavor.
     $('.dashboard-flavors .btn-flavor-delete').on('click', function () {
 
-        // Getting the brand ID.
+        // Getting the flavor ID.
         const flavorId = $(this).attr('data-flavor-id');
 
         $.ajax({
