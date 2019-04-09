@@ -23,5 +23,21 @@ module.exports = {
         if (mode == option) {
             return "selected";
         }
+    },
+
+    /**
+     * Assings an appopriate tag for a category given into consideration whether it's a parent category or a sub category.
+     * 
+     * @param {String} categoryParent The category's parent name.
+     */
+    categoryTag: function (categoryParent) {
+
+        if (categoryParent == null) {
+
+            return "Parent category";
+        } else {
+
+            return `Sub category of ${categoryParent}`;
+        }
     }
 }

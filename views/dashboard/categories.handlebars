@@ -85,14 +85,14 @@
                                             {{#each Data.Categories }}
                                             <li>
                                                 <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
-                                                    {{ this.CategoryName }}</div>
+                                                    {{ this.CategoryName }} &nbsp; <span class="grey-text"> [{{ categoryTag this.CategoryParentName }}] </span></div>
                                                 <div class="collapsible-body">
                                                     <form action="/dashboard/categories?_method=PUT" method="POST">
                                                         <div class="row">
                                                             <div class="input-field col s12">
                                                                 <input id="category-name-{{ this.CategoryID }}"
                                                                     type="text" name="category-name" class="validate"
-                                                                    data-length="50" value="{{ this.FlavorName }}"
+                                                                    data-length="50" value="{{ this.CategoryName }}"
                                                                     required>
                                                                 <label
                                                                     for="category-name-{{ this.CategoryID }}">Category

@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT * FROM `Categories`;\
+        SELECT B.*, (SELECT A.`CategoryName` FROM `Categories` A WHERE A.`CategoryID` = B.`CategoryParent`) AS `CategoryParentName` FROM `Categories` B;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -95,7 +95,7 @@ router.post('/', function (req, res) {
 router.put('/', function (req, res) {
 
     const
-        stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', ['Flavors', 'FlavorName', req.body['flavor-name'], 'FlavorID', req.body['flavor-id']]);
+        stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', ['Categories', 'CategoryName', req.body['category-name'], 'CategoryID', req.body['category-id']]);
 
     conn.query(stmt, (error, results) => {
 
