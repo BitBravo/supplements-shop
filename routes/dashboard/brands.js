@@ -80,12 +80,12 @@ router.post('/', function (req, res) {
 
     conn.query(stmt, (error, results) => {
 
-            // Checking if the there are any errors.
-            if (error) throw error;
+        // Checking if the there are any errors.
+        if (error) throw error;
 
-            // Rendering the brands page.
-            res.redirect('/dashboard/brands');
-        });
+        // Rendering the brands page.
+        res.redirect('/dashboard/brands');
+    });
 });
 
 
@@ -97,12 +97,31 @@ router.put('/', function (req, res) {
 
     conn.query(stmt, (error, results) => {
 
-            // Checking if the there are any errors.
-            if (error) throw error;
+        // Checking if the there are any errors.
+        if (error) throw error;
 
-            // Rendering the brands page.
-            res.redirect('/dashboard/brands');
-        });
+        // Rendering the brands page.
+        res.redirect('/dashboard/brands');
+    });
+});
+
+
+// Setting up the brand deletion route.
+router.delete('/', function (req, res) {
+
+    const
+        stmt = conn.format('DELETE FROM ?? WHERE ?? = ?;', ['Brands', 'BrandID', req.body.brandId]);
+
+    conn.query(stmt, (error, results) => {
+
+        let success = true;
+
+        // Checking if the there are any errors.
+        if (error) success = false;
+
+        // Rendering the brands page.
+        res.json({ success: success });
+    });
 });
 
 
