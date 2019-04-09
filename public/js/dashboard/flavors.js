@@ -16,12 +16,12 @@ $('document').ready(() => {
     $('.dashboard-flavors .btn-brand-delete').on('click', function () {
 
         // Getting the brand ID.
-        const brandId = $(this).attr('data-brand-id');
+        const flavorId = $(this).attr('data-flavor-id');
 
         $.ajax({
-            url: '/dashboard/brands',
+            url: '/dashboard/flavors',
             type: 'DELETE',
-            data: { brandId: brandId },
+            data: { flavorId: flavorId },
             success: (data) => {
 
                 if (data.success === true) {
