@@ -15,6 +15,7 @@ const
     routes = {
         mail: require('./mail'),
         brands: require('./brands'),
+        categories: require('./categories'),
         flavors: require('./flavors'),
         config: require('./config')
     },
@@ -28,6 +29,7 @@ conn.connect();
 // Routing dashboard related routes.
 router.use('/mail', routes.mail);
 router.use('/brands', routes.brands);
+router.use('/categories', routes.categories);
 router.use('/flavors', routes.flavors);
 router.use('/config', routes.config);
 

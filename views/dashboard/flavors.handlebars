@@ -46,6 +46,7 @@
                             <div id="flavors-edition-tab" class="col s12">
                                 <div class="row">
                                     <div class="col s12">
+                                        {{#if Data.Flavors}}
                                         <ul class="collapsible">
                                             {{#each Data.Flavors }}
                                             <li>
@@ -62,14 +63,15 @@
                                                                     name</label>
                                                             </div>
                                                         </div>
-                                                        <input type="hidden" name="flavor-id" value="{{ this.FlavorID }}">
+                                                        <input type="hidden" name="flavor-id"
+                                                            value="{{ this.FlavorID }}">
                                                         <div class="row">
                                                             <div class="col s6 center-align">
                                                                 <input type="submit"
                                                                     class="btn btn-large waves-effect waves-light grey lighten-3"
                                                                     value="Edit">
                                                             </div>
-                                                            <div class="col s6 center-align btn-brand-delete"
+                                                            <div class="col s6 center-align btn-flavor-delete"
                                                                 data-flavor-id="{{ this.FlavorID }}">
                                                                 <input type="button"
                                                                     class="btn btn-large waves-effect waves-light grey lighten-3"
@@ -81,6 +83,12 @@
                                             </li>
                                             {{/each}}
                                         </ul>
+                                        {{else}}
+                                        <ul class="collection">
+                                            <li class="collection-item center-align">There are no existing flavors
+                                            </li>
+                                        </ul>
+                                        {{/if}}
                                     </div>
                                 </div>
                             </div>

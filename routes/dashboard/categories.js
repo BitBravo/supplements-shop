@@ -23,13 +23,13 @@ conn.connect();
 router.use(login);
 
 
-// Setting up the brands route.
+// Setting up the categories route.
 router.get('/', function (req, res) {
 
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT * FROM `Brands`;\
+        SELECT * FROM `Categories`;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -58,59 +58,59 @@ router.get('/', function (req, res) {
                     },
                 },
                 NewMail: results[1][0].NewMail,
-                Brands: results[2]
+                Categories: results[2]
             };
 
             // Getting the proper copyright date.
             data.CopyrightDate = getCopyrightDate();
 
-            // Rendering the brands page.
-            res.render('dashboard/brands', {
+            // Rendering the categories page.
+            res.render('dashboard/categories', {
                 Data: data
             });
         });
 });
 
 
-// Setting the brand creation route.
+// Setting the category creation route.
 router.post('/', function (req, res) {
 
     const
-        stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Brands', 'BrandName', 'Logo', req.body['brand-name'], req.body['brand-logo']]);
+        stmt = conn.format('INSERT INTO ?? (??) VALUES (?);', ['Flavors', 'FlavorName', req.body['flavor-name']]);
 
     conn.query(stmt, (error, results) => {
 
         // Checking if the there are any errors.
         if (error) throw error;
 
-        // Rendering the brands page.
-        res.redirect('/dashboard/brands');
+        // Rendering the categories page.
+        res.redirect('/dashboard/categories');
     });
 });
 
 
-// Setting up the brand edition route.
+// Setting up the category edition route.
 router.put('/', function (req, res) {
 
     const
-        stmt = conn.format('UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;', ['Brands', 'BrandName', req.body['brand-name'], 'Logo', req.body['brand-logo'], 'BrandID', req.body['brand-id']]);
+        stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', ['Flavors', 'FlavorName', req.body['flavor-name'], 'FlavorID', req.body['flavor-id']]);
 
     conn.query(stmt, (error, results) => {
 
         // Checking if the there are any errors.
         if (error) throw error;
 
-        // Rendering the brands page.
-        res.redirect('/dashboard/brands');
+        // Rendering the categories page.
+        res.redirect('/dashboard/categories');
     });
 });
 
 
-// Setting up the brand deletion route.
+// Setting up the category deletion route.
 router.delete('/', function (req, res) {
 
     const
-        stmt = conn.format('DELETE FROM ?? WHERE ?? = ?;', ['Brands', 'BrandID', req.body.brandId]);
+        stmt = conn.format('DELETE FROM ?? WHERE ?? = ?;', ['Flavors', 'FlavorID', req.body.flavorId]);
 
     conn.query(stmt, (error, results) => {
 
