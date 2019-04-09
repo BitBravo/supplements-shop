@@ -36,14 +36,17 @@
                                             {{#if Data.Categories }}
                                             <div class="row" id="parent-categories-select">
                                                 <div class="input-field col s12">
-                                                    <select id="category-parent-sub" >
+                                                    <select id="category-parent-sub">
                                                         {{#each Data.Categories }}
+                                                        {{#if this.CategoryParent }}{{else}}
                                                         <option value="{{ this.CategoryID }}">{{ this.CategoryName }}
                                                         </option>
+                                                        {{/if}}
                                                         {{/each}}
                                                     </select>
                                                     <label>Parent category</label>
-                                                    <input type="hidden" id="category-parent-par" name="category-parent" value="0">
+                                                    <input type="hidden" id="category-parent-par" name="category-parent"
+                                                        value="0">
                                                 </div>
                                             </div>
                                             {{else}}
