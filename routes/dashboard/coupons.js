@@ -90,10 +90,14 @@ router.post('/', function (req, res) {
         const
             _stmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?); ', ['CouponsHistory', 'CouponID', 'CreatedDate', 'Discount', results.insertId, couponDiscount]);
 
-        console.log(_stmt);
+        conn.query(_stmt, (_error, _results) => {
 
-        // Rendering the coupons page.
-        res.redirect('/dashboard/coupons');
+            // Checking if the there are any errors.
+            if (_error) throw _error;
+    
+            // Rendering the coupons page.
+            res.redirect('/dashboard/coupons');
+        });
     });
 });
 
