@@ -106,15 +106,16 @@ router.put('/', function (req, res) {
     const
         couponID = req.body['coupon-id'],
         couponState = req.body['coupon-state'] ? 1 : 0,
-        couponDiscount = req.body['coupon-discount']
-    stmt = conn.format('\
+        couponDiscount = req.body['coupon-discount'],
+        couponOldDiscount = req.body['coupon-old-discount'],
+        stmt = conn.format('\
             UPDATE ?? SET ?? = ? WHERE ?? = ?; \
-            INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?); \
+            ' + (couponDiscount != couponOldDiscount ? 'INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?);' : '') + ' \
             ',
-        [
-            'Coupons', 'Activated', couponState, 'CouponID', couponID,
-            'CouponsHistory', 'CouponID', 'CreatedDate', 'Discount', couponID, couponDiscount
-        ]);
+            [
+                'Coupons', 'Activated', couponState, 'CouponID', couponID,
+                'CouponsHistory', 'CouponID', 'CreatedDate', 'Discount', couponID, couponDiscount
+            ]);
 
     conn.query(stmt, (error, results) => {
 
