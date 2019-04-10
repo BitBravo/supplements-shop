@@ -1,4 +1,4 @@
-<section class="dashboard dashboard-flavors">
+<section class="dashboard dashboard-coupons">
     <div class="row">
         <aside class="col s2">
             {{> sidebar NewMail=Data.NewMail }}
@@ -10,26 +10,26 @@
                     <div class="row valign-wrapper">
                         <div class="col s12">
                             <h4 class="grey-text">
-                                <i class="fa fa-grin-tongue"></i>
-                                Flavors [{{ Data.Flavors.length }}]
+                                <i class="fa fa-tag"></i>
+                                Coupons [{{ Data.Coupons.length }}]
                             </h4>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <ul id="flavors-tabs" class="tabs">
-                                <li class="tab col s6"><a href="#flavors-edition-tab">Edit an existing flavor</a></li>
-                                <li class="tab col s6"><a href="#flavors-creation-tab">Add a new flavor</a></li>
+                            <ul id="coupons-tabs" class="tabs">
+                                <li class="tab col s6"><a href="#coupons-edition-tab">Edit an existing coupon</a></li>
+                                <li class="tab col s6"><a href="#coupons-creation-tab">Add a new coupon</a></li>
                             </ul>
-                            <div id="flavors-creation-tab" class="col s12">
+                            <div id="coupons-creation-tab" class="col s12">
                                 <div class="row">
                                     <div class="col s12">
-                                        <form action="/dashboard/flavors" method="POST">
+                                        <form action="/dashboard/coupons" method="POST">
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input id="flavor-name" type="text" name="flavor-name"
-                                                        class="validate" data-length="30" required>
-                                                    <label for="flavor-name">Flavor name</label>
+                                                    <input id="coupon-name" type="text" name="coupon-name"
+                                                        class="validate" data-length="50" required>
+                                                    <label for="coupon-name">Coupon code</label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -43,36 +43,34 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="flavors-edition-tab" class="col s12">
+                            <div id="coupons-edition-tab" class="col s12">
                                 <div class="row">
                                     <div class="col s12">
-                                        {{#if Data.Flavors}}
+                                        {{#if Data.Coupons}}
                                         <ul class="collapsible">
-                                            {{#each Data.Flavors }}
+                                            {{#each Data.Coupons }}
                                             <li>
                                                 <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
-                                                    {{ this.FlavorName }}</div>
+                                                    {{ this.CouponCode }}</div>
                                                 <div class="collapsible-body">
-                                                    <form action="/dashboard/flavors?_method=PUT" method="POST">
+                                                    <form action="/dashboard/coupons?_method=PUT" method="POST">
                                                         <div class="row">
                                                             <div class="input-field col s12">
-                                                                <input id="flavor-name-{{ this.FlavorID }}" type="text"
-                                                                    name="flavor-name" class="validate" data-length="30"
-                                                                    value="{{ this.FlavorName }}" required>
-                                                                <label for="flavor-name-{{ this.FlavorID }}">Flavor
-                                                                    name</label>
+                                                                <input id="coupon-name-{{ this.CouponID }}" type="text"
+                                                                    name="coupon-name" class="validate" data-length="50"
+                                                                    value="{{ this.CouponCode }}" required>
+                                                                <label for="coupon-name-{{ this.CouponID }}">Coupon
+                                                                    code</label>
                                                             </div>
                                                         </div>
-                                                        <input type="hidden" name="flavor-id"
-                                                            value="{{ this.FlavorID }}">
                                                         <div class="row">
                                                             <div class="col s6 center-align">
                                                                 <input type="submit"
                                                                     class="btn btn-large waves-effect waves-light grey lighten-3"
                                                                     value="Edit">
                                                             </div>
-                                                            <div class="col s6 center-align btn-flavor-delete"
-                                                                data-flavor-id="{{ this.FlavorID }}">
+                                                            <div class="col s6 center-align btn-coupon-delete"
+                                                                data-flavor-id="{{ this.CouponID }}">
                                                                 <input type="button"
                                                                     class="btn btn-large waves-effect waves-light grey lighten-3"
                                                                     value="Delete">
@@ -85,7 +83,7 @@
                                         </ul>
                                         {{else}}
                                         <ul class="collection">
-                                            <li class="collection-item center-align">There are no existing flavors
+                                            <li class="collection-item center-align">There are no existing coupons
                                             </li>
                                         </ul>
                                         {{/if}}
