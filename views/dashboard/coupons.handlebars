@@ -88,7 +88,16 @@
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col s6 center-align">
+                                                            <div class="input-field col s12">
+                                                                <input id="coupon-discount" type="number"
+                                                                    name="coupon-discount" class="validate" max="100"
+                                                                    min="1" data-length="3" value="{{ this.Discount }}" required>
+                                                                <label for="coupon-discount-{{ this.CouponID }}">Coupon
+                                                                    discount</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col s12 center-align">
                                                                 <input type="submit"
                                                                     class="btn btn-large waves-effect waves-light grey lighten-3"
                                                                     value="Edit">
