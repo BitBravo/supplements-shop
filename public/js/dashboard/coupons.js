@@ -7,7 +7,7 @@ $('document').ready(() => {
     });
 
     // Initializing the character counter.
-    $('#coupons-creation-tab input, #coupons-edition-tab input').characterCounter();
+    $('#coupons-creation-tab input[type=text], #coupons-creation-tab input[type=number], #coupons-edition-tab input[type=text], #coupons-edition-tab input[type=number]').characterCounter();
 
     // Initializing the collapsibles.
     $('.dashboard-coupons .collapsible').collapsible();
