@@ -27,9 +27,33 @@
                                         <form action="/dashboard/coupons" method="POST">
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input id="coupon-name" type="text" name="coupon-name"
+                                                    <input id="coupon-code" type="text" name="coupon-code"
                                                         class="validate" data-length="50" required>
-                                                    <label for="coupon-name">Coupon code</label>
+                                                    <label for="coupon-code">Coupon code</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="coupon-discount" type="number" name="coupon-discount"
+                                                        class="validate" max="100" min="1" data-length="3" required>
+                                                    <label for="coupon-discount">Discount</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <div class="switch">
+                                                        <p class="grey-text">Coupon state
+                                                            <label class="right">
+                                                                Idle
+                                                                <input type="checkbox" checked
+                                                                    id="coupon-state-toggler">
+                                                                <span class="lever"></span>
+                                                                Active
+                                                            </label>
+                                                            <input type="hidden" value="1" name="coupon-state"
+                                                                id="coupon-state-input">
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -68,12 +92,6 @@
                                                                 <input type="submit"
                                                                     class="btn btn-large waves-effect waves-light grey lighten-3"
                                                                     value="Edit">
-                                                            </div>
-                                                            <div class="col s6 center-align btn-coupon-delete"
-                                                                data-flavor-id="{{ this.CouponID }}">
-                                                                <input type="button"
-                                                                    class="btn btn-large waves-effect waves-light grey lighten-3"
-                                                                    value="Delete">
                                                             </div>
                                                         </div>
                                                     </form>

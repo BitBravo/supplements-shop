@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `Categories` (
 CREATE TABLE IF NOT EXISTS `Coupons` (
     `CouponID`          SMALLINT NOT NULL AUTO_INCREMENT,
     `CouponCode`        VARCHAR(50) NOT NULL,
-    `Acivated`          BIT NOT NULL DEFAULT 1,
+    `Activated`         BIT NOT NULL DEFAULT 1,
 
     CONSTRAINT pk_coupons_id PRIMARY KEY(`CouponID`)
 );
