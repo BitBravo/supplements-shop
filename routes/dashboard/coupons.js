@@ -23,13 +23,13 @@ conn.connect();
 router.use(login);
 
 
-// Setting up the flavors route.
+// Setting up the coupons route.
 router.get('/', function (req, res) {
 
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT * FROM `Flavors`;\
+        SELECT * FROM `Coupons`;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -58,21 +58,21 @@ router.get('/', function (req, res) {
                     },
                 },
                 NewMail: results[1][0].NewMail,
-                Flavors: results[2]
+                Coupons: results[2]
             };
 
             // Getting the proper copyright date.
             data.CopyrightDate = getCopyrightDate();
 
-            // Rendering the flavors page.
-            res.render('dashboard/flavors', {
+            // Rendering the coupons page.
+            res.render('dashboard/coupons', {
                 Data: data
             });
         });
 });
 
 
-// Setting the flavor creation route.
+// Setting the coupon creation route.
 router.post('/', function (req, res) {
 
     const
@@ -83,13 +83,13 @@ router.post('/', function (req, res) {
         // Checking if the there are any errors.
         if (error) throw error;
 
-        // Rendering the flavors page.
-        res.redirect('/dashboard/flavors');
+        // Rendering the coupons page.
+        res.redirect('/dashboard/coupons');
     });
 });
 
 
-// Setting up the flavor edition route.
+// Setting up the coupon edition route.
 router.put('/', function (req, res) {
 
     const
@@ -100,13 +100,13 @@ router.put('/', function (req, res) {
         // Checking if the there are any errors.
         if (error) throw error;
 
-        // Rendering the flavors page.
-        res.redirect('/dashboard/flavors');
+        // Rendering the coupons page.
+        res.redirect('/dashboard/coupons');
     });
 });
 
 
-// Setting up the flavor deletion route.
+// Setting up the coupon deletion route.
 router.delete('/', function (req, res) {
 
     const
