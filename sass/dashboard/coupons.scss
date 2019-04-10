@@ -3,7 +3,7 @@
     #coupons-creation-tab, #coupons-edition-tab {
         overflow-y: auto;
 
-        input[type=submit] {
+        input[type=submit], input[type=button] {
             width: 200px;
         }
     }
