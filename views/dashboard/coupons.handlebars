@@ -80,22 +80,31 @@
                                                     <form action="/dashboard/coupons?_method=PUT" method="POST">
                                                         <div class="row">
                                                             <div class="input-field col s12">
-                                                                <input id="coupon-name-{{ this.CouponID }}" type="text"
-                                                                    name="coupon-name" class="validate" data-length="50"
-                                                                    value="{{ this.CouponCode }}" required>
-                                                                <label for="coupon-name-{{ this.CouponID }}">Coupon
-                                                                    code</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="input-field col s12">
                                                                 <input id="coupon-discount" type="number"
                                                                     name="coupon-discount" class="validate" max="100"
-                                                                    min="1" data-length="3" value="{{ this.Discount }}" required>
+                                                                    min="1" data-length="3"
+                                                                    value="{{ this.CouponDiscount }}" required>
                                                                 <label for="coupon-discount-{{ this.CouponID }}">Coupon
                                                                     discount</label>
                                                             </div>
                                                         </div>
+                                                        <div class="row">
+                                                            <div class="input-field col s12">
+                                                                <div class="switch">
+                                                                    <p class="grey-text">Coupon state
+                                                                        <label class="right">
+                                                                            Idle
+                                                                            <input type="checkbox" checked
+                                                                                name="coupon-state">
+                                                                            <span class="lever"></span>
+                                                                            Active
+                                                                        </label>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="coupon-id"
+                                                            value="{{ this.CouponID }} ">
                                                         <div class="row">
                                                             <div class="col s12 center-align">
                                                                 <input type="submit"
