@@ -1,7 +1,10 @@
 $('document').ready(() => {
 
     // Initializing tabs.
-    $('.dashboard-brands .tabs').tabs({ duration: 50 });
+    $('.dashboard-brands .tabs').tabs({
+        duration: 50,
+        swipeable: true
+    });
 
     // Initializing the character counter.
     $('#brands-creation-tab input, #brands-edition-tab input').characterCounter();
