@@ -76,18 +76,26 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
 
     const
-        stmt = conn.format('INSERT INTO ?? (??) VALUES (?);', ['Flavors', 'FlavorName', req.body['flavor-name']]);
+        couponCode = req.body['coupon-code'],
+        couponDiscount = req.body['coupon-discount'],
+        couponState = req.body['coupon-state'],
+        stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Coupons', 'CouponCode', 'Activated', couponCode, couponDiscount, couponState]);
+        //stmt = 
 
     conn.query(stmt, (error, results) => {
 
         // Checking if the there are any errors.
         if (error) throw error;
 
+        const
+            _stmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?); ', ['CouponsHistory', 'CouponID', 'CreatedDate', 'Discount', results.insertId, couponDiscount]);
+
+        console.log(_stmt);
+
         // Rendering the coupons page.
         res.redirect('/dashboard/coupons');
     });
 });
-
 
 // Setting up the coupon edition route.
 router.put('/', function (req, res) {
@@ -102,24 +110,6 @@ router.put('/', function (req, res) {
 
         // Rendering the coupons page.
         res.redirect('/dashboard/coupons');
-    });
-});
-
-
-// Setting up the coupon deletion route.
-router.delete('/', function (req, res) {
-
-    const
-        stmt = conn.format('DELETE FROM ?? WHERE ?? = ?;', ['Flavors', 'FlavorID', req.body.flavorId]);
-
-    conn.query(stmt, (error, results) => {
-
-        let success = true;
-
-        // Checking if the there are any errors.
-        if (error) success = false;
-
-        res.json({ success: success });
     });
 });
 
