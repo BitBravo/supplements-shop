@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT `C`.*, (SELECT `CH`.`Discount` FROM `CouponsHistory` `CH` WHERE `C`.`CouponID` = `CH`.`CouponID` ORDER BY `CH`.`CreatedDate` DESC LIMIT 1) AS `CouponDiscount` FROM `Coupons` `C`;\
+        SELECT `C`.*, (SELECT `CH`.`Discount` FROM `CouponsHistory` `CH` WHERE `C`.`CouponID` = `CH`.`CouponID` ORDER BY `CH`.`CreatedDate` DESC LIMIT 1) AS `CouponDiscount` FROM `Coupons` `C` ORDER BY `C`.`CouponID` DESC;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
