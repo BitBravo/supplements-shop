@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT `C`.*, `CH`.`Discount` FROM `Coupons` `C` INNER JOIN `CouponsHistory` `CH` ON `C`.`CouponID` = `CH`.`CouponID` ORDER BY `CH`.`CreatedDate` DESC LIMIT 1;\
+        SELECT `C`.*, `CH`.`Discount` AS `CouponDiscount` FROM `Coupons` `C` INNER JOIN `CouponsHistory` `CH` ON `C`.`CouponID` = `CH`.`CouponID` ORDER BY `CH`.`CreatedDate` DESC LIMIT 1;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -78,9 +78,8 @@ router.post('/', function (req, res) {
     const
         couponCode = req.body['coupon-code'],
         couponDiscount = req.body['coupon-discount'],
-        couponState = req.body['coupon-state'],
-        stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Coupons', 'CouponCode', 'Activated', couponCode, couponDiscount, couponState]);
-        //stmt = 
+        couponState = req.body['coupon-state'] == 'false' ? 0 : 1,
+        stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Coupons', 'CouponCode', 'Activated', couponCode, couponState]);
 
     conn.query(stmt, (error, results) => {
 
@@ -94,7 +93,7 @@ router.post('/', function (req, res) {
 
             // Checking if the there are any errors.
             if (_error) throw _error;
-    
+
             // Rendering the coupons page.
             res.redirect('/dashboard/coupons');
         });
@@ -105,16 +104,20 @@ router.post('/', function (req, res) {
 router.put('/', function (req, res) {
 
     const
+    couponId = req.body['coupon-id'],
+    couponState = req.body['coupon-state'],
+    couponDiscount = req.body['coupon-discount'],
         stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', ['Flavors', 'FlavorName', req.body['flavor-name'], 'FlavorID', req.body['flavor-id']]);
 
-    conn.query(stmt, (error, results) => {
+    console.log(stmt);
+    /*conn.query(stmt, (error, results) => {
 
         // Checking if the there are any errors.
         if (error) throw error;
 
         // Rendering the coupons page.
         res.redirect('/dashboard/coupons');
-    });
+    });*/
 });
 
 
