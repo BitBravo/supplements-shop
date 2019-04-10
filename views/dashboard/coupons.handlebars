@@ -99,7 +99,7 @@
                                                                     <p class="grey-text">Coupon state
                                                                         <label class="right">
                                                                             Idle
-                                                                            <input type="checkbox" checked
+                                                                            <input type="checkbox" {{ couponState this.Activated }}
                                                                                 name="coupon-state">
                                                                             <span class="lever"></span>
                                                                             Active
@@ -109,7 +109,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="hidden" name="coupon-id"
-                                                            value="{{ this.CouponID }} ">
+                                                            value="{{ this.CouponID }}">
                                                         <div class="row">
                                                             <div class="col s12 center-align">
                                                                 <input type="submit"

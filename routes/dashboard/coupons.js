@@ -104,20 +104,26 @@ router.post('/', function (req, res) {
 router.put('/', function (req, res) {
 
     const
-    couponId = req.body['coupon-id'],
-    couponState = req.body['coupon-state'],
-    couponDiscount = req.body['coupon-discount'],
-        stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', ['Flavors', 'FlavorName', req.body['flavor-name'], 'FlavorID', req.body['flavor-id']]);
+        couponID = req.body['coupon-id'],
+        couponState = req.body['coupon-state'] ? 1 : 0,
+        couponDiscount = req.body['coupon-discount']
+    stmt = conn.format('\
+            UPDATE ?? SET ?? = ? WHERE ?? = ?; \
+            INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?); \
+            ',
+        [
+            'Coupons', 'Activated', couponState, 'CouponID', couponID,
+            'CouponsHistory', 'CouponID', 'CreatedDate', 'Discount', couponID, couponDiscount
+        ]);
 
-    console.log(stmt);
-    /*conn.query(stmt, (error, results) => {
+    conn.query(stmt, (error, results) => {
 
         // Checking if the there are any errors.
         if (error) throw error;
 
         // Rendering the coupons page.
         res.redirect('/dashboard/coupons');
-    });*/
+    });
 });
 
 

@@ -39,5 +39,17 @@ module.exports = {
 
             return `Sub category of ${categoryParent}`;
         }
+    },
+
+    /**
+     * Appropriately selects a coupon's state.
+     * 
+     * @param {Bit} state Whether or not the coupon is active or idle.
+     */
+    couponState: function (state) {
+
+        if(state.readInt8(0) == 1) {
+            return 'checked';
+        }
     }
 }

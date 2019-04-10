@@ -4,7 +4,10 @@ $('document').ready(() => {
     $('#parent-categories-select').hide();
 
     // Initializing tabs.
-    $('.dashboard-categories .tabs').tabs({ duration: 50 });
+    $('.dashboard-categories .tabs').tabs({
+        duration: 50,
+        swipeable: true
+    });
 
     // Initializing the character counter.
     $('#categories-creation-tab input, #categories-edition-tab input').characterCounter();
