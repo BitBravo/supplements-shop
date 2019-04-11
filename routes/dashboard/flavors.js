@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT * FROM `Flavors`;\
+        SELECT * FROM `Flavors` ORDER BY `FlavorName` ASC;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
