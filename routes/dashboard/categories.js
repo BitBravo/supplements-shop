@@ -108,30 +108,5 @@ router.put('/', function (req, res) {
 });
 
 
-// Setting up the category deletion route.
-router.delete('/', function (req, res) {
-
-    const
-        stmt = conn.format('\
-        DELETE FROM ?? WHERE ?? = ?; \
-        DELETE FROM ?? WHERE ?? = ?; \
-        ', 
-        [
-            'Categories', 'CategoryParent', req.body.categoryId,
-            'Categories', 'CategoryID', req.body.categoryId
-        ]);
-
-    conn.query(stmt, (error, results) => {
-
-        let success = true;
-
-        // Checking if the there are any errors.
-        if (error) success = false;
-
-        res.json({ success: success });
-    });
-});
-
-
 // Exporting the route.
 module.exports = router;
