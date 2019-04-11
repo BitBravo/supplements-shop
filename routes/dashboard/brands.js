@@ -106,23 +106,5 @@ router.put('/', function (req, res) {
 });
 
 
-// Setting up the brand deletion route.
-router.delete('/', function (req, res) {
-
-    const
-        stmt = conn.format('DELETE FROM ?? WHERE ?? = ?;', ['Brands', 'BrandID', req.body.brandId]);
-
-    conn.query(stmt, (error, results) => {
-
-        let success = true;
-
-        // Checking if the there are any errors.
-        if (error) success = false;
-
-        res.json({ success: success });
-    });
-});
-
-
 // Exporting the route.
 module.exports = router;
