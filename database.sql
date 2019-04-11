@@ -129,7 +129,20 @@ CREATE TABLE IF NOT EXISTS `Products` (
     CONSTRAINT pk_products_id PRIMARY KEY (`ProductID`),
     CONSTRAINT fk_products_cat FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`),
     CONSTRAINT fk_products_brd FOREIGN KEY (`BrandID`) REFERENCES `Brands` (`BrandID`),
-    CONSTRAINT fk_products_tst FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
+    CONSTRAINT fk_products_flv FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
+);
+
+
+-- ProductsVariants.
+CREATE TABLE IF NOT EXISTS `ProductsVariants` (
+    `ProductID`         INT NOT NULL,
+    `FlavorID`          SMALLINT NOT NULL,
+    `Weight`            SMALLINT NOT NULL,
+    `Quantity`          SMALLINT NOT NULL DEFAULT 0,
+
+    CONSTRAINT pk_products_variants_id PRIMARY KEY (`ProductID`),
+    CONSTRAINT fk_products_variants_id FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`),
+    CONSTRAINT fk_products_variants_flv FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
 );
 
 -- PriceHistory.
