@@ -11,25 +11,4 @@ $('document').ready(() => {
 
     // Initializing the collapsibles.
     $('.dashboard-flavors .collapsible').collapsible();
-
-    // Deleting a flavor.
-    $('.dashboard-flavors .btn-flavor-delete').on('click', function () {
-
-        // Getting the flavor ID.
-        const flavorId = $(this).attr('data-flavor-id');
-
-        $.ajax({
-            url: '/dashboard/flavors',
-            type: 'DELETE',
-            data: { flavorId: flavorId },
-            success: (data) => {
-
-                if (data.success === true) {
-                    location.reload();
-                } else {
-                    M.toast({ html: 'Something went wrong!' });
-                }
-            }
-        });
-    });
 });
