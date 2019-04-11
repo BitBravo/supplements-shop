@@ -28,25 +28,4 @@ $('document').ready(() => {
             $('#category-parent-sub').attr('name', '');
         }
     });
-
-    // Deleting a category.
-    $('.dashboard-categories .btn-category-delete').on('click', function () {
-
-        // Getting the cateogry ID.
-        const categoryId = $(this).attr('data-category-id');
-
-        $.ajax({
-            url: '/dashboard/categories',
-            type: 'DELETE',
-            data: { categoryId: categoryId },
-            success: (data) => {
-
-                if (data.success === true) {
-                    location.reload();
-                } else {
-                    M.toast({ html: 'Something went wrong!' });
-                }
-            }
-        });
-    });
 });
