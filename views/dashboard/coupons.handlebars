@@ -1,3 +1,6 @@
+{{!-- The coupons script. --}}
+<script src="/assets/js/dashboard/coupons.js"></script>
+
 <section class="dashboard dashboard-coupons">
     <div class="row">
         <aside class="col s2">
@@ -99,7 +102,8 @@
                                                                     <p class="grey-text">Coupon state
                                                                         <label class="right">
                                                                             Idle
-                                                                            <input type="checkbox" {{ couponState this.Activated }}
+                                                                            <input type="checkbox"
+                                                                                {{ couponState this.Activated }}
                                                                                 name="coupon-state">
                                                                             <span class="lever"></span>
                                                                             Active
@@ -108,7 +112,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <input type="hidden" name="coupon-old-discount" value="{{ this.CouponDiscount }}">
+                                                        <input type="hidden" name="coupon-old-discount"
+                                                            value="{{ this.CouponDiscount }}">
                                                         <input type="hidden" name="coupon-id"
                                                             value="{{ this.CouponID }}">
                                                         <div class="row">

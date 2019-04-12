@@ -1,16 +1,18 @@
 $('document').ready(() => {
 
     // Initializing tabs.
-    $('.dashboard-products .tabs').tabs({
-        duration: 50,
-        swipeable: true
-    });
+    $('.dashboard-products .tabs').tabs({ duration: 50 });
 
     // Initializing the character counter.
-    $('#products-creation-tab input, #products-edition-tab input').characterCounter();
+    $('#products-creation-tab input[type=text], #products-edition-tab input[type=text]').characterCounter();
 
     // Initializing the collapsibles.
     $('.dashboard-products .collapsible').collapsible();
+
+    // Initializing quill.
+    const quill = new Quill('#editor', {
+        theme: 'snow'
+    });
 
     // Loading the image preview.
     $('#brand-logo').on('change', function () {
