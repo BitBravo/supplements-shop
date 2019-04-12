@@ -3,14 +3,14 @@ $('document').ready(() => {
     // Hiding the parent categories select.
     $('#parent-categories-select').hide();
 
+    // Setting up the orders dropdown.
+    $('select').formSelect();
+
     // Initializing tabs.
-    $('.dashboard-categories .tabs').tabs({
-        duration: 50,
-        swipeable: true
-    });
+    $('.dashboard-categories .tabs').tabs({ duration: 50 });
 
     // Initializing the character counter.
-    $('#categories-creation-tab input, #categories-edition-tab input').characterCounter();
+    $('#categories-creation-tab input[type=text], #categories-edition-tab input[type=text]').characterCounter();
 
     // Initializing the collapsibles.
     $('.dashboard-categories .collapsible').collapsible();

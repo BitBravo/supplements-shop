@@ -116,20 +116,18 @@ CREATE TABLE IF NOT EXISTS `ShippingPriceHistory` (
 CREATE TABLE IF NOT EXISTS `Products` (
     `ProductID`         INT NOT NULL AUTO_INCREMENT,
     `ProductName`       VARCHAR(80) NOT NULL,
-    `CategoryID`        SMALLINT NOT NULL,
+    `ProductImage`      TEXT NULL,
+    `NutritionInfo`     TEXT NULL,
     `Description`       TEXT NOT NULL,
-    `NutritionInfo`     VARCHAR(100) NOT NULL,
     `Usage`             TEXT NOT NULL,
     `Warning`           TEXT NOT NULL,
-    `BrandID`           SMALLINT NOT NULL,
-    `FlavorID`           SMALLINT NOT NULL,
     `AddedDate`         DATETIME NOT NULL DEFAULT NOW(),
-    `Quantity`          SMALLINT NOT NULL DEFAULT 0,
+    `CategoryID`        SMALLINT NOT NULL,
+    `BrandID`           SMALLINT NOT NULL,
 
     CONSTRAINT pk_products_id PRIMARY KEY (`ProductID`),
     CONSTRAINT fk_products_cat FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`),
-    CONSTRAINT fk_products_brd FOREIGN KEY (`BrandID`) REFERENCES `Brands` (`BrandID`),
-    CONSTRAINT fk_products_flv FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
+    CONSTRAINT fk_products_brd FOREIGN KEY (`BrandID`) REFERENCES `Brands` (`BrandID`)
 );
 
 
