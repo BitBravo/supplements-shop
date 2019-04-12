@@ -3,6 +3,9 @@ $('document').ready(() => {
     // Initializing tabs.
     $('.dashboard-products .tabs').tabs({ duration: 50 });
 
+    // Setting up the dropdowns.
+    $('select').formSelect();
+
     // Initializing the character counter.
     $('#products-creation-tab input[type=text], #products-edition-tab input[type=text]').characterCounter();
 

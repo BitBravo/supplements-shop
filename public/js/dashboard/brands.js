@@ -4,7 +4,7 @@ $('document').ready(() => {
     $('.dashboard-brands .tabs').tabs({ duration: 50 });
 
     // Initializing the character counter.
-    $('#brands-creation-tab input, #brands-edition-tab input').characterCounter();
+    $('#brands-creation-tab input[type=text], #brands-creation-tab input[type=url], #brands-edition-tab input[type=text], #brands-edition-tab input[type=url]').characterCounter();
 
     // Initializing the brand image box.
     $('.dashboard-brands .materialboxed').materialbox();

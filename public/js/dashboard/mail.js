@@ -1,5 +1,8 @@
 $('document').ready(() => {
 
+    // Setting up the dropdown.
+    $('select').formSelect();
+    
     // Marking selected messages as read.
     $('#email-read-btn').on('click', () => {
 

@@ -3,7 +3,7 @@ $('document').ready(() => {
     // Hiding the parent categories select.
     $('#parent-categories-select').hide();
 
-    // Setting up the orders dropdown.
+    // Setting up the parent categories dropdown.
     $('select').formSelect();
 
     // Initializing tabs.
