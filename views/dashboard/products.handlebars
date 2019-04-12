@@ -1,0 +1,59 @@
+<section class="dashboard dashboard-products">
+    <div class="row">
+        <aside class="col s2">
+            {{> sidebar NewMail=Data.NewMail }}
+        </aside>
+
+        <div class="col s10 dashboard-grid">
+            <div class="row">
+                <div class="card-panel">
+                    <div class="row valign-wrapper">
+                        <div class="col s12">
+                            <h4 class="grey-text">
+                                <i class="fa fa-prescription-bottle"></i>
+                                Products [{{ Data.Products.length }}]
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <ul id="products-tabs" class="tabs">
+                                <li class="tab col s6"><a href="#products-edition-tab">Edit an existing brand</a></li>
+                                <li class="tab col s6"><a href="#products-creation-tab">Add a new brand</a></li>
+                            </ul>
+                            <div id="products-creation-tab" class="col s12">
+                                <div class="row">
+                                    <div class="col s12">
+                                        <form action="/dashboard/products" method="POST">
+                                            <div class="row">
+                                                <div class="col s12 center-align">
+                                                    <input type="submit"
+                                                        class="btn btn-large waves-effect waves-light grey lighten-3"
+                                                        value="Add">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="products-edition-tab" class="col s12">
+                                <div class="row">
+                                    <div class="col s12">
+                                        {{#if Data.Products}}
+
+                                        {{else}}
+                                        <ul class="collection">
+                                            <li class="collection-item center-align">There are no existing products</li>
+                                        </ul>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
