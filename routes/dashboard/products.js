@@ -30,6 +30,8 @@ router.get('/', function (req, res) {
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
         SELECT * FROM `Products` ORDER BY `ProductName` ASC;\
+        SELECT * FROM `Categories` WHERE `CategoryParent` > 0 ORDER BY `CategoryName` ASC;\
+        SELECT * FROM `Brands` ORDER BY `BrandName` ASC;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -58,7 +60,9 @@ router.get('/', function (req, res) {
                     },
                 },
                 NewMail: results[1][0].NewMail,
-                Products: results[2]
+                Products: results[2],
+                Categories: results[3],
+                Brands: results[4]
             };
 
             // Getting the proper copyright date.
