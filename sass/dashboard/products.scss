@@ -1,0 +1,10 @@
+.dashboard-products {
+
+    #products-creation-tab, #products-edition-tab {
+        overflow-y: auto;
+
+        input[type=submit] {
+            width: 200px;
+        }
+    }
+}
