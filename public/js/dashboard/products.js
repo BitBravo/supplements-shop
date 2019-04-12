@@ -13,9 +13,16 @@ $('document').ready(() => {
     $('.dashboard-products .collapsible').collapsible();
 
     // Initializing quill.
-    const quill = new Quill('#editor', {
-        theme: 'snow'
-    });
+    const
+        descEditor = new Quill('#desc-editor', {
+            theme: 'snow'
+        }),
+        usageEditor = new Quill('#usage-editor', {
+            theme: 'snow'
+        }),
+        warningEditor = new Quill('#warning-editor', {
+            theme: 'snow'
+        });
 
     // Loading the image preview.
     $('#brand-logo').on('change', function () {
