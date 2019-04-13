@@ -7,7 +7,7 @@ $('document').ready(() => {
     $('select').formSelect();
 
     // Initializing the character counter.
-    $('#products-creation-tab input[type=text], #products-edition-tab input[type=text]').characterCounter();
+    $('#products-creation-tab input[type=text], #products-creation-tab input[type=url], #products-edition-tab input[type=text], #products-edition-tab input[type=url]').characterCounter();
 
     // Initializing the collapsibles.
     $('.dashboard-products .collapsible').collapsible();
