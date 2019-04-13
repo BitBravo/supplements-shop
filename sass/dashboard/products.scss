@@ -17,9 +17,11 @@
 		font-weight: bold;
     }
     
-    .stock {
-        border: 1px solid grey;
-        border-radius: 3px;
-        padding-top: 50px;
+    .stock-section {
+
+        table {
+            border: 1px solid grey;
+            margin-bottom: 80px;
+        }
     }
 }
