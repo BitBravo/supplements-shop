@@ -15,41 +15,35 @@ $("document").ready(() => {
 
 	// Adding stock.
 	$("#product-creation-stock-form").on("submit", e => {
+		// Stopping the form's submition.
 		e.preventDefault();
 
+		// Getting the values.
 		const quantity = $("#product-creation-stock-quantity").val(),
 			weight = $("#product-creation-stock-weight").val(),
-			flavor = $("#product-creation-stock-flavor").val();
+			flavor = $("#product-creation-stock-flavor").val(),
+			flavorName = $("#product-creation-stock-flavor option:selected").text();
 
+		// Clearing out the inputs.
 		$("#product-creation-stock-quantity").val("");
 		$("#product-creation-stock-weight").val("");
 		$("#product-creation-stock-flavor").val("");
 
-		console.log(quantity, weight, flavor);
 		$(".stock-list").append(`
-            <div class="row stock">
-                <div class="col s2">
-                    <label>Quantity
-                        <input type="number" min="0" class="validate" required>
-                    </label>
-                </div>
-                <div class="col s2">
-                    <label>Weight (Kg)
-                        <input type="number" min="0" class="validate" required>
-                    </label>
-                </div>
-                <div class="col s8">
-                    <label>Flavor
-                        <select>
-                            {{#each Data.Flavors }}
-                            <option value="{{ this.FlavorID }}">
-                                {{ this.FlavorName }}
-                            </option>
-                            {{/each}}
-                        </select>
-                    </label>
-                </div>
-            </div>
+            <tr>
+                <td class="center-align">
+                    ${quantity}
+                    <input type="hidden" name="stock-quantity" value="${quantity}">
+                </td>
+                <td class="center-align">
+                    ${weight}
+                    <input type="hidden" name="stock-weight" value="${weight}">
+                </td>
+                <td class="center-align">
+                    ${flavorName}
+                    <input type="hidden" name="stock-flavor" value="${flavor}">
+                </td>
+            </tr>
         `);
 		$("#product-creation-modal").modal("close");
 	});
