@@ -32,6 +32,7 @@ router.get('/', function (req, res) {
         SELECT * FROM `Products` ORDER BY `ProductName` ASC;\
         SELECT * FROM `Categories` WHERE `CategoryParent` > 0 ORDER BY `CategoryName` ASC;\
         SELECT * FROM `Brands` ORDER BY `BrandName` ASC;\
+        SELECT * FROM `Flavors` ORDER BY `FlavorName` ASC;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
@@ -62,7 +63,8 @@ router.get('/', function (req, res) {
                 NewMail: results[1][0].NewMail,
                 Products: results[2],
                 Categories: results[3],
-                Brands: results[4]
+                Brands: results[4],
+                Flavors: results[5]
             };
 
             // Getting the proper copyright date.

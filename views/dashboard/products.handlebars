@@ -106,6 +106,31 @@
                                             <div class="row">
                                                 <div class="input-field col s12">
                                                     <label>Stock</label>
+                                                    <div class="stock-list">
+                                                        <div class="row stock">
+                                                            <div class="col s2">
+                                                                <label>Quantity
+                                                                    <input type="number" class="validate" required>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col s2">
+                                                                <label>Weight
+                                                                    <input type="number" class="validate" required>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col s8">
+                                                                <label>Flavor
+                                                                    <select>
+                                                                        {{#each Data.Flavors }}
+                                                                        <option value="{{ this.FlavorID }}">
+                                                                            {{ this.FlavorName }}
+                                                                        </option>
+                                                                        {{/each}}
+                                                                    </select>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
