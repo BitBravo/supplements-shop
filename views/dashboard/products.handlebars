@@ -103,34 +103,20 @@
                                                     <label>Product brand</label>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row stock-section">
                                                 <div class="input-field col s12">
-                                                    <label>Stock</label>
-                                                    <div class="stock-list">
-                                                        <div class="row stock">
-                                                            <div class="col s2">
-                                                                <label>Quantity
-                                                                    <input type="number" class="validate" required>
-                                                                </label>
-                                                            </div>
-                                                            <div class="col s2">
-                                                                <label>Weight
-                                                                    <input type="number" class="validate" required>
-                                                                </label>
-                                                            </div>
-                                                            <div class="col s8">
-                                                                <label>Flavor
-                                                                    <select>
-                                                                        {{#each Data.Flavors }}
-                                                                        <option value="{{ this.FlavorID }}">
-                                                                            {{ this.FlavorName }}
-                                                                        </option>
-                                                                        {{/each}}
-                                                                    </select>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <p class="grey-text lighten-3">Stock</p>
+                                                    <table class="striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Quantity</th>
+                                                                <th>Weight (Kg)</th>
+                                                                <th>Flavor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -141,6 +127,7 @@
                                                 </div>
                                                 <div class="col s6 center-align">
                                                     <a class="btn btn-large waves-effect waves-light grey lighten-3 black-text modal-trigger"
+                                                        id="product-creation-modal-opener-btn"
                                                         href="#product-creation-modal">Add stock</a>
                                                 </div>
                                             </div>
@@ -186,14 +173,49 @@
         </div>
 
         <div id="product-creation-modal" class="modal bottom-sheet">
-            <div class="modal-content">
-                <h4>Modal Header</h4>
-                <p>A bunch of text</p>
-            </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Add stock</a>
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
-            </div>
+            <form id="product-creation-stock-form">
+                <div class="modal-content">
+                    <div class="row">
+                        <div class="col s12">
+                            <h4>Adding a stock</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12">
+                            <label>Quantity
+                                <input id="product-creation-stock-quantity" min="0" type="number" class="validate"
+                                    required>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <label>Weight (Kg)
+                                <input id="product-creation-stock-weight" min="0" type="number" class="validate"
+                                    required>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <label>Flavor
+                                <select id="product-creation-stock-flavor">
+                                    {{#each Data.Flavors }}
+                                    <option value="{{ this.FlavorID }}">
+                                        {{ this.FlavorName }}
+                                    </option>
+                                    {{/each}}
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input class="waves-effect waves-green btn-flat" type="submit" value="Add stock">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+            </form>
         </div>
     </div>
 
