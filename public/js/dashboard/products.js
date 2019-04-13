@@ -32,6 +32,11 @@ $("document").ready(() => {
 		$(".stock-list").append(`
             <tr>
                 <td class="center-align">
+                    <a class="stock-remove btn-floating waves-effect waves-light red">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+                <td class="center-align">
                     ${quantity}
                     <input type="hidden" name="stock-quantity" value="${quantity}">
                 </td>
@@ -45,8 +50,19 @@ $("document").ready(() => {
                 </td>
             </tr>
         `);
+
+		addStockRemovingEvent();
 		$("#product-creation-modal").modal("close");
 	});
+
+	function addStockRemovingEvent() {
+		// Removing a stock.
+		$(".stock-remove").on("click", function() {
+			$(this)
+				.closest("tr")
+				.remove();
+		});
+	}
 
 	// Initializing quill.
 	const descEditor = new Quill("#desc-editor", {
