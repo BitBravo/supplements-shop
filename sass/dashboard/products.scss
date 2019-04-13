@@ -1,11 +1,15 @@
 .dashboard-products {
+	#products-creation-tab,
+	#products-edition-tab {
+		margin-top: 50px;
+		overflow-y: auto;
 
-    #products-creation-tab, #products-edition-tab {
-        margin-top: 50px;
-        overflow-y: auto;
+		input[type="submit"] {
+			width: 200px;
+		}
+	}
 
-        input[type=submit] {
-            width: 200px;
-        }
-    }
+	.ql-editor strong {
+		font-weight: bold;
+	}
 }
