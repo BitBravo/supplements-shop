@@ -31,7 +31,7 @@
                             <div id="products-creation-tab" class="col s12">
                                 <div class="row">
                                     <div class="col s12">
-                                        <form action="/dashboard/products" method="POST">
+                                        <form id="product-creation-form">
                                             <div class="row">
                                                 <div class="input-field col s12">
                                                     <input id="product-name" type="text" name="product-name"
@@ -41,14 +41,14 @@
                                             </div>
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input id="product-image" type="text" name="product-image"
+                                                    <input id="product-image" type="url" name="product-image"
                                                         class="validate" required>
                                                     <label for="product-image">Product image</label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input id="product-nutrition" type="text" name="product-nutrition"
+                                                    <input id="product-nutrition" type="url" name="product-nutrition"
                                                         class="validate" required>
                                                     <label for="product-nutrition">Product nutrition</label>
                                                 </div>
@@ -101,6 +101,11 @@
                                                         {{/each}}
                                                     </select>
                                                     <label>Product brand</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <label>Stock</label>
                                                 </div>
                                             </div>
                                             <div class="row">
