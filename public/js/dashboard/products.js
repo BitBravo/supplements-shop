@@ -151,21 +151,21 @@ $('document').ready(() => {
 				flavorsDropdown += '</select>';
 
 				$('#edition-stock-list').append(`
-				<tr data-variant-id="${v.VariantID}">
-					<td></td>
-					<td class="center-align">
-						<input type="number" name="stock-quantity" value="${v.Quantity}">
-					</td>
-					<td class="center-align">
-						<input type="number" name="stock-weight" value="${v.Weight}">
-					</td>
-					<td class="center-align">
-						<input type="number" name="stock-price" value="${v.Price}">
-					</td>
-					<td class="center-align">
-						${flavorsDropdown}
-					</td>
-				</tr>
+					<tr data-variant-id="${v.VariantID}">
+						<td></td>
+						<td class="center-align">
+							<input type="number" name="stock-quantity" value="${v.Quantity}">
+						</td>
+						<td class="center-align">
+							<input type="number" name="stock-weight" value="${v.Weight}">
+						</td>
+						<td class="center-align">
+							<input type="number" name="stock-price" step="0.01" value="${v.Price}">
+						</td>
+						<td class="center-align">
+							${flavorsDropdown}
+						</td>
+					</tr>
 				`);
 			});
 
@@ -210,6 +210,43 @@ $('document').ready(() => {
 				window.location.reload();
 			}
 		});
+	});
+
+	// Adding a new stock to an editable product.
+	$('#add-stock-edition').on('click', () => {
+		let flavorsDropdown = '<select name="stock-flavor">';
+
+		$.each($('#product-creation-stock-flavor').find('option'), (i, v) => {
+			flavorsDropdown += `<option value="${$(v).val()}">${$(v)
+				.text()
+				.trim()}</option>`;
+		});
+
+		flavorsDropdown += '</select>';
+
+		$(flavorsDropdown)
+			.find('option')
+			.text('dddd');
+
+		$('#edition-stock-list').append(`
+			<tr>
+				<td></td>
+				<td class="center-align">
+					<input type="number" name="stock-quantity" value="0">
+				</td>
+				<td class="center-align">
+					<input type="number" name="stock-weight" value="0">
+				</td>
+				<td class="center-align">
+					<input type="number" step="0.01" name="stock-price" value="0">
+				</td>
+				<td class="center-align">
+					${flavorsDropdown}
+				</td>
+			</tr>
+		`);
+
+		$('#edition-stock-list select').formSelect();
 	});
 
 	function addStockRemovingEvent() {

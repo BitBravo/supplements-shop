@@ -214,40 +214,67 @@ router.put('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
-		let _stmt = '';
+		if (req.body.stock) {
+			if (req.body.stock.add) {
+				async.each(req.body.stock.add, addStock => {
+					const _stmt =
+						'INSERT INTO `ProductsVariants` (`ProductID`, `Quantity`, `Weight`, `FlavorID`) VALUES (' +
+						req.body.productID +
+						', ' +
+						addStock.quantity +
+						', ' +
+						addStock.weight +
+						', ' +
+						addStock.flavorID +
+						');';
 
-		async.each(req.body.stock.edit, stock => {
-			_stmt += conn.format(
-				'UPDATE ?? SET ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?; \
-				INSERT INTO ?? (??, ??, ??) VALUES (?, ?, NOW()); \
-				',
-				[
-					'ProductsVariants',
-					'FlavorID',
-					stock.flavorID,
-					'Quantity',
-					stock.quantity,
-					'Weight',
-					stock.weight,
-					'VariantID',
-					stock.variantID,
-					'PriceHistory',
-					'VariantID',
-					'Price',
-					'ActivatedDate',
-					stock.variantID,
-					stock.price
-				]
-			);
-		});
+					conn.query(_stmt, (_error, _results) => {
+						// Checking if there are any errors.
+						if (_error) throw _error;
 
-		conn.query(_stmt, (_error, _results) => {
-			// Checking if there are any errors.
-			if (_error) throw _error;
+						const __stmt =
+							'INSERT INTO `PriceHistory` (`VariantID`, `Price`, `ActivatedDate`) VALUES (' +
+							_results.insertId +
+							', ' +
+							addStock.price +
+							', NOW());';
 
-			// Rendering the products page.
-			res.send();
-		});
+						conn.query(__stmt, (__error, __results) => {
+							// Checking if there are any errors.
+							if (__error) throw __error;
+						});
+					});
+				});
+			}
+
+			if (req.body.stock.edit) {
+				async.each(req.body.stock.edit, editStock => {
+					const _stmt =
+						'UPDATE `ProductsVariants` SET `FlavorID` = ' +
+						editStock.flavorID +
+						', `Quantity` = ' +
+						editStock.quantity +
+						', `Weight` = ' +
+						editStock.weight +
+						' WHERE `VariantID` = ' +
+						editStock.variantID +
+						'; \
+								INSERT INTO `PriceHistory` (`VariantID`, `Price`, `ActivatedDate`) VALUES (' +
+						editStock.variantID +
+						', ' +
+						editStock.price +
+						', NOW());';
+
+					conn.query(_stmt, (_error, _results) => {
+						// Checking if there are any errors.
+						if (_error) throw _error;
+					});
+				});
+			}
+		}
+
+		// Rendering the products page.
+		res.send();
 	});
 });
 
