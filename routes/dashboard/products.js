@@ -76,17 +76,34 @@ router.get('/', function(req, res) {
 
 // Setting up the product retrieval route.
 router.get('/:productID', function(req, res) {
-	const stmt = conn.format('SELECT * FROM ?? WHERE ?? = ?;', [
-		'Products',
-		'ProductID',
-		req.params.productID
-	]);
+	const stmt = conn.format(
+		'\
+		SELECT * FROM ?? WHERE ?? = ?; \
+		SELECT PV.*, (SELECT PH.?? FROM ?? PH WHERE PH.?? = PV.?? ORDER BY ?? DESC LIMIT 1) AS ?? FROM ?? PV WHERE PV.?? = ?; \
+		SELECT * FROM ??; \
+		',
+		[
+			'Products',
+			'ProductID',
+			req.params.productID,
+			'Price',
+			'PriceHistory',
+			'VariantID',
+			'VariantID',
+			'ActivatedDate',
+			'Price',
+			'ProductsVariants',
+			'ProductID',
+			req.params.productID,
+			'Flavors'
+		]
+	);
 	conn.query(stmt, (error, results) => {
 		// Checking if the there are any errors.
 		if (error) throw error;
 
 		// Rendering the products page.
-		res.json(results[0]);
+		res.json(results);
 	});
 });
 
