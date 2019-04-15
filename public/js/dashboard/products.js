@@ -131,7 +131,7 @@ $('document').ready(() => {
 			$('#product-brand-edit').val(data.BrandID);
 
 			// Updating the dropdowns.
-			$('#product-edition-modal select').formSelect();
+			$('#product-category-edit, #product-brand-edit').formSelect();
 
 			$('#product-edition-modal').modal('open');
 		});
