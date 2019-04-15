@@ -32,7 +32,7 @@ router.get('/', function (req, res) {
         SELECT B.*, (SELECT A.`CategoryName` FROM `Categories` A WHERE A.`CategoryID` = B.`CategoryParent`) AS `CategoryParentName` FROM `Categories` B ORDER BY B.CategoryParent, B.CategoryName;\
     ', (error, results) => {
 
-            // Checking if the there are any errors.
+            // Checking if there are any errors.
             if (error) throw error;
 
             // Getting the data.
@@ -82,7 +82,7 @@ router.post('/', function (req, res) {
 
     conn.query(stmt, (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
 
         // Rendering the categories page.
@@ -99,7 +99,7 @@ router.put('/', function (req, res) {
 
     conn.query(stmt, (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
 
         // Rendering the categories page.

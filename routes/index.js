@@ -27,7 +27,7 @@ router.get('/', function (req, res) {
         ',
         (error, results) => {
 
-            // Checking if the there are any errors.
+            // Checking if there are any errors.
             if (error) throw error;
 
             // Getting the data.

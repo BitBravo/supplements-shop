@@ -138,7 +138,7 @@ $('document').ready(() => {
 
 			$('#edition-stock-list').empty();
 			$.each(data[1], (i, v) => {
-				let flavorsDropdown = '<select>';
+				let flavorsDropdown = '<select name="stock-flavor">';
 
 				$.each(data[2], (i, _v) => {
 					flavorsDropdown += `
@@ -151,7 +151,7 @@ $('document').ready(() => {
 				flavorsDropdown += '</select>';
 
 				$('#edition-stock-list').append(`
-				<tr>
+				<tr data-variant-id="${v.VariantID}">
 					<td></td>
 					<td class="center-align">
 						<input type="number" name="stock-quantity" value="${v.Quantity}">
@@ -170,7 +170,9 @@ $('document').ready(() => {
 			});
 
 			// Updating the dropdowns.
-			$('#product-category-edit, #product-brand-edit, #edition-stock-list select').formSelect();
+			$(
+				'#product-category-edit, #product-brand-edit, #edition-stock-list select'
+			).formSelect();
 
 			$('#product-edition-modal').modal('open');
 		});
@@ -180,26 +182,30 @@ $('document').ready(() => {
 	$('#product-edition-form').on('submit', e => {
 		e.preventDefault();
 
+		const data = {
+			productID: $('#product-edition-modal [name=product-id]').val(),
+			productName: $('#product-edition-modal [name=product-name]').val(),
+			productImage: $(
+				'#product-edition-modal [name=product-image]'
+			).val(),
+			productNutrition: $(
+				'#product-edition-modal [name=product-nutrition]'
+			).val(),
+			description: descEditorEdit.container.innerHTML,
+			usage: usageEditorEdit.container.innerHTML,
+			warning: warningEditorEdit.container.innerHTML,
+			categoryID: $('#product-category-edit').val(),
+			brandID: $('#product-brand-edit').val(),
+			stock: {
+				add: getAdditionStock(),
+				edit: getEditableStock()
+			}
+		};
+
 		$.ajax({
 			url: '/dashboard/products',
 			type: 'PUT',
-			data: {
-				productID: $('#product-edition-modal [name=product-id]').val(),
-				productName: $(
-					'#product-edition-modal [name=product-name]'
-				).val(),
-				productImage: $(
-					'#product-edition-modal [name=product-image]'
-				).val(),
-				productNutrition: $(
-					'#product-edition-modal [name=product-nutrition]'
-				).val(),
-				description: descEditorEdit.container.innerHTML,
-				usage: usageEditorEdit.container.innerHTML,
-				warning: warningEditorEdit.container.innerHTML,
-				categoryID: $('#product-category-edit').val(),
-				brandID: $('#product-brand-edit').val()
-			},
+			data: data,
 			success: data => {
 				window.location.reload();
 			}
@@ -236,5 +242,53 @@ $('document').ready(() => {
 		});
 
 		return stock;
+	}
+
+	function getEditableStock() {
+		const variants = [];
+
+		$.each($('#edition-stock-list tr[data-variant-id]'), (i, v) => {
+			variants.push({
+				variantID: $(v).data('variant-id'),
+				flavorID: $(v)
+					.find('[name=stock-flavor]')
+					.val(),
+				quantity: $(v)
+					.find('[name=stock-quantity]')
+					.val(),
+				weight: $(v)
+					.find('[name=stock-weight]')
+					.val(),
+				price: $(v)
+					.find('[name=stock-price]')
+					.val()
+			});
+		});
+
+		return variants;
+	}
+
+	function getAdditionStock() {
+		const variants = [];
+
+		$.each($('#edition-stock-list tr:not([data-variant-id])'), (i, v) => {
+			variants.push({
+				variantID: $(v).data('variant-id'),
+				flavorID: $(v)
+					.find('[name=stock-flavor]')
+					.val(),
+				quantity: $(v)
+					.find('[name=stock-quantity]')
+					.val(),
+				weight: $(v)
+					.find('[name=stock-weight]')
+					.val(),
+				price: $(v)
+					.find('[name=stock-price]')
+					.val()
+			});
+		});
+
+		return variants;
 	}
 });

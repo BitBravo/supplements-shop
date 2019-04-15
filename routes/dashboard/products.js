@@ -4,6 +4,7 @@ const express = require('express'),
 	database = require('../../helpers/database'),
 	getCopyrightDate = require('../../helpers/copyright'),
 	login = require('./../../helpers/login'),
+	async = require('async'),
 	conn = mysql.createConnection({
 		database: database.name,
 		host: database.host,
@@ -31,7 +32,7 @@ router.get('/', function(req, res) {
         SELECT * FROM `Flavors` ORDER BY `FlavorName` ASC;\
     ',
 		(error, results) => {
-			// Checking if the there are any errors.
+			// Checking if there are any errors.
 			if (error) throw error;
 
 			// Getting the data.
@@ -99,7 +100,7 @@ router.get('/:productID', function(req, res) {
 		]
 	);
 	conn.query(stmt, (error, results) => {
-		// Checking if the there are any errors.
+		// Checking if there are any errors.
 		if (error) throw error;
 
 		// Rendering the products page.
@@ -136,7 +137,7 @@ router.post('/', function(req, res) {
 	);
 
 	conn.query(stmt, (error, results) => {
-		// Checking if the there are any errors.
+		// Checking if there are any errors.
 		if (error) throw error;
 
 		req.body.stock.forEach((s, i) => {
@@ -156,7 +157,7 @@ router.post('/', function(req, res) {
 			);
 
 			conn.query(_stmt, (_error, _results) => {
-				// Checking if the there are any errors.
+				// Checking if there are any errors.
 				if (_error) throw _error;
 
 				const __stmt = conn.format(
@@ -172,7 +173,7 @@ router.post('/', function(req, res) {
 				);
 
 				conn.query(__stmt, (__error, __results) => {
-					// Checking if the there are any errors.
+					// Checking if there are any errors.
 					if (__error) throw __error;
 				});
 			});
@@ -210,11 +211,43 @@ router.put('/', function(req, res) {
 	);
 
 	conn.query(stmt, (error, results) => {
-		// Checking if the there are any errors.
+		// Checking if there are any errors.
 		if (error) throw error;
 
-		// Rendering the products page.
-		res.send();
+		let _stmt = '';
+
+		async.each(req.body.stock.edit, stock => {
+			_stmt += conn.format(
+				'UPDATE ?? SET ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?; \
+				INSERT INTO ?? (??, ??, ??) VALUES (?, ?, NOW()); \
+				',
+				[
+					'ProductsVariants',
+					'FlavorID',
+					stock.flavorID,
+					'Quantity',
+					stock.quantity,
+					'Weight',
+					stock.weight,
+					'VariantID',
+					stock.variantID,
+					'PriceHistory',
+					'VariantID',
+					'Price',
+					'ActivatedDate',
+					stock.variantID,
+					stock.price
+				]
+			);
+		});
+
+		conn.query(_stmt, (_error, _results) => {
+			// Checking if there are any errors.
+			if (_error) throw _error;
+
+			// Rendering the products page.
+			res.send();
+		});
 	});
 });
 

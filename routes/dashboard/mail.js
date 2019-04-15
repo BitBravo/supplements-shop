@@ -58,7 +58,7 @@ router.get('/:mode', login, function (req, res) {
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
     ', (error, results) => {
 
-            // Checking if the there are any errors.
+            // Checking if there are any errors.
             if (error) throw error;
 
             // Getting the data.

@@ -32,7 +32,7 @@ router.get('/', function (req, res) {
         SELECT * FROM `Brands` ORDER BY `BrandName` ASC;\
     ', (error, results) => {
 
-            // Checking if the there are any errors.
+            // Checking if there are any errors.
             if (error) throw error;
 
             // Getting the data.
@@ -80,7 +80,7 @@ router.post('/', function (req, res) {
 
     conn.query(stmt, (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
 
         // Rendering the brands page.
@@ -97,7 +97,7 @@ router.put('/', function (req, res) {
 
     conn.query(stmt, (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
 
         // Rendering the brands page.

@@ -32,7 +32,7 @@ router.get('/', function (req, res) {
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
     ', (error, results) => {
 
-            // Checking if the there are any errors.
+            // Checking if there are any errors.
             if (error) throw error;
 
             // Getting the data.
@@ -94,7 +94,7 @@ router.post('/', function (req, res) {
 
     conn.query(stmt, (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
 
         // redirecting to the config page.
@@ -113,7 +113,7 @@ router.put('/', function (req, res) {
 
     conn.query('SELECT `Password` FROM `Config`;', (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
         
         if (sha1(currPassword) === results[0].Password) {

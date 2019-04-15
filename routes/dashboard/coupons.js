@@ -32,7 +32,7 @@ router.get('/', function (req, res) {
         SELECT `C`.*, (SELECT `CH`.`Discount` FROM `CouponsHistory` `CH` WHERE `C`.`CouponID` = `CH`.`CouponID` ORDER BY `CH`.`CreatedDate` DESC LIMIT 1) AS `CouponDiscount` FROM `Coupons` `C` ORDER BY `C`.`CouponID` DESC;\
     ', (error, results) => {
 
-            // Checking if the there are any errors.
+            // Checking if there are any errors.
             if (error) throw error;
 
             // Getting the data.
@@ -83,7 +83,7 @@ router.post('/', function (req, res) {
 
     conn.query(stmt, (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
 
         const
@@ -91,7 +91,7 @@ router.post('/', function (req, res) {
 
         conn.query(_stmt, (_error, _results) => {
 
-            // Checking if the there are any errors.
+            // Checking if there are any errors.
             if (_error) throw _error;
 
             // Rendering the coupons page.
@@ -120,7 +120,7 @@ router.put('/', function (req, res) {
 
     conn.query(stmt, (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
 
         // Rendering the coupons page.
