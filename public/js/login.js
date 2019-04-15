@@ -9,7 +9,7 @@ $('document').ready(() => {
             if (data.allow === true) {
                 window.location = '/dashboard';
             } else {
-                M.toast({html: 'Login failed!'})
+                M.toast({html: 'فشل تسجيل الدخول'})
             }
         });
     });

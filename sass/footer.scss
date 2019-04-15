@@ -1,39 +1,39 @@
 footer#about {
+	.footer-phone-number-icon {
+		margin-right: 10px;
+	}
 
-    .footer-phone-number-icon {
-        margin-right: 10px;
-    }
+	ul.contact-list a {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 10px;
 
-    ul.contact-list a {
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 10px;
+		.fa,
+		.fab {
+			margin-right: 15px;
+		}
+	}
 
-        .fa, .fab {
-            margin-right: 15px;
-        }
-    }
+	.shipping-footer {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
 
-    .shipping-footer {
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
+		span {
+			margin-left: 10px;
+		}
+	}
 
-        span {
-            margin-right: 10px;
-        }
-    }
+	.amana-logo {
+		border-radius: 6px;
+		filter: grayscale(60%);
+		transition-duration: 0.3s;
+		transition-property: filter;
 
-    .amana-logo {
-        border-radius: 6px;
-        filter: grayscale(60%);
-        transition-duration: .3s;
-        transition-property: filter;
-
-        &:hover {
-            filter: grayscale(10%);
-        }
-    }
+		&:hover {
+			filter: grayscale(10%);
+		}
+	}
 }
