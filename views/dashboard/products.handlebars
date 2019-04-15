@@ -112,6 +112,7 @@
                                                                 <th></th>
                                                                 <th class="center-align">Quantity</th>
                                                                 <th class="center-align">Weight (Kg)</th>
+                                                                <th class="center-align">Price (MAD)</th>
                                                                 <th class="center-align">Flavor</th>
                                                             </tr>
                                                         </thead>
@@ -193,6 +194,14 @@
                         <div class="col s12">
                             <label>Weight (Kg)
                                 <input id="product-creation-stock-weight" min="0" type="number" class="validate"
+                                    required>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <label>Price (MAD)
+                                <input id="product-creation-stock-price" min="0" type="number" step="0.01" class="validate"
                                     required>
                             </label>
                         </div>

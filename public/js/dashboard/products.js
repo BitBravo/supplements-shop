@@ -22,11 +22,13 @@ $("document").ready(() => {
 		const quantity = $("#product-creation-stock-quantity").val(),
 			weight = $("#product-creation-stock-weight").val(),
 			flavor = $("#product-creation-stock-flavor").val(),
+			price = $("#product-creation-stock-price").val(),
 			flavorName = $("#product-creation-stock-flavor option:selected").text();
 
 		// Clearing out the inputs.
 		$("#product-creation-stock-quantity").val("");
 		$("#product-creation-stock-weight").val("");
+		$("#product-creation-stock-price").val("");
 		$("#product-creation-stock-flavor").val("");
 
 		$(".stock-list").append(`
@@ -43,6 +45,10 @@ $("document").ready(() => {
                 <td class="center-align">
                     ${weight}
                     <input type="hidden" name="stock-weight" value="${weight}">
+				</td>
+				<td class="center-align">
+                    ${new Intl.NumberFormat('ar-MA', { style: 'currency', currency: 'MAD' }).format(price)}
+                    <input type="hidden" name="stock-price" value="${price}">
                 </td>
                 <td class="center-align">
                     ${flavorName}
