@@ -94,7 +94,7 @@ app.get('*', (req, res) => {
 
     conn.query('SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;', (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
 
         // Getting the data.

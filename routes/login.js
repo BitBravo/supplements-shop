@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
     
         conn.query('SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;', (error, results) => {
     
-            // Checking if the there are any errors.
+            // Checking if there are any errors.
             if (error) throw error;
     
             // Getting the data.
@@ -73,7 +73,7 @@ router.post('/', function (req, res) {
 
     conn.query('SELECT `Password` FROM `Config`;', (error, results) => {
 
-        // Checking if the there are any errors.
+        // Checking if there are any errors.
         if (error) throw error;
 
         let isAllowed = false;
