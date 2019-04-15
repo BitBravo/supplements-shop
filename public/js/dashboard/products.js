@@ -79,4 +79,22 @@ $("document").ready(() => {
 	$("#brand-logo").on("change", function() {
 		$("#products-creation-preview").attr("src", $(this).val());
 	});
+
+	$('#product-creation-form').on('submit', (e) => {
+
+		e.preventDefault();
+
+		const data = {
+			productName: $('#product-name').val(),
+			productImage: $('#product-image').val(),
+			productNutrition: $('#product-nutrition').val(),
+			productDescription: descEditor.container.innerHTML,
+			productUsage: usageEditor.container.innerHTML,
+			productWarning: warningEditor.innerHTML,
+			productCategory: $('#product-category').val(),
+			ProductBrand: $('#product-brand').val()
+		};
+
+		console.log(data);
+	})
 });
