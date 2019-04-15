@@ -118,22 +118,59 @@ $('document').ready(() => {
 			// Affecting the retrieved values.
 			$('#product-edition-modal [name=product-id]').val(productID);
 			$('#product-edition-modal [name=product-name]').val(
-				data.ProductName
+				data[0][0].ProductName
 			);
 			$('#product-edition-modal [name=product-image]').val(
-				data.ProductImage
+				data[0][0].ProductImage
 			);
 			$('#product-edition-modal [name=product-nutrition]').val(
-				data.NutritionInfo
+				data[0][0].NutritionInfo
 			);
-			descEditorEdit.clipboard.dangerouslyPasteHTML(data.Description);
-			usageEditorEdit.clipboard.dangerouslyPasteHTML(data.Usage);
-			warningEditorEdit.clipboard.dangerouslyPasteHTML(data.Warning);
-			$('#product-category-edit').val(data.CategoryID);
-			$('#product-brand-edit').val(data.BrandID);
+			descEditorEdit.clipboard.dangerouslyPasteHTML(
+				data[0][0].Description
+			);
+			usageEditorEdit.clipboard.dangerouslyPasteHTML(data[0][0].Usage);
+			warningEditorEdit.clipboard.dangerouslyPasteHTML(
+				data[0][0].Warning
+			);
+			$('#product-category-edit').val(data[0][0].CategoryID);
+			$('#product-brand-edit').val(data[0][0].BrandID);
+
+			$('#edition-stock-list').empty();
+			$.each(data[1], (i, v) => {
+				let flavorsDropdown = '<select>';
+
+				$.each(data[2], (i, _v) => {
+					flavorsDropdown += `
+					<option ${_v.FlavorID == v.FlavorID ? 'selected' : ''} value="${_v.FlavorID}">${
+						_v.FlavorName
+					}</option>
+					`;
+				});
+
+				flavorsDropdown += '</select>';
+
+				$('#edition-stock-list').append(`
+				<tr>
+					<td></td>
+					<td class="center-align">
+						<input type="number" name="stock-quantity" value="${v.Quantity}">
+					</td>
+					<td class="center-align">
+						<input type="number" name="stock-weight" value="${v.Weight}">
+					</td>
+					<td class="center-align">
+						<input type="number" name="stock-price" value="${v.Price}">
+					</td>
+					<td class="center-align">
+						${flavorsDropdown}
+					</td>
+				</tr>
+				`);
+			});
 
 			// Updating the dropdowns.
-			$('#product-category-edit, #product-brand-edit').formSelect();
+			$('#product-category-edit, #product-brand-edit, #edition-stock-list select').formSelect();
 
 			$('#product-edition-modal').modal('open');
 		});
