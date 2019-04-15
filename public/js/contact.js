@@ -19,10 +19,10 @@ $('document').ready(() => {
 
             if (data.sent === true) {
 
-                M.toast({html: 'Message sent!'});
+                M.toast({html: 'تم الارسال'});
             } else {
 
-                M.toast({html: 'Something went wrong!'});
+                M.toast({html: 'هناك خطأ ما'});
             }
         });
     });
