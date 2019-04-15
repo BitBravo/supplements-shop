@@ -137,7 +137,7 @@ router.post('/', function (req, res) {
 router.delete('/', login, function (req, res) {
 
     const
-        ids = req.body['ids[]'],
+        ids = req.body.ids,
         stmt = mysql.format("UPDATE ?? SET ?? = ? WHERE ?? IN (?);", ['Mail', 'Read', 1, 'MailID', ids]);
 
     conn.query(stmt, (error, results) => {
@@ -153,7 +153,7 @@ router.delete('/', login, function (req, res) {
 router.put('/', login, function (req, res) {
 
     const
-        ids = req.body['ids[]'],
+        ids = req.body.ids,
         stmt = mysql.format("UPDATE ?? SET ?? = ? WHERE ?? IN (?);", ['Mail', 'Read', 0, 'MailID', ids]);
 
     conn.query(stmt, (error, results) => {
