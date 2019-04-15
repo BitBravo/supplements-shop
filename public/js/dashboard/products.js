@@ -90,6 +90,7 @@ $('document').ready(() => {
 		$('#products-creation-preview').attr('src', $(this).val());
 	});
 
+	// Creating the product.
 	$('#product-creation-form').on('submit', e => {
 		e.preventDefault();
 
@@ -109,6 +110,7 @@ $('document').ready(() => {
 		setTimeout(() => window.location.reload(), 2000);
 	});
 
+	// Opening the product edition modal.
 	$('.product-list tr').on('click', function() {
 		const productID = $(this).data('product-id');
 
@@ -124,9 +126,9 @@ $('document').ready(() => {
 			$('#product-edition-modal [name=product-nutrition]').val(
 				data.NutritionInfo
 			);
-			descEditorEdit.container.innerHTML = data.Description;
-			usageEditorEdit.container.innerHTML = data.Usage;
-			warningEditorEdit.container.innerHTML = data.Warning;
+			descEditorEdit.clipboard.dangerouslyPasteHTML(data.Description);
+			usageEditorEdit.clipboard.dangerouslyPasteHTML(data.Usage);
+			warningEditorEdit.clipboard.dangerouslyPasteHTML(data.Warning);
 			$('#product-category-edit').val(data.CategoryID);
 			$('#product-brand-edit').val(data.BrandID);
 
@@ -134,6 +136,36 @@ $('document').ready(() => {
 			$('#product-category-edit, #product-brand-edit').formSelect();
 
 			$('#product-edition-modal').modal('open');
+		});
+	});
+
+	// Editing the product.
+	$('#product-edition-form').on('submit', e => {
+		e.preventDefault();
+
+		$.ajax({
+			url: '/dashboard/products',
+			type: 'PUT',
+			data: {
+				productID: $('#product-edition-modal [name=product-id]').val(),
+				productName: $(
+					'#product-edition-modal [name=product-name]'
+				).val(),
+				productImage: $(
+					'#product-edition-modal [name=product-image]'
+				).val(),
+				productNutrition: $(
+					'#product-edition-modal [name=product-nutrition]'
+				).val(),
+				description: descEditorEdit.container.innerHTML,
+				usage: usageEditorEdit.container.innerHTML,
+				warning: warningEditorEdit.container.innerHTML,
+				categoryID: $('#product-category-edit').val(),
+				brandID: $('#product-brand-edit').val()
+			},
+			success: data => {
+				window.location.reload();
+			}
 		});
 	});
 

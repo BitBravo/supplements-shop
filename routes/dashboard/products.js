@@ -165,22 +165,39 @@ router.post('/', function(req, res) {
 
 // Setting up the product edition route.
 router.put('/', function(req, res) {
-	const stmt = conn.format('UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;', [
-		'Brands',
-		'BrandName',
-		req.body['brand-name'],
-		'Logo',
-		req.body['brand-logo'],
-		'BrandID',
-		req.body['brand-id']
-	]);
+	const stmt = conn.format(
+		'\
+		UPDATE ?? SET ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?; \
+	',
+		[
+			'Products',
+			'ProductName',
+			req.body.productName,
+			'ProductImage',
+			req.body.productImage,
+			'NutritionInfo',
+			req.body.productNutrition,
+			'Description',
+			req.body.description,
+			'Usage',
+			req.body.usage,
+			'Warning',
+			req.body.warning,
+			'CategoryID',
+			req.body.categoryID,
+			'BrandID',
+			req.body.brandID,
+			'ProductID',
+			req.body.productID
+		]
+	);
 
 	conn.query(stmt, (error, results) => {
 		// Checking if the there are any errors.
 		if (error) throw error;
 
 		// Rendering the products page.
-		res.redirect('/dashboard/products');
+		res.send();
 	});
 });
 
