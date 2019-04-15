@@ -151,10 +151,12 @@
                                             </thead>
                                             <tbody>
                                                 {{#each Data.Products }}
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <tr>
+                                                    <td>{{ this.ProductName }}</td>
+                                                    <td>{{ this.Quantity }}</td>
+                                                    <td>{{ this.Category }}</td>
+                                                    <td>{{ formateDate this.AddedDate }}</td>
+                                                </tr>
                                                 {{/each}}
                                             </tbody>
                                         </table>

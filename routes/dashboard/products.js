@@ -25,7 +25,7 @@ router.get("/", function(req, res) {
 		"\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT * FROM `Products` ORDER BY `ProductName` ASC;\
+        SELECT P.*, C.`CategoryName` AS `Category`, (SELECT SUM(PV.`Quantity`) FROM `ProductsVariants` PV WHERE PV.`ProductID` = P.`ProductID`) AS `Quantity` FROM `Products` P INNER JOIN `Categories` C ON P.`CategoryID` = C.`CategoryID` ORDER BY P.`ProductName` ASC;\
         SELECT * FROM `Categories` WHERE `CategoryParent` > 0 ORDER BY `CategoryName` ASC;\
         SELECT * FROM `Brands` ORDER BY `BrandName` ASC;\
         SELECT * FROM `Flavors` ORDER BY `FlavorName` ASC;\
@@ -71,7 +71,7 @@ router.get("/", function(req, res) {
 				Data: data
 			});
 		}
-	);
+    );
 });
 
 // Setting the product creation route.
