@@ -11,21 +11,21 @@
             <div class="row">
                 <div class="card-panel">
                     <div class="row valign-wrapper">
-                        <div class="col s9">
-                            <h4 class="grey-text">
-                                <i class="fa fa-envelope"></i>
-                                Mail [{{ Data.Mail.length }}]
-                            </h4>
-                        </div>
                         <div class="col s3 right-align">
                             <div class="input-field">
                                 <select id="mail-mode-select">
-                                    <option value="1" {{select Data.Mode 0}}>All</option>
-                                    <option value="2" {{select Data.Mode 1}}>Read</option>
-                                    <option value="3" {{select Data.Mode 2}}>Unread</option>
+                                    <option value="1" {{select Data.Mode 0}}>جميع الرسائل</option>
+                                    <option value="2" {{select Data.Mode 1}}>الرسائل المقروءة</option>
+                                    <option value="3" {{select Data.Mode 2}}>الرسائل غير المقروءة</option>
                                 </select>
-                                <label>Show</label>
+                                <label>عرض</label>
                             </div>
+                        </div>
+                        <div class="col s9">
+                            <h4 class="grey-text right-align">
+                                [{{ Data.Mail.length }}] البريد
+                                <i class="fa fa-envelope"></i>
+                            </h4>
                         </div>
                     </div>
                     <div class="row">
@@ -36,7 +36,7 @@
                                         <th>
                                             <label id="select-all-mail-btn">
                                                 <input type="checkbox" class="filled-in" />
-                                                <span id="select-all-label">Select all</span>
+                                                <span id="select-all-label">اختيار الكل</span>
                                             </label>
                                         </th>
                                         <th class="grey-text mail-control-buttons right-align" colspan="2">
@@ -74,14 +74,17 @@
 
     <div id="mail-modal" class="modal modal-fixed-footer">
         <div class="modal-content">
-            <h4><i class="fa fa-envelope"></i> Mail</h4>
+            <h4 class="right-align">
+                البريد
+                <i class="fa fa-envelope"></i>
+            </h4>
 
             <div class="mail-content">
-                <p>A bunch of text</p>
+                <p></p>
             </div>
         </div>
         <div class="modal-footer">
-            <a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
         </div>
     </div>
 
