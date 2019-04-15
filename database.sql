@@ -133,24 +133,25 @@ CREATE TABLE IF NOT EXISTS `Products` (
 
 -- ProductsVariants.
 CREATE TABLE IF NOT EXISTS `ProductsVariants` (
+    `VariantID`         INT NOT NULL AUTO_INCREMENT,
     `ProductID`         INT NOT NULL,
     `FlavorID`          SMALLINT NOT NULL,
     `Weight`            SMALLINT NOT NULL,
     `Quantity`          SMALLINT NOT NULL DEFAULT 0,
 
-    CONSTRAINT pk_products_variants_id PRIMARY KEY (`ProductID`),
+    CONSTRAINT pk_products_variants_id PRIMARY KEY (`VariantID`),
     CONSTRAINT fk_products_variants_id FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`),
     CONSTRAINT fk_products_variants_flv FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
 );
 
 -- PriceHistory.
 CREATE TABLE IF NOT EXISTS `PriceHistory` (
-    `ProductID`         INT NOT NULL,
+    `VariantID`         INT NOT NULL,
     `Price`             DOUBLE NOT NULL,
     `ActivatedDate`     DATETIME NOT NULL DEFAULT NOW(),
 
-    CONSTRAINT pk_price_history_id PRIMARY KEY (`ProductID`, `ActivatedDate`),
-    CONSTRAINT fk_price_history_id FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`)
+    CONSTRAINT pk_price_history_id PRIMARY KEY (`VariantID`, `ActivatedDate`),
+    CONSTRAINT fk_price_history_id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`)
 );
 
 -- OrderStates.
