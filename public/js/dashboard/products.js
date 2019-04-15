@@ -31,7 +31,6 @@ $("document").ready(() => {
 		$("#product-creation-stock-quantity").val("");
 		$("#product-creation-stock-weight").val("");
 		$("#product-creation-stock-price").val("");
-		$("#product-creation-stock-flavor").val("");
 
 		$(".stock-list").append(`
             <tr>
@@ -91,16 +90,14 @@ $("document").ready(() => {
 			productNutrition: $("#product-nutrition").val(),
 			productDescription: descEditor.container.innerHTML,
 			productUsage: usageEditor.container.innerHTML,
-			productWarning: warningEditor.innerHTML,
+			productWarning: warningEditor.container.innerHTML,
 			productCategory: $("#product-category").val(),
-			ProductBrand: $("#product-brand").val(),
+			productBrand: $("#product-brand").val(),
 			stock: getStock()
 		};
 
-		$.post('/dashboard/products', data, function (response) {
-
-			console.log(response);
-		});
+		$.post("/dashboard/products", data);
+		setTimeout(() => window.location.reload(), 2000);
 	});
 
 	function addStockRemovingEvent() {
@@ -117,10 +114,18 @@ $("document").ready(() => {
 
 		$.each($(".stock-list tr"), (i, v) => {
 			stock.push({
-				quantity: $(v).find('[name=stock-quantity]').val(),
-				weight: $(v).find('[name=stock-weight]').val(),
-				price: $(v).find('[name=stock-price]').val(),
-				flavor: $(v).find('[name=stock-flavor]').val()
+				quantity: $(v)
+					.find("[name=stock-quantity]")
+					.val(),
+				weight: $(v)
+					.find("[name=stock-weight]")
+					.val(),
+				price: $(v)
+					.find("[name=stock-price]")
+					.val(),
+				flavorID: $(v)
+					.find("[name=stock-flavor]")
+					.val()
 			});
 		});
 

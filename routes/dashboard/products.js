@@ -1,118 +1,172 @@
 // Importing the dependancies.
-const
-    express = require('express'),
-    mysql = require('mysql'),
-    database = require('../../helpers/database'),
-    getCopyrightDate = require('../../helpers/copyright'),
-    login = require('./../../helpers/login'),
-    conn = mysql.createConnection({
-        database: database.name,
-        host: database.host,
-        password: database.password,
-        user: database.user,
-        multipleStatements: true
-    }),
-    router = express.Router();
-
+const express = require("express"),
+	mysql = require("mysql"),
+	database = require("../../helpers/database"),
+	getCopyrightDate = require("../../helpers/copyright"),
+	login = require("./../../helpers/login"),
+	conn = mysql.createConnection({
+		database: database.name,
+		host: database.host,
+		password: database.password,
+		user: database.user,
+		multipleStatements: true
+	}),
+	router = express.Router();
 
 // Connecting to the database.
 conn.connect();
 
-
 // Using the login middleware.
 router.use(login);
 
-
 // Setting up the products route.
-router.get('/', function (req, res) {
-
-    conn.query('\
+router.get("/", function(req, res) {
+	conn.query(
+		"\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
         SELECT * FROM `Products` ORDER BY `ProductName` ASC;\
         SELECT * FROM `Categories` WHERE `CategoryParent` > 0 ORDER BY `CategoryName` ASC;\
         SELECT * FROM `Brands` ORDER BY `BrandName` ASC;\
         SELECT * FROM `Flavors` ORDER BY `FlavorName` ASC;\
-    ', (error, results) => {
+    ",
+		(error, results) => {
+			// Checking if the there are any errors.
+			if (error) throw error;
 
-            // Checking if the there are any errors.
-            if (error) throw error;
+			// Getting the data.
+			const data = {
+				Config: {
+					Phone: {
+						Primary: results[0][0].PrimaryNumber,
+						Secondary: results[0][0].SecondaryNumber,
+						Fixed: results[0][0].FixedNumber
+					},
+					Email: results[0][0].Email,
+					Facebook: {
+						Name: results[0][0].Facebook.split("|")[0],
+						Link: results[0][0].Facebook.split("|")[1]
+					},
+					Instagram: {
+						Name: results[0][0].Instagram.split("|")[0],
+						Link: results[0][0].Instagram.split("|")[1]
+					},
+					Youtube: {
+						Name: results[0][0].Youtube.split("|")[0],
+						Link: results[0][0].Youtube.split("|")[1]
+					}
+				},
+				NewMail: results[1][0].NewMail,
+				Products: results[2],
+				Categories: results[3],
+				Brands: results[4],
+				Flavors: results[5]
+			};
 
-            // Getting the data.
-            const data = {
-                Config: {
-                    Phone: {
-                        Primary: results[0][0].PrimaryNumber,
-                        Secondary: results[0][0].SecondaryNumber,
-                        Fixed: results[0][0].FixedNumber
-                    },
-                    Email: results[0][0].Email,
-                    Facebook: {
-                        Name: results[0][0].Facebook.split('|')[0],
-                        Link: results[0][0].Facebook.split('|')[1]
-                    },
-                    Instagram: {
-                        Name: results[0][0].Instagram.split('|')[0],
-                        Link: results[0][0].Instagram.split('|')[1]
-                    },
-                    Youtube: {
-                        Name: results[0][0].Youtube.split('|')[0],
-                        Link: results[0][0].Youtube.split('|')[1]
-                    },
-                },
-                NewMail: results[1][0].NewMail,
-                Products: results[2],
-                Categories: results[3],
-                Brands: results[4],
-                Flavors: results[5]
-            };
+			// Getting the proper copyright date.
+			data.CopyrightDate = getCopyrightDate();
 
-            // Getting the proper copyright date.
-            data.CopyrightDate = getCopyrightDate();
-
-            // Rendering the products page.
-            res.render('dashboard/products', {
-                Data: data
-            });
-        });
+			// Rendering the products page.
+			res.render("dashboard/products", {
+				Data: data
+			});
+		}
+	);
 });
-
 
 // Setting the product creation route.
-router.post('/', function (req, res) {
+router.post("/", function(req, res) {
+	const stmt = conn.format(
+		"\
+        INSERT INTO ?? (??, ??, ??, ??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?); \
+        ",
+		[
+			"Products",
+			"ProductName",
+			"ProductImage",
+			"NutritionInfo",
+			"Description",
+			"Usage",
+			"Warning",
+			"AddedDate",
+			"CategoryID",
+			"BrandID",
+			req.body.productName,
+			req.body.productImage,
+			req.body.productNutrition,
+			req.body.productDescription,
+			req.body.productUsage,
+			req.body.productWarning,
+			req.body.productCategory,
+			req.body.productBrand
+		]
+	);
 
-    console.log(req.body);
-    res.send('Product created!');
-    //const
-        //stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Brands', 'BrandName', 'Logo', req.body['brand-name'], req.body['brand-logo']]);
+	conn.query(stmt, (error, results) => {
+		// Checking if the there are any errors.
+		if (error) throw error;
 
-    /*conn.query(stmt, (error, results) => {
+		req.body.stock.forEach((s, i) => {
+			const _stmt = conn.format(
+				"INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, ?);",
+				[
+					"ProductsVariants",
+					"ProductID",
+					"Quantity",
+					"Weight",
+					"FlavorID",
+					results.insertId,
+					s.quantity,
+					s.weight,
+					s.flavorID
+				]
+			);
 
-        // Checking if the there are any errors.
-        if (error) throw error;
+			conn.query(_stmt, (_error, _results) => {
+				// Checking if the there are any errors.
+				if (_error) throw _error;
 
-        // Rendering the products page.
-        res.redirect('/dashboard/products');
-    });*/
+				const __stmt = conn.format(
+					"INSERT INTO ?? (??, ??, ??) VALUES (?, ?, NOW());",
+					[
+						"PriceHistory",
+						"VariantID",
+						"Price",
+						"ActivatedDate",
+						_results.insertId,
+						s.price
+					]
+				);
+
+				conn.query(__stmt, (__error, __results) => {
+					// Checking if the there are any errors.
+					if (__error) throw __error;
+				});
+			});
+		});
+	});
 });
-
 
 // Setting up the product edition route.
-router.put('/', function (req, res) {
+router.put("/", function(req, res) {
+	const stmt = conn.format("UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;", [
+		"Brands",
+		"BrandName",
+		req.body["brand-name"],
+		"Logo",
+		req.body["brand-logo"],
+		"BrandID",
+		req.body["brand-id"]
+	]);
 
-    const
-        stmt = conn.format('UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;', ['Brands', 'BrandName', req.body['brand-name'], 'Logo', req.body['brand-logo'], 'BrandID', req.body['brand-id']]);
+	conn.query(stmt, (error, results) => {
+		// Checking if the there are any errors.
+		if (error) throw error;
 
-    conn.query(stmt, (error, results) => {
-
-        // Checking if the there are any errors.
-        if (error) throw error;
-
-        // Rendering the products page.
-        res.redirect('/dashboard/products');
-    });
+		// Rendering the products page.
+		res.redirect("/dashboard/products");
+	});
 });
-
 
 // Exporting the route.
 module.exports = router;
