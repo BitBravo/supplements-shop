@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT B.*, (SELECT A.`CategoryName` FROM `Categories` A WHERE A.`CategoryID` = B.`CategoryParent`) AS `CategoryParentName` FROM `Categories` B;\
+        SELECT B.*, (SELECT A.`CategoryName` FROM `Categories` A WHERE A.`CategoryID` = B.`CategoryParent`) AS `CategoryParentName` FROM `Categories` B ORDER BY B.CategoryParent, B.CategoryName;\
     ', (error, results) => {
 
             // Checking if the there are any errors.
