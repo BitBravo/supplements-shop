@@ -29,9 +29,9 @@ module.exports = {
 	 */
 	categoryTag: function(categoryParent) {
 		if (categoryParent == null) {
-			return "Parent category";
+			return "فئة رئيسية";
 		} else {
-			return `Sub category of ${categoryParent}`;
+			return `فئة فرعية - ${categoryParent}`;
 		}
 	},
 

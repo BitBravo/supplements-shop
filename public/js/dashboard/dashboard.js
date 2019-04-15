@@ -2,7 +2,7 @@ $('document').ready(() => {
 
     const
         labels = {
-            months: ['January', 'February', 'Mars', 'April', 'May', 'June', 'Jule', 'August', 'Septembre', 'October', 'Novembre', 'Decembre']
+            months: ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
         },
         ordersTarget = $('#orders-chart'),
         revenueTarget = $('#revenue-chart');
@@ -17,7 +17,7 @@ $('document').ready(() => {
                 data: {
                     labels: labels.months,
                     datasets: [{
-                        label: 'Orders per month',
+                        label: 'الطلبات الشهرية',
                         data: [10, 3, 6, 12, 7, 3, 15, 20, 22, 15, 10, 13]
                     }]
                 },
@@ -43,7 +43,7 @@ $('document').ready(() => {
                 data: {
                     labels: labels.months,
                     datasets: [{
-                        label: 'Revenue per month',
+                        label: 'الإيرادات الشهرية',
                         data: [700, 1300, 1600, 200, 700, 700, 800, 3500, 2200, 1000, 1400, 900]
                     }]
                 },

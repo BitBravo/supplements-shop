@@ -15,7 +15,7 @@ $('document').ready(() => {
             success: () => {
 
                 toggleReadStatus(selectedEmails, true);
-                M.toast({ html: 'Message(s) marked as read!' });
+                M.toast({ html: 'تمت قراءة الرسائل' });
             }
         });
     });
@@ -32,7 +32,7 @@ $('document').ready(() => {
             success: () => {
 
                 toggleReadStatus(selectedEmails, false);
-                M.toast({ html: 'Message(s) marked as unread!' });
+                M.toast({ html: 'تم تعليم الرسائل كغير مقروءة' });
             }
         });
     });
