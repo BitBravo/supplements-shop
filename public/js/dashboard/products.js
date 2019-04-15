@@ -23,7 +23,9 @@ $("document").ready(() => {
 			weight = $("#product-creation-stock-weight").val(),
 			flavor = $("#product-creation-stock-flavor").val(),
 			price = $("#product-creation-stock-price").val(),
-			flavorName = $("#product-creation-stock-flavor option:selected").text();
+			flavorName = $(
+				"#product-creation-stock-flavor option:selected"
+			).text();
 
 		// Clearing out the inputs.
 		$("#product-creation-stock-quantity").val("");
@@ -47,7 +49,10 @@ $("document").ready(() => {
                     <input type="hidden" name="stock-weight" value="${weight}">
 				</td>
 				<td class="center-align">
-                    ${new Intl.NumberFormat('ar-MA', { style: 'currency', currency: 'MAD' }).format(price)}
+                    ${new Intl.NumberFormat("ar-MA", {
+						style: "currency",
+						currency: "MAD"
+					}).format(price)}
                     <input type="hidden" name="stock-price" value="${price}">
                 </td>
                 <td class="center-align">
@@ -60,15 +65,6 @@ $("document").ready(() => {
 		addStockRemovingEvent();
 		$("#product-creation-modal").modal("close");
 	});
-
-	function addStockRemovingEvent() {
-		// Removing a stock.
-		$(".stock-remove").on("click", function() {
-			$(this)
-				.closest("tr")
-				.remove();
-		});
-	}
 
 	// Initializing quill.
 	const descEditor = new Quill("#desc-editor", {
@@ -86,21 +82,48 @@ $("document").ready(() => {
 		$("#products-creation-preview").attr("src", $(this).val());
 	});
 
-	$('#product-creation-form').on('submit', (e) => {
-
+	$("#product-creation-form").on("submit", e => {
 		e.preventDefault();
 
 		const data = {
-			productName: $('#product-name').val(),
-			productImage: $('#product-image').val(),
-			productNutrition: $('#product-nutrition').val(),
+			productName: $("#product-name").val(),
+			productImage: $("#product-image").val(),
+			productNutrition: $("#product-nutrition").val(),
 			productDescription: descEditor.container.innerHTML,
 			productUsage: usageEditor.container.innerHTML,
 			productWarning: warningEditor.innerHTML,
-			productCategory: $('#product-category').val(),
-			ProductBrand: $('#product-brand').val()
+			productCategory: $("#product-category").val(),
+			ProductBrand: $("#product-brand").val(),
+			stock: getStock()
 		};
 
-		console.log(data);
-	})
+		$.post('/dashboard/products', data, function (response) {
+
+			console.log(response);
+		});
+	});
+
+	function addStockRemovingEvent() {
+		// Removing a stock.
+		$(".stock-remove").on("click", function() {
+			$(this)
+				.closest("tr")
+				.remove();
+		});
+	}
+
+	function getStock() {
+		const stock = [];
+
+		$.each($(".stock-list tr"), (i, v) => {
+			stock.push({
+				quantity: $(v).find('[name=stock-quantity]').val(),
+				weight: $(v).find('[name=stock-weight]').val(),
+				price: $(v).find('[name=stock-price]').val(),
+				flavor: $(v).find('[name=stock-flavor]').val()
+			});
+		});
+
+		return stock;
+	}
 });

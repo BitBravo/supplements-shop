@@ -81,17 +81,19 @@ router.get('/', function (req, res) {
 // Setting the product creation route.
 router.post('/', function (req, res) {
 
-    const
-        stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Brands', 'BrandName', 'Logo', req.body['brand-name'], req.body['brand-logo']]);
+    console.log(req.body);
+    res.send('Product created!');
+    //const
+        //stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', ['Brands', 'BrandName', 'Logo', req.body['brand-name'], req.body['brand-logo']]);
 
-    conn.query(stmt, (error, results) => {
+    /*conn.query(stmt, (error, results) => {
 
         // Checking if the there are any errors.
         if (error) throw error;
 
         // Rendering the products page.
         res.redirect('/dashboard/products');
-    });
+    });*/
 });
 
 
