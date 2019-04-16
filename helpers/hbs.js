@@ -80,8 +80,7 @@ module.exports = {
      * @param {Object} options The helper's options.
      */
     displayOldPrice: function(oldPrice, newPrice, options) {
-        if (!oldPrice) oldPrice = 0;
-        return oldPrice != newPrice && oldPrice != 0
+        return oldPrice != newPrice && oldPrice != null
             ? options.fn(this)
             : options.inverse(this);
     }
