@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
         '\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
         SELECT * FROM `Brands`; \
-        SELECT P.*, (1) AS `NewPrice`, (0) AS `OldPrice` FROM `Products` P LIMIT 6; \
+        SELECT P.*, PV.`Weight`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 2, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID` LIMIT 6; \
         SELECT P.*, (1) AS `NewPrice`, (0) AS `OldPrice` FROM `Products` P ORDER BY P.`AddedDate` DESC LIMIT 6; \
         ',
         (error, results) => {

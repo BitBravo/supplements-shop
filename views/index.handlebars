@@ -39,6 +39,7 @@
                             </a>
                             <a href="javascript:void(0)" class="black-text">
                                 {{ this.ProductName }}
+                                <small class="weight"><b class="grey-text">(&rlm;{{ this.Weight }} كلغ)</b></small>
                             </a>
                         </span>
                     </div>
@@ -88,7 +89,7 @@
     <div class="container">
         <div class="row">
             {{#each Data.NewestProducts }}
-            <div class="col m12 l6 xl3">
+            <div class="col m12 l6 xl4">
                 <div class="card sticky-action product-card">
                     <div class="card-image waves-effect waves-block waves-light">
                         <img class="activator" src="{{ this.ProductImage }}">
@@ -99,7 +100,7 @@
                                 <i class="material-icons activator right black-text">more_vert</i>
                             </a>
                             <a href="javascript:void(0)" class="black-text">
-                                {{ this.ProductName }}
+                                {{ this.ProductName }} ({{ this.Weight }})
                             </a>
                         </span>
                     </div>
@@ -108,6 +109,20 @@
                             <i class="material-icons right">close</i>
                             {{ this.ProductName }}
                         </span>
+                    </div>
+                    <div class="card-action price right-align">
+                        <div class="row center-align">
+                            <div class="col s12">
+                                <span class="grey-text">
+                                    <del>{{ formatCurrency this.OldPrice }}</del>
+                                </span>
+                            </div>
+                            <div class="col s12">
+                                <span>
+                                    <b class="green-text">{{ formatCurrency this.NewPrice }}</b>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-action right-align">
                         <a href="javascript:void(0)" class="green-text">شراء</a>
