@@ -1,6 +1,5 @@
 // Importing the dependancies.
-const
-    express = require('express'),
+const express = require('express'),
     mysql = require('mysql'),
     database = require('./../helpers/database'),
     getCopyrightDate = require('./../helpers/copyright'),
@@ -13,21 +12,19 @@ const
     }),
     router = express.Router();
 
-
 // Connecting to the database.
 conn.connect();
 
-
 // Setting up index route.
-router.get('/', function (req, res) {
-
-    conn.query('\
+router.get('/', function(req, res) {
+    conn.query(
+        '\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
         SELECT * FROM `Brands`; \
-        SELECT * FROM `Products`; \
+        SELECT P.* FROM `Products` P LIMIT 9; \
+        SELECT P.* FROM `Products` P ORDER BY P.`AddedDate` DESC LIMIT 9; \
         ',
         (error, results) => {
-
             // Checking if there are any errors.
             if (error) throw error;
 
@@ -54,7 +51,8 @@ router.get('/', function (req, res) {
                     }
                 },
                 Brands: results[1],
-                Products: results[2]
+                TopProducts: results[2],
+                NewestProducts: results[3]
             };
 
             // Getting the proper copyright date.
@@ -64,9 +62,9 @@ router.get('/', function (req, res) {
             res.render('index', {
                 Data: data
             });
-        });
+        }
+    );
 });
-
 
 // Exporting the route.
 module.exports = router;
