@@ -21,7 +21,6 @@ const
     exphbs = require('express-handlebars'),
     mysql = require('mysql'),
     database = require('./helpers/database'),
-    login = require('./helpers/login'),
     getCopyrightDate = require('./helpers/copyright'),
     conn = mysql.createConnection({
         database: database.name,
@@ -34,6 +33,7 @@ const
     routers = {
         dashboard: require('./routes/dashboard/dashboard'),
         index: require('./routes/index'),
+        product: require('./routes/product'),
         login: require('./routes/login'),
         search: require('./routes/search')
     };
@@ -82,6 +82,7 @@ conn.connect();
 
 // Routing.
 app.use(routers.index);
+app.use('/product', routers.product);
 app.use('/search', routers.search);
 app.use('/dashboard', routers.dashboard);
 app.use('/login', routers.login);
