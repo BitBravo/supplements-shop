@@ -1,9 +1,17 @@
 .product-card {
+    .card-content {
+        height: 150px;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
     .card-image {
         padding: 30px;
     }
 
     .price {
+        height: 100px;
+
         del {
             font-size: 16px;
         }
