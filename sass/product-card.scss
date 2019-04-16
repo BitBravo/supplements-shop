@@ -1,5 +1,10 @@
 .product-card {
 
+    .card-content {
+
+        height: 100px;
+    }
+
     &:hover {
         top: -5px;
     }
