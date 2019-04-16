@@ -3,6 +3,10 @@
         height: 150px;
         max-height: 150px;
         overflow-y: auto;
+
+        .card-title {
+            margin-bottom: 20px;
+        }
     }
 
     .card-image {
