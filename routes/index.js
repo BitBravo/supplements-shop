@@ -24,6 +24,7 @@ router.get('/', function (req, res) {
     conn.query('\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
         SELECT * FROM `Brands`; \
+        SELECT * FROM `Products`; \
         ',
         (error, results) => {
 
@@ -52,7 +53,8 @@ router.get('/', function (req, res) {
                         Link: results[0][0].Youtube.split('|')[1]
                     }
                 },
-                Brands: results[1]
+                Brands: results[1],
+                Products: results[2]
             };
 
             // Getting the proper copyright date.
