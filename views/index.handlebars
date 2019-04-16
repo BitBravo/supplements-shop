@@ -39,7 +39,8 @@
                             </a>
                             <a href="javascript:void(0)" class="black-text">
                                 {{ this.ProductName }}
-                                <small class="weight"><b class="grey-text">(&rlm;{{ this.Weight }} كلغ)</b></small>
+                                <div class="chip">&rlm;{{ this.Weight }} كلغ</div>
+                                <div class="chip">&rlm;{{ this.FlavorName }}</div>
                             </a>
                         </span>
                     </div>
@@ -51,11 +52,13 @@
                     </div>
                     <div class="card-action price right-align">
                         <div class="row center-align">
+                            {{#displayOldPrice this.OldPrice this.NewPrice}}
                             <div class="col s12">
                                 <span class="grey-text">
                                     <del>{{ formatCurrency this.OldPrice }}</del>
                                 </span>
                             </div>
+                            {{/displayOldPrice}}
                             <div class="col s12">
                                 <span>
                                     <b class="green-text">{{ formatCurrency this.NewPrice }}</b>
@@ -100,7 +103,9 @@
                                 <i class="material-icons activator right black-text">more_vert</i>
                             </a>
                             <a href="javascript:void(0)" class="black-text">
-                                {{ this.ProductName }} ({{ this.Weight }})
+                                {{ this.ProductName }}
+                                <div class="chip">&rlm;{{ this.Weight }} كلغ</div>
+                                <div class="chip">&rlm;{{ this.FlavorName }}</div>
                             </a>
                         </span>
                     </div>
@@ -112,11 +117,13 @@
                     </div>
                     <div class="card-action price right-align">
                         <div class="row center-align">
+                            {{#displayOldPrice this.OldPrice this.NewPrice}}
                             <div class="col s12">
                                 <span class="grey-text">
                                     <del>{{ formatCurrency this.OldPrice }}</del>
                                 </span>
                             </div>
+                            {{/displayOldPrice}}
                             <div class="col s12">
                                 <span>
                                     <b class="green-text">{{ formatCurrency this.NewPrice }}</b>
