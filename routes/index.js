@@ -21,8 +21,8 @@ router.get('/', function(req, res) {
         '\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
         SELECT * FROM `Brands`; \
-        SELECT P.* FROM `Products` P LIMIT 9; \
-        SELECT P.* FROM `Products` P ORDER BY P.`AddedDate` DESC LIMIT 9; \
+        SELECT P.*, (1) AS `NewPrice`, (0) AS `OldPrice` FROM `Products` P LIMIT 6; \
+        SELECT P.*, (1) AS `NewPrice`, (0) AS `OldPrice` FROM `Products` P ORDER BY P.`AddedDate` DESC LIMIT 6; \
         ',
         (error, results) => {
             // Checking if there are any errors.
