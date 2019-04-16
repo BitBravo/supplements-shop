@@ -70,5 +70,19 @@ module.exports = {
             style: 'currency',
             currency: 'MAD'
         }).format(value);
+    },
+
+    /**
+     * Decides whether or not to print the old price.
+     *
+     * @param {Decimal} oldPrice The old price.
+     * @param {Decimal} newPrice The new price.
+     * @param {Object} options The helper's options.
+     */
+    displayOldPrice: function(oldPrice, newPrice, options) {
+        if (!oldPrice) oldPrice = 0;
+        return oldPrice != newPrice && oldPrice != 0
+            ? options.fn(this)
+            : options.inverse(this);
     }
 };
