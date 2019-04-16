@@ -1,0 +1,41 @@
+.product-card {
+
+    &:hover {
+        top: -5px;
+    }
+
+    .card-image {
+        padding: 30px;
+    }
+
+    .price-tag {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        text-transform: uppercase;
+
+        .price {
+            border: 1px solid $color-light;
+            display: flex;
+            flex-direction: column;
+            padding: 2px 15px;
+            width: 100%;
+
+            span:first-of-type {
+                text-decoration: line-through;
+                font-style: italic;
+            }
+
+            span:last-of-type {
+                font-weight: bold;
+            }
+        }
+
+        .discount {
+            display: flex;
+            flex-direction: column;
+            font-weight: bold;
+            padding: 2px 15px;
+        }
+    }
+}

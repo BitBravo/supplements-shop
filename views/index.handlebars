@@ -24,271 +24,32 @@
             </h4>
         </div>
     </div>
-    <div class="row container">
-        <div class="col s4">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img
-                        src="https://cdn.muscleandstrength.com/store/media/mnsresized/promos/accef2/120/0/mega_pre_black_ps_front3.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title"><b>Primeval Labs Mega Pre Blacke</b></span>
-                        <div class="price-tag">
-                            <div class="price">
-                                <span class="grey-text">290.00 DH</span>
-                                <span>145.00 DH</span>
-                            </div>
-                            <div class="discount green">
-                                <span>-50%</span>
-                                <span>Off</span>
-                            </div>
-                        </div>
+    <div class="container">
+        <div class="row">
+            {{#each Data.Products }}
+            <div class="col m12 l6 xl3">
+                <div class="card sticky-action product-card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="{{ this.ProductImage }}">
                     </div>
-                    <div class="card-action">
-                        <a href="javascript:void(0)">Buy</a>
-                        <a href="javascript:void(0)" title="Add to cart">
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ this.ProductName }}<i
+                                class="material-icons right">more_vert</i></span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">
+                            {{ this.ProductName }}<i class="material-icons right">close</i>
+                        </span>
+                    </div>
+                    <div class="card-action right-align">
+                        <a href="javascript:void(0)">شراء</a>
+                        <a href="javascript:void(0)" title="أضف إلى السلة">
                             <i class="fa fa-cart-plus"></i>
                         </a>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col s4">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img
-                        src="https://cdn.muscleandstrength.com/store/media/mnsresized/promos/9c9815/120/0/aminocore111_br_1.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title"><b>AllMax Nutrition AminoCore</b></span>
-                        <div class="price-tag">
-                            <div class="price">
-                                <span class="grey-text">699.00 DH</span>
-                                <span>174.75 DH</span>
-                            </div>
-                            <div class="discount green">
-                                <span>-75%</span>
-                                <span>Off</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="javascript:void(0)">Buy</a>
-                        <a href="javascript:void(0)" title="Add to cart">
-                            <i class="fa fa-cart-plus"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img
-                        src="https://cdn.muscleandstrength.com/store/media/mnsresized/promos/d7946c/120/0/us_gsisolate_44srv_bdaycake.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title"><b>Optimum Nutrition Gold Standard 100% Isolate</b></span>
-                        <div class="price-tag">
-                            <div class="price">
-                                <span class="grey-text">459.00 DH</span>
-                                <span>344.25 DH</span>
-                            </div>
-                            <div class="discount green">
-                                <span>-25%</span>
-                                <span>Off</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="javascript:void(0)">Buy</a>
-                        <a href="javascript:void(0)" title="Add to cart">
-                            <i class="fa fa-cart-plus"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row container">
-        <div class="col s4">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img
-                        src="https://cdn.muscleandstrength.com/store/media/mnsresized/promos/f8a9b4/120/0/cla-plus-carnitine-snow-cone_1_1.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title"><b>BPI Sports CLA + Carnitine</b></span>
-                        <div class="price-tag">
-                            <div class="price">
-                                <span class="grey-text">346.00 DH</span>
-                                <span>121.10 DH</span>
-                            </div>
-                            <div class="discount green">
-                                <span>-65%</span>
-                                <span>Off</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="javascript:void(0)">Buy</a>
-                        <a href="javascript:void(0)" title="Add to cart">
-                            <i class="fa fa-cart-plus"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img
-                        src="https://cdn.muscleandstrength.com/store/media/mnsresized/promos/c05dc8/120/0/outliftfpv4-lg_1_2.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title"><b>Nutrex Outlift</b></span>
-                        <div class="price-tag">
-                            <div class="price">
-                                <span class="grey-text">563.00 DH</span>
-                                <span>422.25 DH</span>
-                            </div>
-                            <div class="discount green">
-                                <span>-25%</span>
-                                <span>Off</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="javascript:void(0)">Buy</a>
-                        <a href="javascript:void(0)" title="Add to cart">
-                            <i class="fa fa-cart-plus"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img
-                        src="https://cdn.muscleandstrength.com/store/media/mnsresized/promos/128784/120/0/man_iso-amino_90serv_sb-sm_1.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title"><b>MAN Sports ISO-Amino</b></span>
-                        <div class="price-tag">
-                            <div class="price">
-                                <span class="grey-text">723.00 DH</span>
-                                <span>144.60 DH</span>
-                            </div>
-                            <div class="discount green">
-                                <span>-80%</span>
-                                <span>Off</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="javascript:void(0)">Buy</a>
-                        <a href="javascript:void(0)" title="Add to cart">
-                            <i class="fa fa-cart-plus"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row container">
-        <div class="col s4">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img
-                        src="https://cdn.muscleandstrength.com/store/media/mnsresized/promos/f8a9b4/120/0/cla-plus-carnitine-snow-cone_1_1.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title"><b>BPI Sports CLA + Carnitine</b></span>
-                        <div class="price-tag">
-                            <div class="price">
-                                <span class="grey-text">346.00 DH</span>
-                                <span>121.10 DH</span>
-                            </div>
-                            <div class="discount green">
-                                <span>-65%</span>
-                                <span>Off</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="javascript:void(0)">Buy</a>
-                        <a href="javascript:void(0)" title="Add to cart">
-                            <i class="fa fa-cart-plus"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img
-                        src="https://cdn.muscleandstrength.com/store/media/mnsresized/promos/c05dc8/120/0/outliftfpv4-lg_1_2.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title"><b>Nutrex Outlift</b></span>
-                        <div class="price-tag">
-                            <div class="price">
-                                <span class="grey-text">563.00 DH</span>
-                                <span>422.25 DH</span>
-                            </div>
-                            <div class="discount green">
-                                <span>-25%</span>
-                                <span>Off</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="javascript:void(0)">Buy</a>
-                        <a href="javascript:void(0)" title="Add to cart">
-                            <i class="fa fa-cart-plus"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col s4">
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img
-                        src="https://cdn.muscleandstrength.com/store/media/mnsresized/promos/128784/120/0/man_iso-amino_90serv_sb-sm_1.jpg">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title"><b>MAN Sports ISO-Amino</b></span>
-                        <div class="price-tag">
-                            <div class="price">
-                                <span class="grey-text">723.00 DH</span>
-                                <span>144.60 DH</span>
-                            </div>
-                            <div class="discount green">
-                                <span>-80%</span>
-                                <span>Off</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="javascript:void(0)">Buy</a>
-                        <a href="javascript:void(0)" title="Add to cart">
-                            <i class="fa fa-cart-plus"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            {{/each}}
         </div>
     </div>
 </section>
@@ -613,7 +374,8 @@
     <div class="row container">
         <div class="col s12">
             <h4>
-                <a class="waves-effect waves-light btn all-products"><i class="fa fa-list"></i> جميع العلامات التجارية</a>
+                <a class="waves-effect waves-light btn all-products"><i class="fa fa-list"></i> جميع العلامات
+                    التجارية</a>
                 <span class="right">ارقى العلامات التجارية</span>
             </h4>
         </div>
@@ -621,9 +383,7 @@
     <div class="row container">
         <div class="carousel brand-carousel">
             {{#each Data.Brands }}
-                <a class="carousel-item"><img
-                        src="{{ this.Logo }}"
-                        alt="{{ this.BrandName }} logo"></a>
+            <a class="carousel-item"><img src="{{ this.Logo }}" alt="{{ this.BrandName }} logo"></a>
             {{/each}}
         </div>
     </div>
