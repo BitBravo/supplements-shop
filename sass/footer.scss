@@ -3,10 +3,14 @@ footer#about {
 		margin-right: 10px;
 	}
 
-	ul.contact-list a {
-		align-items: center;
-		display: flex;
-		flex-direction: row;
+	.collection-item,
+	.collection-header {
+		background-color: transparent;
+		border: none;
+	}
+
+	.contact-list a {
+		border: none;
 		margin-bottom: 10px;
 
 		.fa,
@@ -15,12 +19,7 @@ footer#about {
 		}
 	}
 
-	.shipping-footer {
-		align-items: center;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-
+	.footer-shipping {
 		span {
 			margin-left: 10px;
 		}
@@ -34,6 +33,37 @@ footer#about {
 
 		&:hover {
 			filter: grayscale(10%);
+		}
+	}
+
+	@media screen and (max-width: $tablet-break-point) {
+		.footer-extra,
+		.footer-content {
+			text-align: center;
+		}
+
+		.footer-content .contact-list a {
+			text-align: center;
+		}
+
+		.footer-copyright {
+			height: 80px;
+			position: relative;
+
+			p {
+				left: 50%;
+				margin-left: 20px;
+				position: absolute;
+				text-align: center;
+				top: 0;
+				transform: translateX(-50%);
+			}
+		}
+	}
+
+	@media screen and (max-width: $desktop-break-point) {
+		.footer-content .contact-list a {
+			text-align: center;
 		}
 	}
 }

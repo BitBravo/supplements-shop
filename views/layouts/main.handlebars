@@ -154,15 +154,15 @@
     </a>
 
     {{!-- The main content of the page. --}}
-    <main>
+    <main class="hide-on-med-and-down">
         {{{body}}}
     </main>
 
     {{!-- The footer's partial. --}}
     <footer id="about" class="page-footer grey darken-3">
         <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
+            <div class="row footer-content">
+                <div class="col s12 m12 l12 xl8">
                     <h5 class="white-text">معلومات عنا</h5>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis quisquam fugit cumque quibusdam
                         consequuntur facilis voluptas nemo a? Quod, incidunt ad quia cupiditate placeat non laudantium
@@ -174,46 +174,48 @@
                         ipsum ipsam sapiente consectetur suscipit aliquid velit debitis perferendis corrupti? Dolore
                         cumque ad aperiam voluptates eum.</p>
                 </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">اتصل بنا</h5>
-                    <ul class="contact-list">
-                        <li>
+                <div class="col s12 m12 l12 xl4 contact-list">
+                    <ul class="collection with-header">
+                        <li class="collection-header">
+                            <h5>اتصل بنا</h5>
+                        </li>
+                        <li class="collection-item">
                             <a class="grey-text text-lighten-3" href="#!">
                                 <i class="fa fa-mobile fa-lg"></i>
                                 <span>{{Data.Config.Phone.Primary}}</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="collection-item">
                             <a class="grey-text text-lighten-3" href="#!">
                                 <i class="fa fa-mobile fa-lg"></i>
                                 <span>{{Data.Config.Phone.Secondary}}</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="collection-item">
                             <a class="grey-text text-lighten-3" href="#!">
                                 <i class="fa fa-phone fa-lg"></i>
                                 <span>{{Data.Config.Phone.Fixed}}</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="collection-item">
                             <a class="grey-text text-lighten-3" href="mailto:{{Data.Config.Email}}">
                                 <i class="fa fa-at fa-lg"></i>
                                 <span>{{Data.Config.Email}}</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="collection-item">
                             <a class="grey-text text-lighten-3" href="{{Data.Config.Facebook.Link}}" target="_blank">
                                 <i class="fab fa-facebook fa-lg"></i>
                                 <span>{{Data.Config.Facebook.Name}}</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="collection-item">
                             <a class="grey-text text-lighten-3" href="{{Data.Config.Instagram.Link}}" target="_blank">
                                 <i class="fab fa-instagram fa-lg"></i>
                                 <span>{{Data.Config.Instagram.Name}}</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="collection-item">
                             <a class="grey-text text-lighten-3" href="{{Data.Config.Youtube.Link}}" target="_blank">
                                 <i class="fab fa-youtube fa-lg"></i>
                                 <span>{{Data.Config.Youtube.Name}}</span>
@@ -222,8 +224,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="row">
-                <div class="col s4">
+            <div class="row footer-extra">
+                <div class="col s12 m12 l4">
                     <h5 class="white-text">أهداف</h5>
                     <ul>
                         <li><a class="grey-text lighten-3">Lorem, ipsum dolor.</a></li>
@@ -231,7 +233,7 @@
                         <li><a class="grey-text lighten-3">Lorem ipsum dolor sit.</a></li>
                     </ul>
                 </div>
-                <div class="col s4">
+                <div class="col s12 m12 l4">
                     <h5 class="white-text">معلومات</h5>
                     <ul>
                         <li><a class="grey-text lighten-3">Lorem, ipsum dolor.</a></li>
@@ -239,7 +241,7 @@
                         <li><a class="grey-text lighten-3">Lorem ipsum dolor sit.</a></li>
                     </ul>
                 </div>
-                <div class="col s4">
+                <div class="col s12 m12 l4">
                     <h5 class="white-text">بلوق ومقاطع الفيديو</h5>
                     <ul>
                         <li><a class="grey-text lighten-3">Lorem, ipsum dolor.</a></li>
@@ -250,13 +252,19 @@
             </div>
         </div>
         <div class="footer-copyright grey darken-4">
-            <div class="container">
-                <b>Supplements Maroc</b> &copy; {{Data.CopyrightDate}}
+            <div class="container hide-on-med-and-down">
+                <b>Supplements Maroc</b> {{Data.CopyrightDate}} &copy; جميع الحقوق محفوظة
 
-                <a class="right grey-text shipping-footer" href="http://www.amana-colis.ma/" target="_blank">
+                <a class="right grey-text footer-shipping hide-on-med-and-down valign-wrapper"
+                    href="http://www.amana-colis.ma/" target="_blank">
                     <img class="amana-logo" src="/assets/img/logos/amana-logo.png" alt="Amana logo.">
                     <span>الشحن عبر</span>
                 </a>
+            </div>
+            <div class="hide-on-large-only">
+                <p>
+                    <b>Supplements Maroc</b> {{Data.CopyrightDate}} &copy; جميع الحقوق محفوظة
+                </p>
             </div>
         </div>
     </footer>
