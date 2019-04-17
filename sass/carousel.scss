@@ -1,9 +1,13 @@
 .carousel {
-    height: 700px;
-    margin-top: 60px;
+	height: 700px;
+	margin-top: 60px;
+
+	@media screen and (max-width: $tablet-break-point) {
+		margin-top: 0;
+	}
 }
 
 .brand-carousel {
-    cursor: pointer;
-    height: 250px;
+	cursor: pointer;
+	height: 250px;
 }
