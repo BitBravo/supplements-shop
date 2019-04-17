@@ -1,65 +1,63 @@
 .navbar-fixed {
+	.nav-icon {
+		font-size: 20px;
+	}
 
-    .nav-icon {
-        font-size: 20px;
-    }
+	.brand-logo {
+		margin-left: 10px;
+	}
 
-    .brand-logo {   
-        margin-left: 10px;
-    }
+	.nav-social {
+		opacity: 0.3;
+		transition-duration: 0.3s;
+		transition-property: opacity;
 
-    .nav-social  {
-        opacity: .3;
-        transition-duration: .3s;
-        transition-property: opacity;
+		&:hover {
+			opacity: 0.8;
+		}
 
-        &:hover {
-            opacity: .8;
-        }
+		&:not(:first-of-type) {
+			margin-right: 20px;
+		}
+	}
 
-        &:not(:first-of-type) {
-            margin-right: 20px;
-        }
-    }
+	.nav-phone {
+		font-size: 18px;
+		margin-right: 8px;
+	}
 
-    .nav-phone {
-        font-size: 18px;
-        margin-right: 8px;
-    }
+	.search-field {
+		opacity: 0;
+		transition-duration: 0.3s;
+		transition-property: opacity width;
+		width: 0;
 
-    .search-field {
-        opacity: 0;
-        transition-duration: .3s;
-        transition-property: opacity width;
-        width: 0;
-        
-        input {
-            color: $color-light;
-            padding: 0 10px;
+		input {
+			color: $color-light;
+			padding: 0 10px;
 
-            &:focus {
-                border-bottom: none !important;
-                box-shadow: none !important;
-            }
-        }
+			&:focus {
+				border-bottom: none !important;
+				box-shadow: none !important;
+			}
+		}
 
+		&.field-visible {
+			opacity: 1;
+			width: 300px;
+		}
+	}
 
-        &.field-visible {
-            opacity: 1;
-            width: 300px;
-        }
-    }
+	#cart-button {
+		padding-right: 0;
 
-    #cart-button {
-        padding-right: 0;
-
-        .cart-badge {
-            border-radius: 50%;
-            font-weight: bold;
-            padding: 2px 6px;
-            position: relative;
-            right: 12px;
-            top: -12px;
-        }
-    }
+		.cart-badge {
+			border-radius: 50%;
+			font-weight: bold;
+			padding: 2px 6px;
+			position: relative;
+			right: 12px;
+			top: -12px;
+		}
+	}
 }
