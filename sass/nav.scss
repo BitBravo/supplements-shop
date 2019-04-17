@@ -4,7 +4,7 @@
 	}
 
 	.brand-logo {
-		margin-left: 10px;
+		margin-left: 13px;
 	}
 
 	.nav-social {
@@ -24,28 +24,6 @@
 	.nav-phone {
 		font-size: 18px;
 		margin-right: 8px;
-	}
-
-	.search-field {
-		opacity: 0;
-		transition-duration: 0.3s;
-		transition-property: opacity width;
-		width: 0;
-
-		input {
-			color: $color-light;
-			padding: 0 10px;
-
-			&:focus {
-				border-bottom: none !important;
-				box-shadow: none !important;
-			}
-		}
-
-		&.field-visible {
-			opacity: 1;
-			width: 300px;
-		}
 	}
 
 	#cart-button {

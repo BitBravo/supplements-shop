@@ -29,11 +29,6 @@ $('document').ready(() => {
         },
     });
 
-    // Toggling the search field.
-    $('#search-btn').on('click', () => {
-        $('#search-field').toggleClass('field-visible');
-    });
-
     // Scrolling to the about section.
     $('#about-btn').on('click', () => {
         $([document.documentElement, document.body]).animate({
