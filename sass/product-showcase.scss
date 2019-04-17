@@ -1,13 +1,25 @@
 .product-showcase {
-    height: auto;
-    margin-top: 350px;
-    padding: 30px 0 50px 0;
+	height: auto;
+	margin-top: 350px;
+	padding: 30px 0 50px 0;
 
-    .all-products {
-        display: inline-block;
+	.all-products {
+		display: inline-block;
+		font-weight: bold;
+		margin-top: 12px;
 
-        .fa-list {
-            margin-right: 10px;
+		.fa-list {
+			margin-left: 10px;
+		}
+    }
+    
+    @media screen and (max-width: $tablet-break-point) {
+        h4 {
+            text-align: center;
+        }
+
+        .all-products {
+            width: 100%;
         }
     }
 }
