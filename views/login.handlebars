@@ -1,30 +1,35 @@
 {{!-- The login script. --}}
 <script src="/assets/js/login.js"></script>
 
-<section class="login-section">
-    <div class="login-content z-depth-1 grey lighten-3">
-        <form method="POST" action="/login" id="login-form">
-            <div class="row">
-                <div class="col s12">
-                    <img src="/assets/img/logos/logo.png" alt="Supplmenets Maroc Logo.">
-                </div>
+<section class="center login-section">
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <div class="login-content z-depth-1 grey lighten-3">
+                <form method="POST" action="/login" id="login-form">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <img src="/assets/img/logos/logo.png" alt="Supplmenets Maroc Logo.">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 m12 l12">
+                            <input id="password-field" type="password" class="validate" name="password" required>
+                            <label for="password-field">كلمه السر</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 m12 l6">
+                            <button class="btn waves-effect waves-light grey darken-3 btn-large" type="submit">تسجيل
+                                الدخول</button>
+                        </div>
+                        <div class="col s12 m12 l6">
+                            <button class="btn waves-effect waves-light grey darken-3 btn-large back-btn"
+                                type="button">عد
+                                للصفحة السابقة</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="password-field" type="password" class="validate" name="password" required>
-                    <label for="password-field">كلمه السر</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s6">
-                    <button class="btn waves-effect waves-light grey darken-3 btn-large" type="submit">تسجيل
-                        الدخول</button>
-                </div>
-                <div class="col s6">
-                    <button class="btn waves-effect waves-light grey darken-3 btn-large back-btn" type="button">عد
-                        للصفحة السابقة</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </section>
