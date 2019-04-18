@@ -1,24 +1,37 @@
 .login-section {
-    align-items: center;
-    display: flex;
-    height: 850px;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 65px;
-    
-    .login-content {
-        padding: 70px 40px;
-        text-align: center;
-        width: 500px;
+	.login-content {
+        margin: 200px auto;
+		padding: 50px 40px;
+		width: 500px;
 
-        img {
-            margin-bottom: 80px;
-            width: 300px;
-        }
+		img {
+			margin: 50px 0;
+			width: 300px;
+		}
 
-        .btn {
-            position: relative;
-            width: 100%;
-        }
-    }
+		.btn {
+			position: relative;
+			width: 100%;
+		}
+	}
+
+	@media screen and (max-width: $tablet-break-point) {
+		.btn[type='submit'] {
+			margin-bottom: 20px;
+		}
+	}
+
+	@media screen and (max-width: $phone-break-point) {
+		padding: 0;
+		width: 100%;
+
+		.btn[type='submit'] {
+			margin-bottom: 20px;
+		}
+
+		img {
+			margin-bottom: 80px;
+			width: 100%;
+		}
+	}
 }
