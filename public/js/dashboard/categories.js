@@ -7,7 +7,7 @@ $('document').ready(() => {
     $('select').formSelect();
 
     // Initializing tabs.
-    $('.dashboard-categories .tabs').tabs({ duration: 50 });
+    $('.dashboard-categories .tabs').tabs();
 
     // Initializing the character counter.
     $('#categories-creation-tab input[type=text], #categories-edition-tab input[type=text]').characterCounter();

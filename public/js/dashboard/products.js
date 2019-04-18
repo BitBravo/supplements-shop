@@ -1,6 +1,6 @@
 $('document').ready(() => {
     // Initializing tabs.
-    $('.dashboard-products .tabs').tabs({ duration: 50 });
+    $('.dashboard-products .tabs').tabs();
 
     // Setting up the dropdowns.
     $('.dashboard-products select').formSelect();
