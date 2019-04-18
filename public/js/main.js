@@ -14,10 +14,11 @@ $('document').ready(() => {
 
     // Initializing the brands carousel.
     $('.brand-carousel').carousel({
-        dist: -10,
+        dist: -50,
         fullWidth: false,
         indicators: true,
-        numVisible: 8
+        numVisible: 5,
+        padding: 100
     });
 
     // Initializing the search box
