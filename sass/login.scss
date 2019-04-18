@@ -1,6 +1,6 @@
 .login-section {
 	.login-content {
-        margin: 200px auto;
+		margin: 200px auto;
 		padding: 50px 40px;
 		width: 500px;
 
@@ -22,16 +22,13 @@
 	}
 
 	@media screen and (max-width: $phone-break-point) {
-		padding: 0;
-		width: 100%;
-
-		.btn[type='submit'] {
-			margin-bottom: 20px;
-		}
-
-		img {
-			margin-bottom: 80px;
-			width: 100%;
+		.login-content {
+            margin: 100px auto;
+            width: auto;
+            
+            img {
+                width: 100%;
+            }
 		}
 	}
 }
