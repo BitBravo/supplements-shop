@@ -4,7 +4,7 @@ $('document').ready(() => {
     $('.message-content input').characterCounter();
 
     // Opening up the contact modal.
-    $('#contact-btn').on('click', () => {
+    $('.contact-btn').on('click', () => {
         (M.Modal.getInstance($('#contact-modal'))).open();
     });
     
