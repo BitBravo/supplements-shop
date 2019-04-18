@@ -43,6 +43,10 @@ footer#about {
 		.footer-copyright {
 			text-align: center;
 		}
+
+		.footer-copyright {
+			margin-bottom: 0;
+		}
 	}
 
 	@media screen and (max-width: $desktop-break-point) {
