@@ -33,9 +33,8 @@ const
     routers = {
         dashboard: require('./routes/dashboard/dashboard'),
         index: require('./routes/index'),
-        product: require('./routes/product'),
-        login: require('./routes/login'),
-        search: require('./routes/search')
+        products: require('./routes/products'),
+        login: require('./routes/login')
     };
 
 
@@ -82,8 +81,7 @@ conn.connect();
 
 // Routing.
 app.use(routers.index);
-app.use('/product', routers.product);
-app.use('/search', routers.search);
+app.use('/products', routers.products);
 app.use('/dashboard', routers.dashboard);
 app.use('/login', routers.login);
 
