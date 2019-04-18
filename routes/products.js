@@ -15,8 +15,8 @@ const express = require('express'),
 // Connecting to the database.
 conn.connect();
 
-// Setting up index route.
-router.get('/:productID', function(req, res) {
+// Setting up products route.
+router.get('/', function(req, res) {
     conn.query(
         '\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
@@ -52,8 +52,8 @@ router.get('/:productID', function(req, res) {
             // Getting the proper copyright date.
             data.CopyrightDate = getCopyrightDate();
 
-            // Rendering the index page.
-            res.render('product', {
+            // Rendering the products page.
+            res.render('products', {
                 Data: data
             });
         }

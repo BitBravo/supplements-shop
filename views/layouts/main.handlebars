@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="ar">
 
 <head>
 
@@ -54,10 +54,13 @@
             <div class="nav-wrapper container">
 
                 <div class="left">
-                    <a href="/" class="brand-logo hide-on-med-and-down" title="Supplement Maroc">SM</a>
-                    <a href="/" class="brand-logo right hide-on-large-only" title="Supplement Maroc">SM</a>
-                    <a href="javascript:void(0)" data-target="nav-sidebar" class="sidenav-trigger"><i
-                            class="material-icons">menu</i></a>
+                    <a href="/" class="left brand-logo" title="Supplement Maroc">SM</a>
+                </div>
+
+                <div class="right">
+                    <a href="javascript:void(0)" data-target="nav-sidebar" class="right sidenav-trigger">
+                        <i class="material-icons">menu</i>
+                    </a>
                 </div>
 
                 <div class="right hide-on-med-and-down">
@@ -86,9 +89,9 @@
                 <div class="nav-wrapper container">
                     <ul class="left">
                         <li><a href="/">الصفحة الرئيسية</a></li>
-                        <li><a href="/search">جميع المنتوجات</a></li>
-                        <li><a href="javascript:void(0)" id="contact-btn">اتصل بنا</a></li>
-                        <li><a href="javascript:void(0)" id="about-btn">معلومات عنا</a></li>
+                        <li><a href="/products">جميع المنتوجات</a></li>
+                        <li><a href="javascript:void(0)" class="contact-btn">اتصل بنا</a></li>
+                        <li><a href="javascript:void(0)" class="about-btn">معلومات عنا</a></li>
                     </ul>
                     <ul class="right">
                         <li id="search-btn">
@@ -108,11 +111,39 @@
             </nav>
 
             {{!-- Nav sidebar. --}}
-            <ul class="sidenav" id="nav-sidebar">
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">Javascript</a></li>
-                <li><a href="mobile.html">Mobile</a></li>
+            <ul class="sidenav right-align" id="nav-sidebar">
+                <li>
+                    <a href="/">
+                        <span dir="ltr">
+                            الصفحة الرئيسية
+                            <i class="fas fa-home"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/products">
+                        <span dir="ltr">
+                            جميع المنتوجات
+                            <i class="fas fa-prescription-bottle"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="contact-btn">
+                        <span dir="ltr">
+                            اتصل بنا
+                            <i class="fas fa-at"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="about-btn">
+                        <span dir="ltr">
+                            معلومات عنا
+                            <i class="fas fa-info-circle"></i>
+                        </span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

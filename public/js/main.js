@@ -3,6 +3,11 @@ $('document').ready(() => {
     // Fading out the scroll to top button by default.
     $('#scroll-to-top').fadeOut(0);
 
+    // Initializing the burger menu's sidenav.
+    $('#nav-sidebar').sidenav({
+        edge: 'right'
+    });
+
     // Initializing the modals.
     $('.modal').modal();
 
@@ -31,7 +36,7 @@ $('document').ready(() => {
     });
 
     // Scrolling to the about section.
-    $('#about-btn').on('click', () => {
+    $('.about-btn').on('click', () => {
         $([document.documentElement, document.body]).animate({
             scrollTop: $("#about").offset().top
         }, 500);
