@@ -1,31 +1,40 @@
 .product-card {
-    .card-content {
-        height: 150px;
-        max-height: 150px;
-        overflow-y: auto;
+	.card-content {
+		height: 150px;
+		max-height: 150px;
+		overflow-y: auto;
 
-        .card-title {
-            margin-bottom: 20px;
-        }
-    }
+		.card-title {
+			margin-bottom: 20px;
+		}
+	}
 
-    .card-image {
-        padding: 30px;
-    }
+	.card-image {
+		padding: 30px;
+	}
 
-    .price {
-        height: 100px;
+	.card-action .btn {
+		font-size: 18px;
+		width: 100%;
 
-        del {
-            font-size: 16px;
-        }
+		&:first-of-type {
+			margin-bottom: 8px;
+		}
+	}
 
-        b {
-            font-size: 24px;
-        }
-    }
+	.price {
+		height: 100px;
 
-    .weight {
-        white-space: nowrap;
-    }
+		del {
+			font-size: 16px;
+		}
+
+		b {
+			font-size: 24px;
+		}
+	}
+
+	.weight {
+		white-space: nowrap;
+	}
 }

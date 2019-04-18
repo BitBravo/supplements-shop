@@ -50,7 +50,7 @@ router.get('/', function(req, res) {
 				},
 				Products: results[1]
 			};
-			
+
 			// Getting the proper copyright date.
 			data.CopyrightDate = getCopyrightDate();
 
