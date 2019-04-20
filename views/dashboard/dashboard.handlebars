@@ -4,13 +4,13 @@
 {{!-- The dashboard script. --}}
 <script src="/assets/js/dashboard/dashboard.js"></script>
 
-<section class="dashboard">
+<div class="dashboard dashboard-section">
     <div class="row">
         <aside class="col s2">
             {{> sidebar NewMail=Data.NewMail}}
         </aside>
 
-        <div class="col s10 dashboard-grid">
+        <div class="col s10 container dashboard__grid">
             <div class="row">
                 <div class="col s3">
                     <div class="card-panel card-label grey-text">
@@ -135,4 +135,4 @@
             </div>
         </div>
     </div>
-</section>
+</div>

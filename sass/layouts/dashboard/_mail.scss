@@ -1,0 +1,53 @@
+/**
+    Mail - The mail page's styling rules.
+*/
+
+@charset 'utf-8';
+
+.dashboard-mail {
+	tr {
+		th:first-of-type,
+		td:first-of-type {
+			width: 200px;
+		}
+
+		th:nth-of-type(2),
+		td:nth-of-type(2) {
+			width: 250px;
+		}
+
+		&.mail {
+			cursor: pointer;
+		}
+
+		&.new {
+			color: $color-dark !important;
+		}
+	}
+
+	.mail-control-buttons .fas {
+		cursor: pointer;
+		font-size: 22px;
+		opacity: 0.4;
+		transition-duration: 0.3s;
+		transition-property: opacity;
+
+		&:not(:last-of-type) {
+			margin-right: 10px;
+		}
+
+		&:hover {
+			opacity: 0.6;
+		}
+	}
+
+	.mail-content {
+		margin-top: 70px;
+
+		textarea {
+			margin-top: 50px;
+			min-height: 300px;
+			resize: none;
+		}
+	}
+}

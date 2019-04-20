@@ -1,13 +1,13 @@
 {{!-- The coupons script. --}}
 <script src="/assets/js/dashboard/coupons.js"></script>
 
-<section class="dashboard dashboard-coupons">
+<div class="dashboard dashboard-coupons">
     <div class="row">
         <aside class="col s2">
             {{> sidebar NewMail=Data.NewMail }}
         </aside>
 
-        <div class="col s10 dashboard-grid">
+        <div class="col s10 container dashboard__grid">
             <div class="row">
                 <div class="card-panel">
                     <div class="row valign-wrapper">
@@ -92,7 +92,8 @@
                                                                     name="coupon-discount" class="validate" max="100"
                                                                     min="1" data-length="3"
                                                                     value="{{ this.CouponDiscount }}" required>
-                                                                <label for="coupon-discount-{{ this.CouponID }}">الخصم</label>
+                                                                <label
+                                                                    for="coupon-discount-{{ this.CouponID }}">الخصم</label>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -142,5 +143,4 @@
             </div>
         </div>
     </div>
-
-</section>
+</div>
