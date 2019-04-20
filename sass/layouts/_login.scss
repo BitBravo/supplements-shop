@@ -5,7 +5,10 @@
 @charset 'utf-8';
 
 .login-section {
+	padding: 150px 0 70px 0;
+
 	&__content {
+		margin: auto;
 		padding: 50px 40px;
 		width: 500px;
 
@@ -20,12 +23,16 @@
 	}
 
 	@media screen and (max-width: $break-point--tablet) {
+		padding: 120px 0 30px 0;
+
 		.login-section__btn[type='submit'] {
 			margin-bottom: 20px;
 		}
 	}
 
 	@media screen and (max-width: $break-point--phone) {
+		padding: 30px 0 0 0;
+
 		.login-section__content {
 			margin: 100px auto;
 			width: auto;
