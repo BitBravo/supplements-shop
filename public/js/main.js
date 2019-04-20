@@ -16,10 +16,10 @@ $('document').ready(() => {
 		indicators: true
 	});
 
-	// Sliding the carousel every 5 seconds.
+	// Sliding the carousel every 8 seconds.
 	setInterval(() => {
 		$('.carousel.carousel-slider').carousel('next');
-	}, 5000);
+	}, 8000);
 
 	// Initializing the brands carousel.
 	$('.carousel.carousel--brands').carousel({
