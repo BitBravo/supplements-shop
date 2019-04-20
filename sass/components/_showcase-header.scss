@@ -1,0 +1,17 @@
+/**
+	Showcase-header - Styling rules for the showcase-header component.
+*/
+
+@charset 'utf-8';
+
+.showcase-header {
+	@media screen and (max-width: $break-point--tablet) {
+		&__btn {
+			width: 100%;
+		}
+
+		&__title {
+			text-align: center;
+		}
+	}
+}

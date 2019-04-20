@@ -1,0 +1,34 @@
+/**
+	Extra-info - Styling rules for the extra-info component.
+*/
+
+@charset 'utf-8';
+
+.extra-info {
+	&__card {
+		height: 450px;
+		position: relative;
+
+		&__content {
+			bottom: 0;
+			position: absolute;
+			width: 100%;
+
+			p {
+				padding-right: 20px;
+
+				span {
+					font-weight: bold;
+					font-size: 2rem;
+				}
+			}
+
+			.fa,
+			.fas,
+			.fab {
+				bottom: 20px;
+				position: absolute;
+			}
+		}
+	}
+}
