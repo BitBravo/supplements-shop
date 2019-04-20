@@ -15,42 +15,44 @@
 		}
 	}
 
-	.footer-copyright {
+	&__copyright {
+		padding: 10px 0;
 		margin-bottom: 0;
 	}
 
-	.footer-shipping {
-		span {
+	&__shipping {
+		.label {
 			margin-left: 10px;
 		}
-	}
 
-	.amana-logo {
-		border-radius: 6px;
-		filter: grayscale(60%);
-		transition-duration: 0.3s;
-		transition-property: filter;
+		.logo {
+			border-radius: 6px;
+			filter: grayscale(60%);
+			transition-duration: 0.3s;
+			transition-property: filter;
 
-		&:hover {
-			filter: grayscale(10%);
+			&:hover {
+				filter: grayscale(10%);
+			}
 		}
 	}
 
 	@media screen and (max-width: $break-point--tablet) {
-		.footer-extra,
+		&__extra,
 		&__content,
-		&__content &__contact-list a,
-		.footer-copyright {
+		&__content &__contact-list,
+		&__copyright {
 			text-align: center;
 		}
 
-		.footer-copyright {
+		&__copyright {
+			padding: 0;
 			margin-bottom: 0;
 		}
 	}
 
 	@media screen and (max-width: $break-point--desktop) {
-		&__content &__contact-list a {
+		&__content &__contact-list {
 			text-align: center;
 		}
 	}
