@@ -1,21 +1,17 @@
-footer#about {
+.footer {
 	.footer-phone-number-icon {
 		margin-right: 10px;
 	}
 
-	.collection-item,
-	.collection-header {
-		background-color: transparent;
-		border: none;
-	}
+	&__contact {
+		.contact-list {
+			.contact-list__item {
+				margin-bottom: 15px;
 
-	.contact-list a {
-		border: none;
-		margin-bottom: 10px;
-
-		.fa,
-		.fab {
-			margin-right: 15px;
+				.contact-list__icon {
+					margin-right: 15px;
+				}
+			}
 		}
 	}
 
@@ -42,8 +38,8 @@ footer#about {
 
 	@media screen and (max-width: $break-point--tablet) {
 		.footer-extra,
-		.footer-content,
-		.footer-content .contact-list a,
+		&__content,
+		&__content &__contact-list a,
 		.footer-copyright {
 			text-align: center;
 		}
@@ -54,7 +50,7 @@ footer#about {
 	}
 
 	@media screen and (max-width: $break-point--desktop) {
-		.footer-content .contact-list a {
+		&__content &__contact-list a {
 			text-align: center;
 		}
 	}

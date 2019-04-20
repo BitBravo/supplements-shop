@@ -1,5 +1,11 @@
+/**
+    Product-card - Styling rules for the product-card component.
+*/
+
+@charset 'utf-8';
+
 .product-card {
-	.card-content {
+	&__content {
 		height: 150px;
 		max-height: 150px;
 		overflow-y: auto;
@@ -9,11 +15,11 @@
 		}
 	}
 
-	.card-image {
-		padding: 30px;
+	&__img {
+		padding: 50px;
 	}
 
-	.card-action .btn {
+	&__btn {
 		font-size: 18px;
 		width: 100%;
 
@@ -22,7 +28,7 @@
 		}
 	}
 
-	.price {
+	&__price {
 		height: 100px;
 
 		del {
@@ -32,9 +38,5 @@
 		b {
 			font-size: 24px;
 		}
-	}
-
-	.weight {
-		white-space: nowrap;
 	}
 }
