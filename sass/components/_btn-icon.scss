@@ -1,0 +1,16 @@
+/**
+	Btn-icon - Styling rules for the btn-icon component.
+*/
+
+@charset 'utf-8';
+
+.btn-icon {
+	font-weight: bold;
+	margin-top: 12px;
+
+	.fa,
+	.fab,
+	.fas {
+		margin-left: 10px;
+	}
+}
