@@ -1,4 +1,4 @@
-{{!-- The carousel0 --}}
+{{!-- The carousel. --}}
 <div class="carousel carousel-slider center">
     <div class="carousel-item grey darken-1 white-text" href="#one!">
         <h2>First Panel</h2>
@@ -86,7 +86,7 @@
             </a>
         </div>
         <div class="col s12 m12 l6">
-            <h4 class="right-align showcase-header__title">أحدث المنتوجات</h4>
+            <h4 class="right-align showcase-header__btn">أحدث المنتوجات</h4>
         </div>
     </div>
     <div class="container">
@@ -94,12 +94,12 @@
             {{#each Data.NewestProducts }}
             <div class="col m12 l6 xl4">
                 <div class="card sticky-action product-card">
-                    <div class="card-image waves-effect waves-block waves-light">
+                    <div class="card-image waves-effect waves-block waves-light product-card__img">
                         <a href="/products/{{ this.ProductID }}">
                             <img class="activator" src="{{ this.ProductImage }}">
                         </a>
                     </div>
-                    <div class="card-content">
+                    <div class="product-card__content">
                         <span class="card-title grey-text text-darken-4">
                             <a href="/products/{{ this.ProductID }}" class="black-text">
                                 {{ this.ProductName }}
@@ -108,7 +108,7 @@
                         <div class="chip">&rlm;{{ this.Weight }} كلغ</div>
                         <div class="chip">&rlm;{{ this.FlavorName }}</div>
                     </div>
-                    <div class="card-action price right-align">
+                    <div class="card-action right-align product-card__price">
                         <div class="row center-align">
                             {{#displayOldPrice this.OldPrice this.NewPrice}}
                             <div class="col s12">
@@ -125,8 +125,9 @@
                         </div>
                     </div>
                     <div class="card-action right-align">
-                        <a href="javascript:void(0)" class="btn waves-effect green">شراء</a>
-                        <a href="javascript:void(0)" class="btn waves-effect white green-text" title="أضف إلى السلة">
+                        <a href="javascript:void(0)" class="btn waves-effect green product-card__btn">شراء</a>
+                        <a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
+                            title="أضف إلى السلة">
                             <i class="fa fa-cart-plus"></i>
                         </a>
                     </div>
