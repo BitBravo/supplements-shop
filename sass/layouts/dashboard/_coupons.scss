@@ -1,0 +1,18 @@
+/**
+    Coupons - The coupons page's styling rules.
+*/
+
+@charset 'utf-8';
+
+.dashboard-coupons {
+	#coupons-creation-tab,
+	#coupons-edition-tab {
+		margin-top: 50px;
+		overflow-y: auto;
+
+		input[type='submit'],
+		input[type='button'] {
+			width: 200px;
+		}
+	}
+}

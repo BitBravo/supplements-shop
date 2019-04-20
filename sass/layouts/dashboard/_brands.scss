@@ -1,0 +1,21 @@
+/**
+    Brands - The brands page's styling rules.
+*/
+
+@charset 'utf-8';
+
+.dashboard-brands {
+	#brands-creation-tab,
+	#brands-edition-tab {
+		margin-top: 50px;
+		overflow-y: auto;
+
+		input[type='submit'] {
+			width: 200px;
+		}
+	}
+
+	.materialboxed {
+		width: 100%;
+	}
+}

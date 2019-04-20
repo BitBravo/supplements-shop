@@ -1,0 +1,15 @@
+/**
+    Config - The config page's styling rules.
+*/
+
+@charset 'utf-8';
+
+.dashboard-config {
+	.form-controls {
+		margin-top: 80px;
+
+		input {
+			width: 300px;
+		}
+	}
+}

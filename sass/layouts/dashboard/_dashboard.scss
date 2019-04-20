@@ -1,14 +1,18 @@
 /**
-    Dashboard - The file that links all dashboard-related rules.
+    Dashboard - The dashboard page's styling rules.
 */
 
 @charset 'utf-8';
 
-//@import 'brands.scss';
-//@import 'categories.scss';
-//@import 'config.scss';
-//@import 'coupons.scss';
-//@import 'dashboard.scss';
-//@import 'flavors.scss';
-//@import 'mail.scss';
-//@import 'products.scss';
+.dashboard {
+	padding: 150px 0 100px 0;
+
+	&__grid {
+		.card-label {
+			span {
+				font-size: 30px;
+				font-weight: bold;
+			}
+		}
+	}
+}
