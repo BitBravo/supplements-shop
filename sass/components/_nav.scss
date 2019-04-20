@@ -1,3 +1,9 @@
+/**
+	Nav - Styling rules for the nav component.
+*/
+
+@charset 'utf-8';
+
 .navbar-fixed {
 	.nav-icon {
 		font-size: 20px;
@@ -29,7 +35,7 @@
 	.cart-button {
 		padding-right: 0;
 
-		.cart-badge {
+		.cart-button__badge {
 			border-radius: 50%;
 			font-weight: bold;
 			padding: 2px 6px;
