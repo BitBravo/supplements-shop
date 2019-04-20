@@ -1,0 +1,13 @@
+/**
+    Contact-modal - Styling rules for the contact-modal component.
+*/
+
+@charset 'utf-8';
+
+.contact-modal {
+	&__content {
+		margin-top: 100px;
+		overflow: hidden;
+		padding: 20px;
+	}
+}
