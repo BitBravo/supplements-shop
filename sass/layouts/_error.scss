@@ -5,14 +5,11 @@
 @charset 'utf-8';
 
 .error-section {
-	align-items: center;
-	display: flex;
-	height: 600px;
-	flex-direction: column;
-	justify-content: center;
-	margin-top: 65px;
+	height: 700px;
+	padding-top: 150px;
 
 	&__content {
+		margin: auto;
 		padding: 70px 40px;
 		text-align: center;
 		width: 500px;
@@ -21,9 +18,28 @@
 			margin-right: 15px;
 		}
 
-		.btn {
+		.error-section__btn {
 			position: relative;
 			width: 100%;
+		}
+	}
+
+	@media screen and (max-width: $break-point--tablet) {
+		padding: 80px 10px 0 10px;
+		&__content {
+			padding: 40px 20px;
+
+			.error-section__btn {
+				margin-bottom: 20px;
+			}
+		}
+	}
+
+	@media screen and (max-width: $break-point--phone) {
+
+		&__content {
+			margin: auto;
+			width: auto;
 		}
 	}
 }

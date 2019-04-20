@@ -69,7 +69,7 @@ $('document').ready(() => {
 	});
 
 	// The back button click.
-	$('.back-btn').on('click', () => {
+	$('#back-btn').on('click', () => {
 		history.back();
 	});
 });
