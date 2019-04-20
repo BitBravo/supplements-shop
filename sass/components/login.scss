@@ -15,13 +15,13 @@
 		}
 	}
 
-	@media screen and (max-width: $tablet-break-point) {
+	@media screen and (max-width: $break-point--tablet) {
 		.btn[type='submit'] {
 			margin-bottom: 20px;
 		}
 	}
 
-	@media screen and (max-width: $phone-break-point) {
+	@media screen and (max-width: $break-point--phone) {
 		.login-content {
             margin: 100px auto;
             width: auto;

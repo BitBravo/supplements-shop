@@ -40,7 +40,7 @@ footer#about {
 		}
 	}
 
-	@media screen and (max-width: $tablet-break-point) {
+	@media screen and (max-width: $break-point--tablet) {
 		.footer-extra,
 		.footer-content,
 		.footer-content .contact-list a,
@@ -53,7 +53,7 @@ footer#about {
 		}
 	}
 
-	@media screen and (max-width: $desktop-break-point) {
+	@media screen and (max-width: $break-point--desktop) {
 		.footer-content .contact-list a {
 			text-align: center;
 		}

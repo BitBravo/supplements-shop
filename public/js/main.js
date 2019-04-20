@@ -22,7 +22,7 @@ $('document').ready(() => {
 	}, 5000);
 
 	// Initializing the brands carousel.
-	$('.brand-carousel').carousel({
+	$('.carousel.carousel--brands').carousel({
 		dist: -50,
 		fullWidth: false,
 		indicators: true,

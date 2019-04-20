@@ -1,32 +1,6 @@
-@import 'utils/main.scss';
+@charset 'utf-8';
 
-@import 'carousel.scss';
-@import 'contact.scss';
-@import 'dashboard/main.scss';
-@import 'error.scss';
-@import 'extra-info.scss';
-@import 'footer.scss';
-@import 'login.scss';
-@import 'nav.scss';
-@import 'product.scss';
-@import 'products.scss';
-@import 'product-card.scss';
-@import 'product-showcase.scss';
-@import 'scroll-to-top.scss';
-
-main {
-	position: relative;
-
-	&::before {
-		background-attachment: fixed;
-		background-image: url('/assets/img/backgrounds/main-bg.jpg');
-		background-repeat: repeat-y;
-		background-size: cover;
-		content: '';
-		height: 100%;
-		opacity: 0.1;
-		position: absolute;
-		width: 100%;
-		z-index: -1;
-	}
-}
+@import 'utils/utils';
+@import 'global/global';
+@import 'layouts/layouts';
+@import 'components/components';

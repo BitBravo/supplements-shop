@@ -1,0 +1,19 @@
+/**
+	Carousel - Styling rules for the carousel component.
+*/
+
+@charset 'utf-8';
+
+.carousel {
+	height: 700px;
+	margin-top: 60px;
+
+	@media screen and (max-width: $break-point--tablet) {
+		margin-top: 56px;
+	}
+
+	&.carousel--brands {
+		cursor: pointer;
+		height: 350px;
+	}
+}
