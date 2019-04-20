@@ -1,34 +1,40 @@
+/**
+    Login - The login page's styling rules.
+*/
+
+@charset 'utf-8';
+
 .login-section {
-	.login-content {
+	&__content {
 		margin: 200px auto;
 		padding: 50px 40px;
 		width: 500px;
 
-		img {
+		.login-section__img {
 			margin: 50px 0;
 			width: 300px;
 		}
 
-		.btn {
+		.login-section__btn {
 			position: relative;
 			width: 100%;
 		}
 	}
 
 	@media screen and (max-width: $break-point--tablet) {
-		.btn[type='submit'] {
+		.login-section__btn[type='submit'] {
 			margin-bottom: 20px;
 		}
 	}
 
 	@media screen and (max-width: $break-point--phone) {
-		.login-content {
-            margin: 100px auto;
-            width: auto;
-            
-            img {
-                width: 100%;
-            }
+		.login-section__content {
+			margin: 100px auto;
+			width: auto;
+
+			.login-section__img {
+				width: 100%;
+			}
 		}
 	}
 }

@@ -6,6 +6,6 @@
 @charset 'utf-8';
 
 // Break-points.
-$break-point--phone: 600px;
-$break-point--tablet: 992px;
-$break-point--desktop: 1200px;
+$break-point--phone: 600px !default;
+$break-point--tablet: 992px !default;
+$break-point--desktop: 1200px !default;
