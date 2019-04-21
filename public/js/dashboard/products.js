@@ -45,7 +45,7 @@ $('document').ready(() => {
                 </td>
                 <td class="center-align">
                     ${weight}
-                    <input type="hidden" name="stock-weight" value="${weight}">
+                    <input type="hidden" name="stock-weight" step="0.001" value="${weight}">
 				</td>
 				<td class="center-align">
                     ${new Intl.NumberFormat('ar-MA', {
@@ -157,7 +157,7 @@ $('document').ready(() => {
 							<input type="number" name="stock-quantity" value="${v.Quantity}">
 						</td>
 						<td class="center-align">
-							<input type="number" name="stock-weight" value="${v.Weight}">
+							<input type="number" name="stock-weight" step="0.001" value="${v.Weight}">
 						</td>
 						<td class="center-align">
 							<input type="number" name="stock-price" step="0.01" value="${v.Price}">
@@ -239,7 +239,7 @@ $('document').ready(() => {
 					<input type="number" name="stock-quantity" value="0">
 				</td>
 				<td class="center-align">
-					<input type="number" name="stock-weight" value="0">
+					<input type="number" name="stock-weight" step="0.001" value="0">
 				</td>
 				<td class="center-align">
 					<input type="number" step="0.01" name="stock-price" value="0">

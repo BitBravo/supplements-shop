@@ -116,8 +116,6 @@ CREATE TABLE IF NOT EXISTS `ShippingPriceHistory` (
 CREATE TABLE IF NOT EXISTS `Products` (
     `ProductID`         INT NOT NULL AUTO_INCREMENT,
     `ProductName`       VARCHAR(80) NOT NULL,
-    `ProductImage`      TEXT NULL,
-    `NutritionInfo`     TEXT NULL,
     `Description`       TEXT NOT NULL,
     `Usage`             TEXT NOT NULL,
     `Warning`           TEXT NOT NULL,
@@ -135,13 +133,23 @@ CREATE TABLE IF NOT EXISTS `Products` (
 CREATE TABLE IF NOT EXISTS `ProductsVariants` (
     `VariantID`         INT NOT NULL AUTO_INCREMENT,
     `ProductID`         INT NOT NULL,
-    `FlavorID`          SMALLINT NOT NULL,
-    `Weight`            SMALLINT NOT NULL,
-    `Quantity`          SMALLINT NOT NULL DEFAULT 0,
+    `Weight`            FLOAT NOT NULL,
 
     CONSTRAINT pk_products_variants_id PRIMARY KEY (`VariantID`),
-    CONSTRAINT fk_products_variants_id FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`),
-    CONSTRAINT fk_products_variants_flv FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
+    CONSTRAINT fk_products_variants_id FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`)
+);
+
+-- ProductsVariantsFlavors.
+CREATE TABLE `ProductsVariantsFlavors` (
+	`VariantID`			INT NOT NULL,
+	`VariantImage`      TEXT NULL,
+    `NutritionInfo`     TEXT NULL,
+    `Quantity`          SMALLINT NOT NULL DEFAULT 0,
+    `FlavorID`			SMALLINT NOT NULL,
+    
+    CONSTRAINT pk_products_variants_flavor__id PRIMARY KEY (`VariantID`, `FlavorID`),
+    CONSTRAINT fk_products_variants_flavor__id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`),
+    CONSTRAINT fk_products_variants_flavor_flv FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
 );
 
 -- PriceHistory.
