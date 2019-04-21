@@ -29,6 +29,7 @@
     </div>
     <div class="container">
         <div class="row">
+            {{#if Data.TopProducts }}
             {{#each Data.TopProducts }}
             <div class="col m12 l6 xl4">
                 <div class="card sticky-action product-card">
@@ -72,6 +73,9 @@
                 </div>
             </div>
             {{/each}}
+            {{else}}
+            <h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
+            {{/if}}
         </div>
     </div>
 </section>
@@ -91,6 +95,7 @@
     </div>
     <div class="container">
         <div class="row">
+            {{#if Data.NewestProducts }}
             {{#each Data.NewestProducts }}
             <div class="col m12 l6 xl4">
                 <div class="card sticky-action product-card">
@@ -134,6 +139,9 @@
                 </div>
             </div>
             {{/each}}
+            {{else}}
+            <h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
+            {{/if}}
         </div>
     </div>
 </section>
@@ -189,9 +197,13 @@
     </div>
     <div class="row container">
         <div class="carousel carousel--brands">
+            {{#if Data.Brands }}
             {{#each Data.Brands }}
             <a class="carousel-item"><img src="{{ this.Logo }}" alt="{{ this.BrandName }}'s logo"></a>
             {{/each}}
+            {{else}}
+            <h4 class="center-align">!&rlm;لا توجد علامات تجارية</h4>
+            {{/if}}
         </div>
     </div>
 </section>
