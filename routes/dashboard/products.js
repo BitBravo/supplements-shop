@@ -204,16 +204,12 @@ router.post('/', function(req, res) {
 router.put('/', function(req, res) {
   const stmt = conn.format(
     '\
-		UPDATE ?? SET ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?; \
+		UPDATE ?? SET ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?; \
 	',
     [
       'Products',
       'ProductName',
       req.body.productName,
-      'ProductImage',
-      req.body.productImage,
-      'NutritionInfo',
-      req.body.productNutrition,
       'Description',
       req.body.description,
       'Usage',
@@ -237,14 +233,10 @@ router.put('/', function(req, res) {
       if (req.body.stock.add) {
         async.each(req.body.stock.add, addStock => {
           const _stmt =
-            'INSERT INTO `ProductsVariants` (`ProductID`, `Quantity`, `Weight`, `FlavorID`) VALUES (' +
+            'INSERT INTO `ProductsVariants` (`ProductID`, `Weight`) VALUES (' +
             req.body.productID +
             ', ' +
-            addStock.quantity +
-            ', ' +
             addStock.weight +
-            ', ' +
-            addStock.flavorID +
             ');';
 
           conn.query(_stmt, (_error, _results) => {
@@ -256,7 +248,18 @@ router.put('/', function(req, res) {
               _results.insertId +
               ', ' +
               addStock.price +
-              ', NOW());';
+              ', NOW());' +
+              'INSERT INTO `ProductsVariantsFlavors` (`VariantID`, `VariantImage`, `NutritionInfo`, `Quantity`, `FlavorID`) VALUES (' +
+              _results.insertId +
+              ', "' +
+              addStock.image +
+              '", "' +
+              addStock.nutrition +
+              '", ' +
+              addStock.quantity +
+              ', ' +
+              addStock.flavorID +
+              ');';
 
             conn.query(__stmt, (__error, __results) => {
               // Checking if there are any errors.
@@ -269,12 +272,13 @@ router.put('/', function(req, res) {
       if (req.body.stock.edit) {
         async.each(req.body.stock.edit, editStock => {
           const _stmt =
-            'UPDATE `ProductsVariants` SET `FlavorID` = ' +
-            editStock.flavorID +
-            ', `Quantity` = ' +
+            'UPDATE `ProductsVariantsFlavors` SET ' +
+            '`VariantImage` = "' +
+            editStock.image +
+            '", `NutritionInfo` = "' +
+            editStock.nutrition +
+            '", `Quantity` = ' +
             editStock.quantity +
-            ', `Weight` = ' +
-            editStock.weight +
             ' WHERE `VariantID` = ' +
             editStock.variantID +
             '; \
