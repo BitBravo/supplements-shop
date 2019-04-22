@@ -33,35 +33,35 @@ $('document').ready(() => {
     $('#product-creation-stock-price').val('');
 
     $('.stock-list').append(`
-            <tr>
-                <td class="center-align">
-                    <a class="stock-remove btn-floating waves-effect waves-light red">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                    <input type="hidden" name="stock-image" value="${image}" >
-                    <input type="hidden" name="stock-nutrition" value="${nutritionInfo}" >
-                </td>
-                <td class="center-align">
-                    ${quantity}
-                    <input type="hidden" name="stock-quantity" value="${quantity}">
-                </td>
-                <td class="center-align">
-                    ${weight}
-                    <input type="hidden" name="stock-weight" step="0.001" value="${weight}">
-				</td>
-				<td class="center-align">
-                    ${new Intl.NumberFormat('ar-MA', {
-                      style: 'currency',
-                      currency: 'MAD'
-                    }).format(price)}
-                    <input type="hidden" name="stock-price" value="${price}">
-                </td>
-                <td class="center-align">
-                    ${flavorName}
-                    <input type="hidden" name="stock-flavor" value="${flavor}">
-                </td>
-            </tr>
-        `);
+        <tr>
+            <td class="center-align">
+                <a class="stock-remove btn-floating waves-effect waves-light red">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <input type="hidden" name="stock-image" value="${image}" >
+                <input type="hidden" name="stock-nutrition" value="${nutritionInfo}" >
+            </td>
+            <td class="center-align">
+                ${quantity}
+                <input type="hidden" name="stock-quantity" value="${quantity}">
+            </td>
+            <td class="center-align">
+                ${weight}
+                <input type="hidden" name="stock-weight" step="0.001" value="${weight}">
+            </td>
+            <td class="center-align">
+                ${new Intl.NumberFormat('ar-MA', {
+                  style: 'currency',
+                  currency: 'MAD'
+                }).format(price)}
+                <input type="hidden" name="stock-price" value="${price}">
+            </td>
+            <td class="center-align">
+                ${flavorName}
+                <input type="hidden" name="stock-flavor" value="${flavor}">
+            </td>
+        </tr>
+    `);
 
     addStockRemovingEvent();
     $('#product-creation-modal').modal('close');
@@ -157,7 +157,7 @@ $('document').ready(() => {
                     <td class="center-align">
                         <input type="number" name="stock-weight" step="0.001" value="${
                           v.Weight
-                        }" class="validate">
+                        }" class="validate" disabled>
                     </td>
                     <td class="center-align">
                         <input type="number" name="stock-price" step="0.01" value="${
@@ -248,26 +248,32 @@ $('document').ready(() => {
       .text('dddd');
 
     $('#edition-stock-list').append(`
-			<tr>
-				<td class="center-align">
-					<a class="stock-remove btn-floating waves-effect waves-light red">
-						<i class="fa fa-trash"></i>
-					</a>
-				</td>
-				<td class="center-align">
-					<input type="number" name="stock-quantity" value="0">
-				</td>
-				<td class="center-align">
-					<input type="number" name="stock-weight" step="0.001" value="0">
-				</td>
-				<td class="center-align">
-					<input type="number" step="0.01" name="stock-price" value="0">
-				</td>
-				<td class="center-align">
-					${flavorsDropdown}
-				</td>
-			</tr>
-		`);
+        <tr>
+            <td class="center-align">
+                <a class="stock-remove btn-floating waves-effect waves-light red">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
+            <td class="center-align">
+                <input type="number" name="stock-quantity" value="0" class="validate">
+            </td>
+            <td class="center-align">
+                <input type="number" name="stock-weight" step="0.001" value="0" class="validate">
+            </td>
+            <td class="center-align">
+                <input type="number" step="0.01" name="stock-price" value="0" class="validate">
+            </td>
+            <td class="center-align">
+                ${flavorsDropdown}
+            </td>
+            <td class="center-align">
+                <input type="url" name="stock-image" class="validate">
+            </td>
+            <td class="center-align">
+                <input type="url" name="stock-nutrition" class="validate">
+            </td>
+        </tr>
+    `);
 
     addStockRemovingEvent();
     $('#edition-stock-list select').formSelect();
@@ -317,6 +323,12 @@ $('document').ready(() => {
     $.each($('#edition-stock-list tr[data-variant-id]'), (i, v) => {
       variants.push({
         variantID: $(v).data('variant-id'),
+        image: $(v)
+          .find('[name=stock-image]')
+          .val(),
+        nutrition: $(v)
+          .find('[name=stock-nutrition]')
+          .val(),
         flavorID: $(v)
           .find('[name=stock-flavor]')
           .val(),
@@ -340,7 +352,12 @@ $('document').ready(() => {
 
     $.each($('#edition-stock-list tr:not([data-variant-id])'), (i, v) => {
       variants.push({
-        variantID: $(v).data('variant-id'),
+        image: $(v)
+          .find('[name=stock-image]')
+          .val(),
+        nutrition: $(v)
+          .find('[name=stock-nutrition]')
+          .val(),
         flavorID: $(v)
           .find('[name=stock-flavor]')
           .val(),
