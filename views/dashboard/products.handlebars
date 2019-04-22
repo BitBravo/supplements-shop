@@ -41,20 +41,6 @@
                                             </div>
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input id="product-image" type="url" name="product-image"
-                                                        class="validate" required>
-                                                    <label for="product-image">صورة المنتج</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <input id="product-nutrition" type="url" name="product-nutrition"
-                                                        class="validate" required>
-                                                    <label for="product-nutrition">حقائق غذائية</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
                                                     <label>وصف المنتج</label>
                                                 </div>
                                             </div>
@@ -87,8 +73,10 @@
                                                 <div class="input-field col s6">
                                                     <select id="product-category">
                                                         {{#each Data.Categories }}
-                                                        <option value="{{ this.CategoryID }}">{{ this.CategoryName }}
-                                                        </option>
+                                                            <option value="{{ this.CategoryID }}">{{
+                                                                    this.CategoryName
+                                                                }}
+                                                            </option>
                                                         {{/each}}
                                                     </select>
                                                     <label>فئة المنتج</label>
@@ -96,8 +84,8 @@
                                                 <div class="input-field col s6">
                                                     <select id="product-brand">
                                                         {{#each Data.Brands }}
-                                                        <option value="{{ this.BrandID }}">{{ this.BrandName }}
-                                                        </option>
+                                                            <option value="{{ this.BrandID }}">{{ this.BrandName }}
+                                                            </option>
                                                         {{/each}}
                                                     </select>
                                                     <label>العلامة التجارية للمنتج</label>
@@ -142,31 +130,31 @@
                                 <div class="row">
                                     <div class="col s12">
                                         {{#if Data.Products}}
-                                        <table class="stripped highlight">
-                                            <thead>
-                                                <tr>
-                                                    <th>اسم المنتج</th>
-                                                    <th>الكمية</th>
-                                                    <th>الفئة</th>
-                                                    <th>تاريخ الإضافة</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="product-list">
-                                                {{#each Data.Products }}
-                                                <tr data-product-id="{{ this.ProductID }}">
-                                                    <td>{{ this.ProductName }}</td>
-                                                    <td>{{ this.Quantity }}</td>
-                                                    <td>{{ this.Category }}</td>
-                                                    <td>{{ formatDate this.AddedDate }}</td>
-                                                </tr>
-                                                {{/each}}
-                                            </tbody>
-                                        </table>
+                                            <table class="stripped highlight">
+                                                <thead>
+                                                    <tr>
+                                                        <th>اسم المنتج</th>
+                                                        <th>الكمية</th>
+                                                        <th>الفئة</th>
+                                                        <th>تاريخ الإضافة</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="product-list">
+                                                    {{#each Data.Products }}
+                                                        <tr data-product-id="{{ this.ProductID }}">
+                                                            <td>{{ this.ProductName }}</td>
+                                                            <td>{{ this.Quantity }}</td>
+                                                            <td>{{ this.Category }}</td>
+                                                            <td>{{ formatDate this.AddedDate }}</td>
+                                                        </tr>
+                                                    {{/each}}
+                                                </tbody>
+                                            </table>
 
                                         {{else}}
-                                        <ul class="collection">
-                                            <li class="collection-item center-align">لا توجد منتجات حاليا</li>
-                                        </ul>
+                                            <ul class="collection">
+                                                <li class="collection-item center-align">لا توجد منتوجات حاليا</li>
+                                            </ul>
                                         {{/if}}
                                     </div>
                                 </div>
@@ -197,8 +185,8 @@
                     <div class="row">
                         <div class="col s12">
                             <label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>
-                                <input id="product-creation-stock-weight" min="0" step="0.001" type="number" class="validate"
-                                    required>
+                                <input id="product-creation-stock-weight" min="0" step="0.001" type="number"
+                                    class="validate" required>
                             </label>
                         </div>
                     </div>
@@ -215,9 +203,9 @@
                             <label>النكهة
                                 <select id="product-creation-stock-flavor">
                                     {{#each Data.Flavors }}
-                                    <option value="{{ this.FlavorID }}">
-                                        {{ this.FlavorName }}
-                                    </option>
+                                        <option value="{{ this.FlavorID }}">
+                                            {{ this.FlavorName }}
+                                        </option>
                                     {{/each}}
                                 </select>
                             </label>
@@ -290,8 +278,8 @@
                         <div class="input-field col s6">
                             <select id="product-category-edit">
                                 {{#each Data.Categories }}
-                                <option value="{{ this.CategoryID }}">{{ this.CategoryName }}
-                                </option>
+                                    <option value="{{ this.CategoryID }}">{{ this.CategoryName }}
+                                    </option>
                                 {{/each}}
                             </select>
                             <label>فئة المنتج</label>
@@ -299,8 +287,8 @@
                         <div class="input-field col s6">
                             <select id="product-brand-edit">
                                 {{#each Data.Brands }}
-                                <option value="{{ this.BrandID }}">{{ this.BrandName }}
-                                </option>
+                                    <option value="{{ this.BrandID }}">{{ this.BrandName }}
+                                    </option>
                                 {{/each}}
                             </select>
                             <label>العلامة التجارية للمنتج</label>
@@ -328,7 +316,8 @@
                 </div>
                 <div class="modal-footer">
                     <input class="waves-effect waves-green btn-flat" type="submit" value="تحديث">
-                    <a id="add-stock-edition" href="javascript:void(0)" class="waves-effect waves-green btn-flat">إضافة مخزون</a>
+                    <a id="add-stock-edition" href="javascript:void(0)" class="waves-effect waves-green btn-flat">إضافة
+                        مخزون</a>
                     <a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
                 </div>
             </form>
