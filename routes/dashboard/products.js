@@ -82,6 +82,7 @@ router.get('/:productID', function(req, res) {
 		SELECT * FROM ?? WHERE ?? = ?; \
 		SELECT PV.*, (SELECT PH.?? FROM ?? PH WHERE PH.?? = PV.?? ORDER BY ?? DESC LIMIT 1) AS ?? FROM ?? PV WHERE PV.?? = ?; \
 		SELECT * FROM ??; \
+		SELECT PVF.* FROM ?? PVF INNER JOIN ?? PV ON PVF.?? = PV.?? WHERE PV.?? = ?; \
 		',
     [
       'Products',
@@ -96,7 +97,13 @@ router.get('/:productID', function(req, res) {
       'ProductsVariants',
       'ProductID',
       req.params.productID,
-      'Flavors'
+      'Flavors',
+      'ProductsVariantsFlavors',
+      'ProductsVariants',
+      'VariantID',
+      'VariantID',
+      'ProductID',
+      req.params.productID
     ]
   );
   conn.query(stmt, (error, results) => {
@@ -182,7 +189,6 @@ router.post('/', function(req, res) {
                 s.flavorID
               ]
             );
-            console.log(___stmt, __results);
 
             conn.query(___stmt, (___error, ___results) => {
               if (___error) throw ___error;

@@ -122,13 +122,17 @@ $('document').ready(() => {
       $('#product-edition-modal [name=product-nutrition]').val(
         data[0][0].NutritionInfo
       );
+
       descEditorEdit.clipboard.dangerouslyPasteHTML(data[0][0].Description);
       usageEditorEdit.clipboard.dangerouslyPasteHTML(data[0][0].Usage);
       warningEditorEdit.clipboard.dangerouslyPasteHTML(data[0][0].Warning);
+
       $('#product-category-edit').val(data[0][0].CategoryID);
       $('#product-brand-edit').val(data[0][0].BrandID);
 
       $('#edition-stock-list').empty();
+
+      // Constructing the flavors' dropdown.
       $.each(data[1], (i, v) => {
         let flavorsDropdown = '<select name="stock-flavor">';
 
@@ -136,30 +140,55 @@ $('document').ready(() => {
           flavorsDropdown += `
 					<option ${_v.FlavorID == v.FlavorID ? 'selected' : ''} value="${_v.FlavorID}">${
             _v.FlavorName
-          }</option>
-					`;
+          }</option>`;
         });
 
         flavorsDropdown += '</select>';
 
         $('#edition-stock-list').append(`
-					<tr data-variant-id="${v.VariantID}">
-						<td></td>
-						<td class="center-align">
-							<input type="number" name="stock-quantity" value="${v.Quantity}">
-						</td>
-						<td class="center-align">
-							<input type="number" name="stock-weight" step="0.001" value="${v.Weight}">
-						</td>
-						<td class="center-align">
-							<input type="number" name="stock-price" step="0.01" value="${v.Price}">
-						</td>
-						<td class="center-align">
-							${flavorsDropdown}
-						</td>
-					</tr>
-				`);
+            <tr data-variant-id="${v.VariantID}">
+                <div class="row">
+                    <td></td>
+                    <td class="center-align">
+                        <input type="number" name="stock-quantity" value="${
+                          getProductVariantFlavor(v.VariantID).Quantity
+                        }" class="validate">
+                    </td>
+                    <td class="center-align">
+                        <input type="number" name="stock-weight" step="0.001" value="${
+                          v.Weight
+                        }" class="validate">
+                    </td>
+                    <td class="center-align">
+                        <input type="number" name="stock-price" step="0.01" value="${
+                          v.Price
+                        }" class="validate">
+                    </td>
+                    <td class="center-align">
+                        ${flavorsDropdown}
+                    </td>
+                    <td class="center-align">
+                        <input type="url" name="stock-image" value="${
+                          getProductVariantFlavor(v.VariantID).VariantImage
+                        }" class="validate">
+                    </td>
+                    <td class="center-align">
+                        <input type="url" name="stock-nutrition" value="${
+                          getProductVariantFlavor(v.VariantID).NutritionInfo
+                        }" class="validate">
+                    </td>
+                </div>
+            </tr>
+        `);
       });
+
+      function getProductVariantFlavor(variantID) {
+        for (let productVariantFlavor of data[3]) {
+          if (productVariantFlavor.VariantID === variantID) {
+            return productVariantFlavor;
+          }
+        }
+      }
 
       // Updating the dropdowns.
       $(
