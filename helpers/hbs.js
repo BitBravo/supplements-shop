@@ -83,5 +83,15 @@ module.exports = {
     return oldPrice > newPrice && oldPrice != null
       ? options.fn(this)
       : options.inverse(this);
+  },
+
+  /**
+   * Calculates the discount percentage.
+   *
+   * @param {Decimal} oldPrice The old price.
+   * @param {Decimal} newPrice The new price.
+   */
+  calculateDiscount: function(oldPrice, newPrice) {
+    return `-${Math.round(((oldPrice - newPrice) * 100) / oldPrice)}%`;
   }
 };
