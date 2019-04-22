@@ -17,13 +17,17 @@ $('document').ready(() => {
     e.preventDefault();
 
     // Getting the values.
-    const quantity = $('#product-creation-stock-quantity').val(),
+    const image = $('#product-creation-stock-image').val(),
+      nutritionInfo = $('#product-creation-stock-nutrition').val(),
+      quantity = $('#product-creation-stock-quantity').val(),
       weight = $('#product-creation-stock-weight').val(),
       flavor = $('#product-creation-stock-flavor').val(),
       price = $('#product-creation-stock-price').val(),
       flavorName = $('#product-creation-stock-flavor option:selected').text();
 
     // Clearing out the inputs.
+    $('#product-creation-stock-image').val('');
+    $('#product-creation-stock-nutrition').val('');
     $('#product-creation-stock-quantity').val('');
     $('#product-creation-stock-weight').val('');
     $('#product-creation-stock-price').val('');
@@ -34,6 +38,8 @@ $('document').ready(() => {
                     <a class="stock-remove btn-floating waves-effect waves-light red">
                         <i class="fa fa-trash"></i>
                     </a>
+                    <input type="hidden" name="stock-image" value="${image}" >
+                    <input type="hidden" name="stock-nutrition" value="${nutritionInfo}" >
                 </td>
                 <td class="center-align">
                     ${quantity}
@@ -97,7 +103,7 @@ $('document').ready(() => {
     };
 
     $.post('/dashboard/products', data);
-    setTimeout(() => window.location.reload(), 2000);
+    setTimeout(() => window.location.reload(), 1500);
   });
 
   // Opening the product edition modal.
@@ -252,6 +258,12 @@ $('document').ready(() => {
 
     $.each($('.stock-list tr'), (i, v) => {
       stock.push({
+        image: $(v)
+          .find('[name=stock-image]')
+          .val(),
+        nutritionInfo: $(v)
+          .find('[name=stock-nutrition]')
+          .val(),
         quantity: $(v)
           .find('[name=stock-quantity]')
           .val(),

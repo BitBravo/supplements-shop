@@ -110,17 +110,13 @@ router.get('/:productID', function(req, res) {
 
 // Setting the product creation route.
 router.post('/', function(req, res) {
-  console.log(req.body);
-  res.send();
-  /*const stmt = conn.format(
+  const stmt = conn.format(
     '\
-        INSERT INTO ?? (??, ??, ??, ??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?); \
+        INSERT INTO ?? (??, ??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, NOW(), ?, ?); \
         ',
     [
       'Products',
       'ProductName',
-      'ProductImage',
-      'NutritionInfo',
       'Description',
       'Usage',
       'Warning',
@@ -128,8 +124,6 @@ router.post('/', function(req, res) {
       'CategoryID',
       'BrandID',
       req.body.productName,
-      req.body.productImage,
-      req.body.productNutrition,
       req.body.productDescription,
       req.body.productUsage,
       req.body.productWarning,
@@ -142,45 +136,62 @@ router.post('/', function(req, res) {
     // Checking if there are any errors.
     if (error) throw error;
 
-    req.body.stock.forEach((s, i) => {
-      const _stmt = conn.format(
-        'INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, ?);',
-        [
+    if (req.body.stock) {
+      req.body.stock.forEach((s, i) => {
+        const _stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', [
           'ProductsVariants',
           'ProductID',
-          'Quantity',
           'Weight',
-          'FlavorID',
           results.insertId,
-          s.quantity,
-          s.weight,
-          s.flavorID
-        ]
-      );
+          s.weight
+        ]);
 
-      conn.query(_stmt, (_error, _results) => {
-        // Checking if there are any errors.
-        if (_error) throw _error;
-
-        const __stmt = conn.format(
-          'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, NOW());',
-          [
-            'PriceHistory',
-            'VariantID',
-            'Price',
-            'ActivatedDate',
-            _results.insertId,
-            s.price
-          ]
-        );
-
-        conn.query(__stmt, (__error, __results) => {
+        conn.query(_stmt, (_error, _results) => {
           // Checking if there are any errors.
-          if (__error) throw __error;
+          if (_error) throw _error;
+
+          const __stmt = conn.format(
+            'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, NOW());',
+            [
+              'PriceHistory',
+              'VariantID',
+              'Price',
+              'ActivatedDate',
+              _results.insertId,
+              s.price
+            ]
+          );
+
+          conn.query(__stmt, (__error, __results) => {
+            // Checking if there are any errors.
+            if (__error) throw __error;
+
+            const ___stmt = conn.format(
+              'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?);',
+              [
+                'ProductsVariantsFlavors',
+                'VariantID',
+                'VariantImage',
+                'NutritionInfo',
+                'Quantity',
+                'FlavorID',
+                _results.insertId,
+                s.image,
+                s.nutritionInfo,
+                s.quantity,
+                s.flavorID
+              ]
+            );
+            console.log(___stmt, __results);
+
+            conn.query(___stmt, (___error, ___results) => {
+              if (___error) throw ___error;
+            });
+          });
         });
       });
-    });
-  });*/
+    }
+  });
 });
 
 // Setting up the product edition route.
