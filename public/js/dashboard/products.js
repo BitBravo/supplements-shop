@@ -84,6 +84,7 @@ $('document').ready(() => {
   // Creating the product.
   $('#product-creation-form').on('submit', e => {
     e.preventDefault();
+    $('#product-creation-trigger').prop('disabled', true);
 
     const data = {
       productName: $('#product-name').val(),
