@@ -31,11 +31,11 @@
 		<div class="row">
 			{{#if Data.TopProducts }}
 				{{#each Data.TopProducts }}
-					<div class="col m12 l6 xl4">
+					<div class="col m6 l6 xl4">
 						<div class="card sticky-action product-card">
 							<div class="card-image waves-effect waves-block waves-light product-card__img">
 								<a href="/products/{{ this.ProductID }}">
-									<img class="activator responsive-img" src="{{ this.ProductImage }}">
+									<img class="activator" src="{{ this.ProductImage }}">
 								</a>
 							</div>
 							<div class="product-card__content">
@@ -63,7 +63,7 @@
 								</div>
 							</div>
 							<div class="card-action right-align">
-								<a href="javascript:void(0)" class="btn waves-effect green product-card__btn">شراء</a>
+								<a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
 								<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
 									title="أضف إلى السلة">
 									<i class="fa fa-cart-plus"></i>
@@ -89,18 +89,18 @@
 			</a>
 		</div>
 		<div class="col s12 m12 l6">
-			<h4 class="right-align showcase-header__btn">أحدث المنتوجات</h4>
+			<h4 class="right-align showcase-header__title">أحدث المنتوجات</h4>
 		</div>
 	</div>
 	<div class="container">
 		<div class="row">
 			{{#if Data.NewestProducts }}
 				{{#each Data.NewestProducts }}
-					<div class="col m12 l6 xl4">
+					<div class="col m6 l6 xl4">
 						<div class="card sticky-action product-card">
 							<div class="card-image waves-effect waves-block waves-light product-card__img">
 								<a href="/products/{{ this.ProductID }}">
-									<img class="activator responsive-img" src="{{ this.ProductImage }}">
+									<img class="activator" src="{{ this.ProductImage }}">
 								</a>
 							</div>
 							<div class="product-card__content">
@@ -128,7 +128,7 @@
 								</div>
 							</div>
 							<div class="card-action right-align">
-								<a href="javascript:void(0)" class="btn waves-effect green product-card__btn">شراء</a>
+								<a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
 								<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
 									title="أضف إلى السلة">
 									<i class="fa fa-cart-plus"></i>
