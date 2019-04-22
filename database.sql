@@ -147,8 +147,8 @@ CREATE TABLE `ProductsVariantsFlavors` (
     `Quantity`          SMALLINT NOT NULL DEFAULT 0,
     `FlavorID`			SMALLINT NOT NULL,
     
-    CONSTRAINT pk_products_variants_flavor__id PRIMARY KEY (`VariantID`, `FlavorID`),
-    CONSTRAINT fk_products_variants_flavor__id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`),
+    CONSTRAINT pk_products_variants_flavor_id PRIMARY KEY (`VariantID`, `FlavorID`),
+    CONSTRAINT fk_products_variants_flavor_id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`),
     CONSTRAINT fk_products_variants_flavor_flv FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
 );
 
