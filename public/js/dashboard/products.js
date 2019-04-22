@@ -81,19 +81,12 @@ $('document').ready(() => {
       theme: 'snow'
     });
 
-  // Loading the image preview.
-  $('#brand-logo').on('change', function() {
-    $('#products-creation-preview').attr('src', $(this).val());
-  });
-
   // Creating the product.
   $('#product-creation-form').on('submit', e => {
     e.preventDefault();
 
     const data = {
       productName: $('#product-name').val(),
-      productImage: $('#product-image').val(),
-      productNutrition: $('#product-nutrition').val(),
       productDescription: descEditor.container.innerHTML,
       productUsage: usageEditor.container.innerHTML,
       productWarning: warningEditor.container.innerHTML,
