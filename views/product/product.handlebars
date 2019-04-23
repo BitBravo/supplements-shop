@@ -1,34 +1,75 @@
+<script src="/assets/js/product.js"></script>
+
 <section class="container product-section">
-    <div class="row product-section__upper">
-        <div class="col s8 white z-depth-2 product-section__upper__header">
-            <div class="col s3 product-section__upper__header__img">
-                <img src="{{ Data.ProductVariant.VariantImage }}" alt="{{ Data.ProductInfo.ProductName }}'s image.">
-            </div>
-            <div class="col s9">
-                <h4>{{ Data.ProductInfo.ProductName }}</h4>
-                <div class="chip">&rlm;{{ formatWeight Data.ProductVariant.Weight }}
-                    {{ weightUnite Data.ProductVariant.Weight }}
-                </div>
-                <div class="chip">&rlm;{{ Data.ProductVariant.FlavorName }}</div>
-            </div>
-        </div>
-        <div class="col s3 offset-s1 white z-depth-2 product-section__upper__action">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti consequatur earum distinctio, est iusto
-                magni eligendi, incidunt nostrum, amet perspiciatis quam repudiandae omnis possimus similique ex sequi
-                facere ad rerum.</p>
-        </div>
-    </div>
-    </div>
-    <div class="row product-section__lower">
-        <div class="col s8 white z-depth-2 product-section__lower__main">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Earum dolorum magni, eos veniam atque sint
-                quidem odit dolores modi perspiciatis nemo ipsum nostrum nesciunt, veritatis incidunt mollitia?
-                Consequatur, nemo temporibus?</p>
-        </div>
-        <div class="col s3 offset-s1 white z-depth-2 product-section__lower__side">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti consequatur earum distinctio, est iusto
-                magni eligendi, incidunt nostrum, amet perspiciatis quam repudiandae omnis possimus similique ex sequi
-                facere ad rerum.</p>
-        </div>
-    </div>
+	<div class="row product-section__upper">
+		<div class="col s8 white z-depth-2 product-section__upper__header">
+			<div class="col s3 product-section__upper__header__img">
+				<img src="{{ Data.ProductVariant.VariantImage }}" alt="{{ Data.ProductInfo.ProductName }}'s image.">
+			</div>
+			<div class="col s9">
+				<h4 class="grey lighten-4 center-align">{{ Data.ProductInfo.ProductName }}</h4>
+				<table class="centered striped grey lighten-4">
+					<tbody>
+						<tr>
+							<td>
+								<div class="chip">&rlm;{{ formatWeight Data.ProductVariant.Weight }}
+									{{ weightUnite Data.ProductVariant.Weight }}
+								</div>
+							</td>
+							<td>
+								الوزن
+							</td>
+							<td>
+								<div class="chip">&rlm;{{ Data.ProductInfo.CategoryName }}</div>
+							</td>
+							<td>
+								الفئة
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="chip">&rlm;{{ Data.ProductVariant.FlavorName }}</div>
+							</td>
+							<td>النكهة</td>
+							<td>
+								<div class="chip">&rlm;{{ Data.ProductInfo.BrandName }}</div>
+							</td>
+							<td>العلامة التجارية</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col s3 offset-s1 white z-depth-2 product-section__upper__action">
+			<div class="row">
+				<div class="col s12">
+					<div class="input-field col s12 product-variant-select">
+						<select>
+							<optgroup label="team 1">
+								<option value="1">Option 1</option>
+								<option value="2">Option 2</option>
+							</optgroup>
+							<optgroup label="team 2">
+								<option value="3">Option 3</option>
+								<option value="4">Option 4</option>
+							</optgroup>
+						</select>
+						<label>منتجات مماثلة</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="row product-section__lower">
+		<div class="col s8 white z-depth-2 product-section__lower__main">
+			<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Earum dolorum magni, eos veniam atque sint
+				quidem odit dolores modi perspiciatis nemo ipsum nostrum nesciunt, veritatis incidunt mollitia?
+				Consequatur, nemo temporibus?</p>
+		</div>
+		<div class="col s3 offset-s1 white z-depth-2 product-section__lower__side">
+			<img class="responsive-img" src="{{ Data.ProductVariant.NutritionInfo }}"
+				alt="{{ Data.ProductInfo.ProductName }}'s nutrition facts.">
+		</div>
+	</div>
 </section>

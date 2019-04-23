@@ -8,11 +8,15 @@
   padding: 180px 0 100px 0;
 
   &__upper {
-    height: 300px;
+    height: 270px;
     margin-bottom: 80px;
 
     &__header {
       height: 100%;
+
+      h4 {
+        padding: 20px 10px;
+      }
 
       &__img {
         display: flex;
@@ -21,7 +25,7 @@
 
         img {
           height: 200px;
-          margin-top: 20px;
+          margin-top: 30px;
           width: 130px;
         }
       }
@@ -29,11 +33,15 @@
 
     &__action {
       height: 100%;
+
+      .product-variant-select {
+        margin-top: 20px;
+      }
     }
   }
 
   &__lower {
-    height: 400px;
+    height: 800px;
 
     &__main {
       height: 100%;
@@ -41,6 +49,11 @@
 
     &__side {
       height: 100%;
+
+      img {
+        margin-top: 10px;
+        width: 100%;
+      }
     }
   }
 }

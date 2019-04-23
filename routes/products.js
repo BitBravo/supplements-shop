@@ -67,8 +67,9 @@ router.get('/:variantID', function(req, res) {
   const stmt = conn.format(
     `
     SELECT ??, ??, ??, ??, ??, ??, ?? FROM ??; 
-    SELECT P.?? FROM ?? P INNER JOIN ?? PV ON P.?? = PV.?? WHERE PV.?? = ?;
-    SELECT PV.??, PVF.??, PVF.??, (SELECT F.?? FROM ?? F WHERE F.?? = PVF.??) AS ?? FROM ?? PV INNER JOIN ?? PVF ON PV.?? = PVF.?? WHERE PV.?? = ?;`,
+    SELECT P.??, (SELECT C.?? FROM ?? C WHERE C.?? = P.??) AS ??, (SELECT B.?? FROM ?? B WHERE B.?? = P.??) AS ?? FROM ?? P INNER JOIN ?? PV ON P.?? = PV.?? WHERE PV.?? = ?;
+    SELECT PV.??, PVF.??, PVF.??, (SELECT F.?? FROM ?? F WHERE F.?? = PVF.??) AS ?? FROM ?? PV INNER JOIN ?? PVF ON PV.?? = PVF.?? WHERE PV.?? = ?;
+    SELECT PV.??, (SELECT F.?? FROM ?? F WHERE F.?? = PVF.??) AS ??, PV.?? FROM ?? PV INNER JOIN ?? PVF ON PV.?? = PVF.?? WHERE PV.?? = (SELECT P.?? FROM ?? P INNER JOIN ?? PV ON P.?? = PV.?? WHERE PV.?? = ?) ORDER BY PV.??;`,
     [
       // Config.
       'PrimaryNumber',
@@ -81,6 +82,16 @@ router.get('/:variantID', function(req, res) {
       'Config',
       // ProductInfo.
       'ProductName',
+      'CategoryName',
+      'Categories',
+      'CategoryID',
+      'CategoryID',
+      'CategoryName',
+      'BrandName',
+      'Brands',
+      'BrandID',
+      'BrandID',
+      'BrandName',
       'Products',
       'ProductsVariants',
       'ProductID',
@@ -101,9 +112,31 @@ router.get('/:variantID', function(req, res) {
       'VariantID',
       'VariantID',
       'VariantID',
-      req.params['variantID']
+      req.params['variantID'],
+      // SimilarProducts.
+      'VariantID',
+      'FlavorName',
+      'Flavors',
+      'FlavorID',
+      'FlavorID',
+      'FlavorName',
+      'Weight',
+      'ProductsVariants',
+      'ProductsVariantsFlavors',
+      'VariantID',
+      'VariantID',
+      'ProductID',
+      'ProductID',
+      'Products',
+      'ProductsVariants',
+      'ProductID',
+      'ProductID',
+      'VariantID',
+      req.params['variantID'],
+      'Weight'
     ]
   );
+  console.log(stmt);
 
   conn.query(stmt, (error, results) => {
     // Checking if there are any errors.
@@ -135,7 +168,8 @@ router.get('/:variantID', function(req, res) {
       ProductVariant: results[2][0]
     };
 
-    console.log(data.ProductVariant);
+    console.log('\n\n------\n\n');
+    console.log(results[3]);
     // Getting the proper copyright date.
     data.CopyrightDate = getCopyrightDate();
 
