@@ -64,51 +64,86 @@ router.get('/', function(req, res) {
 
 // Setting up product route.
 router.get('/:variantID', function(req, res) {
-  conn.query(
-    '\
-		SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
-		SELECT * FROM `Products` WHERE `ProductID` = ' +
-      req.params.variantID +
-      '; \
-        ',
-    (error, results) => {
-      // Checking if there are any errors.
-      if (error) throw error;
-
-      // Getting the data.
-      const data = {
-        Config: {
-          Phone: {
-            Primary: results[0][0].PrimaryNumber,
-            Secondary: results[0][0].SecondaryNumber,
-            Fixed: results[0][0].FixedNumber
-          },
-          Email: results[0][0].Email,
-          Facebook: {
-            Name: results[0][0].Facebook.split('|')[0],
-            Link: results[0][0].Facebook.split('|')[1]
-          },
-          Instagram: {
-            Name: results[0][0].Instagram.split('|')[0],
-            Link: results[0][0].Instagram.split('|')[1]
-          },
-          Youtube: {
-            Name: results[0][0].Youtube.split('|')[0],
-            Link: results[0][0].Youtube.split('|')[1]
-          }
-        },
-        Product: results[1][0]
-      };
-
-      // Getting the proper copyright date.
-      data.CopyrightDate = getCopyrightDate();
-
-      // Rendering the products page.
-      res.render('product/product', {
-        Data: data
-      });
-    }
+  const stmt = conn.format(
+    `
+    SELECT ??, ??, ??, ??, ??, ??, ?? FROM ??; 
+    SELECT P.?? FROM ?? P INNER JOIN ?? PV ON P.?? = PV.?? WHERE PV.?? = ?;
+    SELECT PV.??, PVF.??, PVF.??, (SELECT F.?? FROM ?? F WHERE F.?? = PVF.??) AS ?? FROM ?? PV INNER JOIN ?? PVF ON PV.?? = PVF.?? WHERE PV.?? = ?;`,
+    [
+      // Config.
+      'PrimaryNumber',
+      'SecondaryNumber',
+      'FixedNumber',
+      'Email',
+      'Facebook',
+      'Instagram',
+      'Youtube',
+      'Config',
+      // ProductInfo.
+      'ProductName',
+      'Products',
+      'ProductsVariants',
+      'ProductID',
+      'ProductID',
+      'VariantID',
+      req.params['variantID'],
+      // ProductVariant.
+      'Weight',
+      'VariantImage',
+      'NutritionInfo',
+      'FlavorName',
+      'Flavors',
+      'FlavorID',
+      'FlavorID',
+      'FlavorName',
+      'ProductsVariants',
+      'ProductsVariantsFlavors',
+      'VariantID',
+      'VariantID',
+      'VariantID',
+      req.params['variantID']
+    ]
   );
+
+  conn.query(stmt, (error, results) => {
+    // Checking if there are any errors.
+    if (error) throw error;
+
+    // Getting the data.
+    const data = {
+      Config: {
+        Phone: {
+          Primary: results[0][0].PrimaryNumber,
+          Secondary: results[0][0].SecondaryNumber,
+          Fixed: results[0][0].FixedNumber
+        },
+        Email: results[0][0].Email,
+        Facebook: {
+          Name: results[0][0].Facebook.split('|')[0],
+          Link: results[0][0].Facebook.split('|')[1]
+        },
+        Instagram: {
+          Name: results[0][0].Instagram.split('|')[0],
+          Link: results[0][0].Instagram.split('|')[1]
+        },
+        Youtube: {
+          Name: results[0][0].Youtube.split('|')[0],
+          Link: results[0][0].Youtube.split('|')[1]
+        }
+      },
+      ProductInfo: results[1][0],
+      ProductVariant: results[2][0]
+    };
+
+    console.log(data.ProductVariant);
+    // Getting the proper copyright date.
+    data.CopyrightDate = getCopyrightDate();
+
+    // Rendering the products page.
+    res.render('product/product', {
+      Data: data
+    });
+  });
 });
 
 // Exporting the route.

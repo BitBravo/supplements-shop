@@ -7,21 +7,40 @@
 .product-section {
   padding: 180px 0 100px 0;
 
-  &__header {
+  &__upper {
     height: 300px;
-    margin-bottom: 30px;
+    margin-bottom: 80px;
+
+    &__header {
+      height: 100%;
+
+      &__img {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+
+        img {
+          height: 200px;
+          margin-top: 20px;
+          width: 130px;
+        }
+      }
+    }
+
+    &__action {
+      height: 100%;
+    }
   }
 
-  &__action {
-    height: 300px;
-    margin-bottom: 30px;
-  }
+  &__lower {
+    height: 400px;
 
-  &__main {
-    height: 300px;
-  }
+    &__main {
+      height: 100%;
+    }
 
-  &__side {
-    height: 300px;
+    &__side {
+      height: 100%;
+    }
   }
 }
