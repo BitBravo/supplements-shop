@@ -57,8 +57,32 @@
 					</div>
 				</div>
 			</div>
+			<div class="row center-align product-section__price">
+				<div class="col s12">
+					{{#displayOldPrice Data.ProductVariant.OldPrice Data.ProductVariant.NewPrice}}
+						<div class="col s12">
+							<span class="grey-text">
+								<del>{{ formatCurrency Data.ProductVariant.OldPrice }}</del>
+							</span>
+						</div>
+					{{/displayOldPrice}}
+					<div class="col s12">
+						<span>
+							<b class="green-text">{{ formatCurrency Data.ProductVariant.NewPrice }}</b>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="col s12">
+					<a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
+					<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
+						title="أضف إلى السلة">
+						<i class="fa fa-cart-plus"></i>
+					</a>
+				</div>
+			</div>
 		</div>
-	</div>
 	</div>
 	<div class="row product-section__lower">
 		<ul class="col s8 white collapsible product-section__lower__main">
