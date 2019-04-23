@@ -7,13 +7,21 @@
 .product-section {
   padding: 180px 0 100px 0;
 
+  &__price {
+    del {
+      font-size: 15px;
+    }
+
+    b {
+      font-size: 20px;
+    }
+  }
+
   &__upper {
-    height: 270px;
+    display: flex;
     margin-bottom: 80px;
 
     &__header {
-      height: 100%;
-
       h4 {
         padding: 20px 10px;
       }
@@ -32,8 +40,6 @@
     }
 
     &__action {
-      height: 100%;
-
       .product-variant-select {
         margin-top: 20px;
       }
@@ -57,8 +63,6 @@
     }
 
     &__side {
-      height: 100%;
-
       img {
         margin: 12px 0 8px 0;
         width: 100%;
