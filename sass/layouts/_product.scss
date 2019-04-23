@@ -41,17 +41,26 @@
   }
 
   &__lower {
-    height: 800px;
-
     &__main {
-      height: 100%;
+      .ql-editor {
+        width: 100%;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .ql-clipboard,
+      .ql-tooltip {
+        display: none;
+      }
     }
 
     &__side {
       height: 100%;
 
       img {
-        margin-top: 10px;
+        margin: 12px 0 8px 0;
         width: 100%;
       }
     }
