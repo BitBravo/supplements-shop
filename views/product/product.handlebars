@@ -61,12 +61,22 @@
 	</div>
 	</div>
 	<div class="row product-section__lower">
-		<div class="col s8 white z-depth-2 product-section__lower__main">
-			<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Earum dolorum magni, eos veniam atque sint
-				quidem odit dolores modi perspiciatis nemo ipsum nostrum nesciunt, veritatis incidunt mollitia?
-				Consequatur, nemo temporibus?</p>
-		</div>
+		<ul class="col s8 white collapsible product-section__lower__main">
+			<li class="active">
+				<div class="collapsible-header"><i class="material-icons">description</i>الوصف</div>
+				<div class="collapsible-body">{{{ Data.ProductInfo.Description }}}</div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="material-icons">check</i>طريقة الاستخدام</div>
+				<div class="collapsible-body">{{{ Data.ProductInfo.Usage }}}</div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="material-icons">warning</i>التحذيرات</div>
+				<div class="collapsible-body">{{{ Data.ProductInfo.Warning }}}</div>
+			</li>
+		</ul>
 		<div class="col s3 offset-s1 white z-depth-2 product-section__lower__side">
+			<h4 class="center-align">حقائق غذائية</h4>
 			<img class="responsive-img" src="{{ Data.ProductVariant.NutritionInfo }}"
 				alt="{{ Data.ProductInfo.ProductName }}'s nutrition facts.">
 		</div>
