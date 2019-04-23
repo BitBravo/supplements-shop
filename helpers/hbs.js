@@ -93,5 +93,23 @@ module.exports = {
    */
   calculateDiscount: function(oldPrice, newPrice) {
     return `-${Math.round(((oldPrice - newPrice) * 100) / oldPrice)}%`;
+  },
+
+  /**
+   * Displays the appropriate unite given a weight value.
+   *
+   * @param {Float} weight The weight to base the unite off of.
+   */
+  weightUnite: function(weight) {
+    return weight >= 1 ? 'كلغ' : 'غرام';
+  },
+
+  /**
+   * Formats the given weight value.
+   *
+   * @param {Float} weight The weight to format.
+   */
+  formatWeight: function(weight) {
+    return weight >= 1 ? weight : weight * 1000;
   }
 };

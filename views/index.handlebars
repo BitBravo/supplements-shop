@@ -49,7 +49,9 @@
 										{{ this.ProductName }}
 									</a>
 								</span>
-								<div class="chip">&rlm;{{ this.Weight }} كلغ</div>
+								<div class="chip">&rlm;{{ formatWeight this.Weight }}
+									{{ weightUnite this.Weight }}
+								</div>
 							</div>
 							<div class="card-action right-align product-card__price">
 								<div class="row center-align">
@@ -119,7 +121,9 @@
 										{{ this.ProductName }}
 									</a>
 								</span>
-								<div class="chip">&rlm;{{ this.Weight }} كلغ</div>
+								<div class="chip">&rlm;{{ formatWeight this.Weight }}
+									{{ weightUnite this.Weight }}
+								</div>
 							</div>
 							<div class="card-action right-align product-card__price">
 								<div class="row center-align">
