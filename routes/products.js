@@ -63,12 +63,12 @@ router.get('/', function(req, res) {
 });
 
 // Setting up product route.
-router.get('/:productID', function(req, res) {
+router.get('/:variantID', function(req, res) {
   conn.query(
     '\
 		SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
 		SELECT * FROM `Products` WHERE `ProductID` = ' +
-      req.params.productID +
+      req.params.variantID +
       '; \
         ',
     (error, results) => {
