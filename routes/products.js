@@ -136,7 +136,6 @@ router.get('/:variantID', function(req, res) {
       'Weight'
     ]
   );
-  console.log(stmt);
 
   conn.query(stmt, (error, results) => {
     // Checking if there are any errors.
@@ -165,11 +164,10 @@ router.get('/:variantID', function(req, res) {
         }
       },
       ProductInfo: results[1][0],
-      ProductVariant: results[2][0]
+      ProductVariant: results[2][0],
+      SimilarVariants: groupVariants(results[3])
     };
 
-    console.log('\n\n------\n\n');
-    console.log(results[3]);
     // Getting the proper copyright date.
     data.CopyrightDate = getCopyrightDate();
 
@@ -177,6 +175,41 @@ router.get('/:variantID', function(req, res) {
     res.render('product/product', {
       Data: data
     });
+
+    /**
+     * Groups a collection of data by the weight's property.
+     *
+     * @param {Object[]} collection The collection of mixed data.
+     */
+    function groupVariants(collection) {
+      let track = [],
+        groupedCol = [];
+
+      collection.forEach(col => {
+        if (!track.includes(col.Weight)) {
+          groupedCol.push({
+            Weight: col.Weight,
+            Flavors: (() => {
+              const flavors = [];
+
+              collection.forEach(c => {
+                if (c.Weight === col.Weight) {
+                  flavors.push({
+                    VariantID: c.VariantID,
+                    FlavorName: c.FlavorName
+                  });
+                }
+              });
+
+              return flavors;
+            })()
+          });
+          track.push(col.Weight);
+        }
+      });
+
+      return groupedCol;
+    }
   });
 });
 

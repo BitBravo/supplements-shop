@@ -45,14 +45,13 @@
 				<div class="col s12">
 					<div class="input-field col s12 product-variant-select">
 						<select>
-							<optgroup label="team 1">
-								<option value="1">Option 1</option>
-								<option value="2">Option 2</option>
-							</optgroup>
-							<optgroup label="team 2">
-								<option value="3">Option 3</option>
-								<option value="4">Option 4</option>
-							</optgroup>
+							{{#each Data.SimilarVariants }}
+								<optgroup label="&rlm;{{ formatWeight this.Weight }} {{ weightUnite this.Weight }}">
+									{{#each this.Flavors }}
+										<option value="{{ this.VariantID }}">{{ this.FlavorName }}</option>
+									{{/each}}
+								</optgroup>
+							{{/each}}
 						</select>
 						<label>منتجات مماثلة</label>
 					</div>
