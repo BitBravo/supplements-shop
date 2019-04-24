@@ -5,50 +5,54 @@
 @charset 'utf-8';
 
 .navbar-fixed {
-	.nav-icon {
-		font-size: 20px;
-	}
+  .nav-icon {
+    font-size: 20px;
+  }
 
-	.brand-logo {
-		margin-left: 13px;
-	}
+  .brand-logo {
+    margin-left: 13px;
+  }
 
-	.nav-social {
-		opacity: 0.3;
-		transition-duration: 0.3s;
-		transition-property: opacity;
+  .nav-social {
+    opacity: 0.3;
+    transition-duration: 0.3s;
+    transition-property: opacity;
 
-		&:hover {
-			opacity: 0.8;
-		}
+    &:hover {
+      opacity: 0.8;
+    }
 
-		&:not(:first-of-type) {
-			margin-right: 20px;
-		}
-	}
+    &:not(:first-of-type) {
+      margin-right: 20px;
+    }
+  }
 
-	.nav-phone {
-		font-size: 18px;
-		margin-right: 8px;
-	}
+  .nav-phone {
+    font-size: 18px;
+    margin-right: 8px;
+  }
 
-	.cart-button {
-		padding-right: 0;
+  .cart-button {
+    padding-right: 0;
 
-		.cart-button__badge {
-			border-radius: 50%;
-			font-weight: bold;
-			padding: 2px 6px;
-			position: relative;
-			right: 12px;
-			top: -12px;
-		}
-	}
+    .cart-button__badge {
+      border-radius: 50%;
+      font-weight: bold;
+      padding: 2px 6px;
+      position: relative;
+      right: 12px;
+      top: -12px;
+    }
+  }
 
-	ul.sidenav {
-		.fa,
-		.fas {
-			margin-left: 10px;
-		}
-	}
+  .dropdown-trigger:focus {
+    outline: none;
+  }
+
+  ul.sidenav {
+    .fa,
+    .fas {
+      margin-left: 10px;
+    }
+  }
 }
