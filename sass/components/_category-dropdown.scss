@@ -12,14 +12,17 @@
     transition-duration: 0.3s !important;
 
     &:hover {
-      background-color: $color-light--dark;
-      color: $color-dark !important;
+      color: $color-light !important;
     }
 
     h6 {
       color: $color-light;
       margin-bottom: 20px;
       padding: 15px 5px;
+
+      &:hover {
+        color: $color-light--light;
+      }
     }
   }
 
