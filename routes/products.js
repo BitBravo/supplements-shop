@@ -22,7 +22,7 @@ router.get('/', function(req, res) {
     '\
     SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
     SELECT * FROM `Categories`; \
-		/*SELECT P.*, PV.`Weight`, (SELECT F.`FlavorName` FROM `Flavors` F WHERE F.`FlavorID` = PV.`FlavorID`) AS `FlavorName`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID`*/; \
+		SELECT Res.* FROM (SELECT P.*, PV.`Weight`, PV.`VariantID` AS `VariantID`, (SELECT F.`FlavorName` FROM `Flavors` F INNER JOIN `ProductsVariantsFlavors` PVF ON F.`FlavorID` = PVF.`FlavorID` WHERE PVF.`VariantID` = PV.`VariantID`) AS `FlavorName`, (SELECT PVF.`VariantImage` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) AS `ProductImage`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID` WHERE (SELECT PVF.`Quantity` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) > 0) AS Res ORDER BY RAND(); \
         ',
     (error, results) => {
       // Checking if there are any errors.
@@ -50,8 +50,8 @@ router.get('/', function(req, res) {
             Link: results[0][0].Youtube.split('|')[1]
           }
         },
-        Categories: formater.groupCategories(results[1])
-        //Products: results[2]
+        Categories: formater.groupCategories(results[1]),
+        Products: results[2]
       };
 
       // Getting the proper copyright date.
