@@ -73,7 +73,8 @@ router.get('/:variantID', function(req, res) {
     SELECT * FROM ??; 
     SELECT P.??, P.??, P.??, P.??, (SELECT C.?? FROM ?? C WHERE C.?? = P.??) AS ??, (SELECT B.?? FROM ?? B WHERE B.?? = P.??) AS ?? FROM ?? P INNER JOIN ?? PV ON P.?? = PV.?? WHERE PV.?? = ?;
     SELECT PV.??, PV.??, PVF.??, PVF.??, (SELECT PH.?? FROM ?? PH WHERE PH.?? = PV.?? ORDER BY PH.?? DESC LIMIT 1) AS ??, (SELECT DISTINCT PH.?? FROM ?? PH WHERE PH.?? = PV.?? ORDER BY PH.?? DESC LIMIT 1, 1) AS ??, (SELECT F.?? FROM ?? F WHERE F.?? = PVF.??) AS ?? FROM ?? PV INNER JOIN ?? PVF ON PV.?? = PVF.?? WHERE PV.?? = ?;
-    SELECT PV.??, (SELECT F.?? FROM ?? F WHERE F.?? = PVF.??) AS ??, PV.?? FROM ?? PV INNER JOIN ?? PVF ON PV.?? = PVF.?? WHERE PV.?? = (SELECT P.?? FROM ?? P INNER JOIN ?? PV ON P.?? = PV.?? WHERE PV.?? = ?) AND (SELECT PVF.?? FROM ?? PVF WHERE PVF.?? = PV.??) > 0 ORDER BY PV.??;`,
+    SELECT PV.??, (SELECT F.?? FROM ?? F WHERE F.?? = PVF.??) AS ??, PV.?? FROM ?? PV INNER JOIN ?? PVF ON PV.?? = PVF.?? WHERE PV.?? = (SELECT P.?? FROM ?? P INNER JOIN ?? PV ON P.?? = PV.?? WHERE PV.?? = ?) AND (SELECT PVF.?? FROM ?? PVF WHERE PVF.?? = PV.??) > 0 ORDER BY PV.??;
+    SELECT ?? FROM ?? WHERE ?? = ?;`,
     [
       // Config.
       'PrimaryNumber',
@@ -159,7 +160,12 @@ router.get('/:variantID', function(req, res) {
       'ProductsVariantsFlavors',
       'VariantID',
       'VariantID',
-      'Weight'
+      'Weight',
+      // Check.
+      'Quantity',
+      'ProductsVariantsFlavors',
+      'VariantID',
+      req.params['variantID']
     ]
   );
 
@@ -167,41 +173,45 @@ router.get('/:variantID', function(req, res) {
     // Checking if there are any errors.
     if (error) throw error;
 
-    // Getting the data.
-    const data = {
-      Config: {
-        Phone: {
-          Primary: results[0][0].PrimaryNumber,
-          Secondary: results[0][0].SecondaryNumber,
-          Fixed: results[0][0].FixedNumber
+    if (results[5][0].Quantity > 0) {
+      // Getting the data.
+      const data = {
+        Config: {
+          Phone: {
+            Primary: results[0][0].PrimaryNumber,
+            Secondary: results[0][0].SecondaryNumber,
+            Fixed: results[0][0].FixedNumber
+          },
+          Email: results[0][0].Email,
+          Facebook: {
+            Name: results[0][0].Facebook.split('|')[0],
+            Link: results[0][0].Facebook.split('|')[1]
+          },
+          Instagram: {
+            Name: results[0][0].Instagram.split('|')[0],
+            Link: results[0][0].Instagram.split('|')[1]
+          },
+          Youtube: {
+            Name: results[0][0].Youtube.split('|')[0],
+            Link: results[0][0].Youtube.split('|')[1]
+          }
         },
-        Email: results[0][0].Email,
-        Facebook: {
-          Name: results[0][0].Facebook.split('|')[0],
-          Link: results[0][0].Facebook.split('|')[1]
-        },
-        Instagram: {
-          Name: results[0][0].Instagram.split('|')[0],
-          Link: results[0][0].Instagram.split('|')[1]
-        },
-        Youtube: {
-          Name: results[0][0].Youtube.split('|')[0],
-          Link: results[0][0].Youtube.split('|')[1]
-        }
-      },
-      Categories: formater.groupCategories(results[1]),
-      ProductInfo: results[2][0],
-      ProductVariant: results[3][0],
-      SimilarVariants: formater.groupVariants(results[4])
-    };
+        Categories: formater.groupCategories(results[1]),
+        ProductInfo: results[2][0],
+        ProductVariant: results[3][0],
+        SimilarVariants: formater.groupVariants(results[4])
+      };
 
-    // Getting the proper copyright date.
-    data.CopyrightDate = getCopyrightDate();
+      // Getting the proper copyright date.
+      data.CopyrightDate = getCopyrightDate();
 
-    // Rendering the products page.
-    res.render('product/product', {
-      Data: data
-    });
+      // Rendering the products page.
+      res.render('product/product', {
+        Data: data
+      });
+    } else {
+      res.redirect('/error');
+    }
   });
 });
 
