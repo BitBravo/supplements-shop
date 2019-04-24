@@ -2,106 +2,106 @@
 
 <html lang="ar">
 
-<head>
+	<head>
 
-    {{!-- Meta data. --}}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="author" content="EOussama">
-    <meta name="application-name" content="Supplements Maroc">
-    <meta name="description" content="Online store for selling workout-related protein products.">
-    <meta name="keywords" content="store, e-commerce">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{{!-- Meta data. --}}
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="author" content="EOussama">
+		<meta name="application-name" content="Supplements Maroc">
+		<meta name="description" content="Online store for selling workout-related protein products.">
+		<meta name="keywords" content="store, e-commerce">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {{!-- The favicon. --}}
-    <link rel="icon" href="/assets/img/favicon.png">
+		{{!-- The favicon. --}}
+		<link rel="icon" href="/assets/img/favicon.png">
 
-    {{!-- FontAwesome. --}}
-    <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css">
+		{{!-- FontAwesome. --}}
+		<link rel="stylesheet" href="/assets/fontawesome/css/all.min.css">
 
-    {{!-- Materialize Stylesheet. --}}
-    <link rel="stylesheet" href="/assets/materialize/dist/css/materialize.min.css">
+		{{!-- Materialize Stylesheet. --}}
+		<link rel="stylesheet" href="/assets/materialize/dist/css/materialize.min.css">
 
-    {{!-- Material Icons. --}}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		{{!-- Material Icons. --}}
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    {{!-- The main stylesheet. --}}
-    <link rel="stylesheet" href="/assets/css/main.css">
+		{{!-- The main stylesheet. --}}
+		<link rel="stylesheet" href="/assets/css/main.css">
 
-    {{!-- JQuery Script. --}}
-    <script src="/assets/jquery/dist/jquery.min.js"></script>
+		{{!-- JQuery Script. --}}
+		<script src="/assets/jquery/dist/jquery.min.js"></script>
 
-    {{!-- Materialize Script. --}}
-    <script src="/assets/materialize/dist/js/materialize.min.js"></script>
+		{{!-- Materialize Script. --}}
+		<script src="/assets/materialize/dist/js/materialize.min.js"></script>
 
-    {{!-- The main script. --}}
-    <script src="/assets/js/main.js"></script>
+		{{!-- The main script. --}}
+		<script src="/assets/js/main.js"></script>
 
-    {{!-- The contact script. --}}
-    <script src="/assets/js/contact.js"></script>
+		{{!-- The contact script. --}}
+		<script src="/assets/js/contact.js"></script>
 
-    {{!-- The title. --}}
-    <title>Supplements Maroc</title>
-</head>
+		{{!-- The title. --}}
+		<title>Supplements Maroc</title>
+	</head>
 
-<body>
+	<body>
 
-    {{!-- The nav's partial. --}}
-    {{> nav }}
+		{{!-- The nav's partial. --}}
+		{{> nav }}
 
-    {{!-- Contact Modal. --}}
-    <div id="contact-modal" class="modal modal-fixed-footer contact-modal">
-        <form id="contact-form" class="col s12">
-            <div class="modal-content">
-                <div class="row">
-                    <div class="col s12">
-                        <h4 class="right-align">اتصل بنا</h4>
-                    </div>
-                </div>
+		{{!-- Contact Modal. --}}
+		<div id="contact-modal" class="modal modal-fixed-footer contact-modal">
+			<form id="contact-form" class="col s12">
+				<div class="modal-content">
+					<div class="row">
+						<div class="col s12">
+							<h4 class="right-align">اتصل بنا</h4>
+						</div>
+					</div>
 
-                <div class="row contact-modal__content">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="message-username" type="text" class="right-align validate" data-length="100"
-                                name="username" minlength="2" required>
-                            <label for="message-username">اسم المستخدم</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="message-email" type="email" class="right-align validate" data-length="80"
-                                name="email" required>
-                            <label for="message-email">البريد الإلكتروني</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <textarea id="message-message" class="right-align materialize-textarea" data-length="2000"
-                                rows="5" name="message" minlength="5" required></textarea>
-                            <label for="message-message">رسالة</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <input type="submit" class="waves-effect waves-green btn-flat" value="إرسال">
-                <a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
-            </div>
-        </form>
-    </div>
+					<div class="row contact-modal__content">
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="message-username" type="text" class="right-align validate" data-length="100" name="username"
+									minlength="2" required>
+								<label for="message-username">اسم المستخدم</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="message-email" type="email" class="right-align validate" data-length="80" name="email"
+									required>
+								<label for="message-email">البريد الإلكتروني</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<textarea id="message-message" class="right-align materialize-textarea" data-length="2000" rows="5"
+									name="message" minlength="5" required></textarea>
+								<label for="message-message">رسالة</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="waves-effect waves-green btn-flat" value="إرسال">
+					<a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
+				</div>
+			</form>
+		</div>
 
-    {{!-- Scroll back to top button. --}}
-    <a href="javascript:void(0)" id="scroll-to-top" title="Scroll to top" class="visible scroll-to-top">
-        <i class="fas fa-chevron-up fa-2x"></i>
-    </a>
+		{{!-- Scroll back to top button. --}}
+		<a href="javascript:void(0)" id="scroll-to-top" title="Scroll to top" class="visible scroll-to-top">
+			<i class="fas fa-chevron-up fa-2x"></i>
+		</a>
 
-    {{!-- The main content of the page. --}}
-    <main>
-        {{{body}}}
-    </main>
+		{{!-- The main content of the page. --}}
+		<main>
+			{{{body}}}
+		</main>
 
-    {{!-- The footer's partial. --}}
-    {{> footer }}
-</body>
+		{{!-- The footer's partial. --}}
+		{{> footer }}
+	</body>
 
 </html>
