@@ -3,6 +3,7 @@ const express = require('express'),
   mysql = require('mysql'),
   database = require('./../helpers/database'),
   getCopyrightDate = require('./../helpers/copyright'),
+  formater = require('../helpers/formater'),
   conn = mysql.createConnection({
     database: database.name,
     host: database.host,
@@ -52,7 +53,7 @@ router.get('/', function(req, res) {
           }
         },
         Brands: results[1],
-        Categories: formatCategories(results[2]),
+        Categories: formater.groupCategories(results[2]),
         TopProducts: results[3],
         NewestProducts: results[4]
       };
@@ -66,40 +67,6 @@ router.get('/', function(req, res) {
       });
     }
   );
-
-  function formatCategories(categories) {
-    const formatedCatgories = [];
-
-    categories.forEach(category => {
-      if (category.CategoryParent == null) {
-        category.SubCategories = (() => {
-          const cats = [];
-
-          categories.forEach(cat => {
-            if (cat.CategoryParent == category.CategoryID) {
-              cats.push(cat);
-            }
-          });
-
-          return cats;
-        })();
-
-        formatedCatgories.push(category);
-      }
-    });
-
-    formatedCatgories.sort((a, b) => {
-      if (a.SubCategories.length > b.SubCategories.length) {
-        return -1;
-      } else if (a.SubCategories.length < b.SubCategories.length) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-
-    return formatedCatgories;
-  }
 });
 
 // Exporting the route.

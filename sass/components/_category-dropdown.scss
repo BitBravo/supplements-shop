@@ -22,4 +22,8 @@
       padding: 15px 5px;
     }
   }
+
+  *:focus {
+    outline: none;
+  }
 }
