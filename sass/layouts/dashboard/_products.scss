@@ -5,32 +5,42 @@
 @charset 'utf-8';
 
 .dashboard-products {
-	#products-creation-tab,
-	#products-edition-tab {
-		margin-top: 50px;
-		overflow-y: auto;
+  #products-creation-tab,
+  #products-edition-tab {
+    margin-top: 50px;
+    overflow-y: auto;
 
-		input[type='submit'] {
-			width: 200px;
-		}
+    input[type='submit'] {
+      width: 200px;
+    }
 
-		a.modal-trigger {
-			width: 270px;
-		}
-	}
+    a.modal-trigger {
+      width: 270px;
+    }
+  }
 
-	.ql-editor strong {
-		font-weight: bold;
-	}
+  .highlighted-table {
+    tbody tr {
+      cursor: pointer;
 
-	.stock-section {
-		table {
-			border: 1px solid grey;
-			margin-bottom: 80px;
+      &:hover {
+        background-color: $color-light;
+      }
+    }
+  }
 
-			.stock-remove i {
-				font-size: 15px;
-			}
-		}
-	}
+  .ql-editor strong {
+    font-weight: bold;
+  }
+
+  .stock-section {
+    table {
+      border: 1px solid grey;
+      margin-bottom: 80px;
+
+      .stock-remove i {
+        font-size: 15px;
+      }
+    }
+  }
 }
