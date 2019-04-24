@@ -9,7 +9,7 @@
 			</div>
 			<div class="col s12 l9 hide-on-med-only">
 				<h4 class="grey lighten-4 center-align hide-on-med-and-down">{{ Data.ProductInfo.ProductName }}</h4>
-				<table class="centered striped grey lighten-4">
+				<table class="centered striped grey lighten-4 hide-on-small-and-down">
 					<tbody>
 						<tr>
 							<td>
@@ -32,6 +32,40 @@
 								<div class="chip">&rlm;{{ Data.ProductVariant.FlavorName }}</div>
 							</td>
 							<td>النكهة</td>
+							<td>
+								<div class="chip">&rlm;{{ Data.ProductInfo.BrandName }}</div>
+							</td>
+							<td>العلامة التجارية</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="centered striped grey lighten-4 hide-on-med-and-up">
+					<tbody>
+						<tr>
+							<td>
+								<div class="chip">&rlm;{{ formatWeight Data.ProductVariant.Weight }}
+									{{ weightUnite Data.ProductVariant.Weight }}
+								</div>
+							</td>
+							<td>
+								الوزن
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="chip">&rlm;{{ Data.ProductInfo.CategoryName }}</div>
+							</td>
+							<td>
+								الفئة
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="chip">&rlm;{{ Data.ProductVariant.FlavorName }}</div>
+							</td>
+							<td>النكهة</td>
+						</tr>
+						<tr>
 							<td>
 								<div class="chip">&rlm;{{ Data.ProductInfo.BrandName }}</div>
 							</td>
@@ -120,7 +154,7 @@
 		</div>
 	</div>
 	<div class="row product-section__lower">
-		<ul class="col s8 white collapsible product-section__lower__main">
+		<ul class="col s12 m8 l8 white collapsible product-section__lower__main">
 			<li class="active">
 				<div class="collapsible-header"><i class="material-icons">description</i>الوصف</div>
 				<div class="collapsible-body">{{{ Data.ProductInfo.Description }}}</div>
@@ -134,7 +168,7 @@
 				<div class="collapsible-body">{{{ Data.ProductInfo.Warning }}}</div>
 			</li>
 		</ul>
-		<div class="col s3 offset-s1 white card-panel product-section__lower__side">
+		<div class="col s12 m3 l3 offset-m1 offset-l1 white card-panel product-section__lower__side">
 			<h4 class="center-align">حقائق غذائية</h4>
 			<img class="responsive-img" src="{{ Data.ProductVariant.NutritionInfo }}"
 				alt="{{ Data.ProductInfo.ProductName }}'s nutrition facts.">
