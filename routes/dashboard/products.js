@@ -88,9 +88,11 @@ router.get('/:productID', function(req, res) {
 		SELECT PVF.* FROM ?? PVF INNER JOIN ?? PV ON PVF.?? = PV.?? WHERE PV.?? = ?; \
 		',
     [
+      //
       'Products',
       'ProductID',
       req.params.productID,
+      //
       'Price',
       'PriceHistory',
       'VariantID',
@@ -100,7 +102,9 @@ router.get('/:productID', function(req, res) {
       'ProductsVariants',
       'ProductID',
       req.params.productID,
+      //
       'Flavors',
+      //
       'ProductsVariantsFlavors',
       'ProductsVariants',
       'VariantID',

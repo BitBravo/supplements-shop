@@ -138,9 +138,11 @@ $('document').ready(() => {
 
         $.each(data[2], (i, _v) => {
           flavorsDropdown += `
-					<option ${_v.FlavorID == v.FlavorID ? 'selected' : ''} value="${_v.FlavorID}">${
-            _v.FlavorName
-          }</option>`;
+					<option ${
+            _v.FlavorID == getProductVariantFlavor(v.VariantID).FlavorID
+              ? 'selected'
+              : ''
+          } value="${_v.FlavorID}">${_v.FlavorName}</option>`;
         });
 
         flavorsDropdown += '</select>';
