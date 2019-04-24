@@ -152,17 +152,17 @@ $('document').ready(() => {
                 <div class="row">
                     <td></td>
                     <td class="center-align">
-                        <input type="number" name="stock-quantity" value="${
+                        <input type="number" name="stock-quantity" min="0" value="${
                           getProductVariantFlavor(v.VariantID).Quantity
                         }" class="validate">
                     </td>
                     <td class="center-align">
-                        <input type="number" name="stock-weight" step="0.001" value="${
+                        <input type="number" name="stock-weight" min="0" step="0.001" value="${
                           v.Weight
                         }" class="validate" disabled>
                     </td>
                     <td class="center-align">
-                        <input type="number" name="stock-price" step="0.01" value="${
+                        <input type="number" name="stock-price" min="0" step="0.01" value="${
                           v.Price
                         }" class="validate">
                     </td>
@@ -257,13 +257,13 @@ $('document').ready(() => {
                 </a>
             </td>
             <td class="center-align">
-                <input type="number" name="stock-quantity" value="0" class="validate">
+                <input type="number" name="stock-quantity" min="0" value="0" class="validate">
             </td>
             <td class="center-align">
-                <input type="number" name="stock-weight" step="0.001" value="0" class="validate">
+                <input type="number" name="stock-weight" min="0" step="0.001" value="0" class="validate">
             </td>
             <td class="center-align">
-                <input type="number" step="0.01" name="stock-price" value="0" class="validate">
+                <input type="number" step="0.01" min="0" name="stock-price" value="0" class="validate">
             </td>
             <td class="center-align">
                 ${flavorsDropdown}
