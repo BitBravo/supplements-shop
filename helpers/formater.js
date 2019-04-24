@@ -2,7 +2,7 @@
  * All costume data formaters used in the application.
  */
 
-/*
+/**
  * Groups all categories together approprietely.
  *
  * @param {Object[]} categories The collection of categories.
@@ -41,7 +41,7 @@ module.exports.groupCategories = function(categories) {
   return formatedCatgories;
 };
 
-/*
+/**
  * Groups a collection of data by the weight's property.
  *
  * @param {Object[]} collection The collection of mixed data.
@@ -74,4 +74,19 @@ module.exports.groupVariants = function(collection) {
   });
 
   return groupedCol;
+};
+
+/**
+ * Truncates a message for it to properly fit the screen.
+ *
+ * @param {String} mail The message to truncate.
+ */
+module.exports.truncateMessages = function(mail) {
+  for (const m of mail) {
+    if (m.Message.length > 80) {
+      m.Message = m.Message.substring(0, 80) + '...';
+    }
+  }
+
+  return mail;
 };
