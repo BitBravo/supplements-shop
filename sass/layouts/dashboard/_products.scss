@@ -19,6 +19,13 @@
     }
   }
 
+  #product-creation-modal {
+    .select-wrapper ul {
+      height: 350px;
+      overflow: auto;
+    }
+  }
+
   .highlighted-table {
     tbody tr {
       cursor: pointer;
