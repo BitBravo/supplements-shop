@@ -1,0 +1,25 @@
+/**
+    Contact-modal - Styling rules for the contact-modal component.
+*/
+
+@charset 'utf-8';
+
+.category-dropdown {
+  padding: 10px 20px;
+
+  a {
+    color: $color-light--dark !important;
+    transition-duration: 0.3s !important;
+
+    &:hover {
+      background-color: $color-light--dark;
+      color: $color-dark !important;
+    }
+
+    h6 {
+      color: $color-light;
+      margin-bottom: 20px;
+      padding: 15px 5px;
+    }
+  }
+}

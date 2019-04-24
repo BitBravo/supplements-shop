@@ -20,7 +20,7 @@ router.get('/', function(req, res) {
   conn.query(
     '\
 		SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
-		SELECT P.*, PV.`Weight`, (SELECT F.`FlavorName` FROM `Flavors` F WHERE F.`FlavorID` = PV.`FlavorID`) AS `FlavorName`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID`; \
+		/*SELECT P.*, PV.`Weight`, (SELECT F.`FlavorName` FROM `Flavors` F WHERE F.`FlavorID` = PV.`FlavorID`) AS `FlavorName`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID`*/; \
         ',
     (error, results) => {
       // Checking if there are any errors.
@@ -47,8 +47,8 @@ router.get('/', function(req, res) {
             Name: results[0][0].Youtube.split('|')[0],
             Link: results[0][0].Youtube.split('|')[1]
           }
-        },
-        Products: results[1]
+        }
+        //Products: results[1]
       };
 
       // Getting the proper copyright date.

@@ -21,6 +21,7 @@ router.get('/', function(req, res) {
     '\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
         SELECT * FROM `Brands`; \
+        SELECT * FROM `Categories`; \
         SELECT Res.* FROM (SELECT P.*, PV.`Weight`, PV.`VariantID` AS `VariantID`, (SELECT F.`FlavorName` FROM `Flavors` F INNER JOIN `ProductsVariantsFlavors` PVF ON F.`FlavorID` = PVF.`FlavorID` WHERE PVF.`VariantID` = PV.`VariantID`) AS `FlavorName`, (SELECT PVF.`VariantImage` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) AS `ProductImage`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID`) AS Res ORDER BY RAND() LIMIT 6; \
         SELECT P.*, PV.`Weight`, PV.`VariantID` AS `VariantID`, (SELECT F.`FlavorName` FROM `Flavors` F INNER JOIN `ProductsVariantsFlavors` PVF ON F.`FlavorID` = PVF.`FlavorID` WHERE PVF.`VariantID` = PV.`VariantID`) AS `FlavorName`, (SELECT PVF.`VariantImage` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) AS `ProductImage`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID` ORDER BY P.`AddedDate` DESC LIMIT 6; \
         ',
@@ -51,8 +52,9 @@ router.get('/', function(req, res) {
           }
         },
         Brands: results[1],
-        TopProducts: results[2],
-        NewestProducts: results[3]
+        Categories: formatCategories(results[2]),
+        TopProducts: results[3],
+        NewestProducts: results[4]
       };
 
       // Getting the proper copyright date.
@@ -64,6 +66,40 @@ router.get('/', function(req, res) {
       });
     }
   );
+
+  function formatCategories(categories) {
+    const formatedCatgories = [];
+
+    categories.forEach(category => {
+      if (category.CategoryParent == null) {
+        category.SubCategories = (() => {
+          const cats = [];
+
+          categories.forEach(cat => {
+            if (cat.CategoryParent == category.CategoryID) {
+              cats.push(cat);
+            }
+          });
+
+          return cats;
+        })();
+
+        formatedCatgories.push(category);
+      }
+    });
+
+    formatedCatgories.sort((a, b) => {
+      if (a.SubCategories.length > b.SubCategories.length) {
+        return -1;
+      } else if (a.SubCategories.length < b.SubCategories.length) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return formatedCatgories;
+  }
 });
 
 // Exporting the route.
