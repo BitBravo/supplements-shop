@@ -5,25 +5,25 @@
 @charset 'utf-8';
 
 .scroll-to-top {
-	background-color: $color-dark-light;
-	border-radius: 5px 5px 0 0;
-	bottom: -10px;
-	color: $color-light;
-	display: none;
-	opacity: 0.2;
-	padding: 13px 10px;
-	position: fixed;
-	right: 20px;
-	transition-duration: 0.3s;
-	transition-property: bottom opacity;
-	z-index: 5;
+  background-color: $color-dark--light;
+  border-radius: 5px 5px 0 0;
+  bottom: -10px;
+  color: $color-light;
+  display: none;
+  opacity: 0.2;
+  padding: 13px 10px;
+  position: fixed;
+  right: 20px;
+  transition-duration: 0.3s;
+  transition-property: bottom opacity;
+  z-index: 5;
 
-	&:hover {
-		bottom: 0;
-		opacity: 0.6;
-	}
+  &:hover {
+    bottom: 0;
+    opacity: 0.6;
+  }
 
-	&.visible {
-		display: block;
-	}
+  &.visible {
+    display: block;
+  }
 }

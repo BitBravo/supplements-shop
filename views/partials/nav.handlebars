@@ -1,129 +1,151 @@
 {{!-- The navbar. --}}
 <div class="navbar-fixed">
-    <nav class="nav-extended grey darken-4">
+	<nav class="nav-extended grey darken-4">
 
-        {{!-- Upper navbar. --}}
-        <div class="nav-wrapper container">
+		{{!-- Upper navbar. --}}
+		<div class="nav-wrapper container">
 
-            <div class="left">
-                <a href="/" class="left brand-logo" title="Supplement Maroc">SM</a>
-            </div>
+			<div class="left">
+				<a href="/" class="left brand-logo" title="Supplement Maroc">SM</a>
+			</div>
 
-            <div class="right">
-                <a href="javascript:void(0)" data-target="nav-sidebar" class="right sidenav-trigger">
-                    <i class="material-icons">menu</i>
-                </a>
-            </div>
+			<div class="right">
+				<a href="javascript:void(0)" data-target="nav-sidebar" class="right sidenav-trigger">
+					<i class="material-icons">menu</i>
+				</a>
+			</div>
 
-            <div class="right hide-on-med-and-down">
+			<div class="right hide-on-med-and-down">
 
-                {{!-- Phone number. --}}
-                <a class="grey-text" href="javascript:void(0)">
-                    <i class="fa fa-phone nav-phone nav-icon"></i>
-                    <b>{{Data.Config.Phone.Primary}}</b>
-                </a>
+				{{!-- Phone number. --}}
+				<a class="grey-text" href="javascript:void(0)">
+					<i class="fa fa-phone nav-phone nav-icon"></i>
+					<b>{{Data.Config.Phone.Primary}}</b>
+				</a>
 
-                {{!-- Social icons. --}}
-                <a class="left nav-social grey-text" href="{{Data.Config.Facebook.Link}}" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a class="left nav-social grey-text" href="{{Data.Config.Instagram.Link}}" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a class="left nav-social grey-text" href="{{Data.Config.Youtube.Link}}" target="_blank">
-                    <i class="fab fa-youtube"></i>
-                </a>
-            </div>
-        </div>
+				{{!-- Social icons. --}}
+				<a class="left nav-social grey-text" href="{{Data.Config.Facebook.Link}}" target="_blank">
+					<i class="fab fa-facebook-f"></i>
+				</a>
+				<a class="left nav-social grey-text" href="{{Data.Config.Instagram.Link}}" target="_blank">
+					<i class="fab fa-instagram"></i>
+				</a>
+				<a class="left nav-social grey-text" href="{{Data.Config.Youtube.Link}}" target="_blank">
+					<i class="fab fa-youtube"></i>
+				</a>
+			</div>
+		</div>
 
-        {{!-- Lower navbar. --}}
-        <nav class="grey darken-3 hide-on-med-and-down">
-            <div class="nav-wrapper container">
-                <ul class="left">
-                    <li><a href="/">الصفحة الرئيسية</a></li>
-                    <li><a href="/products"><i class="material-icons left">arrow_drop_down</i> جميع المنتوجات</a>
-                    </li>
-                    <li><a href="javascript:void(0)" class="contact-btn">اتصل بنا</a></li>
-                    <li><a href="javascript:void(0)" class="about-btn">معلومات عنا</a></li>
-                </ul>
-                <ul class="right">
-                    <li class="search-btn">
-                        <a href="javascript:void(0)">
-                            <i class="fa fa-search nav-icon"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" class="cart-button">
-                            <i class="fa fa-shopping-cart nav-icon"></i>
-                            <small class="red cart-button__badge">0</small>
-                        </a>
-                    </li>
-                    <li><a href="/dashboard"><i class="fa fa-cog nav-icon"></i></a></li>
-                </ul>
-            </div>
-        </nav>
+		{{!-- Lower navbar. --}}
+		<nav class="grey darken-3 hide-on-med-and-down">
+			<div class="nav-wrapper container">
+				<ul class="left">
+					<li><a href="/">الصفحة الرئيسية</a></li>
+					<li><a href="/products" class="dropdown-trigger" data-target="product-category-dropdown"><i
+								class="material-icons left">arrow_drop_down</i> جميع المنتوجات</a>
+					</li>
+					<li><a href="javascript:void(0)" class="contact-btn">اتصل بنا</a></li>
+					<li><a href="javascript:void(0)" class="about-btn">معلومات عنا</a></li>
+				</ul>
+				<ul class="right">
+					<li class="search-btn">
+						<a href="javascript:void(0)">
+							<i class="fa fa-search nav-icon"></i>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)" class="cart-button">
+							<i class="fa fa-shopping-cart nav-icon"></i>
+							<small class="red cart-button__badge">0</small>
+						</a>
+					</li>
+					<li><a href="/dashboard"><i class="fa fa-cog nav-icon"></i></a></li>
+				</ul>
+			</div>
+		</nav>
 
-        {{!-- Small screens' lower navbar. --}}
-        <nav class="grey darken-3 hide-on-large-only">
-            <div class="nav-wrapper container">
-                <ul class="right">
-                    <li>
-                        <a href="javascript:void(0)" class="search-button">
-                            <i class="fa fa-search nav-icon"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" class="cart-button">
-                            <i class="fa fa-shopping-cart nav-icon"></i>
-                            <small class="red cart-button__badge">0</small>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </nav>
+		{{!-- Small screens' lower navbar. --}}
+		<nav class="grey darken-3 hide-on-large-only">
+			<div class="nav-wrapper container">
+				<ul class="right">
+					<li>
+						<a href="javascript:void(0)" class="search-button">
+							<i class="fa fa-search nav-icon"></i>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)" class="cart-button">
+							<i class="fa fa-shopping-cart nav-icon"></i>
+							<small class="red cart-button__badge">0</small>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</nav>
+</div>
+
+{{!-- Products Category Menu. --}}
+<div id="product-category-dropdown" class="grey darken-3 dropdown-content category-dropdown">
+	<div class="row">
+		{{#each Data.Categories }}
+			<div class="col">
+				<a href="">
+					<h6>{{this.CategoryName }}</h6>
+				</a>
+
+				<ul>
+					{{#each this.SubCategories }}
+						<li>
+							<a href="">{{ this.CategoryName }}</a>
+						</li>
+					{{/each}}
+				</ul>
+			</div>
+		{{/each}}
+	</div>
 </div>
 
 {{!-- Nav sidebar. --}}
-<ul class="sidenav right-align grey lighten-3" id="nav-sidebar">
-    <li>
-        <a href="/">
-            <span dir="ltr">
-                الصفحة الرئيسية
-                <i class="fas fa-home"></i>
-            </span>
-        </a>
-    </li>
-    <li>
-        <a href="/products">
-            <span dir="ltr">
-                جميع المنتوجات
-                <i class="fas fa-prescription-bottle"></i>
-            </span>
-        </a>
-    </li>
-    <li>
-        <a href="javascript:void(0)" class="contact-btn">
-            <span dir="ltr">
-                اتصل بنا
-                <i class="fas fa-at"></i>
-            </span>
-        </a>
-    </li>
-    <li>
-        <a href="javascript:void(0)" class="about-btn">
-            <span dir="ltr">
-                معلومات عنا
-                <i class="fas fa-info-circle"></i>
-            </span>
-        </a>
-    </li>
-    <li>
-        <a href="/dashboard">
-            <span dir="ltr">
-                لوحة القيادة
-                <i class="fas fa-columns"></i>
-            </span>
-        </a>
-    </li>
+<ul class=" sidenav right-align grey lighten-3" id="nav-sidebar">
+	<li>
+		<a href="/">
+			<span dir="ltr">
+				الصفحة الرئيسية
+				<i class="fas fa-home"></i>
+			</span>
+		</a>
+	</li>
+	<li>
+		<a href="/products">
+			<span dir="ltr">
+				جميع المنتوجات
+				<i class="fas fa-prescription-bottle"></i>
+			</span>
+		</a>
+	</li>
+	<li>
+		<a href="javascript:void(0)" class="contact-btn">
+			<span dir="ltr">
+				اتصل بنا
+				<i class="fas fa-at"></i>
+			</span>
+		</a>
+	</li>
+	<li>
+		<a href="javascript:void(0)" class="about-btn">
+			<span dir="ltr">
+				معلومات عنا
+				<i class="fas fa-info-circle"></i>
+			</span>
+		</a>
+	</li>
+	<li>
+		<a href="/dashboard">
+			<span dir="ltr">
+				لوحة القيادة
+				<i class="fas fa-columns"></i>
+			</span>
+		</a>
+	</li>
 </ul>
