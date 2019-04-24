@@ -3,6 +3,7 @@ const express = require('express'),
   mysql = require('mysql'),
   database = require('./../helpers/database'),
   getCopyrightDate = require('./../helpers/copyright'),
+  formater = require('../helpers/formater'),
   conn = mysql.createConnection({
     database: database.name,
     host: database.host,
@@ -19,7 +20,8 @@ conn.connect();
 router.get('/', function(req, res) {
   conn.query(
     '\
-		SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
+    SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
+    SELECT * FROM `Categories`; \
 		/*SELECT P.*, PV.`Weight`, (SELECT F.`FlavorName` FROM `Flavors` F WHERE F.`FlavorID` = PV.`FlavorID`) AS `FlavorName`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID`*/; \
         ',
     (error, results) => {
@@ -47,8 +49,9 @@ router.get('/', function(req, res) {
             Name: results[0][0].Youtube.split('|')[0],
             Link: results[0][0].Youtube.split('|')[1]
           }
-        }
-        //Products: results[1]
+        },
+        Categories: formater.groupCategories(results[1])
+        //Products: results[2]
       };
 
       // Getting the proper copyright date.
@@ -67,6 +70,7 @@ router.get('/:variantID', function(req, res) {
   const stmt = conn.format(
     `
     SELECT ??, ??, ??, ??, ??, ??, ?? FROM ??; 
+    SELECT * FROM ??; 
     SELECT P.??, P.??, P.??, P.??, (SELECT C.?? FROM ?? C WHERE C.?? = P.??) AS ??, (SELECT B.?? FROM ?? B WHERE B.?? = P.??) AS ?? FROM ?? P INNER JOIN ?? PV ON P.?? = PV.?? WHERE PV.?? = ?;
     SELECT PV.??, PV.??, PVF.??, PVF.??, (SELECT PH.?? FROM ?? PH WHERE PH.?? = PV.?? ORDER BY PH.?? DESC LIMIT 1) AS ??, (SELECT DISTINCT PH.?? FROM ?? PH WHERE PH.?? = PV.?? ORDER BY PH.?? DESC LIMIT 1, 1) AS ??, (SELECT F.?? FROM ?? F WHERE F.?? = PVF.??) AS ?? FROM ?? PV INNER JOIN ?? PVF ON PV.?? = PVF.?? WHERE PV.?? = ?;
     SELECT PV.??, (SELECT F.?? FROM ?? F WHERE F.?? = PVF.??) AS ??, PV.?? FROM ?? PV INNER JOIN ?? PVF ON PV.?? = PVF.?? WHERE PV.?? = (SELECT P.?? FROM ?? P INNER JOIN ?? PV ON P.?? = PV.?? WHERE PV.?? = ?) ORDER BY PV.??;`,
@@ -80,6 +84,8 @@ router.get('/:variantID', function(req, res) {
       'Instagram',
       'Youtube',
       'Config',
+      // Categories.
+      'Categories',
       // ProductInfo.
       'ProductName',
       'Description',
@@ -179,9 +185,10 @@ router.get('/:variantID', function(req, res) {
           Link: results[0][0].Youtube.split('|')[1]
         }
       },
-      ProductInfo: results[1][0],
-      ProductVariant: results[2][0],
-      SimilarVariants: groupVariants(results[3])
+      Categories: formater.groupCategories(results[1]),
+      ProductInfo: results[2][0],
+      ProductVariant: results[3][0],
+      SimilarVariants: formater.groupVariants(results[4])
     };
 
     // Getting the proper copyright date.
@@ -191,41 +198,6 @@ router.get('/:variantID', function(req, res) {
     res.render('product/product', {
       Data: data
     });
-
-    /**
-     * Groups a collection of data by the weight's property.
-     *
-     * @param {Object[]} collection The collection of mixed data.
-     */
-    function groupVariants(collection) {
-      let track = [],
-        groupedCol = [];
-
-      collection.forEach(col => {
-        if (!track.includes(col.Weight)) {
-          groupedCol.push({
-            Weight: col.Weight,
-            Flavors: (() => {
-              const flavors = [];
-
-              collection.forEach(c => {
-                if (c.Weight === col.Weight) {
-                  flavors.push({
-                    VariantID: c.VariantID,
-                    FlavorName: c.FlavorName
-                  });
-                }
-              });
-
-              return flavors;
-            })()
-          });
-          track.push(col.Weight);
-        }
-      });
-
-      return groupedCol;
-    }
   });
 });
 
