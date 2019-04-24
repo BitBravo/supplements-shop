@@ -72,7 +72,7 @@
 											<div class="row">
 												<div class="input-field col s6">
 													<select id="product-category">
-														{{#each Data.Categories }}
+														{{#each Data.CategoriesData }}
 															<option value="{{ this.CategoryID }}">{{
                                                                     this.CategoryName
                                                                 }}
@@ -273,7 +273,7 @@
 					<div class="row">
 						<div class="input-field col s6">
 							<select id="product-category-edit">
-								{{#each Data.Categories }}
+								{{#each Data.CategoriesData }}
 									<option value="{{ this.CategoryID }}">{{ this.CategoryName }}
 									</option>
 								{{/each}}
