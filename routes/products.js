@@ -67,15 +67,18 @@ router.get('/', function(req, res) {
 
 // Getting all products for autocompletion purposes.
 router.post('/', function(req, res) {
-  conn.query('SELECT `ProductName` FROM `Products`', (error, results) => {
-    // Checking if there are any errors.
-    if (error) throw error;
+  conn.query(
+    'SELECT P.`ProductName`, PVF.`VariantImage`, PV.`Weight`, F.`FlavorName` FROM `Products` P INNER JOIN `ProductsVariants` PV ON P.`ProductID` = PV.`ProductID` INNER JOIN `ProductsVariantsFlavors` PVF ON PV.`VariantID` = PVF.`VariantID` INNER JOIN `Flavors` F ON PVF.`FlavorID` = F.`FlavorID`',
+    (error, results) => {
+      // Checking if there are any errors.
+      if (error) throw error;
 
-    const data = formater.constructAutocompletionData(results);
+      const data = formater.constructAutocompletionData(results);
 
-    // Sending the retrieved data.
-    res.json({ data });
-  });
+      // Sending the retrieved data.
+      res.json({ data });
+    }
+  );
 });
 
 // Setting up product route.

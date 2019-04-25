@@ -100,7 +100,14 @@ module.exports.constructAutocompletionData = function(data) {
   const formatedData = {};
 
   data.forEach(d => {
-    formatedData[d.ProductName] = '';
+    formatedData[
+      d.ProductName +
+        ' ' +
+        (d.Weight > 1 ? d.Weight : d.Weight * 1000) +
+        (d.Weight > 1 ? 'kg' : 'g') +
+        ' ' +
+        d.FlavorName
+    ] = d.VariantImage;
   });
 
   console.log(formatedData);
