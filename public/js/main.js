@@ -2,7 +2,11 @@ $('document').ready(() => {
   // Initializing the search box
   $.post('/products/', results => {
     $('input.autocomplete').autocomplete({
-      data: results.data
+      data: results.data,
+      limit: 5,
+      onAutocomplete: () => {
+        $('.search-form').trigger('submit');
+      }
     });
   });
 
