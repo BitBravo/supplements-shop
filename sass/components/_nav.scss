@@ -49,6 +49,70 @@
     outline: none;
   }
 
+  nav.hide-on-large-only {
+    height: 56px !important;
+  }
+
+  .small-screen-nav {
+    display: flex;
+    flex-direction: row;
+    height: 56px;
+    width: 100%;
+
+    .cart-section {
+      width: 70px !important;
+    }
+
+    .search-field {
+      width: 100%;
+
+      .input-field {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+
+        i {
+          font-size: 30px;
+          font-weight: bold;
+          width: 50px;
+        }
+
+        .autocomplete {
+          color: $color-light;
+          font-size: 20px;
+
+          &:active,
+          &:focus {
+            border: none;
+            box-shadow: none;
+          }
+        }
+
+        ul {
+          background-color: darken($color-light--dark, 30);
+          top: 56px !important;
+          width: 100% !important;
+
+          li {
+            &:hover {
+              background-color: darken($color-light--dark, 25);
+            }
+
+            span {
+              color: $color-light !important;
+
+              .highlight {
+                color: $color-light--light !important;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   ul.sidenav {
     .fa,
     .fas {
