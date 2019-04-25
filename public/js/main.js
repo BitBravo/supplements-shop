@@ -1,4 +1,11 @@
 $('document').ready(() => {
+  // Initializing the search box
+  $.post('/products/', results => {
+    $('input.autocomplete').autocomplete({
+      data: results.data
+    });
+  });
+
   // Fading out the scroll to top button by default.
   $('#scroll-to-top').fadeOut(0);
 
@@ -37,15 +44,6 @@ $('document').ready(() => {
     indicators: true,
     numVisible: 5,
     padding: 100
-  });
-
-  // Initializing the search box
-  $('input.autocomplete').autocomplete({
-    data: {
-      Apple: null,
-      Microsoft: null,
-      Google: 'https://placehold.it/250x250'
-    }
   });
 
   // Scrolling to the about section.
