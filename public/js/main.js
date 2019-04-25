@@ -36,6 +36,17 @@ $('document').ready(() => {
     indicators: true
   });
 
+  // Opening the search-navbar.
+  $('.search-btn').on('click', () => {
+    $('.search-navbar').fadeIn();
+    $('.search-navbar input').focus();
+  });
+
+  // Closing the search-navbar.
+  $('.search-close-btn').on('click', () => {
+    $('.search-navbar').fadeOut();
+  });
+
   // Sliding the carousel every 8 seconds.
   setInterval(() => {
     $('.carousel.carousel-slider').carousel('next');
