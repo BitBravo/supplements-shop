@@ -113,6 +113,47 @@
     }
   }
 
+  .search-navbar {
+    display: none;
+
+    input {
+      background-color: darken($color-light--dark, 40) !important;
+      color: $color-light !important;
+      font-size: 20px;
+      height: 64px !important;
+    }
+
+    label i {
+      font-size: 30px;
+      font-weight: bold;
+      text-align: center;
+      position: relative;
+      width: 50px;
+      top: -11px;
+    }
+
+    ul {
+      background-color: darken($color-light--dark, 40);
+      top: 56px !important;
+      width: 100% !important;
+
+      li {
+        &:hover {
+          background-color: darken($color-light--dark, 35);
+        }
+
+        span {
+          color: $color-light !important;
+
+          .highlight {
+            color: $color-light--light !important;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
   ul.sidenav {
     .fa,
     .fas {

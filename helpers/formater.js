@@ -110,6 +110,5 @@ module.exports.constructAutocompletionData = function(data) {
     ] = d.VariantImage;
   });
 
-  console.log(formatedData);
   return formatedData;
 };
