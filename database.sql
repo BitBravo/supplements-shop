@@ -15,7 +15,7 @@
 */
 
 -- Creating the database.
-CREATE DATABASE IF NOT EXISTS `db_supp_maroc`;
+CREATE DATABASE IF NOT EXISTS `db_supp_maroc` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Using the database.
 USE `db_supp_maroc`;
