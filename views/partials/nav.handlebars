@@ -67,19 +67,22 @@
 		{{!-- Small screens' lower navbar. --}}
 		<nav class="grey darken-3 hide-on-large-only">
 			<div class="nav-wrapper container">
-				<ul class="right">
-					<li>
-						<a href="javascript:void(0)" class="search-button">
-							<i class="fa fa-search nav-icon"></i>
-						</a>
-					</li>
-					<li>
-						<a href="javascript:void(0)" class="cart-button">
+				<div class="right small-screen-nav">
+					<div class="search-field">
+						<form method="GET" action="/products/">
+							<div class="input-field grey darken-2">
+								<input type="text" name="search" class="autocomplete right-align" placeholder="...بحث">
+								<i class="material-icons right">search</i>
+							</div>
+						</form>
+					</div>
+					<div class="cart-section">
+						<a href="javascript:void(0)" class="right cart-button">
 							<i class="fa fa-shopping-cart nav-icon"></i>
 							<small class="red cart-button__badge">0</small>
 						</a>
-					</li>
-				</ul>
+					</div>
+				</div>
 			</div>
 		</nav>
 	</nav>
