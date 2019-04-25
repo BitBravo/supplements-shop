@@ -65,6 +65,19 @@ router.get('/', function(req, res) {
   );
 });
 
+// Getting all products for autocompletion purposes.
+router.post('/', function(req, res) {
+  conn.query('SELECT `ProductName` FROM `Products`', (error, results) => {
+    // Checking if there are any errors.
+    if (error) throw error;
+
+    const data = formater.constructAutocompletionData(results);
+
+    // Sending the retrieved data.
+    res.json({ data });
+  });
+});
+
 // Setting up product route.
 router.get('/:variantID', function(req, res) {
   const stmt = conn.format(

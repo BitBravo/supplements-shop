@@ -90,3 +90,19 @@ module.exports.truncateMessages = function(mail) {
 
   return mail;
 };
+
+/**
+ * Readies an array of products for use in the autocompletion plugin.
+ *
+ * @param {Object[]} data The collection of data to format.
+ */
+module.exports.constructAutocompletionData = function(data) {
+  const formatedData = {};
+
+  data.forEach(d => {
+    formatedData[d.ProductName] = '';
+  });
+
+  console.log(formatedData);
+  return formatedData;
+};
