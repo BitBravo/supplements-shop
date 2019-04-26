@@ -1,11 +1,19 @@
 $('document').ready(() => {
   // Initializing the search box
   $.post('/products/', results => {
-    $('input.autocomplete').autocomplete({
+    $('.search-large-form .autocomplete').autocomplete({
       data: results.data,
       limit: 5,
       onAutocomplete: () => {
-        $('.search-form').trigger('submit');
+        $('.search-large-form').trigger('submit');
+      }
+    });
+
+    $('.search-small-form .autocomplete').autocomplete({
+      data: results.data,
+      limit: 5,
+      onAutocomplete: () => {
+        $('.search-small-form').trigger('submit');
       }
     });
   });
