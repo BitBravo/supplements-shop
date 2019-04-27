@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `Mail` (
     `SenderName`        VARCHAR(300) NOT NULL,
     `Message`           TEXT NOT NULL,
     `IssueDate`         DATETIME NOT NULL DEFAULT NOW(),
-    `Read`              BIT NOT NULL DEFAULT 0,          
+    `Read`              BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_mail_id PRIMARY KEY (`MailID`)
 );
@@ -54,14 +54,16 @@ CREATE TABLE IF NOT EXISTS `Brands` (
     `BrandID`           SMALLINT NOT NULL AUTO_INCREMENT,
     `BrandName`         VARCHAR(50) NOT NULL,
     `Logo`              VARCHAR(300) NOT NULL,
+    `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_brands_id PRIMARY KEY (`BrandID`)
 );
 
 -- Flavors.
 CREATE TABLE IF NOT EXISTS `Flavors` (
-    `FlavorID`           SMALLINT NOT NULL AUTO_INCREMENT,
-    `FlavorName`         VARCHAR(30) NOT NULL,
+    `FlavorID`          SMALLINT NOT NULL AUTO_INCREMENT,
+    `FlavorName`        VARCHAR(30) NOT NULL,
+    `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_flavor_id PRIMARY KEY (`FlavorID`)
 );
@@ -71,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `Categories` (
     `CategoryID`        SMALLINT NOT NULL AUTO_INCREMENT,
     `CategoryName`      VARCHAR(50) NOT NULL,
     `CategoryParent`    SMALLINT NULL,
+    `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_categories_id PRIMARY KEY (`CategoryID`),
     CONSTRAINT fk_categories_id FOREIGN KEY (`CategoryParent`) REFERENCES `Categories` (`CategoryID`)
@@ -81,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `Coupons` (
     `CouponID`          SMALLINT NOT NULL AUTO_INCREMENT,
     `CouponCode`        VARCHAR(50) NOT NULL,
     `Activated`         BIT NOT NULL DEFAULT 1,
+    `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_coupons_id PRIMARY KEY(`CouponID`)
 );
@@ -116,12 +120,14 @@ CREATE TABLE IF NOT EXISTS `ShippingPriceHistory` (
 CREATE TABLE IF NOT EXISTS `Products` (
     `ProductID`         INT NOT NULL AUTO_INCREMENT,
     `ProductName`       VARCHAR(80) NOT NULL,
+    `NutritionInfo`     TEXT NULL, 
     `Description`       TEXT NOT NULL,
     `Usage`             TEXT NOT NULL,
     `Warning`           TEXT NOT NULL,
     `AddedDate`         DATETIME NOT NULL DEFAULT NOW(),
     `CategoryID`        SMALLINT NOT NULL,
     `BrandID`           SMALLINT NOT NULL,
+    `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_products_id PRIMARY KEY (`ProductID`),
     CONSTRAINT fk_products_cat FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`),
@@ -134,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `ProductsVariants` (
     `VariantID`         INT NOT NULL AUTO_INCREMENT,
     `ProductID`         INT NOT NULL,
     `Weight`            FLOAT NOT NULL,
+    `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_products_variants_id PRIMARY KEY (`VariantID`),
     CONSTRAINT fk_products_variants_id FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`)
@@ -143,20 +150,20 @@ CREATE TABLE IF NOT EXISTS `ProductsVariants` (
 CREATE TABLE `ProductsVariantsFlavors` (
 	`VariantID`			INT NOT NULL,
 	`VariantImage`      TEXT NULL,
-    `NutritionInfo`     TEXT NULL,
     `Quantity`          SMALLINT NOT NULL DEFAULT 0,
     `FlavorID`			SMALLINT NOT NULL,
+    `Deleted`           BIT NOT NULL DEFAULT 0,
     
     CONSTRAINT pk_products_variants_flavor_id PRIMARY KEY (`VariantID`, `FlavorID`),
     CONSTRAINT fk_products_variants_flavor_id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`),
     CONSTRAINT fk_products_variants_flavor_flv FOREIGN KEY (`FlavorID`) REFERENCES `Flavors` (`FlavorID`)
 );
 
--- PriceHistory.
-CREATE TABLE IF NOT EXISTS `PriceHistory` (
+-- ProductsPriceHistory.
+CREATE TABLE IF NOT EXISTS `ProductsPriceHistory` (
     `VariantID`         INT NOT NULL,
     `Price`             DOUBLE NOT NULL,
-    `ActivatedDate`     DATETIME NOT NULL DEFAULT NOW(),
+    `ChangedDate`       DATETIME NOT NULL DEFAULT NOW(),
 
     CONSTRAINT pk_price_history_id PRIMARY KEY (`VariantID`, `ActivatedDate`),
     CONSTRAINT fk_price_history_id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`)
@@ -183,6 +190,7 @@ CREATE TABLE IF NOT EXISTS `Orders` (
     `Address`           VARCHAR(100) NOT NULL,
     `StateID`           TINYINT NOT NULL,
     `CouponID`          SMALLINT NULL,
+    `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_orders_id PRIMARY KEY (`OrderID`),
     CONSTRAINT fk_orders_st FOREIGN KEY (`StateID`) REFERENCES `OrderStates` (`StateID`),
