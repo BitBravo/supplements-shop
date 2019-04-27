@@ -127,9 +127,11 @@ CREATE TABLE IF NOT EXISTS `Products` (
     `AddedDate`         DATETIME NOT NULL DEFAULT NOW(),
     `CategoryID`        SMALLINT NOT NULL,
     `BrandID`           SMALLINT NOT NULL,
+    `FeaturedVariantID` INT NOT NULL,
     `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_products_id PRIMARY KEY (`ProductID`),
+    CONSTRAINT fk_products_featured_variant_id FOREIGN KEY (`FeaturedVariantID`) REFERENCES `ProductsVariants` (`VariantID`),
     CONSTRAINT fk_products_cat FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`),
     CONSTRAINT fk_products_brd FOREIGN KEY (`BrandID`) REFERENCES `Brands` (`BrandID`)
 );
