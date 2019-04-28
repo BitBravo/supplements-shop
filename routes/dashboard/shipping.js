@@ -77,32 +77,48 @@ router.get('/', function(req, res) {
 
 // Setting up the shipping price update route.
 router.put('/price', (req, res) => {
-  const stmt = conn.format('INSERT INTO ?? (??) VALUES (?);', [
-    'ShippingPriceHistory',
-    'ShippingPrice',
-    req.body['price']
-  ]);
+  conn.query(
+    'SELECT `ShippingPrice` FROM `ShippingPriceHistory` ORDER BY `StartingDate` DESC LIMIT 1;',
+    (errors, results) => {
+      if (errors) throw errors;
 
-  conn.query(stmt, (errors, results) => {
-    if (errors) throw errors;
+      if (results[0].ShippingPrice != req.body['price']) {
+        conn.query(
+          'INSERT INTO `ShippingPriceHistory` (`ShippingPrice`) VALUES (' +
+            req.body['price'] +
+            ');',
+          (_errors, _results) => {
+            if (_errors) throw _errors;
+          }
+        );
+      }
 
-    res.redirect('/dashboard/shipping');
-  });
+      res.redirect('/dashboard/shipping');
+    }
+  );
 });
 
 // Setting up the shipping bump update route.
 router.put('/bump', (req, res) => {
-  const stmt = conn.format('INSERT INTO ?? (??) VALUES (?);', [
-    'ShippingBumpHistory',
-    'ShippingBump',
-    req.body['bump']
-  ]);
+  conn.query(
+    'SELECT `ShippingBump` FROM `ShippingBumpHistory` ORDER BY `StartingDate` DESC LIMIT 1;',
+    (errors, results) => {
+      if (errors) throw errors;
 
-  conn.query(stmt, (errors, results) => {
-    if (errors) throw errors;
+      if (results[0].ShippingBump != req.body['bump']) {
+        conn.query(
+          'INSERT INTO `ShippingBumpHistory` (`ShippingBump`) VALUES (' +
+            req.body['bump'] +
+            ');',
+          (errors, results) => {
+            if (errors) throw errors;
+          }
+        );
+      }
 
-    res.redirect('/dashboard/shipping');
-  });
+      res.redirect('/dashboard/shipping');
+    }
+  );
 });
 
 // Exporting the route.
