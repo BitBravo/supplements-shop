@@ -12,41 +12,20 @@ const express = require("express"),
     user: database.user,
     multipleStatements: true
   }),
-  routes = {
-    products: require("./products"),
-    mail: require("./mail"),
-    brands: require("./brands"),
-    categories: require("./categories"),
-    flavors: require("./flavors"),
-    coupons: require("./coupons"),
-    shipping: require("./shipping"),
-    config: require("./config")
-  },
   router = express.Router();
 
 // Connecting to the database.
 conn.connect();
 
-// Routing dashboard related routes.
-router.use("/products", routes.products);
-router.use("/mail", routes.mail);
-router.use("/brands", routes.brands);
-router.use("/categories", routes.categories);
-router.use("/flavors", routes.flavors);
-router.use("/coupons", routes.coupons);
-router.use("/shipping", routes.shipping);
-router.use("/config", routes.config);
+// Using the login middleware.
+router.use(login);
 
-// Setting up dashboard route.
-router.get("/", login, function(req, res) {
+// Setting up the shipping route.
+router.get("/", function(req, res) {
   conn.query(
     "\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories`;\
-        SELECT COUNT(*) AS `ProductsNum` FROM `Products`;\
-        SELECT COUNT(*) AS `MailNum` FROM `Mail`;\
-        SELECT COUNT(*) AS `OrdersNum` FROM `Orders`;\
-        SELECT '0,00 MAD' AS `TotalRevenue`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
     ",
     (error, results) => {
@@ -76,18 +55,14 @@ router.get("/", login, function(req, res) {
           }
         },
         Categories: formater.groupCategories(results[1]),
-        ProductsNum: results[2][0].ProductsNum,
-        MailNum: results[3][0].MailNum,
-        OrdersNum: results[4][0].OrdersNum,
-        TotalRevenue: results[5][0].TotalRevenue,
-        NewMail: results[6][0].NewMail
+        NewMail: results[2][0].NewMail
       };
 
       // Getting the proper copyright date.
       data.CopyrightDate = getCopyrightDate();
 
-      // Rendering the dashboard page.
-      res.render("dashboard/dashboard", {
+      // Rendering the shipping page.
+      res.render("dashboard/shipping", {
         Data: data
       });
     }
