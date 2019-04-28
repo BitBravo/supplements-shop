@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `CouponsHistory` (
 
 -- ShippingBumpHistory.
 CREATE TABLE IF NOT EXISTS `ShippingBumpHistory` (
-    `ShippingBump`      DOUBLE NOT NULL,
+    `ShippingBump`      DECIMAL(12, 2) NOT NULL,
     `StartingDate`      DATETIME NOT NULL DEFAULT NOW(),
 
     CONSTRAINT pk_shipping_bump_history_id PRIMARY KEY (`ShippingBump`, `StartingDate`)
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `ShippingBumpHistory` (
 
 -- ShippingPriceHistory.
 CREATE TABLE IF NOT EXISTS `ShippingPriceHistory` (
-    `ShippingPrice`     DOUBLE NOT NULL,
+    `ShippingPrice`     DECIMAL(12, 2) NOT NULL,
     `StartingDate`      DATETIME NOT NULL DEFAULT NOW(),
 
     CONSTRAINT pk_shipping_price_history_id PRIMARY KEY (`ShippingPrice`, `StartingDate`)
@@ -164,7 +164,7 @@ CREATE TABLE `ProductsVariantsFlavors` (
 -- ProductsPriceHistory.
 CREATE TABLE IF NOT EXISTS `ProductsPriceHistory` (
     `VariantID`         INT NOT NULL,
-    `Price`             DOUBLE NOT NULL,
+    `Price`             DECIMAL(12, 2) NOT NULL,
     `ChangedDate`       DATETIME NOT NULL DEFAULT NOW(),
 
     CONSTRAINT pk_price_history_id PRIMARY KEY (`VariantID`, `ActivatedDate`),
@@ -216,6 +216,7 @@ CREATE TABLE IF NOT EXISTS `OrdersDetails` (
     Data insertion.
 */
 
+-- Config insertion.
 INSERT INTO `Config` VALUES (
     'w4jkPd5ePA5kBaAA', 
     '0656975326', 
@@ -227,4 +228,11 @@ INSERT INTO `Config` VALUES (
     'supmar|https://www.youtube.com/'
 );
 
+-- OrderStates insertion.
 INSERT INTO `OrderStates` (`StateName`) VALUES ('Issued'), ('Delivered'), ('Cancelled'), ('Rejected');
+
+-- ShippingPriceHistory insertion.
+INSERT INTO `ShippingPriceHistory`(`ShippingPrice`) VALUES (49);
+
+-- ShippingBumpHistory insertion.
+INSERT INTO `ShippingBumpHistory`(`ShippingBump`) VALUES (999.99);

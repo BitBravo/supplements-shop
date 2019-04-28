@@ -27,6 +27,8 @@ router.get("/", function(req, res) {
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
+        SELECT `ShippingPrice` FROM `shippingpricehistory` ORDER BY `StartingDate` DESC LIMIT 1;\
+        SELECT `ShippingBump` FROM `shippingbumphistory` ORDER BY `StartingDate` DESC LIMIT 1;\
     ",
     (error, results) => {
       // Checking if there are any errors.
@@ -55,8 +57,14 @@ router.get("/", function(req, res) {
           }
         },
         Categories: formater.groupCategories(results[1]),
-        NewMail: results[2][0].NewMail
+        NewMail: results[2][0].NewMail,
+        Shipping: {
+          Price: results[3],
+          Bump: results[4]
+        }
       };
+
+      console.log(data.Shipping);
 
       // Getting the proper copyright date.
       data.CopyrightDate = getCopyrightDate();
