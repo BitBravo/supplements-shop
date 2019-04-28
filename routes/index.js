@@ -25,6 +25,8 @@ router.get('/', function(req, res) {
         SELECT * FROM `Categories`; \
         SELECT Res.* FROM (SELECT P.*, PV.`Weight`, PV.`VariantID` AS `VariantID`, (SELECT F.`FlavorName` FROM `Flavors` F INNER JOIN `ProductsVariantsFlavors` PVF ON F.`FlavorID` = PVF.`FlavorID` WHERE PVF.`VariantID` = PV.`VariantID`) AS `FlavorName`, (SELECT PVF.`VariantImage` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) AS `ProductImage`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID` WHERE (SELECT PVF.`Quantity` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) > 0) AS Res ORDER BY RAND() LIMIT 6; \
         SELECT P.*, PV.`Weight`, PV.`VariantID` AS `VariantID`, (SELECT F.`FlavorName` FROM `Flavors` F INNER JOIN `ProductsVariantsFlavors` PVF ON F.`FlavorID` = PVF.`FlavorID` WHERE PVF.`VariantID` = PV.`VariantID`) AS `FlavorName`, (SELECT PVF.`VariantImage` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) AS `ProductImage`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID` WHERE (SELECT PVF.`Quantity` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) > 0 ORDER BY P.`AddedDate` DESC LIMIT 6; \
+        SELECT `ShippingPrice` FROM `shippingpricehistory` ORDER BY `StartingDate` DESC LIMIT 1;\
+        SELECT `ShippingBump` FROM `shippingbumphistory` ORDER BY `StartingDate` DESC LIMIT 1;\
         ',
     (error, results) => {
       // Checking if there are any errors.
@@ -55,7 +57,11 @@ router.get('/', function(req, res) {
         Brands: results[1],
         Categories: formater.groupCategories(results[2]),
         TopProducts: results[3],
-        NewestProducts: results[4]
+        NewestProducts: results[4],
+        Shipping: {
+          Price: results[5][0].ShippingPrice,
+          Bump: results[6][0].ShippingBump
+        }
       };
 
       // Getting the proper copyright date.

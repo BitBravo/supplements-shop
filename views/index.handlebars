@@ -1,14 +1,17 @@
 {{!-- The carousel. --}}
 <div class="carousel carousel-slider center">
-	<div class="carousel-item grey darken-1 white-text" href="#one!">
+	<div class="carousel-item grey darken-1 white-text"
+			 href="#one!">
 		<h2>First Panel</h2>
 		<p class="white-text">This is your first panel</p>
 	</div>
-	<div class="carousel-item grey darken-2 white-text" href="#two!">
+	<div class="carousel-item grey darken-2 white-text"
+			 href="#two!">
 		<h2>Second Panel</h2>
 		<p class="white-text">This is your second panel</p>
 	</div>
-	<div class="carousel-item grey darken-3 white-text" href="#three!">
+	<div class="carousel-item grey darken-3 white-text"
+			 href="#three!">
 		<h2>Third Panel</h2>
 		<p class="white-text">This is your third panel</p>
 	</div>
@@ -18,7 +21,8 @@
 <section class="products-showcase top-sold grey lighten-3 z-depth-2">
 	<div class="row container showcase-header">
 		<div class="col s12 m12 l6">
-			<a href="/products/" class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
+			<a href="/products/"
+				 class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
 				جميع المنتوجات
 				<i class="fa fa-list"></i>
 			</a>
@@ -30,59 +34,63 @@
 	<div class="container">
 		<div class="row">
 			{{#if Data.TopProducts }}
-				{{#each Data.TopProducts }}
-					<div class="col s12 m6 l6 xl4">
-						<div class="card sticky-action product-card">
+			{{#each Data.TopProducts }}
+			<div class="col s12 m6 l6 xl4">
+				<div class="card sticky-action product-card">
+					{{#displayOldPrice this.OldPrice this.NewPrice}}
+					<div class="z-depth-1 center-align green white-text product-card__product-discount">
+						<div class="product-discount__content">{{ calculateDiscount this.OldPrice this.NewPrice }}</div>
+					</div>
+					{{/displayOldPrice}}
+					<div class="card-image waves-effect waves-block waves-light product-card__img">
+						<a href="/products/{{ this.VariantID }}">
+							<img class="activator"
+									 src="{{ this.ProductImage }}">
+						</a>
+					</div>
+					<div class="product-card__content">
+						<span class="card-title grey-text text-darken-4">
+							<a href="/products/{{ this.VariantID }}"
+								 class="black-text">
+								{{ this.ProductName }}
+							</a>
+						</span>
+						<br>
+						<div class="chip">&rlm;{{ formatWeight this.Weight }}
+							{{ weightUnite this.Weight }}
+						</div>
+						<div class="chip">{{ this.FlavorName }}</div>
+					</div>
+					<div class="card-action right-align product-card__price">
+						<div class="row center-align">
 							{{#displayOldPrice this.OldPrice this.NewPrice}}
-								<div class="z-depth-1 center-align green white-text product-card__product-discount">
-									<div class="product-discount__content">{{ calculateDiscount this.OldPrice this.NewPrice }}</div>
-								</div>
-							{{/displayOldPrice}}
-							<div class="card-image waves-effect waves-block waves-light product-card__img">
-								<a href="/products/{{ this.VariantID }}">
-									<img class="activator" src="{{ this.ProductImage }}">
-								</a>
-							</div>
-							<div class="product-card__content">
-								<span class="card-title grey-text text-darken-4">
-									<a href="/products/{{ this.VariantID }}" class="black-text">
-										{{ this.ProductName }}
-									</a>
+							<div class="col s12">
+								<span class="grey-text">
+									<del>{{ formatCurrency this.OldPrice }}</del>
 								</span>
-								<br>
-								<div class="chip">&rlm;{{ formatWeight this.Weight }}
-									{{ weightUnite this.Weight }}
-								</div>
-								<div class="chip">{{ this.FlavorName }}</div>
 							</div>
-							<div class="card-action right-align product-card__price">
-								<div class="row center-align">
-									{{#displayOldPrice this.OldPrice this.NewPrice}}
-										<div class="col s12">
-											<span class="grey-text">
-												<del>{{ formatCurrency this.OldPrice }}</del>
-											</span>
-										</div>
-									{{/displayOldPrice}}
-									<div class="col s12">
-										<span>
-											<b class="green-text">{{ formatCurrency this.NewPrice }}</b>
-										</span>
-									</div>
-								</div>
-							</div>
-							<div class="card-action right-align">
-								<a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
-								<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
-									title="أضف إلى السلة">
-									<i class="fa fa-cart-plus"></i>
-								</a>
+							{{/displayOldPrice}}
+							<div class="col s12">
+								<span>
+									<b class="green-text">{{ formatCurrency this.NewPrice }}</b>
+								</span>
 							</div>
 						</div>
 					</div>
-				{{/each}}
+					<div class="card-action right-align">
+						<a href="javascript:void(0)"
+							 class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
+						<a href="javascript:void(0)"
+							 class="btn waves-effect white green-text product-card__btn"
+							 title="أضف إلى السلة">
+							<i class="fa fa-cart-plus"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			{{/each}}
 			{{else}}
-				<h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
+			<h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
 			{{/if}}
 		</div>
 	</div>
@@ -92,7 +100,8 @@
 <section class="products-showcase newest-products grey lighten-3 z-depth-2">
 	<div class="row container showcase-header">
 		<div class="col s12 m12 l6">
-			<a href="/products/" class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
+			<a href="/products/"
+				 class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
 				جميع المنتوجات
 				<i class="fa fa-list"></i>
 			</a>
@@ -104,59 +113,63 @@
 	<div class="container">
 		<div class="row">
 			{{#if Data.NewestProducts }}
-				{{#each Data.NewestProducts }}
-					<div class="col s12 m6 l6 xl4">
-						<div class="card sticky-action product-card">
+			{{#each Data.NewestProducts }}
+			<div class="col s12 m6 l6 xl4">
+				<div class="card sticky-action product-card">
+					{{#displayOldPrice this.OldPrice this.NewPrice}}
+					<div class="z-depth-1 center-align green white-text product-card__product-discount">
+						<div class="product-discount__content">{{ calculateDiscount this.OldPrice this.NewPrice }}</div>
+					</div>
+					{{/displayOldPrice}}
+					<div class="card-image waves-effect waves-block waves-light product-card__img">
+						<a href="/products/{{ this.VariantID }}">
+							<img class="activator"
+									 src="{{ this.ProductImage }}">
+						</a>
+					</div>
+					<div class="product-card__content">
+						<span class="card-title grey-text text-darken-4">
+							<a href="/products/{{ this.VariantID }}"
+								 class="black-text">
+								{{ this.ProductName }}
+							</a>
+						</span>
+						<br>
+						<div class="chip">&rlm;{{ formatWeight this.Weight }}
+							{{ weightUnite this.Weight }}
+						</div>
+						<div class="chip">{{ this.FlavorName }}</div>
+					</div>
+					<div class="card-action right-align product-card__price">
+						<div class="row center-align">
 							{{#displayOldPrice this.OldPrice this.NewPrice}}
-								<div class="z-depth-1 center-align green white-text product-card__product-discount">
-									<div class="product-discount__content">{{ calculateDiscount this.OldPrice this.NewPrice }}</div>
-								</div>
-							{{/displayOldPrice}}
-							<div class="card-image waves-effect waves-block waves-light product-card__img">
-								<a href="/products/{{ this.VariantID }}">
-									<img class="activator" src="{{ this.ProductImage }}">
-								</a>
-							</div>
-							<div class="product-card__content">
-								<span class="card-title grey-text text-darken-4">
-									<a href="/products/{{ this.VariantID }}" class="black-text">
-										{{ this.ProductName }}
-									</a>
+							<div class="col s12">
+								<span class="grey-text">
+									<del>{{ formatCurrency this.OldPrice }}</del>
 								</span>
-								<br>
-								<div class="chip">&rlm;{{ formatWeight this.Weight }}
-									{{ weightUnite this.Weight }}
-								</div>
-								<div class="chip">{{ this.FlavorName }}</div>
 							</div>
-							<div class="card-action right-align product-card__price">
-								<div class="row center-align">
-									{{#displayOldPrice this.OldPrice this.NewPrice}}
-										<div class="col s12">
-											<span class="grey-text">
-												<del>{{ formatCurrency this.OldPrice }}</del>
-											</span>
-										</div>
-									{{/displayOldPrice}}
-									<div class="col s12">
-										<span>
-											<b class="green-text">{{ formatCurrency this.NewPrice }}</b>
-										</span>
-									</div>
-								</div>
-							</div>
-							<div class="card-action right-align">
-								<a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
-								<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
-									title="أضف إلى السلة">
-									<i class="fa fa-cart-plus"></i>
-								</a>
+							{{/displayOldPrice}}
+							<div class="col s12">
+								<span>
+									<b class="green-text">{{ formatCurrency this.NewPrice }}</b>
+								</span>
 							</div>
 						</div>
 					</div>
-				{{/each}}
+					<div class="card-action right-align">
+						<a href="javascript:void(0)"
+							 class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
+						<a href="javascript:void(0)"
+							 class="btn waves-effect white green-text product-card__btn"
+							 title="أضف إلى السلة">
+							<i class="fa fa-cart-plus"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			{{/each}}
 			{{else}}
-				<h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
+			<h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
 			{{/if}}
 		</div>
 	</div>
@@ -175,7 +188,8 @@
 					</div>
 					<div class="col s6">
 						<p class="right-align"><b>الشحن مجاني بدءا من</b></p>
-						<p class="right-align yellow-text text-darken-2"><span>999,99 درهم</span></p>
+						<p class="right-align yellow-text text-darken-2"><span>{{ formatCurrency Data.Shipping.Bump }}</span>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -190,7 +204,8 @@
 					</div>
 					<div class="col s6">
 						<p class="right-align"><b>مصاريف الشحن</b></p>
-						<p class="right-align yellow-text text-darken-2"><span>49,00 درهم</span></p>
+						<p class="right-align yellow-text text-darken-2"><span>{{ formatCurrency Data.Shipping.Price }}</span>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -214,11 +229,12 @@
 	<div class="row container">
 		<div class="carousel carousel--brands">
 			{{#if Data.Brands }}
-				{{#each Data.Brands }}
-					<a class="carousel-item"><img src="{{ this.Logo }}" alt="{{ this.BrandName }}'s logo"></a>
-				{{/each}}
+			{{#each Data.Brands }}
+			<a class="carousel-item"><img src="{{ this.Logo }}"
+						 alt="{{ this.BrandName }}'s logo"></a>
+			{{/each}}
 			{{else}}
-				<h4 class="center-align">!&rlm;لا توجد علامات تجارية</h4>
+			<h4 class="center-align">!&rlm;لا توجد علامات تجارية</h4>
 			{{/if}}
 		</div>
 	</div>
