@@ -1,0 +1,15 @@
+/**
+    Brands - The shipping page's styling rules.
+*/
+
+@charset 'utf-8';
+
+.dashboard-shipping {
+  input[type="submit"] {
+    width: 100%;
+  }
+
+  p {
+    margin-bottom: 50px;
+  }
+}
