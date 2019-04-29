@@ -139,12 +139,11 @@
 											{{#each Data.DeletedCoupons }}
 											<li class="collection-item">
 												<div>
-													<a href="javascript:void(0)" class="secondary-content left btn-restore"><i
+													<input type="hidden" value="{{ this.CouponID }}">
+													<a href="javascript:void(0)" class="secondary-content btn-restore"><i
 															class="material-icons">restore</i></a>
-													<span class="right">
-														<b>{{ this.CouponCode }}</b>
-													</span>
-													<input type="hidden" data-coupon-id="{{ this.CouponID }}">
+
+													<b>{{ this.CouponCode }}</b>
 												</div>
 											</li>
 											{{/each}}
