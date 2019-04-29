@@ -19,6 +19,9 @@ $('document').ready(() => {
   // The selection index.
   var currentIndex = -1;
 
+  // Getting all flavors.
+  var flavors = JSON.parse($('#flavors-json').text());
+
   // Initializing QuillJS.
   var
     descEditor = new Quill('#desc-editor', {
@@ -85,6 +88,7 @@ $('document').ready(() => {
     addNewStock({
       Weight: $stockWeightInput.val(),
       Price: $stockPriceInput.val(),
+      CurrentIndex: -1,
       Flavors: []
     });
 
@@ -168,14 +172,41 @@ $('document').ready(() => {
     // Updating the stock list.
     Product.Stock.forEach(function (stock, index) {
 
-      var stockFlavors = '';
+      var
+        stockFlavors = '',
+        flavorsDropDown = '';
+
+      $.each(flavors, function (index, flavor) {
+        flavorsDropDown += '<option value="' + flavor.FlavorID + '">' + flavor.FlavorName + '</option>';
+      });
 
       $.each(stock.Flavors, function (index, flavor) {
         stockFlavors += '\
-          <li data-flavor-index="'+ index + '">\
-            <div class="collapsible-header"><i class="fas fa-trash stock-creation-flavor-remove-btn"></i>'+ flavor.FlavorID + '</div>\
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>\
-          </li>\
+          <li data-flavor-index="'+ index + '" class="stock-creation-flavor-entry ' + (index === stock.CurrentIndex ? 'active' : '') + '">\
+            <div class="collapsible-header"><i class="fas fa-trash stock-creation-flavor-remove-btn"></i>'+ formater.getFlavorNameFromID(flavor.FlavorID) + '</div>\
+            <div class="collapsible-body">\
+              <div class="row">\
+                <div class="col s6"></div>\
+                <div class="col s6">\
+                  <div class="row">\
+                    <div class="input-field col s12">\
+                    <select name="stock-creation-entry-flavor">\
+                        '+ flavorsDropDown + '\
+                    </select >\
+                    <label>النكهة</label>\
+                    </div >\
+                  </div >\
+                  <div class="row">\
+                  <div class="input-field col s12 right-align">\
+                    <label>الكمية <small class="grey-text">&rlm;(درهم)&rlm;</small>\
+                      <input min="0" name="stock-creation-entry-quantity" type="number" value="'+ flavor.Quantity + '" class="validate right-align" required>\
+                    </label>\
+                  </div>\
+                </div>\
+                </div >\
+              </div >\
+            </div >\
+          </li >\
         ';
       });
 
@@ -244,7 +275,7 @@ $('document').ready(() => {
     });
 
     // Adding the stock update event for price and weight inputs.
-    $('#stock-creation-list input[type=number]').on('change', function (e) {
+    $('#stock-creation-list input[name=stock-creation-entry-price], #stock-creation-list input[name=stock-creation-entry-weight]').on('change', function (e) {
 
       // Getting the stock's index.
       var index = $(this).closest('li').data('id');
@@ -279,7 +310,7 @@ $('document').ready(() => {
       // Adding a flavor.
       addFlavor(index, {
         Quantity: 1,
-        FlavorID: 0,
+        FlavorID: flavors[0].FlavorID,
         ProductVariantImage: ''
       });
     });
@@ -299,13 +330,60 @@ $('document').ready(() => {
       removeFlavor(index, flavorIndex);
     });
 
+    $('.stock-creation-entry .stock-creation-flavor-entry .collapsible-header').on('click', function () {
+
+      // Getting the stock's index.
+      var index = $(this).closest('.stock-creation-entry').data('id');
+
+      if (!$(this).hasClass('active')) {
+        Product.Stock[index].CurrentIndex = $(this).parent().data('flavor-index');
+      } else {
+        Product.Stock[index].CurrentIndex = -1;
+      }
+    });
+
+    // Adding the flavor update event.
+    $('.stock-creation-entry select').on('change', function (e) {
+
+      // Getting the stock's index.
+      var
+        index = $(this).closest('.stock-creation-entry').data('id'),
+        flavorIndex = $(this).closest('li').data('flavor-index'),
+        newFlavorId = parseInt($(e.target).val());
+
+      // Updating the flavor.
+      Product.Stock[index].Flavors[flavorIndex].FlavorID = newFlavorId;
+
+      // Updating the UI.
+      updateUI();
+    });
+
+    // Adding the quantity update event.
+    $('#stock-creation-list [name=stock-creation-entry-quantity]').on('change', function (e) {
+
+      // Getting the stock's index.
+      var
+        index = $(this).closest('.stock-creation-entry').data('id'),
+        flavorIndex = $(this).closest('li').data('flavor-index'),
+        quantity = parseInt($(e.target).val());
+
+      // Updating the quantity.
+      Product.Stock[index].Flavors[flavorIndex].Quantity = quantity;
+
+      // Updating the UI.
+      updateUI();
+    });
+
     // Re-initializing the collapsibles.
     $('#stock-creation-list, #stock-creation-list .collapsible').collapsible();
+
+    // Re-initializing the dropdowns.
+    $('#stock-creation-list select').formSelect();
   }
 
   var formater = {
     formatWeight: function (weight) {
-      return (weight >= 1) ? weight + " kg" : (weight * 1000) + " g";
+      return (weight >= 1) ? weight + "kg" : (weight * 1000) + "g";
     },
     formatPrice: function (price) {
       return new Intl.NumberFormat('ar-MA', {
@@ -317,32 +395,46 @@ $('document').ready(() => {
       return stock.Flavors.reduce(function (total, flv) {
         return total + flv.Quantity;
       }, 0);
+    },
+    getFlavorNameFromID: function (flavorId) {
+      for (var i = 0; i < flavors.length; i++) {
+        if (flavors[i].FlavorID == flavorId) {
+          return flavors[i].FlavorName;
+        }
+      }
+
+      return 'Unflavored';
     }
   }
 
   addNewStock({
     Price: 399.99,
     Weight: 1,
+    CurrentIndex: -1,
     Flavors: []
   });
   addNewStock({
     Price: 900,
     Weight: 10.5,
+    CurrentIndex: -1,
     Flavors: []
   });
   addNewStock({
     Price: 120.50,
     Weight: 0.400,
+    CurrentIndex: -1,
     Flavors: []
   });
   addNewStock({
     Price: 560.90,
     Weight: 0.85,
+    CurrentIndex: -1,
     Flavors: []
   });
   addNewStock({
     Price: 490.99,
     Weight: 3.2,
+    CurrentIndex: -1,
     Flavors: []
   });
 
