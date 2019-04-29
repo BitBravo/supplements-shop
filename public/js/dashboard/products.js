@@ -1,83 +1,26 @@
 $('document').ready(() => {
-  // Initializing tabs.
-  $('.dashboard-products .tabs').tabs();
+  // Getting frequently used elements.
+  var
+    $stockCreationList = $('#stock-creation-list'),
+    $stockCreationModal = $('#stock-creation-modal');
 
-  // Setting up the dropdowns.
-  $('.dashboard-products select').formSelect();
+  // Initializing the product object.
+  var Product = {
+    Name: '',
+    NutritionInfo: '',
+    BrandId: 0,
+    CateogryId: 0,
+    Description: '',
+    Usage: '',
+    Warning: '',
+    Stock: [
+      ,
+      ,
+      ,
+      ,
 
-  // Initializing the character counter.
-  $('.dashboard-products #product-name, .dashboard-products #product-nutrition-info').characterCounter();
-
-  // Initializing the collapsibles.
-  $('.dashboard-products .collapsible').collapsible();
-
-  // Initializing the materialbox.
-  $('.dashboard-products .materialboxed').materialbox();
-
-  // Nutrition facts preview.
-  $('#product-nutrition-info').on('change', function () {
-    $('.nutrition-facts-preview img').attr('src', $(this).val());
-
-    if ($('.nutrition-facts-preview img').on('error', function () {
-      $('.nutrition-facts-preview img').attr('src', '/assets/img/backgrounds/placeholder.jpg');
-    }));
-  });
-
-  // Adding stock.
-  $('#product-creation-stock-form').on('submit', e => {
-    // Stopping the form's submition.
-    e.preventDefault();
-
-    // Getting the values.
-    const image = $('#product-creation-stock-image').val(),
-      nutritionInfo = $('#product-creation-stock-nutrition').val(),
-      quantity = $('#product-creation-stock-quantity').val(),
-      weight = $('#product-creation-stock-weight').val(),
-      flavor = $('#product-creation-stock-flavor').val(),
-      price = $('#product-creation-stock-price').val(),
-      flavorName = $('#product-creation-stock-flavor option:selected').text();
-
-    // Clearing out the inputs.
-    $('#product-creation-stock-image').val('');
-    $('#product-creation-stock-nutrition').val('');
-    $('#product-creation-stock-quantity').val('');
-    $('#product-creation-stock-weight').val('');
-    $('#product-creation-stock-price').val('');
-
-    $('.stock-list').append(`
-        <tr>
-            <td class="center-align">
-                <a class="stock-remove btn-floating waves-effect waves-light red">
-                    <i class="fa fa-trash"></i>
-                </a>
-                <input type="hidden" name="stock-image" value="${image}" >
-                <input type="hidden" name="stock-nutrition" value="${nutritionInfo}" >
-            </td>
-            <td class="center-align">
-                ${quantity}
-                <input type="hidden" name="stock-quantity" value="${quantity}">
-            </td>
-            <td class="center-align">
-                ${weight}
-                <input type="hidden" name="stock-weight" step="0.001" value="${weight}">
-            </td>
-            <td class="center-align">
-                ${new Intl.NumberFormat('ar-MA', {
-      style: 'currency',
-      currency: 'MAD'
-    }).format(price)}
-                <input type="hidden" name="stock-price" value="${price}">
-            </td>
-            <td class="center-align">
-                ${flavorName}
-                <input type="hidden" name="stock-flavor" value="${flavor}">
-            </td>
-        </tr>
-    `);
-
-    addStockRemovingEvent();
-    $('#product-creation-modal').modal('close');
-  });
+    ]
+  };
 
   // Initializing QuillJS.
   var
@@ -100,8 +43,226 @@ $('document').ready(() => {
       theme: 'snow'
     });
 
+  // Updating the UI.
+  updateUI();
+
+  // Initializing tabs.
+  $('.dashboard-products .tabs').tabs();
+
+  // Setting up the dropdowns.
+  $('#product-creation-brand, #product-creation-category').formSelect();
+
+  // Initializing the character counter.
+  $('.dashboard-products #product-creation-name, .dashboard-products #product-creation-nutrition-info').characterCounter();
+
+  // Initializing the collapsibles.
+  $('.dashboard-products .collapsible').collapsible();
+
+  // Initializing the materialbox.
+  $('.dashboard-products .materialboxed').materialbox();
+
+  // Nutrition facts preview.
+  $('#product-creation-nutrition-info').on('change', function () {
+    $('.nutrition-facts-creation-preview img').attr('src', $(this).val());
+
+    if ($('.nutrition-facts-creation-preview img').on('error', function () {
+      $('.nutrition-facts-creation-preview img').attr('src', '/assets/img/backgrounds/placeholder.jpg');
+    }));
+  });
+
+  // Handeling the submit event on the stock-creation-modal.
+  $('#stock-creation-form').on('submit', function (e) {
+
+    // Preventing the page from loading.
+    e.preventDefault();
+
+    // Closing the modal.
+    $stockCreationModal.modal('close');
+
+    // Getting the inputs.
+    var
+      $stockWeightInput = $(this).find('#stock-creation-modal-weight'),
+      $stockPriceInput = $(this).find('#stock-creation-modal-price');
+
+    // Adding a new stock.
+    addNewStock({
+      Quantity: 0,
+      Weight: $stockWeightInput.val(),
+      Price: $stockPriceInput.val(),
+      Flavors: []
+    });
+
+    // Clearing the inputs.
+    $stockWeightInput.val('');
+    $stockPriceInput.val('');
+  });
+
+  // Handeling the click event on the stock-creation-clear-btn.
+  $('#stock-creation-clear-btn').on('click', function () {
+
+    // Clearing the created stock.
+    Product.Stock = [];
+
+    // Updating the UI.
+    updateUI();
+  });
+
+  // Handeling the change event on the product-creation-name.
+  $('#product-creation-name').on('change', function () {
+    Product.Name = $(this).val();
+
+    updateUI();
+  });
+
+  function addNewStock(stock) {
+
+    // Calculating the stock quantity.
+    stock.Quantity = stock.Flavors.reduce(function (total, flv) {
+      return flv.Quantity + total;
+    }, 0);
+
+    // Adding the stock.
+    Product.Stock.push(stock);
+
+    // Updating the UI.
+    updateUI();
+  }
+
+  function updateUI() {
+
+    // Updating the stock count.
+    $('#stock-creation-count').text(Product.Stock.length);
+
+    // Clearing the old output.
+    $stockCreationList.empty();
+
+    // Updating the stock list.
+    Product.Stock.forEach(function (stock, index) {
+      var stockElement = $stockCreationList.append('\
+        <li class="'+ (index === Product.Stock.length - 1 ? 'active' : '') + '">\
+          <div class="collapsible-header stock-creation-header">\
+          <span class="valign-wrapper">\
+            ' + stock.Quantity + '&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
+            </span>\
+            <span class="valign-wrapper">\
+            ' + formater.formatPrice(stock.Price) + '&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
+            </span>\
+            <span class="valign-wrapper">\
+              ' + formater.formatWeight(stock.Weight) + '&nbsp; <b>الوزن</b> <i class="material-icons">control_point</i> \
+            </span>\
+          </div>\
+          <div class="collapsible-body">\
+            <span>Lorem ipsum dolor sit amet.</span>\
+          </div>\
+        </li>');
+    });
+
+    // Re-initializing the collapsibles.
+    $('#stock-creation-list').collapsible();
+
+  }
+
+  var formater = {
+    formatWeight: function (weight) {
+      return (weight >= 1) ? weight + " kg" : (weight * 1000) + " g";
+    },
+    formatPrice: function (price) {
+      return new Intl.NumberFormat('ar-MA', {
+        style: 'currency',
+        currency: 'MAD'
+      }).format(price);
+    }
+  }
+
+  addNewStock({
+    Price: 399.99,
+    Weight: 1,
+    Quantity: 0,
+    Flavors: []
+  });
+  addNewStock({
+    Price: 900,
+    Weight: 10.5,
+    Quantity: 0,
+    Flavors: []
+  });
+  addNewStock({
+    Price: 120.50,
+    Weight: 0.400,
+    Quantity: 0,
+    Flavors: []
+  });
+  addNewStock({
+    Price: 560.90,
+    Weight: 0.85,
+    Quantity: 0,
+    Flavors: []
+  });
+  addNewStock({
+    Price: 490.99,
+    Weight: 3.2,
+    Quantity: 0,
+    Flavors: []
+  });
+
+  // Adding stock.
+  /*$('#product-creation-stock-form').on('submit', e => {
+  // Stopping the form's submition.
+  e.preventDefault();
+
+  // Getting the values.
+  const image = $('#product-creation-stock-image').val(),
+    nutritionInfo = $('#product-creation-stock-nutrition').val(),
+    quantity = $('#product-creation-stock-quantity').val(),
+    weight = $('#product-creation-stock-weight').val(),
+    flavor = $('#product-creation-stock-flavor').val(),
+    price = $('#product-creation-stock-price').val(),
+    flavorName = $('#product-creation-stock-flavor option:selected').text();
+
+  // Clearing out the inputs.
+  $('#product-creation-stock-image').val('');
+  $('#product-creation-stock-nutrition').val('');
+  $('#product-creation-stock-quantity').val('');
+  $('#product-creation-stock-weight').val('');
+  $('#product-creation-stock-price').val('');
+
+  $('.stock-list').append(`
+      <tr>
+          <td class="center-align">
+              <a class="stock-remove btn-floating waves-effect waves-light red">
+                  <i class="fa fa-trash"></i>
+              </a>
+              <input type="hidden" name="stock-image" value="${image}" >
+              <input type="hidden" name="stock-nutrition" value="${nutritionInfo}" >
+          </td>
+          <td class="center-align">
+              ${quantity}
+              <input type="hidden" name="stock-quantity" value="${quantity}">
+          </td>
+          <td class="center-align">
+              ${weight}
+              <input type="hidden" name="stock-weight" step="0.001" value="${weight}">
+          </td>
+          <td class="center-align">
+              ${new Intl.NumberFormat('ar-MA', {
+    style: 'currency',
+    currency: 'MAD'
+  }).format(price)}
+              <input type="hidden" name="stock-price" value="${price}">
+          </td>
+          <td class="center-align">
+              ${flavorName}
+              <input type="hidden" name="stock-flavor" value="${flavor}">
+          </td>
+      </tr>
+  `);
+
+  addStockRemovingEvent();
+  $('#product-creation-modal').modal('close');
+});*/
+
   // Creating the product.
-  $('#product-creation-form').on('submit', e => {
+  /*$('#product-creation-form').on('submit', e => {
     e.preventDefault();
     $('#product-creation-trigger').prop('disabled', true);
 
@@ -117,10 +278,10 @@ $('document').ready(() => {
 
     $.post('/dashboard/products', data);
     setTimeout(() => window.location.reload(), 1500);
-  });
+  });*/
 
   // Opening the product edition modal.
-  $('.product-list tr').on('click', function () {
+  /*$('.product-list tr').on('click', function () {
     const productID = $(this).data('product-id');
 
     $.get('/dashboard/products/' + productID, data => {
@@ -212,10 +373,10 @@ $('document').ready(() => {
 
       $('#product-edition-modal').modal('open');
     });
-  });
+  });*/
 
   // Editing the product.
-  $('#product-edition-form').on('submit', e => {
+  /*$('#product-edition-form').on('submit', e => {
     e.preventDefault();
 
     const data = {
@@ -244,10 +405,10 @@ $('document').ready(() => {
         window.location.reload();
       }
     });
-  });
+  });*/
 
   // Adding a new stock to an editable product.
-  $('#add-stock-edition').on('click', () => {
+  /*$('#add-stock-edition').on('click', () => {
     let flavorsDropdown = '<select name="stock-flavor">';
 
     $.each($('#product-creation-stock-flavor').find('option'), (i, v) => {
@@ -292,18 +453,18 @@ $('document').ready(() => {
 
     addStockRemovingEvent();
     $('#edition-stock-list select').formSelect();
-  });
+  });*/
 
-  function addStockRemovingEvent() {
+  /*function addStockRemovingEvent() {
     // Removing a stock.
     $('.stock-remove').on('click', function () {
       $(this)
         .closest('tr')
         .remove();
     });
-  }
+  }*/
 
-  function getStock() {
+  /*function getStock() {
     const stock = [];
 
     $.each($('.stock-list tr'), (i, v) => {
@@ -330,9 +491,9 @@ $('document').ready(() => {
     });
 
     return stock;
-  }
+  }*/
 
-  function getEditableStock() {
+  /*function getEditableStock() {
     const variants = [];
 
     $.each($('#edition-stock-list tr[data-variant-id]'), (i, v) => {
@@ -360,9 +521,9 @@ $('document').ready(() => {
     });
 
     return variants;
-  }
+  }*/
 
-  function getAdditionStock() {
+  /*function getAdditionStock() {
     const variants = [];
 
     $.each($('#edition-stock-list tr:not([data-variant-id])'), (i, v) => {
@@ -389,5 +550,5 @@ $('document').ready(() => {
     });
 
     return variants;
-  }
+  }*/
 });
