@@ -13,13 +13,7 @@ $('document').ready(() => {
     Description: '',
     Usage: '',
     Warning: '',
-    Stock: [
-      ,
-      ,
-      ,
-      ,
-
-    ]
+    Stock: []
   };
 
   // Initializing QuillJS.
@@ -128,6 +122,15 @@ $('document').ready(() => {
     updateUI();
   }
 
+  function removeStock(index) {
+
+    // Remove a stock.
+    Product.Stock.splice(index, 1);
+
+    // Updating the UI.
+    updateUI();
+  }
+
   function updateUI() {
 
     // Updating the stock count.
@@ -139,22 +142,38 @@ $('document').ready(() => {
     // Updating the stock list.
     Product.Stock.forEach(function (stock, index) {
       var stockElement = $stockCreationList.append('\
-        <li class="'+ (index === Product.Stock.length - 1 ? 'active' : '') + '">\
+        <li data-id="'+ index + '">\
           <div class="collapsible-header stock-creation-header">\
-          <span class="valign-wrapper">\
+            <span class="valign-wrapper">\
+              <i class="fas fa-trash"></i>\
+            </span>\
+            <span class="valign-wrapper">\
             ' + stock.Quantity + '&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
             </span>\
             <span class="valign-wrapper">\
             ' + formater.formatPrice(stock.Price) + '&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
             </span>\
             <span class="valign-wrapper">\
-              ' + formater.formatWeight(stock.Weight) + '&nbsp; <b>الوزن</b> <i class="material-icons">control_point</i> \
+            ' + formater.formatWeight(stock.Weight) + '&nbsp; <b>الوزن</b> <i class="fas fa-balance-scale"></i> \
             </span>\
           </div>\
           <div class="collapsible-body">\
             <span>Lorem ipsum dolor sit amet.</span>\
           </div>\
         </li>');
+    });
+
+    // Adding the stock remove click event.
+    $('#stock-creation-list .fa-trash').on('click', function (e) {
+
+      // Stopping event propagation.
+      e.stopPropagation();
+
+      // Getting the stock's index.
+      var index = $(this).closest('li').data('id');
+
+      // Removing the stock.
+      removeStock(index);
     });
 
     // Re-initializing the collapsibles.
