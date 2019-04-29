@@ -80,7 +80,6 @@ $('document').ready(() => {
 
     // Adding a new stock.
     addNewStock({
-      Quantity: 0,
       Weight: $stockWeightInput.val(),
       Price: $stockPriceInput.val(),
       Flavors: []
@@ -110,11 +109,6 @@ $('document').ready(() => {
 
   function addNewStock(stock) {
 
-    // Calculating the stock quantity.
-    stock.Quantity = stock.Flavors.reduce(function (total, flv) {
-      return flv.Quantity + total;
-    }, 0);
-
     // Adding the stock.
     Product.Stock.push(stock);
 
@@ -134,7 +128,9 @@ $('document').ready(() => {
   function updateUI() {
 
     // Updating the stock count.
-    $('#stock-creation-count').text(Product.Stock.length);
+    $('#stock-creation-count').text(Product.Stock.reduce(function (total, stock) {
+      return total + formater.calculateStockQuantity(stock);
+    }, 0));
 
     // Clearing the old output.
     $stockCreationList.empty();
@@ -148,7 +144,7 @@ $('document').ready(() => {
               <i class="fas fa-trash"></i>\
             </span>\
             <span class="valign-wrapper">\
-            ' + stock.Quantity + '&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
+            ' + formater.calculateStockQuantity(stock) + '&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
             </span>\
             <span class="valign-wrapper">\
             ' + formater.formatPrice(stock.Price) + '&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
@@ -190,37 +186,37 @@ $('document').ready(() => {
         style: 'currency',
         currency: 'MAD'
       }).format(price);
+    },
+    calculateStockQuantity: function (stock) {
+      return stock.Flavors.reduce(function (total, flv) {
+        return total + flv.Quantity;
+      }, 0);
     }
   }
 
   addNewStock({
     Price: 399.99,
     Weight: 1,
-    Quantity: 0,
     Flavors: []
   });
   addNewStock({
     Price: 900,
     Weight: 10.5,
-    Quantity: 0,
     Flavors: []
   });
   addNewStock({
     Price: 120.50,
     Weight: 0.400,
-    Quantity: 0,
     Flavors: []
   });
   addNewStock({
     Price: 560.90,
     Weight: 0.85,
-    Quantity: 0,
     Flavors: []
   });
   addNewStock({
     Price: 490.99,
     Weight: 3.2,
-    Quantity: 0,
     Flavors: []
   });
 
