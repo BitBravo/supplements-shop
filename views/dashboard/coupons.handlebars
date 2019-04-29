@@ -2,145 +2,166 @@
 <script src="/assets/js/dashboard/coupons.js"></script>
 
 <div class="dashboard dashboard-coupons">
-    <div class="row">
-        <aside class="col s2">
-            {{> sidebar NewMail=Data.NewMail }}
-        </aside>
+	<div class="row">
+		<aside class="col s2">
+			{{> sidebar NewMail=Data.NewMail }}
+		</aside>
 
-        <div class="col s10 container dashboard__grid">
-            <div class="row">
-                <div class="card-panel">
-                    <div class="row valign-wrapper">
-                        <div class="col s12">
-                            <h4 class="grey-text right-align">
-                                [{{ Data.Coupons.length }}] القسائم
-                                <i class="fa fa-tag"></i>
-                            </h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
-                            <ul id="coupons-tabs" class="tabs">
-                                <li class="tab col s6"><a href="#coupons-edition-tab">تحرير القسائم</a></li>
-                                <li class="tab col s6"><a href="#coupons-creation-tab">إضافة قسيمة جديدة</a></li>
-                            </ul>
-                            <div id="coupons-creation-tab" class="col s12">
-                                <div class="row">
-                                    <div class="col s12">
-                                        <form action="/dashboard/coupons" method="POST">
-                                            <div class="row">
-                                                <div class="input-field valign-wrapper col s12">
-                                                    <input id="coupon-code" type="text" name="coupon-code"
-                                                        class="validate" data-length="50" required>
-                                                    <label for="coupon-code">رمز القسيمة</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <input id="coupon-discount" type="number" name="coupon-discount"
-                                                        class="validate" max="100" min="1" data-length="3" required>
-                                                    <label for="coupon-discount">الخصم</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <div class="switch">
-                                                        <p class="grey-text">حالة القسيمة
-                                                            <label class="right">
-                                                                مفعل
-                                                                <input type="checkbox" checked
-                                                                    id="coupon-state-toggler">
-                                                                <span class="lever"></span>
-                                                                خامل
-                                                            </label>
-                                                            <input type="hidden" value="1" name="coupon-state"
-                                                                id="coupon-state-input">
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col s6 center-align">
-                                                    <input type="submit"
-                                                        class="btn btn-large waves-effect waves-light grey lighten-3"
-                                                        value="إضافة">
-                                                </div>
-                                                <div class="col s6 center-align">
-                                                    <input type="button" id="coupon-code-generator-btn"
-                                                        class="btn btn-large waves-effect waves-light grey lighten-3"
-                                                        value="توليد رمز القسيمة">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="coupons-edition-tab" class="col s12">
-                                <div class="row">
-                                    <div class="col s12">
-                                        {{#if Data.Coupons}}
-                                        <ul class="collapsible">
-                                            {{#each Data.Coupons }}
-                                            <li>
-                                                <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
-                                                    {{ this.CouponCode }}</div>
-                                                <div class="collapsible-body">
-                                                    <form action="/dashboard/coupons?_method=PUT" method="POST">
-                                                        <div class="row">
-                                                            <div class="input-field col s12">
-                                                                <input id="coupon-discount" type="number"
-                                                                    name="coupon-discount" class="validate" max="100"
-                                                                    min="1" data-length="3"
-                                                                    value="{{ this.CouponDiscount }}" required>
-                                                                <label
-                                                                    for="coupon-discount-{{ this.CouponID }}">الخصم</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="input-field col s12">
-                                                                <div class="switch">
-                                                                    <p class="grey-text">حالة القسيمة
-                                                                        <label class="right">
-                                                                            مفعل
-                                                                            <input type="checkbox"
-                                                                                {{ couponState this.Activated }}
-                                                                                name="coupon-state">
-                                                                            <span class="lever"></span>
-                                                                            خامل
-                                                                        </label>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" name="coupon-old-discount"
-                                                            value="{{ this.CouponDiscount }}">
-                                                        <input type="hidden" name="coupon-id"
-                                                            value="{{ this.CouponID }}">
-                                                        <div class="row">
-                                                            <div class="col s12 center-align">
-                                                                <input type="submit"
-                                                                    class="btn btn-large waves-effect waves-light grey lighten-3"
-                                                                    value="تحديث">
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </li>
-                                            {{/each}}
-                                        </ul>
-                                        {{else}}
-                                        <ul class="collection">
-                                            <li class="collection-item center-align">There are no existing coupons
-                                            </li>
-                                        </ul>
-                                        {{/if}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div class="col s10 container dashboard__grid">
+			<div class="row">
+				<div class="card-panel">
+					<div class="row valign-wrapper">
+						<div class="col s12">
+							<h4 class="grey-text right-align">
+								[{{ Data.Coupons.length }}] القسائم
+								<i class="fa fa-tag"></i>
+							</h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<ul id="coupons-tabs" class="tabs">
+								<li class="tab col s4"><a href="#coupons-edition-tab">تحديث القسائم</a></li>
+								<li class="tab col s4"><a href="#coupons-creation-tab">إضافة قسيمة جديدة</a></li>
+								<li class="tab col s4"><a href="#coupons-restoration-tab">استعادة القسائم المحذوفة</a></li>
+							</ul>
+							<div id="coupons-creation-tab" class="col s12">
+								<div class="row">
+									<div class="col s12">
+										<form action="/dashboard/coupons" method="POST">
+											<div class="row">
+												<div class="input-field valign-wrapper col s12">
+													<input id="coupon-code" type="text" name="coupon-code" class="validate" data-length="50"
+														required>
+													<label for="coupon-code">رمز القسيمة</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="input-field col s12">
+													<input id="coupon-discount" type="number" name="coupon-discount" class="validate" max="100"
+														min="1" data-length="3" required>
+													<label for="coupon-discount">الخصم</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="input-field col s12">
+													<div class="switch">
+														<p class="grey-text">حالة القسيمة
+															<label class="right">
+																مفعل
+																<input type="checkbox" checked id="coupon-state-toggler">
+																<span class="lever"></span>
+																خامل
+															</label>
+															<input type="hidden" value="1" name="coupon-state" id="coupon-state-input">
+														</p>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col s6 center-align">
+													<input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
+														value="إضافة">
+												</div>
+												<div class="col s6 center-align">
+													<input type="button" id="coupon-code-generator-btn"
+														class="btn btn-large waves-effect waves-light grey lighten-3" value="توليد رمز القسيمة">
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div id="coupons-edition-tab" class="col s12">
+								<div class="row">
+									<div class="col s12">
+										{{#if Data.Coupons}}
+										<ul class="collapsible">
+											{{#each Data.Coupons }}
+											<li>
+												<div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
+													{{ this.CouponCode }}</div>
+												<div class="collapsible-body">
+													<form action="/dashboard/coupons?_method=PUT" method="POST">
+														<div class="row">
+															<div class="input-field col s12">
+																<input id="coupon-discount" type="number" name="coupon-discount" class="validate"
+																	max="100" min="1" data-length="3" value="{{ this.CouponDiscount }}" required>
+																<label for="coupon-discount-{{ this.CouponID }}">الخصم</label>
+															</div>
+														</div>
+														<div class="row">
+															<div class="input-field col s12">
+																<div class="switch">
+																	<p class="grey-text">حالة القسيمة
+																		<label class="right">
+																			مفعل
+																			<input type="checkbox" {{ couponState this.Activated }} name="coupon-state">
+																			<span class="lever"></span>
+																			خامل
+																		</label>
+																	</p>
+																</div>
+															</div>
+														</div>
+														<input type="hidden" name="coupon-old-discount" value="{{ this.CouponDiscount }}">
+														<input type="hidden" name="coupon-id" value="{{ this.CouponID }}">
+														<div class="row">
+															<div class="col s6 center-align">
+																<input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
+																	value="تحديث">
+															</div>
+															<div class="col s6 center-align">
+																<input type="button"
+																	class="btn btn-large waves-effect waves-light grey lighten-3 btn-delete" value="حذف">
+																<input type="hidden" value="{{ this.CouponID }}">
+															</div>
+														</div>
+													</form>
+												</div>
+											</li>
+											{{/each}}
+										</ul>
+										{{else}}
+										<ul class="collection">
+											<li class="collection-item center-align">لم يتم إنشاء قسائم بعد
+											</li>
+										</ul>
+										{{/if}}
+									</div>
+								</div>
+							</div>
+							<div id="coupons-restoration-tab" class="col s12">
+								<div class="row">
+									<div class="col s12">
+										{{#if Data.DeletedCoupons}}
+										<ul class="collection">
+											{{#each Data.DeletedCoupons }}
+											<li class="collection-item">
+												<div>
+													<a href="javascript:void(0)" class="secondary-content left btn-restore"><i
+															class="material-icons">restore</i></a>
+													<span class="right">
+														<b>{{ this.CouponCode }}</b>
+													</span>
+													<input type="hidden" data-coupon-id="{{ this.CouponID }}">
+												</div>
+											</li>
+											{{/each}}
+										</ul>
+										{{else}}
+										<ul class="collection">
+											<li class="collection-item center-align">لم يتم حذف أي قسائم
+											</li>
+										</ul>
+										{{/if}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
