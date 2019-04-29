@@ -14,10 +14,6 @@
     input[type='submit'] {
       width: 200px;
     }
-    
-    /*a.modal-trigger {
-      width: 270px;
-    }*/
   }
 
   .nutrition-facts-creation-preview {
@@ -42,6 +38,18 @@
     }
   }
 
+  .stock-creation-entry-variant-image-preview {
+    background-image: url(/assets/img/backgrounds/placeholder.jpg);
+    background-position-x: center; 
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 200px;
+
+    img {
+      display: none;
+    }
+  }
+
   .stock-creation-section {
     .stock-creation-header, .stock-creation-flavor-entry .collapsible-header {
       display: flex;
@@ -61,6 +69,12 @@
 
       span:first-child {
         flex: 1;
+      }
+    }
+
+    .stock-creation-flavor-entry .collapsible-body {
+      .stock-creation-entry-variant-image-wrapper {
+        margin-top: 60px !important;
       }
     }
     
@@ -98,32 +112,4 @@
   .ql-editor strong {
     font-weight: bold;
   }
-
-  /*#product-creation-modal {
-    .select-wrapper ul {
-      height: 350px;
-      overflow: auto;
-    }
-  }*/
-
-  /*.highlighted-table {
-    tbody tr {
-      cursor: pointer;
-
-      &:hover {
-        background-color: $color-light;
-      }
-    }
-  }*/
-
-  /*.stock-section {
-    table {
-      border: 1px solid grey;
-      margin-bottom: 80px;
-
-      .stock-remove i {
-        font-size: 15px;
-      }
-    }
-  }*/
 }
