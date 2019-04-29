@@ -31,7 +31,7 @@
 							</ul>
 							<div id="products-creation-tab" class="col s12">
 								<div class="row">
-									<div class="col s8">
+									<div class="col s8 product-creation__main">
 										<div class="row">
 											<div class="input-field col s12">
 												<input id="product-name" type="text" name="product-name" class="validate" data-length="80"
@@ -79,10 +79,6 @@
 									</div>
 									<div class="col s3 offset-s1">
 										<div class="row">
-											<div class="col s12 nutrition-facts-preview">
-												<img src="/assets/img/backgrounds/placeholder.jpg" class="materialboxed"
-													alt="Nutrition facts preview.">
-											</div>
 											<div class="input-field col s12">
 												<select id="product-category">
 													{{#each Data.CategoriesData }}
@@ -98,6 +94,12 @@
 													{{/each}}
 												</select>
 												<label>العلامة التجارية للمنتج</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12 nutrition-facts-preview">
+												<img src="/assets/img/backgrounds/placeholder.jpg" class="materialboxed"
+													alt="Nutrition facts preview.">
 											</div>
 										</div>
 									</div>
