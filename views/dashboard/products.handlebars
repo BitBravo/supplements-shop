@@ -25,100 +25,81 @@
 					<div class="row">
 						<div class="col s12">
 							<ul id="products-tabs" class="tabs">
-								<li class="tab col s6"><a href="#products-edition-tab">تحرير المنتوجات</a></li>
-								<li class="tab col s6"><a href="#products-creation-tab">إضافة منتج جديد</a></li>
+								<li class="tab col s4"><a href="#products-edition-tab">تحرير المنتوجات</a></li>
+								<li class="tab col s4"><a href="#products-creation-tab">إضافة منتج جديد</a></li>
+								<li class="tab col s4"><a href="#products-restoration-tab">استعادة المنتجات</a></li>
 							</ul>
 							<div id="products-creation-tab" class="col s12">
 								<div class="row">
-									<div class="col s12">
-										<form id="product-creation-form">
-											<div class="row">
-												<div class="input-field col s12">
-													<input id="product-name" type="text" name="product-name" class="validate" data-length="80"
-														required>
-													<label for="product-name">اسم المنتج</label>
-												</div>
+									<div class="col s8">
+										<div class="row">
+											<div class="input-field col s12">
+												<input id="product-name" type="text" name="product-name" class="validate" data-length="80"
+													required>
+												<label for="product-name">اسم المنتج</label>
 											</div>
-											<div class="row">
-												<div class="input-field col s12">
-													<label>وصف المنتج</label>
-												</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<input id="product-nutrition-info" type="url" name="product-nutrition-info" class="validate"
+													required>
+												<label for="product-nutrition-info">حقائق غذائية</label>
 											</div>
-											<div class="row">
-												<div class="input-field col s12">
-													<div id="desc-editor"></div>
-												</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<label>وصف المنتج</label>
 											</div>
-											<div class="row">
-												<div class="input-field col s12">
-													<label>استعمال</label>
-												</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<div id="desc-editor"></div>
 											</div>
-											<div class="row">
-												<div class="input-field col s12">
-													<div id="usage-editor"></div>
-												</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<label>استعمال</label>
 											</div>
-											<div class="row">
-												<div class="input-field col s12">
-													<label>تحذيرات</label>
-												</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<div id="usage-editor"></div>
 											</div>
-											<div class="row">
-												<div class="input-field col s12">
-													<div id="warning-editor"></div>
-												</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<label>تحذيرات</label>
 											</div>
-											<div class="row">
-												<div class="input-field col s6">
-													<select id="product-category">
-														{{#each Data.CategoriesData }}
-														<option value="{{ this.CategoryID }}">{{
-                                                                    this.CategoryName
-                                                                }}
-														</option>
-														{{/each}}
-													</select>
-													<label>فئة المنتج</label>
-												</div>
-												<div class="input-field col s6">
-													<select id="product-brand">
-														{{#each Data.Brands }}
-														<option value="{{ this.BrandID }}">{{ this.BrandName }}
-														</option>
-														{{/each}}
-													</select>
-													<label>العلامة التجارية للمنتج</label>
-												</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<div id="warning-editor"></div>
 											</div>
-											<div class="row stock-section">
-												<div class="input-field col s12">
-													<p class="grey-text lighten-3">المخزون</p>
-													<table class="striped">
-														<thead>
-															<tr>
-																<th></th>
-																<th class="center-align">الكمية</th>
-																<th class="center-align">الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small></th>
-																<th class="center-align">السعر <small class="grey-text">&rlm;(درهم)&rlm;</small></th>
-																<th class="center-align">النكهة</th>
-															</tr>
-														</thead>
-														<tbody class="stock-list"></tbody>
-													</table>
-												</div>
+										</div>
+									</div>
+									<div class="col s3 offset-s1">
+										<div class="row">
+											<div class="col s12 nutrition-facts-preview">
+												<img src="/assets/img/backgrounds/placeholder.jpg" class="materialboxed"
+													alt="Nutrition facts preview.">
 											</div>
-											<div class="row">
-												<div class="col s6 center-align">
-													<input type="submit" id="product-creation-trigger"
-														class="btn btn-large waves-effect waves-light grey lighten-3" value="إضافة المنتج">
-												</div>
-												<div class="col s6 center-align">
-													<a class="btn btn-large waves-effect waves-light grey lighten-3 black-text modal-trigger"
-														id="product-creation-modal-opener-btn" href="#product-creation-modal">إضافة مخزون</a>
-												</div>
+											<div class="input-field col s12">
+												<select id="product-category">
+													{{#each Data.CategoriesData }}
+													<option value="{{ this.CategoryID }}">{{ this.CategoryName }}</option>
+													{{/each}}
+												</select>
+												<label>فئة المنتج</label>
 											</div>
-										</form>
+											<div class="input-field col s12">
+												<select id="product-brand">
+													{{#each Data.Brands }}
+													<option value="{{ this.BrandID }}">{{ this.BrandName }}</option>
+													{{/each}}
+												</select>
+												<label>العلامة التجارية للمنتج</label>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -150,6 +131,31 @@
 										{{else}}
 										<ul class="collection">
 											<li class="collection-item center-align">لا توجد منتوجات حاليا</li>
+										</ul>
+										{{/if}}
+									</div>
+								</div>
+							</div>
+							<div id="products-restoration-tab" class="col s12">
+								<div class="row">
+									<div class="col s12">
+										{{#if Data.DeletedProducts}}
+										<ul class="collection">
+											{{#each Data.DeletedProducts}}
+											<li class="collection-item">
+												<div>
+													<input type="hidden" value="{{ this.ProductID }}">
+													<a href="javascript:void(0)" class="secondary-content btn-restore"><i
+															class="material-icons">restore</i></a>
+
+													<b>{{ this.ProductName }}</b>
+												</div>
+											</li>
+											{{/each}}
+										</ul>
+										{{else}}
+										<ul class="collection">
+											<li class="collection-item center-align">لا توجد منتجات محذوفة</li>
 										</ul>
 										{{/if}}
 									</div>

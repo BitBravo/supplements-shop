@@ -6,27 +6,51 @@
 
 .dashboard-products {
   #products-creation-tab,
-  #products-edition-tab {
+  #products-edition-tab,
+  #products-restoration-tab {
     margin-top: 50px;
     overflow-y: auto;
 
     input[type='submit'] {
       width: 200px;
     }
-
-    a.modal-trigger {
+    
+    /*a.modal-trigger {
       width: 270px;
+    }*/
+  }
+
+  .nutrition-facts-preview {
+    margin-bottom: 50px;
+    max-height: 500px;
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+
+    img {
+      width: 100%;
+    }
+
+    &::after {
+      background-image: linear-gradient(to top, lighten($color-dark--light, 50), transparent);
+      bottom: 0;
+      content: '';
+      height: 50px;
+      left: 0;
+      position: absolute;
+      width: 100%;
     }
   }
 
-  #product-creation-modal {
+
+  /*#product-creation-modal {
     .select-wrapper ul {
       height: 350px;
       overflow: auto;
     }
-  }
+  }*/
 
-  .highlighted-table {
+  /*.highlighted-table {
     tbody tr {
       cursor: pointer;
 
@@ -34,13 +58,13 @@
         background-color: $color-light;
       }
     }
-  }
+  }*/
 
   .ql-editor strong {
     font-weight: bold;
   }
 
-  .stock-section {
+  /*.stock-section {
     table {
       border: 1px solid grey;
       margin-bottom: 80px;
@@ -49,5 +73,5 @@
         font-size: 15px;
       }
     }
-  }
+  }*/
 }

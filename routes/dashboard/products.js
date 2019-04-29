@@ -22,13 +22,13 @@ conn.connect();
 router.use(login);
 
 // Setting up the products route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   conn.query(
     '\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT P.*, C.`CategoryName` AS `Category`, (SELECT SUM(PVF.`Quantity`) FROM `ProductsVariantsFlavors` PVF INNER JOIN `ProductsVariants` PV ON PVF.`VariantID` = PV.`VariantID` WHERE PV.`ProductID` = P.`ProductID`) AS `Quantity` FROM `Products` P INNER JOIN `Categories` C ON P.`CategoryID` = C.`CategoryID` ORDER BY P.`ProductName` ASC;\
+        SELECT 1;\
         SELECT * FROM `Categories` WHERE `CategoryParent` > 0 ORDER BY `CategoryName` ASC;\
         SELECT * FROM `Brands` ORDER BY `BrandName` ASC;\
         SELECT * FROM `Flavors` ORDER BY `FlavorName` ASC;\
@@ -79,7 +79,7 @@ router.get('/', function(req, res) {
 });
 
 // Setting up the product retrieval route.
-router.get('/:productID', function(req, res) {
+router.get('/:productID', function (req, res) {
   const stmt = conn.format(
     '\
 		SELECT * FROM ?? WHERE ?? = ?; \
@@ -123,7 +123,7 @@ router.get('/:productID', function(req, res) {
 });
 
 // Setting the product creation route.
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
   const stmt = conn.format(
     '\
         INSERT INTO ?? (??, ??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, NOW(), ?, ?); \
@@ -208,7 +208,7 @@ router.post('/', function(req, res) {
 });
 
 // Setting up the product edition route.
-router.put('/', function(req, res) {
+router.put('/', function (req, res) {
   const stmt = conn.format(
     '\
 		UPDATE ?? SET ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?; \
