@@ -21,9 +21,10 @@
 					<div class="row">
 						<div class="col s12">
 							<ul id="categories-tabs" class="tabs">
-								<li class="tab col s6"><a href="#categories-edition-tab">تحرير الفئات</a>
+								<li class="tab col s4"><a href="#categories-edition-tab">تحرير الفئات</a>
 								</li>
-								<li class="tab col s6"><a href="#categories-creation-tab">إضافة فئة جديدة</a></li>
+								<li class="tab col s4"><a href="#categories-creation-tab">إضافة فئة جديدة</a></li>
+								<li class="tab col s4"><a href="#categories-restoration-tab">استعادة الفئات</a></li>
 							</ul>
 							<div id="categories-creation-tab" class="col s12">
 								<div class="row">
@@ -37,30 +38,30 @@
 												</div>
 											</div>
 											{{#if Data.CategoriesData }}
-												<div class="row" id="parent-categories-select">
-													<div class="input-field col s12">
-														<select id="category-parent-sub">
-															{{#each Data.CategoriesData }}
-																{{#if this.CategoryParent }}{{else}}
-																	<option value="{{ this.CategoryID }}">{{ this.CategoryName }}</option>
-																{{/if}}
-															{{/each}}
-														</select>
-														<label>الفئة العليا</label>
-														<input type="hidden" id="category-parent-par" name="category-parent" value="0">
-													</div>
+											<div class="row" id="parent-categories-select">
+												<div class="input-field col s12">
+													<select id="category-parent-sub">
+														{{#each Data.CategoriesData }}
+														{{#if this.CategoryParent }}{{else}}
+														<option value="{{ this.CategoryID }}">{{ this.CategoryName }}</option>
+														{{/if}}
+														{{/each}}
+													</select>
+													<label>الفئة العليا</label>
+													<input type="hidden" id="category-parent-par" name="category-parent" value="0">
 												</div>
+											</div>
 											{{else}}
-												<input type="hidden" name="category-parent" value="0">
+											<input type="hidden" name="category-parent" value="0">
 											{{/if}}
 											<div class="row">
 												<div class="input-field col s12">
 													<p>
 														<label id="sub-cat">
 															{{#if Data.CategoriesData }}
-																<input type="checkbox" />
+															<input type="checkbox" />
 															{{else}}
-																<input type="checkbox" disabled />
+															<input type="checkbox" disabled />
 															{{/if}}
 															<span>هذه الفئة فرعية</span>
 														</label>
@@ -81,40 +82,71 @@
 								<div class="row">
 									<div class="col s12">
 										{{#if Data.CategoriesData}}
-											<ul class="collapsible">
-												{{#each Data.CategoriesData }}
-													<li>
-														<div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
-															{{ this.CategoryName }} &nbsp; <span class="grey-text">
-																[{{ categoryTag this.CategoryParentName }}] </span>
+										<ul class="collapsible">
+											{{#each Data.CategoriesData }}
+											<li>
+												<div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
+													{{ this.CategoryName }} &nbsp; <span class="grey-text">
+														[{{ categoryTag this.CategoryParentName }}] </span>
+												</div>
+												<div class="collapsible-body">
+													<form action="/dashboard/categories?_method=PUT" method="POST">
+														<div class="row">
+															<div class="input-field col s12">
+																<input id="category-name-{{ this.CategoryID }}" type="text" name="category-name"
+																	class="validate" data-length="50" value="{{ this.CategoryName }}" required>
+																<label for="category-name-{{ this.CategoryID }}">اسم
+																	الفئة</label>
+															</div>
 														</div>
-														<div class="collapsible-body">
-															<form action="/dashboard/categories?_method=PUT" method="POST">
-																<div class="row">
-																	<div class="input-field col s12">
-																		<input id="category-name-{{ this.CategoryID }}" type="text" name="category-name"
-																			class="validate" data-length="50" value="{{ this.CategoryName }}" required>
-																		<label for="category-name-{{ this.CategoryID }}">اسم
-																			الفئة</label>
-																	</div>
-																</div>
-																<input type="hidden" name="category-id" value="{{ this.CategoryID }}">
-																<div class="row">
-																	<div class="col s12 center-align">
-																		<input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
-																			value="تحديث">
-																	</div>
-																</div>
-															</form>
+														<input type="hidden" name="category-id" value="{{ this.CategoryID }}">
+														<div class="row">
+															<div class="col s6 center-align">
+																<input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
+																	value="تحديث">
+															</div>
+															<div class="col s6 center-align">
+																<input type="button"
+																	class="btn btn-large waves-effect waves-light grey lighten-3 btn-delete" value="حذف">
+																<input type="hidden" value="{{ this.CategoryID }}">
+															</div>
 														</div>
-													</li>
-												{{/each}}
-											</ul>
+													</form>
+												</div>
+											</li>
+											{{/each}}
+										</ul>
 										{{else}}
-											<ul class="collection">
-												<li class="collection-item center-align">لا توجد فئات حاليا
-												</li>
-											</ul>
+										<ul class="collection">
+											<li class="collection-item center-align">لا توجد فئات حاليا
+											</li>
+										</ul>
+										{{/if}}
+									</div>
+								</div>
+							</div>
+							<div id="categories-restoration-tab" class="col s12">
+								<div class="row">
+									<div class="col s12">
+										{{#if Data.DeletedCategoriesData}}
+										<ul class="collection">
+											{{#each Data.DeletedCategoriesData }}
+											<li class="collection-item">
+												<div>
+													<input type="hidden" value="{{ this.CategoryID }}">
+													<a href="javascript:void(0)" class="secondary-content btn-restore"><i
+															class="material-icons">restore</i></a>
+
+													<b>{{ this.CategoryName }} [{{ categoryTag this.CategoryParentName }}]</b>
+												</div>
+											</li>
+											{{/each}}
+										</ul>
+										{{else}}
+										<ul class="collection">
+											<li class="collection-item center-align">لا توجد فئات محذوفة
+											</li>
+										</ul>
 										{{/if}}
 									</div>
 								</div>
