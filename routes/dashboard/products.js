@@ -31,7 +31,7 @@ router.get('/', function (req, res) {
         SELECT 1;\
         SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND (`P`.`Deleted` = 0 OR `P`.`Deleted` IS NULL) ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`; \
         SELECT * FROM `Brands` WHERE `Deleted` = 0 ORDER BY `BrandName` ASC;\
-        SELECT * FROM `Flavors` ORDER BY `FlavorName` ASC;\
+        SELECT * FROM `Flavors` WHERE `Deleted` = 0 ORDER BY `FlavorName` ASC;\
     ',
     (error, results) => {
       // Checking if there are any errors.
@@ -64,7 +64,8 @@ router.get('/', function (req, res) {
         Products: results[3],
         CategoriesData: formater.groupCategories(results[4]),
         Brands: results[5],
-        Flavors: results[6]
+        Flavors: results[6],
+        FlavorsJSON: JSON.stringify(results[6])
       };
 
       // Getting the proper copyright date.
