@@ -17,12 +17,12 @@ const express = require('express'),
 conn.connect();
 
 // Setting up products route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   conn.query(
     '\
     SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
     SELECT * FROM `Categories`; \
-		SELECT Res.* FROM (SELECT P.*, PV.`Weight`, PV.`VariantID` AS `VariantID`, (SELECT F.`FlavorName` FROM `Flavors` F INNER JOIN `ProductsVariantsFlavors` PVF ON F.`FlavorID` = PVF.`FlavorID` WHERE PVF.`VariantID` = PV.`VariantID`) AS `FlavorName`, (SELECT PVF.`VariantImage` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) AS `ProductImage`, (SELECT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1) AS `NewPrice`, (SELECT DISTINCT PH.`Price` FROM `PriceHistory` PH WHERE PH.`VariantID` = PV.`VariantID` ORDER BY PH.`ActivatedDate` DESC LIMIT 1, 1) AS `OldPrice` FROM `ProductsVariants` PV INNER JOIN `Products` P ON PV.`ProductID` = P.`ProductID` WHERE (SELECT PVF.`Quantity` FROM `ProductsVariantsFlavors` PVF WHERE PVF.`VariantID` = PV.`VariantID`) > 0) AS Res ORDER BY RAND(); \
+		SELECT 1; \
         ',
     (error, results) => {
       // Checking if there are any errors.
@@ -66,9 +66,8 @@ router.get('/', function(req, res) {
 });
 
 // Getting all products for autocompletion purposes.
-router.post('/', function(req, res) {
-  conn.query(
-    'SELECT P.`ProductName`, PVF.`VariantImage`, PV.`Weight`, F.`FlavorName` FROM `Products` P INNER JOIN `ProductsVariants` PV ON P.`ProductID` = PV.`ProductID` INNER JOIN `ProductsVariantsFlavors` PVF ON PV.`VariantID` = PVF.`VariantID` INNER JOIN `Flavors` F ON PVF.`FlavorID` = F.`FlavorID`',
+router.post('/', function (req, res) {
+  conn.query('SELECT 1;',
     (error, results) => {
       // Checking if there are any errors.
       if (error) throw error;
@@ -82,7 +81,7 @@ router.post('/', function(req, res) {
 });
 
 // Setting up product route.
-router.get('/:variantID', function(req, res) {
+router.get('/:variantID', function (req, res) {
   const stmt = conn.format(
     `
     SELECT ??, ??, ??, ??, ??, ??, ?? FROM ??; 
