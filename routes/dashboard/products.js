@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
         SELECT * FROM `Categories`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
         SELECT 1;\
-        SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`CategoryParent` IS NOT NULL AND `C`.`Deleted` = 0 AND (`P`.`Deleted` = 0 OR `P`.`Deleted` IS NULL) ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`; \
+        SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND (`P`.`Deleted` = 0 OR `P`.`Deleted` IS NULL) ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`; \
         SELECT * FROM `Brands` WHERE `Deleted` = 0 ORDER BY `BrandName` ASC;\
         SELECT * FROM `Flavors` ORDER BY `FlavorName` ASC;\
     ',
@@ -62,7 +62,7 @@ router.get('/', function (req, res) {
         Categories: formater.groupCategories(results[1]),
         NewMail: results[2][0].NewMail,
         Products: results[3],
-        CategoriesData: results[4],
+        CategoriesData: formater.groupCategories(results[4]),
         Brands: results[5],
         Flavors: results[6]
       };

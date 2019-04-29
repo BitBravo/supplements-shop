@@ -7,7 +7,7 @@
  *
  * @param {Object[]} categories The collection of categories.
  */
-module.exports.groupCategories = function(categories) {
+module.exports.groupCategories = function (categories) {
   const formatedCatgories = [];
 
   categories.forEach(category => {
@@ -24,7 +24,9 @@ module.exports.groupCategories = function(categories) {
         return cats;
       })();
 
-      formatedCatgories.push(category);
+      if (category.SubCategories.length) {
+        formatedCatgories.push(category);
+      }
     }
   });
 
@@ -46,7 +48,7 @@ module.exports.groupCategories = function(categories) {
  *
  * @param {Object[]} collection The collection of mixed data.
  */
-module.exports.groupVariants = function(collection) {
+module.exports.groupVariants = function (collection) {
   let track = [],
     groupedCol = [];
 
@@ -81,7 +83,7 @@ module.exports.groupVariants = function(collection) {
  *
  * @param {String} mail The message to truncate.
  */
-module.exports.truncateMessages = function(mail) {
+module.exports.truncateMessages = function (mail) {
   for (const m of mail) {
     if (m.Message.length > 80) {
       m.Message = m.Message.substring(0, 80) + '...';
@@ -96,17 +98,17 @@ module.exports.truncateMessages = function(mail) {
  *
  * @param {Object[]} data The collection of data to format.
  */
-module.exports.constructAutocompletionData = function(data) {
+module.exports.constructAutocompletionData = function (data) {
   const formatedData = {};
 
   data.forEach(d => {
     formatedData[
       d.ProductName +
-        ' ' +
-        (d.Weight > 1 ? d.Weight : d.Weight * 1000) +
-        (d.Weight > 1 ? 'kg' : 'g') +
-        ' ' +
-        d.FlavorName
+      ' ' +
+      (d.Weight > 1 ? d.Weight : d.Weight * 1000) +
+      (d.Weight > 1 ? 'kg' : 'g') +
+      ' ' +
+      d.FlavorName
     ] = d.VariantImage;
   });
 
