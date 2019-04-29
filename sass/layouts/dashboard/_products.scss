@@ -43,7 +43,6 @@
   }
 
   .stock-creation-section {
-
     .stock-creation-header {
       display: flex;
       flex-direction: row;
@@ -62,17 +61,28 @@
 
       span:first-child {
         flex: 2;
+      }
+    }
+    
+    .fa-trash {
+      color: #ffcece;
+      text-align: left;
+      transition-duration: .3s;
+      transition-property: color;
 
-        .fa-trash {
-          color: #ffcece;
-          text-align: left;
-          transition-duration: .3s;
-          transition-property: color;
-  
-          &:hover {
-            color: #ff7979;
-          }
-        }
+      &:hover {
+        color: #ff7979;
+      }
+    }
+
+    .stock-creation-flavor-add-btn {
+      margin-top: 30px;
+      width: 100%;
+    }
+    
+    .stock-creation-entry-flavor-list {
+      h5 {
+        margin-bottom: 30px;
       }
     }
 
