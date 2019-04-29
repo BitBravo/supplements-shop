@@ -20,7 +20,7 @@
     }*/
   }
 
-  .nutrition-facts-preview {
+  .nutrition-facts-creation-preview {
     margin-bottom: 50px;
     max-height: 579px;
     overflow: hidden;
@@ -42,6 +42,28 @@
     }
   }
 
+  .stock-creation-section {
+    .stock-creation-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+      span {
+      }
+    }
+
+    .card-title {
+      margin-bottom: 70px;
+    }
+  }
+
+  #stock-creation-modal input[type='submit'] {
+    cursor: pointer;
+  }
+
+  .ql-editor strong {
+    font-weight: bold;
+  }
 
   /*#product-creation-modal {
     .select-wrapper ul {
@@ -59,10 +81,6 @@
       }
     }
   }*/
-
-  .ql-editor strong {
-    font-weight: bold;
-  }
 
   /*.stock-section {
     table {

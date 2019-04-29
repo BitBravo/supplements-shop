@@ -31,19 +31,19 @@
 							</ul>
 							<div id="products-creation-tab" class="col s12">
 								<div class="row">
-									<div class="col s8 product-creation__main">
+									<div class="col s8">
 										<div class="row">
 											<div class="input-field col s12">
-												<input id="product-name" type="text" name="product-name" class="validate" data-length="80"
-													required>
-												<label for="product-name">اسم المنتج</label>
+												<input id="product-creation-name" type="text" name="product-creation-name" class="validate"
+													data-length="80" required>
+												<label for="product-creation-name">اسم المنتج</label>
 											</div>
 										</div>
 										<div class="row">
 											<div class="input-field col s12">
-												<input id="product-nutrition-info" type="url" name="product-nutrition-info" class="validate"
-													required>
-												<label for="product-nutrition-info">حقائق غذائية</label>
+												<input id="product-creation-nutrition-info" type="url" name="product-creation-nutrition-info"
+													class="validate" required>
+												<label for="product-creation-nutrition-info">حقائق غذائية</label>
 											</div>
 										</div>
 										<div class="row">
@@ -80,7 +80,7 @@
 									<div class="col s3 offset-s1">
 										<div class="row">
 											<div class="input-field col s12">
-												<select id="product-category">
+												<select id="product-creation-category">
 													{{#each Data.CategoriesData }}
 													<optgroup label="{{ this.CategoryName }}">
 														{{#each this.SubCategories}}
@@ -92,7 +92,7 @@
 												<label>فئة المنتج</label>
 											</div>
 											<div class="input-field col s12">
-												<select id="product-brand">
+												<select id="product-creation-brand">
 													{{#each Data.Brands }}
 													<option value="{{ this.BrandID }}">{{ this.BrandName }}</option>
 													{{/each}}
@@ -101,9 +101,31 @@
 											</div>
 										</div>
 										<div class="row">
-											<div class="col s12 nutrition-facts-preview">
+											<div class="col s12 nutrition-facts-creation-preview">
 												<img src="/assets/img/backgrounds/placeholder.jpg" class="materialboxed"
 													alt="Nutrition facts preview.">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row stock-creation-section">
+									<div class="col s12">
+										<div class="card">
+											<div class="card-content">
+												<span class="card-title right-align">
+													<b>
+
+														[ <span id="stock-creation-count"></span> ] المخزون</span>
+												</b>
+												<div class="row">
+													<div class="col s12">
+														<ul class="collapsible popout" id="stock-creation-list"></ul>
+													</div>
+												</div>
+											</div>
+											<div class="card-action right-align">
+												<a href="#stock-creation-modal" class="modal-trigger">إضافة مخزون جديد</a>
+												<a href="javascript:void(0)" id="stock-creation-clear-btn">مسح المخزون</a>
 											</div>
 										</div>
 									</div>
@@ -173,69 +195,29 @@
 			</div>
 		</div>
 
-		<div id="product-creation-modal" class="modal bottom-sheet">
-			<form id="product-creation-stock-form">
+		<div id="stock-creation-modal" class="modal bottom-sheet">
+			<form id="stock-creation-form">
 				<div class="modal-content">
 					<div class="row">
 						<div class="col s12 right-align">
-							<h4>إضافة مخزون</h4>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col s12 right-align">
-							<label>صورة المنتوج
-								<input id="product-creation-stock-image" type="url" class="validate right-align" required>
-							</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col s12 right-align">
-							<label>حقائق غذائية
-								<input id="product-creation-stock-nutrition" type="url" class="validate right-align" required>
-							</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col s12 right-align">
-							<label>الكمية
-								<input id="product-creation-stock-quantity" min="0" type="number" class="validate right-align" required>
-							</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col s12 right-align">
 							<label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>
-								<input id="product-creation-stock-weight" min="0" step="0.001" type="number"
-									class="validate right-align" required>
-							</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col s12 right-align">
-							<label>النكهة
-								<select id="product-creation-stock-flavor">
-									{{#each Data.Flavors }}
-									<option value="{{ this.FlavorID }}">{{
-												this.FlavorName
-											}}
-									</option>
-									{{/each}}
-								</select>
+								<input id="stock-creation-modal-weight" min="0" step="0.001" type="number" class="validate right-align"
+									required>
 							</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col s12 right-align">
 							<label>السعر <small class="grey-text">&rlm;(درهم)&rlm;</small>
-								<input id="product-creation-stock-price" min="0" type="number" step="0.01" class="validate right-align"
+								<input id="stock-creation-modal-price" min="0" type="number" step="0.01" class="validate right-align"
 									required>
 							</label>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<input class="waves-effect waves-green btn-flat" type="submit" value="إضافة المخزون">
 					<a href="#!" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
+					<input class="waves-effect waves-green btn-flat" type="submit" value="إضافة إلى المخزون">
 				</div>
 			</form>
 		</div>
