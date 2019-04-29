@@ -99,6 +99,9 @@ $('document').ready(() => {
     // Clearing the created stock.
     Product.Stock = [];
 
+    // Updating the current index.
+    currentIndex = -1;
+
     // Updating the UI.
     updateUI();
   });
@@ -128,7 +131,16 @@ $('document').ready(() => {
     Product.Stock.splice(index, 1);
 
     // Updating the current index.
-    currentIndex = currentIndex > 0 ? currentIndex - 1 : -1;
+    currentIndex = currentIndex === index ? -1 : (currentIndex >= 0 ? (currentIndex < index ? currentIndex : currentIndex - 1) : -1);
+
+    // Updating the UI.
+    updateUI();
+  }
+
+  function addFlavor(index, flavor) {
+
+    // Add a flavor.
+    Product.Stock[index].Flavors.push(flavor);
 
     // Updating the UI.
     updateUI();
@@ -146,11 +158,23 @@ $('document').ready(() => {
 
     // Updating the stock list.
     Product.Stock.forEach(function (stock, index) {
+
+      var stockFlavors = '';
+
+      $.each(stock.Flavors, function (index, flavor) {
+        stockFlavors += '\
+          <li>\
+            <div class="collapsible-header"><i class="fas fa-trash stock-creation-flavor-remove-btn"></i>'+ flavor.FlavorID + '</div>\
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>\
+          </li>\
+        ';
+      });
+
       $stockCreationList.append('\
         <li data-id="'+ index + '" class="' + (index === currentIndex ? 'active' : '') + '">\
           <div class="collapsible-header stock-creation-header">\
             <span class="valign-wrapper">\
-              <i class="fas fa-trash"></i>\
+              <i class="fas fa-trash stock-creation-remove-btn"></i>\
             </span>\
             <span class="valign-wrapper">\
             ' + formater.calculateStockQuantity(stock) + '&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
@@ -164,7 +188,7 @@ $('document').ready(() => {
           </div>\
           <div class="collapsible-body">\
             <div class="row">\
-              <div class="col s6">\
+              <div class="col s4 grey lighten-4">\
                 <div class="row">\
                   <div class="col s12 right-align">\
                     <label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>\
@@ -179,9 +203,18 @@ $('document').ready(() => {
                     </label>\
                   </div>\
                 </div>\
+                <div class="row">\
+                  <div class="col s8 offset-s2">\
+                    <button class="btn btn-block btn-large waves-effect waves-light stock-creation-flavor-add-btn">إضافة نكهة للمنتوج</button>\
+                    </label>\
+                  </div>\
+                </div>\
               </div>\
-              <div class="col s6">\
-                \
+              <div class="col s7 offset-s1 stock-creation-entry-flavor-list">\
+                <h5 class="right-align">[ '+ stock.Flavors.length + ' ] النكهات</h5>\
+                <ul class="collapsible">\
+                  '+ stockFlavors + '\
+                </ul>\
               </div>\
             </div>\
           </div>\
@@ -189,7 +222,7 @@ $('document').ready(() => {
     });
 
     // Adding the stock remove click event.
-    $('#stock-creation-list .fa-trash').on('click', function (e) {
+    $('#stock-creation-list .stock-creation-remove-btn').on('click', function (e) {
 
       // Stopping event propagation.
       e.stopPropagation();
@@ -219,17 +252,31 @@ $('document').ready(() => {
     });
 
     // Adding the index update event.
-    $('#stock-creation-list > li').on('click', function () {
+    $('#stock-creation-list .stock-creation-header').on('click', function () {
 
-      if ($(this).hasClass('active')) {
-        currentIndex = $(this).data('id');
+      if (!$(this).parent().hasClass('active')) {
+        currentIndex = $(this).parent().data('id');
       } else {
         currentIndex = -1;
       }
     });
 
+    // Adding the flavor addition event.
+    $('.stock-creation-flavor-add-btn').on('click', function () {
+
+      // Getting the stock's index.
+      var index = $(this).closest('li').data('id');
+
+      // Adding a flavor.
+      addFlavor(index, {
+        Quantity: 1,
+        FlavorID: 0,
+        ProductVariantImage: ''
+      });
+    });
+
     // Re-initializing the collapsibles.
-    $('#stock-creation-list').collapsible();
+    $('#stock-creation-list, #stock-creation-list .collapsible').collapsible();
   }
 
   var formater = {
