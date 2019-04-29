@@ -21,13 +21,14 @@ conn.connect();
 router.use(login);
 
 // Setting up the categories route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   conn.query(
     '\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT B.*, (SELECT A.`CategoryName` FROM `Categories` A WHERE A.`CategoryID` = B.`CategoryParent`) AS `CategoryParentName` FROM `Categories` B ORDER BY B.CategoryParent, B.CategoryName;\
+        SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND (`P`.`Deleted` = 0 OR `P`.`Deleted` IS NULL) ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`;\
+        SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 1 ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`;\
     ',
     (error, results) => {
       // Checking if there are any errors.
@@ -57,7 +58,8 @@ router.get('/', function(req, res) {
         },
         Categories: formater.groupCategories(results[1]),
         NewMail: results[2][0].NewMail,
-        CategoriesData: results[3]
+        CategoriesData: results[3],
+        DeletedCategoriesData: results[4]
       };
 
       // Getting the proper copyright date.
@@ -72,7 +74,7 @@ router.get('/', function(req, res) {
 });
 
 // Setting the category creation route.
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
   const categoryName = req.body['category-name'],
     categoryParent =
       req.body['category-parent'] == 0 ? null : req.body['category-parent'],
@@ -94,7 +96,7 @@ router.post('/', function(req, res) {
 });
 
 // Setting up the category edition route.
-router.put('/', function(req, res) {
+router.put('/', function (req, res) {
   const stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', [
     'Categories',
     'CategoryName',
@@ -109,6 +111,36 @@ router.put('/', function(req, res) {
 
     // Rendering the categories page.
     res.redirect('/dashboard/categories');
+  });
+});
+
+// Setting up the deletion route.
+router.delete('/', function (req, res) {
+  var
+    categoryId = req.body['categoryId'],
+    stmt = conn.format('UPDATE ?? SET ?? = 1 WHERE ?? = ?;', ['Categories', 'Deleted', 'CategoryID', categoryId]);
+
+  conn.query(stmt, (error, results) => {
+    // Checking if there are any errors.
+    if (error) throw error;
+
+    // Signaling the client.
+    res.send();
+  });
+});
+
+// Setting up the restoration route.
+router.put('/restore', function (req, res) {
+  var
+    categoryId = req.body['categoryId'],
+    stmt = conn.format('UPDATE ?? SET ?? = 0 WHERE ?? = ?;', ['Categories', 'Deleted', 'CategoryID', categoryId]);
+
+  conn.query(stmt, (error, results) => {
+    // Checking if there are any errors.
+    if (error) throw error;
+
+    // Signaling the client.
+    res.send();
   });
 });
 
