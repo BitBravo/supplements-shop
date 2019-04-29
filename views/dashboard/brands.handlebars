@@ -2,118 +2,144 @@
 <script src="/assets/js/dashboard/brands.js"></script>
 
 <div class="dashboard dashboard-brands">
-    <div class="row">
-        <aside class="col s2">
-            {{> sidebar NewMail=Data.NewMail }}
-        </aside>
+	<div class="row">
+		<aside class="col s2">
+			{{> sidebar NewMail=Data.NewMail }}
+		</aside>
 
-        <div class="col s10 container dashboard__grid">
-            <div class="row">
-                <div class="card-panel">
-                    <div class="row valign-wrapper">
-                        <div class="col s12">
-                            <h4 class="grey-text right-align">
-                                [{{ Data.Brands.length }}] العلامات التجارية
-                                <i class="fa fa-copyright"></i>
-                            </h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
-                            <ul id="brands-tabs" class="tabs">
-                                <li class="tab col s6"><a href="#brands-edition-tab">تحرير العلامات التجارية</a></li>
-                                <li class="tab col s6"><a href="#brands-creation-tab">أضف علامة تجارية جديدة</a></li>
-                            </ul>
-                            <div id="brands-creation-tab" class="col s12">
-                                <div class="row">
-                                    <div class="col s12">
-                                        <form action="/dashboard/brands" method="POST">
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <input id="brand-name" type="text" name="brand-name"
-                                                        class="validate" data-length="50" required>
-                                                    <label for="brand-name">اسم العلامة التجارية</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <input id="brand-logo" type="url" name="brand-logo"
-                                                        data-length="300" class="validate">
-                                                    <label for="brand-logo">شعار العلامة التجارية</label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col s12">
-                                                    <img id="brands-creation-preview" class="materialboxed"
-                                                        src="/assets/img/backgrounds/placeholder.jpg" alt="Brand image">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col s12 center-align">
-                                                    <input type="submit"
-                                                        class="btn btn-large waves-effect waves-light grey lighten-3"
-                                                        value="إضافة">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="brands-edition-tab" class="col s12">
-                                <div class="row">
-                                    <div class="col s12">
-                                        {{#if Data.Brands}}
-                                        <ul class="collapsible">
-                                            {{#each Data.Brands }}
-                                            <li>
-                                                <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
-                                                    {{ this.BrandName }}</div>
-                                                <div class="collapsible-body">
-                                                    <form action="/dashboard/brands?_method=PUT" method="POST">
-                                                        <div class="row">
-                                                            <div class="input-field col s12">
-                                                                <input id="brand-name-{{ this.BrandID }}" type="text"
-                                                                    name="brand-name" class="validate" data-length="50"
-                                                                    value="{{ this.BrandName }}" required>
-                                                                <label for="brand-name-{{ this.BrandID }}">اسم العلامة
-                                                                    التجارية</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="input-field col s12">
-                                                                <input id="brand-logo-{{ this.BrandID }}" type="text"
-                                                                    name="brand-logo" class="validate" data-length="300"
-                                                                    value="{{ this.Logo }}" required>
-                                                                <label for="brand-logo-{{ this.BrandID }}">شعار العلامة
-                                                                    التجارية</label>
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" name="brand-id" value="{{ this.BrandID }}">
-                                                        <div class="row">
-                                                            <div class="col s12 center-align">
-                                                                <input type="submit"
-                                                                    class="btn btn-large waves-effect waves-light grey lighten-3"
-                                                                    value="تحديث">
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </li>
-                                            {{/each}}
-                                        </ul>
-                                        {{else}}
-                                        <ul class="collection">
-                                            <li class="collection-item center-align">لا توجد علامات تجارية حاليا</li>
-                                        </ul>
-                                        {{/if}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div class="col s10 container dashboard__grid">
+			<div class="row">
+				<div class="card-panel">
+					<div class="row valign-wrapper">
+						<div class="col s12">
+							<h4 class="grey-text right-align">
+								[{{ Data.Brands.length }}] العلامات التجارية
+								<i class="fa fa-copyright"></i>
+							</h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<ul id="brands-tabs" class="tabs">
+								<li class="tab col s4"><a href="#brands-edition-tab">تحرير العلامات التجارية</a></li>
+								<li class="tab col s4"><a href="#brands-creation-tab">أضف علامة تجارية جديدة</a></li>
+								<li class="tab col s4"><a href="#brands-restoration-tab">استعادة العلامات التجارية</a></li>
+							</ul>
+							<div id="brands-creation-tab" class="col s12">
+								<div class="row">
+									<div class="col s12">
+										<form action="/dashboard/brands" method="POST">
+											<div class="row">
+												<div class="input-field col s12">
+													<input id="brand-name" type="text" name="brand-name" class="validate" data-length="50"
+														required>
+													<label for="brand-name">اسم العلامة التجارية</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="input-field col s12">
+													<input id="brand-logo" type="url" name="brand-logo" data-length="300" class="validate">
+													<label for="brand-logo">شعار العلامة التجارية</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col s12">
+													<img id="brands-creation-preview" class="materialboxed"
+														src="/assets/img/backgrounds/placeholder.jpg" alt="Brand image">
+												</div>
+											</div>
+											<div class="row">
+												<div class="col s12 center-align">
+													<input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
+														value="إضافة">
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div id="brands-edition-tab" class="col s12">
+								<div class="row">
+									<div class="col s12">
+										{{#if Data.Brands}}
+										<ul class="collapsible">
+											{{#each Data.Brands }}
+											<li>
+												<div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
+													{{ this.BrandName }}</div>
+												<div class="collapsible-body">
+													<form action="/dashboard/brands?_method=PUT" method="POST">
+														<div class="row">
+															<div class="input-field col s12">
+																<input id="brand-name-{{ this.BrandID }}" type="text" name="brand-name" class="validate"
+																	data-length="50" value="{{ this.BrandName }}" required>
+																<label for="brand-name-{{ this.BrandID }}">اسم العلامة
+																	التجارية</label>
+															</div>
+														</div>
+														<div class="row">
+															<div class="input-field col s12">
+																<input id="brand-logo-{{ this.BrandID }}" type="text" name="brand-logo" class="validate"
+																	data-length="300" value="{{ this.Logo }}" required>
+																<label for="brand-logo-{{ this.BrandID }}">شعار العلامة
+																	التجارية</label>
+															</div>
+														</div>
+														<input type="hidden" name="brand-id" value="{{ this.BrandID }}">
+														<div class="row">
+															<div class="col s6 center-align">
+																<input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
+																	value="تحديث">
+															</div>
+															<div class="col s6 center-align">
+																<input type="button"
+																	class="btn btn-large waves-effect waves-light grey lighten-3 btn-delete" value="حذف">
+																<input type="hidden" value="{{ this.BrandID }}">
+															</div>
+														</div>
+													</form>
+												</div>
+											</li>
+											{{/each}}
+										</ul>
+										{{else}}
+										<ul class="collection">
+											<li class="collection-item center-align">لا توجد علامات تجارية حاليا</li>
+										</ul>
+										{{/if}}
+									</div>
+								</div>
+							</div>
+							<div id="brands-restoration-tab" class="col s12">
+								<div class="row">
+									<div class="col s12">
+										{{#if Data.DeletedBrands}}
+										<ul class="collection">
+											{{#each Data.DeletedBrands }}
+											<li class="collection-item">
+												<div>
+													<input type="hidden" value="{{ this.BrandID }}">
+													<a href="javascript:void(0)" class="secondary-content btn-restore"><i
+															class="material-icons">restore</i></a>
+
+													<b>{{ this.BrandName }}</b>
+												</div>
+											</li>
+											{{/each}}
+										</ul>
+										{{else}}
+										<ul class="collection">
+											<li class="collection-item center-align">لا توجد علامات تجارية محذوفة</li>
+										</ul>
+										{{/if}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </div>
