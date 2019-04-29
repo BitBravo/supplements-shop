@@ -1,36 +1,54 @@
 $('document').ready(() => {
 
-    // Initializing tabs.
-    $('.dashboard-coupons .tabs').tabs();
+	// Initializing tabs.
+	$('.dashboard-coupons .tabs').tabs();
 
-    // Initializing the character counter.
-    $('#coupons-creation-tab input[type=text], #coupons-creation-tab input[type=number], #coupons-edition-tab input[type=text], #coupons-edition-tab input[type=number]').characterCounter();
+	// Initializing the character counter.
+	$('#coupons-creation-tab input[type=text], #coupons-creation-tab input[type=number], #coupons-edition-tab input[type=text], #coupons-edition-tab input[type=number]').characterCounter();
 
-    // Initializing the collapsibles.
-    $('.dashboard-coupons .collapsible').collapsible();
+	// Initializing the collapsibles.
+	$('.dashboard-coupons .collapsible').collapsible();
 
-    // Generating the coupon code.
-    $('#coupon-code-generator-btn').on('click', () => {
+	// Generating the coupon code.
+	$('#coupon-code-generator-btn').on('click', () => {
 
-        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789@';
-        let
-            i = 0,
-            couponCode = '';
+		var
+			chars = 'abcdefghijklmnopqrstuvwxyz0123456789@',
+			i = 0,
+			couponCode = '';
 
-        for (i = 0; i < 50; i++) {
+		for (i = 0; i < 50; i++) {
+			var rand = Math.floor(Math.random() * chars.length);
+			couponCode += chars[rand];
+		}
 
-            const rand = Math.floor(Math.random() * chars.length);
+		$('#coupon-code').val(couponCode);
+		$('#coupon-code').focus();
+	});
 
-            couponCode += chars[rand];
-        }
+	// Updating the coupon state.
+	$('#coupon-state-toggler').on('change', function () {
+		$('#coupon-state-input').val($(this).is(':checked'));
+	});
 
-        $('#coupon-code').val(couponCode);
-        $('#coupon-code').focus();
-    });
+	// Deleting the coupon.
+	$('.dashboard-coupons .btn-delete').on('click', function () {
+		var couponId = $(this).next().val();
 
-    // Updating the coupon state.
-    $('#coupon-state-toggler').on('change', function () {
+		$.ajax({
+			url: "/dashboard/coupons/",
+			type: "DELETE",
+			data: { couponId },
+			success: function () {
+				location.reload();
+			}
+		})
+	});
 
-        $('#coupon-state-input').val($(this).is(':checked'));
-    });
+	// Restoring a coupon.
+	$('.dashboard-coupons .btn-restore').on('click', function () {
+		var couponId = $(this).closest('input[type=hidden]').data('coupon-id');
+
+		console.log(couponId);
+	});
 });

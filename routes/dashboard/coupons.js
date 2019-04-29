@@ -21,13 +21,14 @@ conn.connect();
 router.use(login);
 
 // Setting up the coupons route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   conn.query(
     '\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT `C`.*, (SELECT `CH`.`Discount` FROM `CouponsHistory` `CH` WHERE `C`.`CouponID` = `CH`.`CouponID` ORDER BY `CH`.`CreatedDate` DESC LIMIT 1) AS `CouponDiscount` FROM `Coupons` `C` ORDER BY `C`.`CouponID` DESC;\
+        SELECT `C`.*, (SELECT `CH`.`Discount` FROM `CouponsHistory` `CH` WHERE `C`.`CouponID` = `CH`.`CouponID` ORDER BY `CH`.`CreatedDate` DESC LIMIT 1) AS `CouponDiscount` FROM `Coupons` `C` WHERE `C`.`Deleted` = 0 ORDER BY `C`.`CouponID` DESC;\
+        SELECT `C`.*, (SELECT `CH`.`Discount` FROM `CouponsHistory` `CH` WHERE `C`.`CouponID` = `CH`.`CouponID` ORDER BY `CH`.`CreatedDate` DESC LIMIT 1) AS `CouponDiscount` FROM `Coupons` `C` WHERE `C`.`Deleted` = 1 ORDER BY `C`.`CouponID` DESC;\
     ',
     (error, results) => {
       // Checking if there are any errors.
@@ -57,7 +58,8 @@ router.get('/', function(req, res) {
         },
         Categories: formater.groupCategories(results[1]),
         NewMail: results[2][0].NewMail,
-        Coupons: results[3]
+        Coupons: results[3],
+        DeletedCoupons: results[4],
       };
 
       // Getting the proper copyright date.
@@ -72,7 +74,7 @@ router.get('/', function(req, res) {
 });
 
 // Setting the coupon creation route.
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
   const couponCode = req.body['coupon-code'],
     couponDiscount = req.body['coupon-discount'],
     couponState = req.body['coupon-state'] == 'false' ? 0 : 1,
@@ -111,7 +113,7 @@ router.post('/', function(req, res) {
 });
 
 // Setting up the coupon edition route.
-router.put('/', function(req, res) {
+router.put('/', function (req, res) {
   const couponID = req.body['coupon-id'],
     couponState = req.body['coupon-state'] ? 1 : 0,
     couponDiscount = req.body['coupon-discount'],
@@ -120,10 +122,10 @@ router.put('/', function(req, res) {
       '\
             UPDATE ?? SET ?? = ? WHERE ?? = ?; \
             ' +
-        (couponDiscount != couponOldDiscount
-          ? 'INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?);'
-          : '') +
-        ' \
+      (couponDiscount != couponOldDiscount
+        ? 'INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?);'
+        : '') +
+      ' \
             ',
       [
         'Coupons',
@@ -146,6 +148,21 @@ router.put('/', function(req, res) {
 
     // Rendering the coupons page.
     res.redirect('/dashboard/coupons');
+  });
+});
+
+// Setting up the deletion route.
+router.delete('/', function (req, res) {
+  var
+    couponId = req.body['couponId'],
+    stmt = conn.format('UPDATE ?? SET ?? = 1 WHERE ?? = ?;', ['Coupons', 'Deleted', 'CouponID', couponId]);
+
+  conn.query(stmt, (error, results) => {
+    // Checking if there are any errors.
+    if (error) throw error;
+
+    // Signaling the client.
+    res.send();
   });
 });
 
