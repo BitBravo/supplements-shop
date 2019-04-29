@@ -43,12 +43,36 @@
   }
 
   .stock-creation-section {
+
     .stock-creation-header {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
 
-      span {
+      span:not(:first-child) {
+        display: flex;
+        flex: 1;
+        justify-content: flex-end;
+              
+        .fa-balance-scale {
+          font-size: 16px;
+          margin-left: 8px;
+        }
+      }
+
+      span:first-child {
+        flex: 2;
+
+        .fa-trash {
+          color: #ffcece;
+          text-align: left;
+          transition-duration: .3s;
+          transition-property: color;
+  
+          &:hover {
+            color: #ff7979;
+          }
+        }
       }
     }
 
