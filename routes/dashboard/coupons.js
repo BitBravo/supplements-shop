@@ -166,5 +166,20 @@ router.delete('/', function (req, res) {
   });
 });
 
+// Setting up the restoration route.
+router.put('/restore', function (req, res) {
+  var
+    couponId = req.body['couponId'],
+    stmt = conn.format('UPDATE ?? SET ?? = 0 WHERE ?? = ?;', ['Coupons', 'Deleted', 'CouponID', couponId]);
+
+  conn.query(stmt, (error, results) => {
+    // Checking if there are any errors.
+    if (error) throw error;
+
+    // Signaling the client.
+    res.send();
+  });
+});
+
 // Exporting the route.
 module.exports = router;

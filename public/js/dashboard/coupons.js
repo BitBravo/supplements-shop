@@ -9,7 +9,7 @@ $('document').ready(() => {
 	// Initializing the collapsibles.
 	$('.dashboard-coupons .collapsible').collapsible();
 
-	// Generating the coupon code.
+	// Generating a coupon code.
 	$('#coupon-code-generator-btn').on('click', () => {
 
 		var
@@ -26,17 +26,17 @@ $('document').ready(() => {
 		$('#coupon-code').focus();
 	});
 
-	// Updating the coupon state.
+	// Updating a coupon' state.
 	$('#coupon-state-toggler').on('change', function () {
 		$('#coupon-state-input').val($(this).is(':checked'));
 	});
 
-	// Deleting the coupon.
+	// Deleting a coupon.
 	$('.dashboard-coupons .btn-delete').on('click', function () {
 		var couponId = $(this).next().val();
 
 		$.ajax({
-			url: "/dashboard/coupons/",
+			url: "/dashboard/coupons",
 			type: "DELETE",
 			data: { couponId },
 			success: function () {
@@ -47,8 +47,15 @@ $('document').ready(() => {
 
 	// Restoring a coupon.
 	$('.dashboard-coupons .btn-restore').on('click', function () {
-		var couponId = $(this).closest('input[type=hidden]').data('coupon-id');
+		var couponId = $(this).prev().val();
 
-		console.log(couponId);
+		$.ajax({
+			url: "/dashboard/coupons/restore",
+			type: "PUT",
+			data: { couponId },
+			success: function () {
+				location.reload();
+			}
+		})
 	});
 });
