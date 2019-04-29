@@ -139,8 +139,17 @@ $('document').ready(() => {
 
   function addFlavor(index, flavor) {
 
-    // Add a flavor.
+    // Adding a flavor.
     Product.Stock[index].Flavors.push(flavor);
+
+    // Updating the UI.
+    updateUI();
+  }
+
+  function removeFlavor(index, flavorIndex) {
+
+    // Removing a flavor.
+    Product.Stock[index].Flavors.splice(flavorIndex, 1);
 
     // Updating the UI.
     updateUI();
@@ -163,7 +172,7 @@ $('document').ready(() => {
 
       $.each(stock.Flavors, function (index, flavor) {
         stockFlavors += '\
-          <li>\
+          <li data-flavor-index="'+ index + '">\
             <div class="collapsible-header"><i class="fas fa-trash stock-creation-flavor-remove-btn"></i>'+ flavor.FlavorID + '</div>\
             <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>\
           </li>\
@@ -171,7 +180,7 @@ $('document').ready(() => {
       });
 
       $stockCreationList.append('\
-        <li data-id="'+ index + '" class="' + (index === currentIndex ? 'active' : '') + '">\
+        <li data-id="'+ index + '" class="stock-creation-entry ' + (index === currentIndex ? 'active' : '') + '">\
           <div class="collapsible-header stock-creation-header">\
             <span class="valign-wrapper">\
               <i class="fas fa-trash stock-creation-remove-btn"></i>\
@@ -273,6 +282,21 @@ $('document').ready(() => {
         FlavorID: 0,
         ProductVariantImage: ''
       });
+    });
+
+    // Adding the flavor removal event.
+    $('.stock-creation-flavor-remove-btn').on('click', function (e) {
+
+      // Stopping event propagation.
+      e.stopPropagation();
+
+      // Getting the stock's index.
+      var
+        index = $(this).closest('.stock-creation-entry').data('id'),
+        flavorIndex = $(this).closest('li').data('flavor-index');
+
+      // Adding a flavor.
+      removeFlavor(index, flavorIndex);
     });
 
     // Re-initializing the collapsibles.
