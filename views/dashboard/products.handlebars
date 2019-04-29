@@ -82,7 +82,11 @@
 											<div class="input-field col s12">
 												<select id="product-category">
 													{{#each Data.CategoriesData }}
-													<option value="{{ this.CategoryID }}">{{ this.CategoryName }}</option>
+													<optgroup label="{{ this.CategoryName }}">
+														{{#each this.SubCategories}}
+														<option value="{{ this.CategoryID }}">{{ this.CategoryName }}</option>
+														{{/each}}
+													</optgroup>
 													{{/each}}
 												</select>
 												<label>فئة المنتج</label>
