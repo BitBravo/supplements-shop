@@ -6,10 +6,22 @@ $('document').ready(() => {
   $('.dashboard-products select').formSelect();
 
   // Initializing the character counter.
-  $('.dashboard-products #product-name').characterCounter();
+  $('.dashboard-products #product-name, .dashboard-products #product-nutrition-info').characterCounter();
 
   // Initializing the collapsibles.
   $('.dashboard-products .collapsible').collapsible();
+
+  // Initializing the materialbox.
+  $('.dashboard-products .materialboxed').materialbox();
+
+  // Nutrition facts preview.
+  $('#product-nutrition-info').on('change', function () {
+    $('.nutrition-facts-preview img').attr('src', $(this).val());
+
+    if ($('.nutrition-facts-preview img').on('error', function () {
+      $('.nutrition-facts-preview img').attr('src', '/assets/img/backgrounds/placeholder.jpg');
+    }));
+  });
 
   // Adding stock.
   $('#product-creation-stock-form').on('submit', e => {
@@ -51,9 +63,9 @@ $('document').ready(() => {
             </td>
             <td class="center-align">
                 ${new Intl.NumberFormat('ar-MA', {
-                  style: 'currency',
-                  currency: 'MAD'
-                }).format(price)}
+      style: 'currency',
+      currency: 'MAD'
+    }).format(price)}
                 <input type="hidden" name="stock-price" value="${price}">
             </td>
             <td class="center-align">
@@ -67,8 +79,9 @@ $('document').ready(() => {
     $('#product-creation-modal').modal('close');
   });
 
-  // Initializing quill.
-  const descEditor = new Quill('#desc-editor', {
+  // Initializing QuillJS.
+  var
+    descEditor = new Quill('#desc-editor', {
       theme: 'snow'
     }),
     usageEditor = new Quill('#usage-editor', {
@@ -107,7 +120,7 @@ $('document').ready(() => {
   });
 
   // Opening the product edition modal.
-  $('.product-list tr').on('click', function() {
+  $('.product-list tr').on('click', function () {
     const productID = $(this).data('product-id');
 
     $.get('/dashboard/products/' + productID, data => {
@@ -142,7 +155,7 @@ $('document').ready(() => {
             _v.FlavorID == getProductVariantFlavor(v.VariantID).FlavorID
               ? 'selected'
               : ''
-          } value="${_v.FlavorID}">${_v.FlavorName}</option>`;
+            } value="${_v.FlavorID}">${_v.FlavorName}</option>`;
         });
 
         flavorsDropdown += '</select>';
@@ -153,31 +166,31 @@ $('document').ready(() => {
                     <td></td>
                     <td class="center-align">
                         <input type="number" name="stock-quantity" min="0" value="${
-                          getProductVariantFlavor(v.VariantID).Quantity
-                        }" class="validate">
+          getProductVariantFlavor(v.VariantID).Quantity
+          }" class="validate">
                     </td>
                     <td class="center-align">
                         <input type="number" name="stock-weight" min="0" step="0.001" value="${
-                          v.Weight
-                        }" class="validate" disabled>
+          v.Weight
+          }" class="validate" disabled>
                     </td>
                     <td class="center-align">
                         <input type="number" name="stock-price" min="0" step="0.01" value="${
-                          v.Price
-                        }" class="validate">
+          v.Price
+          }" class="validate">
                     </td>
                     <td class="center-align">
                         ${flavorsDropdown}
                     </td>
                     <td class="center-align">
                         <input type="url" name="stock-image" value="${
-                          getProductVariantFlavor(v.VariantID).VariantImage
-                        }" class="validate">
+          getProductVariantFlavor(v.VariantID).VariantImage
+          }" class="validate">
                     </td>
                     <td class="center-align">
                         <input type="url" name="stock-nutrition" value="${
-                          getProductVariantFlavor(v.VariantID).NutritionInfo
-                        }" class="validate">
+          getProductVariantFlavor(v.VariantID).NutritionInfo
+          }" class="validate">
                     </td>
                 </div>
             </tr>
@@ -283,7 +296,7 @@ $('document').ready(() => {
 
   function addStockRemovingEvent() {
     // Removing a stock.
-    $('.stock-remove').on('click', function() {
+    $('.stock-remove').on('click', function () {
       $(this)
         .closest('tr')
         .remove();
