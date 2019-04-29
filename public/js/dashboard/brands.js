@@ -22,13 +22,13 @@ $('document').ready(() => {
 	});
 
 	// Deleting a brand.
-	$('.dashboard-categories .btn-delete').on('click', function () {
-		var categoryId = $(this).next().val();
+	$('.dashboard-brands .btn-delete').on('click', function () {
+		var brandId = $(this).next().val();
 
 		$.ajax({
-			url: "/dashboard/categories",
+			url: "/dashboard/brands",
 			type: "DELETE",
-			data: { categoryId },
+			data: { brandId },
 			success: function () {
 				location.reload();
 			}
@@ -36,13 +36,13 @@ $('document').ready(() => {
 	});
 
 	// Restoring a brand.
-	$('.dashboard-categories .btn-restore').on('click', function () {
-		var categoryId = $(this).prev().val();
+	$('.dashboard-brands .btn-restore').on('click', function () {
+		var brandId = $(this).prev().val();
 
 		$.ajax({
-			url: "/dashboard/categories/restore",
+			url: "/dashboard/brands/restore",
 			type: "PUT",
-			data: { categoryId },
+			data: { brandId },
 			success: function () {
 				location.reload();
 			}
