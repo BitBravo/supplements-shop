@@ -16,6 +16,9 @@ $('document').ready(() => {
     Stock: []
   };
 
+  // The selection index.
+  var currentIndex = -1;
+
   // Initializing QuillJS.
   var
     descEditor = new Quill('#desc-editor', {
@@ -112,6 +115,9 @@ $('document').ready(() => {
     // Adding the stock.
     Product.Stock.push(stock);
 
+    // Updating the currenr index.
+    currentIndex = Product.Stock.length - 1;
+
     // Updating the UI.
     updateUI();
   }
@@ -120,6 +126,9 @@ $('document').ready(() => {
 
     // Remove a stock.
     Product.Stock.splice(index, 1);
+
+    // Updating the current index.
+    currentIndex = currentIndex > 0 ? currentIndex - 1 : -1;
 
     // Updating the UI.
     updateUI();
@@ -137,8 +146,8 @@ $('document').ready(() => {
 
     // Updating the stock list.
     Product.Stock.forEach(function (stock, index) {
-      var stockElement = $stockCreationList.append('\
-        <li data-id="'+ index + '">\
+      $stockCreationList.append('\
+        <li data-id="'+ index + '" class="' + (index === currentIndex ? 'active' : '') + '">\
           <div class="collapsible-header stock-creation-header">\
             <span class="valign-wrapper">\
               <i class="fas fa-trash"></i>\
@@ -154,7 +163,27 @@ $('document').ready(() => {
             </span>\
           </div>\
           <div class="collapsible-body">\
-            <span>Lorem ipsum dolor sit amet.</span>\
+            <div class="row">\
+              <div class="col s6">\
+                <div class="row">\
+                  <div class="col s12 right-align">\
+                    <label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>\
+                      <input min="0" name="stock-creation-entry-weight" step="0.001" type="number" value="'+ stock.Weight + '" class="validate right-align" required>\
+                    </label>\
+                  </div>\
+                </div>\
+                <div class="row">\
+                  <div class="col s12 right-align">\
+                    <label>السعر <small class="grey-text">&rlm;(درهم)&rlm;</small>\
+                      <input min="0" name="stock-creation-entry-price" type="number" step="0.01" value="'+ stock.Price + '" class="validate right-align" required>\
+                    </label>\
+                  </div>\
+                </div>\
+              </div>\
+              <div class="col s6">\
+                \
+              </div>\
+            </div>\
           </div>\
         </li>');
     });
@@ -172,9 +201,35 @@ $('document').ready(() => {
       removeStock(index);
     });
 
+    // Adding the stock update event for price and weight inputs.
+    $('#stock-creation-list input[type=number]').on('change', function (e) {
+
+      // Getting the stock's index.
+      var index = $(this).closest('li').data('id');
+
+      // Updaing the stock.
+      if ($(this).attr('name') === 'stock-creation-entry-weight') {
+        Product.Stock[index].Weight = $(this).val();
+      } else if ($(this).attr('name') === 'stock-creation-entry-price') {
+        Product.Stock[index].Price = $(this).val();
+      }
+
+      // Updating the UI.
+      updateUI();
+    });
+
+    // Adding the index update event.
+    $('#stock-creation-list > li').on('click', function () {
+
+      if ($(this).hasClass('active')) {
+        currentIndex = $(this).data('id');
+      } else {
+        currentIndex = -1;
+      }
+    });
+
     // Re-initializing the collapsibles.
     $('#stock-creation-list').collapsible();
-
   }
 
   var formater = {
