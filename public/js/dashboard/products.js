@@ -171,19 +171,28 @@ $('document').ready(() => {
 
     // Updating the stock list.
     Product.Stock.forEach(function (stock, index) {
-
-      var
-        stockFlavors = '',
-        flavorsDropDown = '';
-
-      $.each(flavors, function (index, flavor) {
-        flavorsDropDown += '<option value="' + flavor.FlavorID + '">' + flavor.FlavorName + '</option>';
-      });
+      var stockFlavors = '';
 
       $.each(stock.Flavors, function (index, flavor) {
+        var flavorsDropDown = '';
+
+        $.each(flavors, function (index, flv) {
+          flavorsDropDown += '<option value="' + flv.FlavorID + '" ' + (flv.FlavorID === flavor.FlavorID ? 'selected' : '') + '>' + flv.FlavorName + '</option>';
+        });
+
         stockFlavors += '\
           <li data-flavor-index="'+ index + '" class="stock-creation-flavor-entry ' + (index === stock.CurrentIndex ? 'active' : '') + '">\
-            <div class="collapsible-header"><i class="fas fa-trash stock-creation-flavor-remove-btn"></i>'+ formater.getFlavorNameFromID(flavor.FlavorID) + '</div>\
+            <div class="collapsible-header">\
+              <span class="valign-wrapper">\
+                <i class="fas fa-trash stock-creation-flavor-remove-btn"></i>\
+              </span>\
+              <span class="valign-wrapper">\
+              '+ flavor.Quantity + ' &nbsp; <b>الكمية</b> <i class="material-icons">inbox</i>\
+              </span >\
+              <span class="valign-wrapper">\
+              '+ formater.getFlavorNameFromID(flavor.FlavorID) + ' &nbsp; <b>النكهة</b> <i class="material-icons">local_drink</i>\
+              </span >\
+            </div >\
             <div class="collapsible-body">\
               <div class="row">\
                 <div class="col s6"></div>\
@@ -191,7 +200,7 @@ $('document').ready(() => {
                   <div class="row">\
                     <div class="input-field col s12">\
                     <select name="stock-creation-entry-flavor">\
-                        '+ flavorsDropDown + '\
+                      '+ flavorsDropDown + '\
                     </select >\
                     <label>النكهة</label>\
                     </div >\
@@ -335,7 +344,7 @@ $('document').ready(() => {
       // Getting the stock's index.
       var index = $(this).closest('.stock-creation-entry').data('id');
 
-      if (!$(this).hasClass('active')) {
+      if (!$(this).parent().hasClass('active')) {
         Product.Stock[index].CurrentIndex = $(this).parent().data('flavor-index');
       } else {
         Product.Stock[index].CurrentIndex = -1;
@@ -411,32 +420,20 @@ $('document').ready(() => {
     Price: 399.99,
     Weight: 1,
     CurrentIndex: -1,
-    Flavors: []
+    Flavors: [
+      {
+        Quantity: 3,
+        FlavorID: 4,
+        VariantImage: ''
+      },
+      {
+        Quantity: 2,
+        FlavorID: 3,
+        VariantImage: ''
+      }
+    ]
   });
-  addNewStock({
-    Price: 900,
-    Weight: 10.5,
-    CurrentIndex: -1,
-    Flavors: []
-  });
-  addNewStock({
-    Price: 120.50,
-    Weight: 0.400,
-    CurrentIndex: -1,
-    Flavors: []
-  });
-  addNewStock({
-    Price: 560.90,
-    Weight: 0.85,
-    CurrentIndex: -1,
-    Flavors: []
-  });
-  addNewStock({
-    Price: 490.99,
-    Weight: 3.2,
-    CurrentIndex: -1,
-    Flavors: []
-  });
+
 
   // Adding stock.
   /*$('#product-creation-stock-form').on('submit', e => {

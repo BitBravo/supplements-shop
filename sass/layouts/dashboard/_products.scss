@@ -43,7 +43,7 @@
   }
 
   .stock-creation-section {
-    .stock-creation-header {
+    .stock-creation-header, .stock-creation-flavor-entry .collapsible-header {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
@@ -60,7 +60,7 @@
       }
 
       span:first-child {
-        flex: 2;
+        flex: 1;
       }
     }
     
