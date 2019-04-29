@@ -127,11 +127,9 @@ CREATE TABLE IF NOT EXISTS `Products` (
     `AddedDate`         DATETIME NOT NULL DEFAULT NOW(),
     `CategoryID`        SMALLINT NOT NULL,
     `BrandID`           SMALLINT NOT NULL,
-    `FeaturedVariantID` INT NOT NULL,
     `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_products_id PRIMARY KEY (`ProductID`),
-    CONSTRAINT fk_products_featured_variant_id FOREIGN KEY (`FeaturedVariantID`) REFERENCES `ProductsVariants` (`VariantID`),
     CONSTRAINT fk_products_cat FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`),
     CONSTRAINT fk_products_brd FOREIGN KEY (`BrandID`) REFERENCES `Brands` (`BrandID`)
 );
@@ -142,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `ProductsVariants` (
     `VariantID`         INT NOT NULL AUTO_INCREMENT,
     `ProductID`         INT NOT NULL,
     `Weight`            FLOAT NOT NULL,
+    `FeaturedVariant`   BIT NOT NULL DEFAULT 0,
     `Deleted`           BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT pk_products_variants_id PRIMARY KEY (`VariantID`),
@@ -167,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `ProductsPriceHistory` (
     `Price`             DECIMAL(12, 2) NOT NULL,
     `ChangedDate`       DATETIME NOT NULL DEFAULT NOW(),
 
-    CONSTRAINT pk_price_history_id PRIMARY KEY (`VariantID`, `ActivatedDate`),
+    CONSTRAINT pk_price_history_id PRIMARY KEY (`VariantID`, `ChangedDate`),
     CONSTRAINT fk_price_history_id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`)
 );
 
