@@ -21,7 +21,7 @@ router.get('/', function (req, res) {
   conn.query(
     '\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
-        SELECT * FROM `Brands`; \
+        SELECT * FROM `Brands` WHERE `Deleted` = 0; \
         SELECT * FROM `Categories`; \
         SELECT 1; \
         SELECT 1; \
