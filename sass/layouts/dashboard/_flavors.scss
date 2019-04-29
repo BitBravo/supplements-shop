@@ -6,11 +6,12 @@
 
 .dashboard-flavors {
 	#flavors-creation-tab,
-	#flavors-edition-tab {
+	#flavors-edition-tab,
+	#flavors-restoration-tab {
 		margin-top: 50px;
 		overflow-y: auto;
 
-		input[type='submit'] {
+		input[type='submit'], input[type='button'] {
 			width: 200px;
 		}
 	}
