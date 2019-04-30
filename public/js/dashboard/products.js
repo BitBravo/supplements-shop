@@ -66,24 +66,39 @@ $('document').ready(() => {
 
     // Stopping the page from reloading.
     e.preventDefault();
+
+    // Retrieving information.
+    Product.NutritionInfo = $('#product-creation-nutrition-info').val();
+    Product.BrandId = $('#product-creation-brand').val();
+    Product.CateogryId = $('#product-creation-category').val();
+    Product.Description = descEditor.container.innerHTML;
+    Product.Usage = usageEditor.container.innerHTML;
+    Product.Warning = warningEditor.container.innerHTML;
+
+    if (confirm('هل ترغب في إضافة هذا المنتوج؟')) {
+      console.log('add');
+    }
   });
 
   // Reseting the product creation.
   $('#product-creation-form').on('reset', function () {
+    if (confirm('هل تريد إعادة ضبط كل شيء؟')) {
 
-    // Reseting the product tracking object.
-    Product = {
-      Name: '',
-      NutritionInfo: '',
-      BrandId: 0,
-      CateogryId: 0,
-      Description: '',
-      Usage: '',
-      Warning: '',
-      Stock: []
-    };
+      // Reseting the product tracking object.
+      Product = {
+        Name: '',
+        NutritionInfo: '',
+        BrandId: 0,
+        CateogryId: 0,
+        Description: '',
+        Usage: '',
+        Warning: '',
+        Stock: []
+      };
 
-    updateUI();
+      // Updating the UI.
+      updateUI();
+    }
   });
 
   // Nutrition facts preview.
