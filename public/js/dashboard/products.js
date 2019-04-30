@@ -8,8 +8,8 @@ $('document').ready(() => {
   var Product = {
     Name: '',
     NutritionInfo: '',
-    BrandId: 0,
-    CateogryId: 0,
+    BrandID: 0,
+    CategoryID: 0,
     Description: '',
     Usage: '',
     Warning: '',
@@ -69,14 +69,17 @@ $('document').ready(() => {
 
     // Retrieving information.
     Product.NutritionInfo = $('#product-creation-nutrition-info').val();
-    Product.BrandId = $('#product-creation-brand').val();
-    Product.CateogryId = $('#product-creation-category').val();
+    Product.BrandID = $('#product-creation-brand').val();
+    Product.CategoryID = $('#product-creation-category').val();
     Product.Description = descEditor.container.innerHTML;
     Product.Usage = usageEditor.container.innerHTML;
     Product.Warning = warningEditor.container.innerHTML;
 
     if (confirm('هل ترغب في إضافة هذا المنتوج؟')) {
-      console.log('add');
+
+      $.post('/dashboard/products', Product, function () {
+        location.reload();
+      });
     }
   });
 
@@ -88,8 +91,8 @@ $('document').ready(() => {
       Product = {
         Name: '',
         NutritionInfo: '',
-        BrandId: 0,
-        CateogryId: 0,
+        BrandID: 0,
+        CategoryID: 0,
         Description: '',
         Usage: '',
         Warning: '',
@@ -129,6 +132,7 @@ $('document').ready(() => {
       Weight: $stockWeightInput.val(),
       Price: $stockPriceInput.val(),
       CurrentIndex: -1,
+      FeaturedVariant: false,
       Flavors: []
     });
 
@@ -506,6 +510,7 @@ $('document').ready(() => {
       {
         Quantity: 3,
         FlavorID: 4,
+        FeaturedVariant: true,
         VariantImage: 'https://store.bbcomcdn.com/images/store/skuimage/sku_MT4060010/image_skuMT4060010_largeImage_X_450_white.jpg'
       },
       {
@@ -520,6 +525,7 @@ $('document').ready(() => {
     Price: 700,
     Weight: 6,
     CurrentIndex: -1,
+    FeaturedVariant: true,
     Flavors: [
       {
         Quantity: 5,
