@@ -169,6 +169,11 @@ $('document').ready(() => {
     // Updating the currenr index.
     currentIndex = Product.Stock.length - 1;
 
+    // Setting the default featured variant.
+    if (Product.Stock.length === 1) {
+      Product.Stock[0].FeaturedVariant = true;
+    }
+
     // Updating the UI.
     updateUI();
   }
@@ -180,6 +185,26 @@ $('document').ready(() => {
 
     // Updating the current index.
     currentIndex = currentIndex === index ? -1 : (currentIndex >= 0 ? (currentIndex < index ? currentIndex : currentIndex - 1) : -1);
+
+    // Setting the default featured variant.
+    if (Product.Stock.length > 0) {
+      Product.Stock[0].FeaturedVariant = true;
+    }
+
+    // Updating the UI.
+    updateUI();
+  }
+
+  function setFeaturedStock(index) {
+
+    // Removing all other featured products.
+    for (var i = 0; i < Product.Stock.length; i++) {
+      if (i === index) {
+        Product.Stock[i].FeaturedVariant = true;
+      } else {
+        Product.Stock[i].FeaturedVariant = false;
+      }
+    }
 
     // Updating the UI.
     updateUI();
@@ -288,7 +313,8 @@ $('document').ready(() => {
         <li data-id="'+ index + '" class="stock-creation-entry ' + (index === currentIndex ? 'active' : '') + '">\
           <div class="collapsible-header stock-creation-header">\
             <span class="valign-wrapper">\
-              <i class="fas fa-trash stock-creation-remove-btn"></i>\
+            <i class="fas fa-trash stock-creation-remove-btn"></i>\
+              <i class="fas fa-star stock-creation-feature-btn '+ (stock.FeaturedVariant ? 'featured' : '') + '"></i>\
             </span>\
             <span class="valign-wrapper">\
             ' + formater.calculateStockQuantity(stock) + '&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
@@ -346,6 +372,19 @@ $('document').ready(() => {
 
       // Removing the stock.
       removeStock(index);
+    });
+
+    // Adding the stock featuring click event.
+    $('#stock-creation-list .stock-creation-feature-btn').on('click', function (e) {
+
+      // Stopping event propagation.
+      e.stopPropagation();
+
+      // Getting the stock's index.
+      var index = $(this).closest('li').data('id');
+
+      // Removing the stock.
+      setFeaturedStock(index);
     });
 
     // Adding the stock update event for price and weight inputs.
@@ -506,11 +545,11 @@ $('document').ready(() => {
     Price: 399.99,
     Weight: .8,
     CurrentIndex: -1,
+    FeaturedVariant: false,
     Flavors: [
       {
         Quantity: 3,
         FlavorID: 4,
-        FeaturedVariant: true,
         VariantImage: 'https://store.bbcomcdn.com/images/store/skuimage/sku_MT4060010/image_skuMT4060010_largeImage_X_450_white.jpg'
       },
       {

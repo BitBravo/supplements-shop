@@ -101,6 +101,21 @@
       }
     }
 
+    .fa-star {
+      color: #e9f0ff;
+      text-align: left;
+      transition-duration: .3s;
+      transition-property: color;
+
+      &:hover {
+        color: #a7c4ff;
+      }
+
+      &.featured {
+        color: yellow;
+      }
+    }
+
     .stock-creation-flavor-add-btn {
       margin-top: 30px;
       width: 100%;

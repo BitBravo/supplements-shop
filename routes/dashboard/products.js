@@ -138,10 +138,10 @@ router.post('/', function (req, res) {
 
     if (req.body['Stock']) {
       for (var i = 0; i < req.body['Stock'].length; i++) {
-        var variantStmt = conn.format('INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, 0, 0);',
+        var variantStmt = conn.format('INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, 0);',
           [
             'ProductsVariants', 'ProductID', 'Weight', 'FeaturedVariant', 'Deleted',
-            results.insertId, req.body['Stock'][i]['Weight']
+            results.insertId, req.body['Stock'][i]['Weight'], req.body['Stock'][i]['FeaturedVariant'] == 'true' ? 1 : 0
           ]);
 
         conn.query(variantStmt, function (variantErrors, variantResults) {
