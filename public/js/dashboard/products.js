@@ -61,6 +61,31 @@ $('document').ready(() => {
   // Initializing the materialbox.
   $('.dashboard-products .materialboxed').materialbox();
 
+  // Submiting a new product to the server-side.
+  $('#product-creation-form').on('submit', function (e) {
+
+    // Stopping the page from reloading.
+    e.preventDefault();
+  });
+
+  // Reseting the product creation.
+  $('#product-creation-form').on('reset', function () {
+
+    // Reseting the product tracking object.
+    Product = {
+      Name: '',
+      NutritionInfo: '',
+      BrandId: 0,
+      CateogryId: 0,
+      Description: '',
+      Usage: '',
+      Warning: '',
+      Stock: []
+    };
+
+    updateUI();
+  });
+
   // Nutrition facts preview.
   $('#product-creation-nutrition-info').on('change', function () {
     $('.nutrition-facts-creation-preview img').attr('src', $(this).val());
@@ -223,7 +248,7 @@ $('document').ready(() => {
                   <div class="row">\
                     <div class="input-field col s12 right-align">\
                       <label>الكمية <small class="grey-text">&rlm;(درهم)&rlm;</small>\
-                        <input min="0" name="stock-creation-entry-quantity" type="number" value="'+ flavor.Quantity + '" class="validate right-align">\
+                        <input min="0" name="stock-creation-entry-quantity" type="number" value="'+ flavor.Quantity + '" class="validate right-align" required>\
                       </label>\
                     </div>\
                   </div>\
@@ -232,7 +257,7 @@ $('document').ready(() => {
               <div class="row ">\
                 <div class="input-field col s12 stock-creation-entry-variant-image-wrapper">\
                   <label>صورة المنتوج</label>\
-                  <input type="url" name="stock-creation-entry-variant-image" class="validate" value="'+ flavor.VariantImage + '">\
+                  <input type="url" name="stock-creation-entry-variant-image" class="validate" value="'+ flavor.VariantImage + '" required>\
                 </div>\
               </div>\
             </div>\
@@ -262,14 +287,14 @@ $('document').ready(() => {
                 <div class="row">\
                   <div class="col s12 right-align">\
                     <label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>\
-                      <input min="0" name="stock-creation-entry-weight" step="0.001" type="number" value="'+ stock.Weight + '" class="validate right-align">\
+                      <input min="0" name="stock-creation-entry-weight" step="0.001" type="number" value="'+ stock.Weight + '" class="validate right-align" required>\
                     </label>\
                   </div>\
                 </div>\
                 <div class="row">\
                   <div class="col s12 right-align">\
                     <label>السعر <small class="grey-text">&rlm;(درهم)&rlm;</small>\
-                      <input min="0" name="stock-creation-entry-price" type="number" step="0.01" value="'+ stock.Price + '" class="validate right-align">\
+                      <input min="0" name="stock-creation-entry-price" type="number" step="0.01" value="'+ stock.Price + '" class="validate right-align" required>\
                     </label>\
                   </div>\
                 </div>\
@@ -430,7 +455,6 @@ $('document').ready(() => {
 
     // Re-initializing the dropdowns.
     $('#stock-creation-list select').formSelect();
-
   }
 
   var formater = {
@@ -461,7 +485,7 @@ $('document').ready(() => {
 
   addNewStock({
     Price: 399.99,
-    Weight: 1,
+    Weight: .8,
     CurrentIndex: -1,
     Flavors: [
       {
@@ -473,6 +497,19 @@ $('document').ready(() => {
         Quantity: 2,
         FlavorID: 3,
         VariantImage: 'https://s7.vitaminshoppe.com/is/image/VitaminShoppe/2159978_01?$OP_PDPSKU$'
+      }
+    ]
+  });
+
+  addNewStock({
+    Price: 700,
+    Weight: 6,
+    CurrentIndex: -1,
+    Flavors: [
+      {
+        Quantity: 5,
+        FlavorID: 2,
+        VariantImage: 'https://store.bbcomcdn.com/images/store/skuimage/sku_MT4060010/image_skuMT4060010_largeImage_X_450_white.jpg'
       }
     ]
   });

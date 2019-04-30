@@ -11,9 +11,21 @@
     margin-top: 50px;
     overflow-y: auto;
 
-    input[type='submit'] {
-      width: 200px;
-    }
+    .product-creation-controls {
+      margin-top: 80px;
+
+      .col {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        input[type='submit'], input[type='reset'] {
+          color: $color-light;
+          width: 300px;
+        }
+      }
+
+    } 
   }
 
   .nutrition-facts-creation-preview {
