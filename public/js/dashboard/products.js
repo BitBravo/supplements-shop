@@ -540,37 +540,4 @@ $('document').ready(() => {
       return 'Unflavored';
     }
   }
-
-  addNewStock({
-    Price: 399.99,
-    Weight: .8,
-    CurrentIndex: -1,
-    FeaturedVariant: false,
-    Flavors: [
-      {
-        Quantity: 3,
-        FlavorID: 4,
-        VariantImage: 'https://store.bbcomcdn.com/images/store/skuimage/sku_MT4060010/image_skuMT4060010_largeImage_X_450_white.jpg'
-      },
-      {
-        Quantity: 2,
-        FlavorID: 3,
-        VariantImage: 'https://s7.vitaminshoppe.com/is/image/VitaminShoppe/2159978_01?$OP_PDPSKU$'
-      }
-    ]
-  });
-
-  addNewStock({
-    Price: 700,
-    Weight: 6,
-    CurrentIndex: -1,
-    FeaturedVariant: true,
-    Flavors: [
-      {
-        Quantity: 5,
-        FlavorID: 2,
-        VariantImage: 'https://store.bbcomcdn.com/images/store/skuimage/sku_MT4060010/image_skuMT4060010_largeImage_X_450_white.jpg'
-      }
-    ]
-  });
 });
