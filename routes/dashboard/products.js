@@ -137,19 +137,46 @@ router.post('/', function (req, res) {
     if (errors) throw errors;
 
     if (req.body['Stock']) {
-      for (var i = 0; i < req.body['Stock'].length; i++) {
+      async.each(req.body['Stock'], function (productStock) {
         var variantStmt = conn.format('INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, 0);',
           [
             'ProductsVariants', 'ProductID', 'Weight', 'FeaturedVariant', 'Deleted',
-            results.insertId, req.body['Stock'][i]['Weight'], req.body['Stock'][i]['FeaturedVariant'] == 'true' ? 1 : 0
+            results.insertId, productStock['Weight'], productStock['FeaturedVariant'] == 'true' ? 1 : 0
           ]);
 
         conn.query(variantStmt, function (variantErrors, variantResults) {
 
           // Checking if there are any errors.
           if (variantErrors) throw variantErrors;
+
+          async.each(productStock['Flavors'], function (stockFlavor) {
+            var flavorsStmt = conn.format('INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, 0);',
+              [
+                'ProductsVariantsFlavors', 'VariantID', 'VariantImage', 'Quantity', 'FlavorID', 'Deleted',
+                variantResults.insertId, stockFlavor['VariantImage'], stockFlavor['Quantity'], stockFlavor['FlavorID']
+              ]);
+
+            conn.query(flavorsStmt, function (flavorsErrors, flavorsResults) {
+
+              // Checking if there are any errors.
+              if (flavorsErrors) throw flavorsErrors;
+            });
+          });
+
+
+          var priceStmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, ?, NOW());',
+            [
+              'ProductsPriceHistory', 'VariantID', 'Price', 'ChangedDate',
+              variantResults.insertId, productStock['Price']
+            ]);
+
+          conn.query(priceStmt, function (priceStmt, priceResults) {
+
+            // Checking if there are any errors.
+            if (priceStmt) throw priceStmt;
+          });
         });
-      }
+      });
     }
 
     // Signalung the client.
