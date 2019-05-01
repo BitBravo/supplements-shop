@@ -234,7 +234,7 @@ $('document').ready(() => {
 			Product.Stock[index].Flavors.splice(flavorIndex, 1);
 
 			// Updating the current index.
-			if (index <= Product.Stock[index].CurrentIndex) {
+			if (index < Product.Stock[index].CurrentIndex) {
 				Product.Stock[index].CurrentIndex--;
 			}
 
@@ -714,12 +714,24 @@ $('document').ready(() => {
 			updateUI();
 		}
 
+		function addFlavor(index, flavor) {
+			// Adding a flavor.
+			Product.Stock[index].Flavors.push(flavor);
+
+			// Updating the current index.
+			Product.Stock[index].CurrentIndex =
+				Product.Stock[index].Flavors.length - 1;
+
+			// Updating the UI.
+			updateUI();
+		}
+
 		function removeFlavor(index, flavorIndex) {
 			// Removing a flavor.
 			Product.Stock[index].Flavors.splice(flavorIndex, 1);
 
 			// Updating the current index.
-			if (index <= Product.Stock[index].CurrentIndex) {
+			if (index < Product.Stock[index].CurrentIndex) {
 				Product.Stock[index].CurrentIndex--;
 			}
 
@@ -1093,6 +1105,21 @@ $('document').ready(() => {
 				setFeaturedStock(index);
 			});
 
+			// Adding the flavor addition event.
+			$('.stock-edition-flavor-add-btn').on('click', function() {
+				// Getting the stock's index.
+				var index = $(this)
+					.closest('li')
+					.data('id');
+
+				// Adding a flavor.
+				addFlavor(index, {
+					Quantity: 1,
+					FlavorID: flavors[0].FlavorID,
+					VariantImage: ''
+				});
+			});
+
 			// Adding the flavor removal event.
 			$('.stock-edition-flavor-remove-btn').on('click', function(e) {
 				// Stopping event propagation.
@@ -1108,6 +1135,26 @@ $('document').ready(() => {
 
 				// Adding a flavor.
 				removeFlavor(index, flavorIndex);
+			});
+
+			// Adding the stock update event for price and weight inputs.
+			$(
+				'#stock-edition-list input[name=stock-edition-entry-price], #stock-edition-list input[name=stock-edition-entry-weight]'
+			).on('change', function(e) {
+				// Getting the stock's index.
+				var index = $(this)
+					.closest('li')
+					.data('id');
+
+				// Updaing the stock.
+				if ($(this).attr('name') === 'stock-edition-entry-weight') {
+					Product.Stock[index].Weight = $(this).val();
+				} else if ($(this).attr('name') === 'stock-edition-entry-price') {
+					Product.Stock[index].Price = $(this).val();
+				}
+
+				// Updating the UI.
+				updateUI();
 			});
 
 			// Adding the index update event.
