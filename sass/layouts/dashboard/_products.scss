@@ -10,25 +10,24 @@
   #products-restoration-tab {
     margin-top: 50px;
     overflow-y: auto;
-
-    .product-creation-controls {
-      margin-top: 80px;
-
-      .col {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-
-        input[type='submit'], input[type='reset'] {
-          color: $color-light;
-          width: 300px;
-        }
-      }
-
-    } 
   }
+  
+  .product-creation-controls, .product-edition-controls {
+    margin-top: 80px;
 
-  .nutrition-facts-creation-preview {
+    .col {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      input[type='submit'], input[type='reset'] {
+        color: $color-light;
+        width: 300px;
+      }
+    }
+  } 
+
+  .nutrition-facts-creation-preview, .nutrition-facts-edition-preview {
     margin-bottom: 50px;
     max-height: 579px;
     overflow: hidden;
