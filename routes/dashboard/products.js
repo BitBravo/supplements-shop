@@ -81,39 +81,11 @@ router.get('/', function(req, res) {
 
 // Setting up the product retrieval route.
 router.get('/:productID', function(req, res) {
-	const stmt = conn.format(
-		'\
-		SELECT * FROM ?? WHERE ?? = ?; \
-		SELECT PV.*, (SELECT PH.?? FROM ?? PH WHERE PH.?? = PV.?? ORDER BY ?? DESC LIMIT 1) AS ?? FROM ?? PV WHERE PV.?? = ?; \
-		SELECT * FROM ??; \
-		SELECT PVF.* FROM ?? PVF INNER JOIN ?? PV ON PVF.?? = PV.?? WHERE PV.?? = ?; \
-		',
-		[
-			//
-			'Products',
-			'ProductID',
-			req.params.productID,
-			//
-			'Price',
-			'PriceHistory',
-			'VariantID',
-			'VariantID',
-			'ActivatedDate',
-			'Price',
-			'ProductsVariants',
-			'ProductID',
-			req.params.productID,
-			//
-			'Flavors',
-			//
-			'ProductsVariantsFlavors',
-			'ProductsVariants',
-			'VariantID',
-			'VariantID',
-			'ProductID',
-			req.params.productID
-		]
-	);
+	const stmt = conn.format('SELECT * FROM ?? WHERE ?? = ?;', [
+		'Products',
+		'ProductID',
+		req.params['productID']
+	]);
 	conn.query(stmt, (error, results) => {
 		// Checking if there are any errors.
 		if (error) throw error;
