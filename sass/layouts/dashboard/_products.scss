@@ -49,7 +49,7 @@
     }
   }
 
-  .stock-creation-entry-variant-image-preview {
+  .stock-creation-entry-variant-image-preview, .stock-edition-entry-variant-image-preview {
     background-image: url(/assets/img/backgrounds/placeholder.jpg);
     background-position-x: center; 
     background-repeat: no-repeat;
@@ -84,9 +84,13 @@
     }
 
     .stock-creation-flavor-entry .collapsible-body, .stock-edition-flavor-entry .collapsible-body {
-      .stock-creation-entry-variant-image-wrapper, .stock-edition-entry-variant-image-wrapper {
+      .stock-creation-entry-variant-image-wrapper {
         margin-top: 60px !important;
       }
+      
+      .stock-edition-entry-variant-image-wrapper {
+        margin-top: 20px !important;
+      } 
     }
     
     .fa-trash {

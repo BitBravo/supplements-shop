@@ -902,7 +902,7 @@ $('document').ready(() => {
       </div>\
       <div class="collapsible-body">\
         <div class="row">\
-          <div class="col s4">\
+          <div class="col s12">\
             <div class="row">\
               <div class="col s12 right-align">\
                 <label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>\
@@ -928,15 +928,17 @@ $('document').ready(() => {
               </div>\
             </div>\
           </div>\
-          <div class="col s7 offset-s1 stock-edition-entry-flavor-list">\
-            <h5 class="right-align">[ ' +
+          <div class="row">\
+            <div class="col s12 stock-edition-entry-flavor-list">\
+              <h5 class="right-align">[ ' +
 						stock.Flavors.length +
 						' ] النكهات</h5>\
-            <ul class="collapsible">\
-              ' +
+              <ul class="collapsible">\
+                ' +
 						stockFlavors +
 						'\
-            </ul>\
+              </ul>\
+            </div>\
           </div>\
         </div>\
       </div>\
@@ -944,8 +946,56 @@ $('document').ready(() => {
 				);
 			});
 
+			// Adding the image preview event handeler.
+			$('#stock-edition-list [name=stock-edition-entry-variant-image]').on(
+				'change',
+				function() {
+					updateStockCreationPreviews($(this));
+				}
+			);
+
+			// Displaying the product images' previews.
+			$('#stock-edition-list [name=stock-edition-entry-variant-image]').trigger(
+				'change'
+			);
+
+			// Re-initializing the collapsibles.
+			$('#stock-edition-list, #stock-edition-list .collapsible').collapsible();
+
 			// Re-initializing the dropdowns.
-			$('#product-edition-brand, #product-edition-category').formSelect();
+			$(
+				'#product-edition-brand, #product-edition-category, #stock-edition-list select'
+			).formSelect();
+		}
+
+		function updateStockCreationPreviews(ele) {
+			ele
+				.closest('.stock-edition-flavor-entry')
+				.find('.stock-edition-entry-variant-image-preview img')
+				.attr('src', ele.val());
+			ele
+				.closest('.stock-edition-flavor-entry')
+				.find('.stock-edition-entry-variant-image-preview')
+				.css('background-image', 'url(' + ele.val() + ')');
+
+			if (
+				ele
+					.closest('.stock-edition-flavor-entry')
+					.find('.stock-edition-entry-variant-image-preview img')
+					.on('error', function() {
+						ele
+							.closest('.stock-edition-flavor-entry')
+							.find('.stock-edition-entry-variant-image-preview img')
+							.attr('src', '/assets/img/backgrounds/placeholder.jpg');
+						ele
+							.closest('.stock-edition-flavor-entry')
+							.find('.stock-edition-entry-variant-image-preview')
+							.css(
+								'background-image',
+								'url(/assets/img/backgrounds/placeholder.jpg)'
+							);
+					})
+			);
 		}
 	})();
 
