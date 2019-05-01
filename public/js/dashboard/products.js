@@ -1120,6 +1120,24 @@ $('document').ready(() => {
 				});
 			});
 
+			// Adding the flavor update event.
+			$('.stock-edition-entry select').on('change', function(e) {
+				// Getting the stock's index.
+				var index = $(this)
+						.closest('.stock-edition-entry')
+						.data('id'),
+					flavorIndex = $(this)
+						.closest('li')
+						.data('flavor-index'),
+					newFlavorId = parseInt($(e.target).val());
+
+				// Updating the flavor.
+				Product.Stock[index].Flavors[flavorIndex].FlavorID = newFlavorId;
+
+				// Updating the UI.
+				updateUI();
+			});
+
 			// Adding the flavor removal event.
 			$('.stock-edition-flavor-remove-btn').on('click', function(e) {
 				// Stopping event propagation.
@@ -1152,6 +1170,45 @@ $('document').ready(() => {
 				} else if ($(this).attr('name') === 'stock-edition-entry-price') {
 					Product.Stock[index].Price = $(this).val();
 				}
+
+				// Updating the UI.
+				updateUI();
+			});
+
+			// Adding the quantity update event.
+			$('#stock-edition-list [name=stock-edition-entry-quantity]').on(
+				'change',
+				function(e) {
+					// Getting the stock's index.
+					var index = $(this)
+							.closest('.stock-edition-entry')
+							.data('id'),
+						flavorIndex = $(this)
+							.closest('li')
+							.data('flavor-index'),
+						quantity = parseInt($(e.target).val());
+
+					// Updating the quantity.
+					Product.Stock[index].Flavors[flavorIndex].Quantity = quantity;
+
+					// Updating the UI.
+					updateUI();
+				}
+			);
+
+			// Variants' image preview.
+			$('[name=stock-edition-entry-variant-image]').on('change', function(e) {
+				// Getting the stock's index.
+				var index = $(this)
+						.closest('.stock-edition-entry')
+						.data('id'),
+					flavorIndex = $(this)
+						.closest('li')
+						.data('flavor-index'),
+					image = $(e.target).val();
+
+				// Updating the image.
+				Product.Stock[index].Flavors[flavorIndex].VariantImage = image;
 
 				// Updating the UI.
 				updateUI();
