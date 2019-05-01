@@ -187,7 +187,16 @@ $('document').ready(() => {
 
 			// Setting the default featured variant.
 			if (Product.Stock.length > 0) {
-				Product.Stock[0].FeaturedVariant = true;
+				if (
+					Product.Stock.filter(function(s) {
+						if (s.FeaturedVariant) {
+							return true;
+						} else {
+							return false;
+						}
+					}).length <= 0
+				)
+					setFeaturedStock(0);
 			}
 
 			// Updating the UI.
@@ -656,6 +665,50 @@ $('document').ready(() => {
 				theme: 'snow'
 			});
 
+		function removeStock(index) {
+			// Remove a stock.
+			Product.Stock.splice(index, 1);
+
+			// Updating the current index.
+			currentIndex =
+				currentIndex === index
+					? -1
+					: currentIndex >= 0
+					? currentIndex < index
+						? currentIndex
+						: currentIndex - 1
+					: -1;
+
+			// Setting the default featured variant.
+			if (
+				Product.Stock.filter(function(s) {
+					if (s.FeaturedVariant) {
+						return true;
+					} else {
+						return false;
+					}
+				}).length <= 0
+			)
+				setFeaturedStock(0);
+
+			// Updating the UI.
+			updateUI();
+		}
+
+		function setFeaturedStock(index) {
+			// Removing all other featured products.
+			for (var i = 0; i < Product.Stock.length; i++) {
+				if (i === index) {
+					Product.Stock[i].FeaturedVariant = true;
+				} else {
+					Product.Stock[i].FeaturedVariant = false;
+				}
+			}
+
+			// Updating the UI.
+			updateUI();
+		}
+
 		// Setting up the dropdowns.
 		$('#product-edition-brand, #product-edition-category').formSelect();
 
@@ -958,6 +1011,38 @@ $('document').ready(() => {
 			$('#stock-edition-list [name=stock-edition-entry-variant-image]').trigger(
 				'change'
 			);
+
+			// Adding the stock remove click event.
+			$('#stock-edition-list .stock-edition-remove-btn').on('click', function(
+				e
+			) {
+				// Stopping event propagation.
+				e.stopPropagation();
+
+				// Getting the stock's index.
+				var index = $(this)
+					.closest('li')
+					.data('id');
+
+				// Removing the stock.
+				removeStock(index);
+			});
+
+			// Adding the stock featuring click event.
+			$('#stock-edition-list .stock-edition-feature-btn').on('click', function(
+				e
+			) {
+				// Stopping event propagation.
+				e.stopPropagation();
+
+				// Getting the stock's index.
+				var index = $(this)
+					.closest('li')
+					.data('id');
+
+				// Removing the stock.
+				setFeaturedStock(index);
+			});
 
 			// Re-initializing the collapsibles.
 			$('#stock-edition-list, #stock-edition-list .collapsible').collapsible();
