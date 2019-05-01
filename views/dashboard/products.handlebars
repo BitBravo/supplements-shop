@@ -136,7 +136,6 @@
 										</div>
 										<div class="col s6">
 											<input type="submit" class="btn btn-large waves-effect waves-light" value="إضافة المنتوج">
-
 										</div>
 									</div>
 							</div>
@@ -232,97 +231,147 @@
 			</form>
 		</div>
 
-		<div id="product-edition-modal" class=" modal modal-fixed-footer">
-			<form id="product-edition-form">
+		<div id="stock-edition-modal" class="modal bottom-sheet">
+			<form id="stock-edition-form">
 				<div class="modal-content">
-					<h4 class="right-align">تحديث المنتج</h4>
-					<input type="hidden" name="product-id">
 					<div class="row">
-						<div class="input-field col s12">
-							<input id="product-name-edition" type="text" name="product-name" class="validate" data-length="80"
-								required>
-							<label for="product-name-edition">اسم المنتج</label>
+						<div class="col s12 right-align">
+							<label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>
+								<input id="stock-edition-modal-weight" min="0" step="0.001" type="number" class="validate right-align"
+									required>
+							</label>
 						</div>
 					</div>
 					<div class="row">
-						<div class="input-field col s12">
-							<label>وصف المنتج</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<div id="desc-editor-edit"></div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<label>استعمال</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<div id="usage-editor-edit"></div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<label>تحذيرات</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<div id="warning-editor-edit"></div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s6">
-							<select id="product-category-edit">
-								{{#each Data.CategoriesData }}
-								<option value="{{ this.CategoryID }}">{{ this.CategoryName }}
-								</option>
-								{{/each}}
-							</select>
-							<label>فئة المنتج</label>
-						</div>
-						<div class="input-field col s6">
-							<select id="product-brand-edit">
-								{{#each Data.Brands }}
-								<option value="{{ this.BrandID }}">{{ this.BrandName }}
-								</option>
-								{{/each}}
-							</select>
-							<label>العلامة التجارية للمنتج</label>
-						</div>
-					</div>
-					<div class="row stock-section">
-						<div class="input-field col s12">
-							<p class="grey-text lighten-3">المخزون</p>
-							<table class="striped">
-								<thead>
-									<tr>
-										<th></th>
-										<th class="center-align">الكمية</th>
-										<th class="center-align">الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>
-										</th>
-										<th class="center-align">السعر <small class="grey-text">&rlm;(درهم)&rlm;</small>
-										</th>
-										<th class="center-align">النكهة</th>
-										<th class="center-align">صورة المنتوج</th>
-										<th class="center-align">الحقائق غذائية</th>
-									</tr>
-								</thead>
-								<tbody id="edition-stock-list"></tbody>
-							</table>
+						<div class="col s12 right-align">
+							<label>السعر <small class="grey-text">&rlm;(درهم)&rlm;</small>
+								<input id="stock-edition-modal-price" min="0" type="number" step="0.01" class="validate right-align"
+									required>
+							</label>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<input class="waves-effect waves-green btn-flat" type="submit" value="تحديث">
-					<a id="add-stock-edition" href="javascript:void(0)" class="waves-effect waves-green btn-flat">إضافة
-						مخزون</a>
-					<a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
+					<a href="#!" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
+					<input class="waves-effect waves-green btn-flat" type="submit" value="إضافة إلى المخزون">
 				</div>
 			</form>
+		</div>
+
+		<div id="product-edition-modal" class=" modal modal-fixed-footer">
+			<div class="modal-content">
+				<h4 class="right-align">تحديث المنتج</h4>
+				<div class="col s12">
+					<form id="product-edition-form">
+						<div class="row">
+							<div class="col s8">
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="product-edition-name" type="text" name="product-edition-name" class="validate"
+											data-length="80" required>
+										<label for="product-edition-name">اسم المنتج</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="product-edition-nutrition-info" type="url" name="product-edition-nutrition-info"
+											class="validate" required>
+										<label for="product-edition-nutrition-info">حقائق غذائية</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<label>وصف المنتج</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<div id="desc-editor-edit"></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<label>استعمال</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<div id="usage-editor-edit"></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<label>تحذيرات</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<div id="warning-editor-edit"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col s3 offset-s1">
+								<div class="row">
+									<div class="input-field col s12">
+										<select id="product-edition-category">
+											{{#each Data.CategoriesData }}
+											<optgroup label="{{ this.CategoryName }}">
+												{{#each this.SubCategories}}
+												<option value="{{ this.CategoryID }}">{{ this.CategoryName }}</option>
+												{{/each}}
+											</optgroup>
+											{{/each}}
+										</select>
+										<label>فئة المنتج</label>
+									</div>
+									<div class="input-field col s12">
+										<select id="product-edition-brand">
+											{{#each Data.Brands }}
+											<option value="{{ this.BrandID }}">{{ this.BrandName }}</option>
+											{{/each}}
+										</select>
+										<label>العلامة التجارية للمنتج</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col s12 nutrition-facts-edition-preview">
+										<img src="/assets/img/backgrounds/placeholder.jpg" class="materialboxed"
+											alt="Nutrition facts preview.">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row stock-edition-section">
+							<div class="col s12">
+								<div class="card">
+									<div class="card-content">
+										<span class="card-title right-align">
+											<b>
+												[ <span id="stock-edition-count"></span> ] المخزون</span>
+										</b>
+										<div class="row">
+											<div class="col s12">
+												<ul class="collapsible popout" id="stock-edition-list"></ul>
+											</div>
+										</div>
+									</div>
+									<div class="card-action right-align">
+										<a href="#stock-edition-modal" class="modal-trigger">إضافة مخزون جديد</a>
+										<a href="javascript:void(0)" id="stock-edition-clear-btn">مسح المخزون</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row product-edition-controls">
+							<div class="col s6">
+								<input type="reset" class="btn btn-large waves-effect waves-light" value="إعادة تعيين">
+							</div>
+							<div class="col s6">
+								<input type="submit" class="btn btn-large waves-effect waves-light" value="إضافة المنتوج">
+							</div>
+						</div>
+				</div>
+			</div>
 		</div>
 
 		<script type="application/json" id="flavors-json">
