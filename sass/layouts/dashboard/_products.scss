@@ -61,8 +61,8 @@
     }
   }
 
-  .stock-creation-section {
-    .stock-creation-header, .stock-creation-flavor-entry .collapsible-header {
+  .stock-creation-section, .stock-edition-section {
+    .stock-creation-header, .stock-creation-flavor-entry .collapsible-header, .stock-edition-header, .stock-edition-flavor-entry .collapsible-header {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
@@ -83,8 +83,8 @@
       }
     }
 
-    .stock-creation-flavor-entry .collapsible-body {
-      .stock-creation-entry-variant-image-wrapper {
+    .stock-creation-flavor-entry .collapsible-body, .stock-edition-flavor-entry .collapsible-body {
+      .stock-creation-entry-variant-image-wrapper, .stock-edition-entry-variant-image-wrapper {
         margin-top: 60px !important;
       }
     }
@@ -115,12 +115,12 @@
       }
     }
 
-    .stock-creation-flavor-add-btn {
+    .stock-creation-flavor-add-btn, .stock-edition-flavor-add-btn {
       margin-top: 30px;
       width: 100%;
     }
     
-    .stock-creation-entry-flavor-list {
+    .stock-creation-entry-flavor-list, .stock-edition-entry-flavor-list {
       h5 {
         margin-bottom: 30px;
       }

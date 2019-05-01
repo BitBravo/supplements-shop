@@ -28,7 +28,7 @@ router.get('/', function(req, res) {
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT DISTINCT `P`.`ProductID`, `P`.`ProductName`, `P`.`AddedDate`, `C`.`CategoryName`, (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariants` `PV` INNER JOIN `ProductsVariantsFlavors` `PVF` ON `PV`.`VariantID` = `PVF`.`VariantID` WHERE `PV`.`ProductID` = `P`.`ProductID`) AS `Quantity` FROM `Products` `P` INNER JOIN `Categories` `C` ON `P`.`CategoryID` = `C`.`CategoryID`;\
+        SELECT DISTINCT `P`.`ProductID`, `P`.`ProductName`, `P`.`AddedDate`, `C`.`CategoryName`, (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariants` `PV` INNER JOIN `ProductsVariantsFlavors` `PVF` ON `PV`.`VariantID` = `PVF`.`VariantID` WHERE `PV`.`ProductID` = `P`.`ProductID`) AS `Quantity` FROM `Products` `P` INNER JOIN `Categories` `C` ON `P`.`CategoryID` = `C`.`CategoryID` ORDER BY `P`.`AddedDate` DESC;\
         SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND (`P`.`Deleted` = 0 OR `P`.`Deleted` IS NULL) ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`; \
         SELECT * FROM `Brands` WHERE `Deleted` = 0 ORDER BY `BrandName` ASC;\
         SELECT * FROM `Flavors` WHERE `Deleted` = 0 ORDER BY `FlavorName` ASC;\
@@ -81,11 +81,61 @@ router.get('/', function(req, res) {
 
 // Setting up the product retrieval route.
 router.get('/:productID', function(req, res) {
-	const stmt = conn.format('SELECT * FROM ?? WHERE ?? = ?;', [
-		'Products',
-		'ProductID',
-		req.params['productID']
-	]);
+	const stmt = conn.format(
+		'\
+    SELECT * FROM ?? WHERE ?? = ?;\
+    SELECT ??.??, ??.??, ??.??, (SELECT ??.?? From ProductsPriceHistory ?? WHERE ??.?? = ??.?? ORDER BY ??.?? DESC LIMIT 1) AS ?? FROM ?? ?? WHERE ??.?? = ?;\
+    SELECT ??.??, ??.??, ??.??, ??.?? FROM ?? ?? INNER JOIN ?? ?? ON ??.?? = ??.?? WHERE ??.?? = ?;\
+  ',
+		[
+			// Meta data.
+			'Products',
+			'ProductID',
+			req.params['productID'],
+			// Stock data
+			'PV',
+			'VariantID',
+			'PV',
+			'Weight',
+			'PV',
+			'FeaturedVariant',
+			'PPH',
+			'Price',
+			'PPH',
+			'PPH',
+			'VariantID',
+			'PV',
+			'VariantID',
+			'PPH',
+			'ChangedDate',
+			'Price',
+			'ProductsVariants',
+			'PV',
+			'PV',
+			'ProductID',
+			req.params['productID'],
+			// Flavors data.
+			'PVF',
+			'VariantID',
+			'PVF',
+			'FlavorID',
+			'PVF',
+			'Quantity',
+			'PVF',
+			'VariantImage',
+			'ProductsVariantsFlavors',
+			'PVF',
+			'ProductsVariants',
+			'PV',
+			'PVF',
+			'VariantID',
+			'PV',
+			'VariantID',
+			'PV',
+			'ProductID',
+			req.params['productID']
+		]
+	);
 	conn.query(stmt, (error, results) => {
 		// Checking if there are any errors.
 		if (error) throw error;
