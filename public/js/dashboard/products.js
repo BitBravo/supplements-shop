@@ -89,6 +89,15 @@ $('document').ready(() => {
 					Stock: []
 				};
 
+				// Clearing the inputs.
+				descEditor.clipboard.dangerouslyPasteHTML('');
+				usageEditor.clipboard.dangerouslyPasteHTML('');
+				warningEditor.clipboard.dangerouslyPasteHTML('');
+				$('.nutrition-facts-creation-preview img').attr(
+					'src',
+					'/assets/img/backgrounds/placeholder.jpg'
+				);
+
 				// Updating the UI.
 				updateUI();
 			}
@@ -143,13 +152,6 @@ $('document').ready(() => {
 			currentIndex = -1;
 
 			// Updating the UI.
-			updateUI();
-		});
-
-		// Handeling the change event on the product-creation-name.
-		$('#product-creation-name').on('change', function() {
-			Product.Name = $(this).val();
-
 			updateUI();
 		});
 
@@ -667,16 +669,16 @@ $('document').ready(() => {
 			var productId = $(this).data('product-id');
 
 			$.get('/dashboard/products/' + productId, function(data) {
-				console.log(data);
 				// Retrieving the values.
-				Product.ID = data[0]['ProductID'];
-				Product.Name = data[0]['ProductName'];
-				Product.NutritionInfo = data[0]['NutritionInfo'];
-				Product.BrandID = data[0]['BrandID'];
-				Product.CategoryID = data[0]['CategoryID'];
-				Product.Description = data[0]['Description'];
-				Product.Usage = data[0]['Usage'];
-				Product.Warning = data[0]['Warning'];
+				Product.ID = data[0][0]['ProductID'];
+				Product.Name = data[0][0]['ProductName'];
+				Product.NutritionInfo = data[0][0]['NutritionInfo'];
+				Product.BrandID = data[0][0]['BrandID'];
+				Product.CategoryID = data[0][0]['CategoryID'];
+				Product.Description = data[0][0]['Description'];
+				Product.Usage = data[0][0]['Usage'];
+				Product.Warning = data[0][0]['Warning'];
+				Product.Stock = helper.groupStock(data[1], data[2]);
 
 				// Updating the inputs.
 				$productEditionName.val(Product.Name);
@@ -726,6 +728,7 @@ $('document').ready(() => {
 		// Reseting the product edition.
 		$('#product-edition-form').on('reset', function() {
 			if (confirm('هل تريد إعادة ضبط كل شيء؟')) {
+				console.log(Product.ID);
 				// Reseting the product tracking object.
 				Product = {
 					ID: Product.ID,
@@ -739,9 +742,27 @@ $('document').ready(() => {
 					Stock: []
 				};
 
+				// Clearing the inputs.
+				$descEditorEdit.clipboard.dangerouslyPasteHTML('');
+				$usageEditorEdit.clipboard.dangerouslyPasteHTML('');
+				$warningEditorEdit.clipboard.dangerouslyPasteHTML('');
+				$productEditionNutritionInfo.trigger('change');
+
 				// Updating the UI.
 				updateUI();
 			}
+		});
+
+		// Handeling the click event on the stock-creation-clear-btn.
+		$('#stock-edition-clear-btn').on('click', function() {
+			// Clearing the created stock.
+			Product.Stock = [];
+
+			// Updating the current index.
+			currentIndex = -1;
+
+			// Updating the UI.
+			updateUI();
 		});
 
 		// Nutrition facts preview.
@@ -952,6 +973,20 @@ $('document').ready(() => {
 			}
 
 			return 'Unflavored';
+		},
+		groupStock(stock, flavors) {
+			$.each(stock, function(i, s) {
+				s['FeaturedVariant'] = s['FeaturedVariant']['data'][0];
+				s['Flavors'] = [];
+
+				$.each(flavors, function(j, f) {
+					if (f['VariantID'] === s['VariantID']) {
+						s['Flavors'].push(f);
+					}
+				});
+			});
+
+			return stock.slice();
 		}
 	};
 });
