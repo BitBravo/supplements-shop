@@ -136,6 +136,18 @@
     cursor: pointer;
   }
 
+  .product-list {
+    tr {
+      cursor: pointer;
+      transition-duration: .3s;
+      transition-property: background-color;
+
+      &:hover {
+        background-color: $color-light;
+      }
+    }
+  }
+
   .ql-editor strong {
     font-weight: bold;
   }
