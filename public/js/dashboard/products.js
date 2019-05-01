@@ -842,7 +842,6 @@ $('document').ready(() => {
 		// Reseting the product edition.
 		$('#product-edition-form').on('reset', function() {
 			if (confirm('هل تريد إعادة ضبط كل شيء؟')) {
-				console.log(Product.ID);
 				// Reseting the product tracking object.
 				Product = {
 					ID: Product.ID,
@@ -860,14 +859,17 @@ $('document').ready(() => {
 				$descEditorEdit.clipboard.dangerouslyPasteHTML('');
 				$usageEditorEdit.clipboard.dangerouslyPasteHTML('');
 				$warningEditorEdit.clipboard.dangerouslyPasteHTML('');
-				$productEditionNutritionInfo.trigger('change');
+				$('.nutrition-facts-edition-preview img').attr(
+					'src',
+					'/assets/img/backgrounds/placeholder.jpg'
+				);
 
 				// Updating the UI.
 				updateUI();
 			}
 		});
 
-		// Handeling the click event on the stock-creation-clear-btn.
+		// Handeling the click event on the stock-edition-clear-btn.
 		$('#stock-edition-clear-btn').on('click', function() {
 			// Clearing the created stock.
 			Product.Stock = [];
