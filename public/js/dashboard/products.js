@@ -1,4 +1,7 @@
 $('document').ready(() => {
+	// Getting all flavors.
+	var flavors = JSON.parse($('#flavors-json').text());
+
 	// Initializing tabs.
 	$('.dashboard-products .tabs').tabs();
 
@@ -28,9 +31,6 @@ $('document').ready(() => {
 
 		// The selection index.
 		var currentIndex = -1;
-
-		// Getting all flavors.
-		var flavors = JSON.parse($('#flavors-json').text());
 
 		// Initializing QuillJS.
 		var descEditor = new Quill('#desc-editor', {
@@ -260,7 +260,7 @@ $('document').ready(() => {
 			// Updating the stock count.
 			$('#stock-creation-count').text(
 				Product.Stock.reduce(function(total, stock) {
-					return total + formater.calculateStockQuantity(stock);
+					return total + helper.calculateStockQuantity(stock);
 				}, 0)
 			);
 
@@ -303,7 +303,7 @@ $('document').ready(() => {
           </span >\
           <span class="valign-wrapper">\
           ' +
-						formater.getFlavorNameFromID(flavor.FlavorID) +
+						helper.getFlavorNameFromID(flavor.FlavorID) +
 						' &nbsp; <b>النكهة</b> <i class="material-icons">local_drink</i>\
           </span >\
         </div >\
@@ -363,17 +363,17 @@ $('document').ready(() => {
         </span>\
         <span class="valign-wrapper">\
         ' +
-						formater.calculateStockQuantity(stock) +
+						helper.calculateStockQuantity(stock) +
 						'&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
         </span>\
         <span class="valign-wrapper">\
         ' +
-						formater.formatPrice(stock.Price) +
+						helper.formatPrice(stock.Price) +
 						'&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
         </span>\
         <span class="valign-wrapper">\
         ' +
-						formater.formatWeight(stock.Weight) +
+						helper.formatWeight(stock.Weight) +
 						'&nbsp; <b>الوزن</b> <i class="fas fa-balance-scale"></i> \
         </span>\
       </div>\
@@ -615,38 +615,21 @@ $('document').ready(() => {
 			// Re-initializing the dropdowns.
 			$('#stock-creation-list select').formSelect();
 		}
-
-		var formater = {
-			formatWeight: function(weight) {
-				return weight >= 1 ? weight + 'kg' : weight * 1000 + 'g';
-			},
-			formatPrice: function(price) {
-				return new Intl.NumberFormat('ar-MA', {
-					style: 'currency',
-					currency: 'MAD'
-				}).format(price);
-			},
-			calculateStockQuantity: function(stock) {
-				return stock.Flavors.reduce(function(total, flv) {
-					return total + flv.Quantity;
-				}, 0);
-			},
-			getFlavorNameFromID: function(flavorId) {
-				for (var i = 0; i < flavors.length; i++) {
-					if (flavors[i].FlavorID == flavorId) {
-						return flavors[i].FlavorName;
-					}
-				}
-
-				return 'Unflavored';
-			}
-		};
 	})();
 
 	// Product edition.
 	(function() {
+		// Frequently used elements.
+		var $productEditionModal = $('#product-edition-modal'),
+			$stockEditionList = $('#stock-edition-list'),
+			$productEditionName = $('#product-edition-name'),
+			$productEditionNutritionInfo = $('#product-edition-nutrition-info'),
+			$productEditionBrand = $('#product-edition-brand'),
+			$productEditionCategory = $('#product-edition-category');
+
 		// Initializing the product object.
 		var Product = {
+			ID: 0,
 			Name: '',
 			NutritionInfo: '',
 			BrandID: 0,
@@ -657,14 +640,17 @@ $('document').ready(() => {
 			Stock: []
 		};
 
+		// The selection index.
+		var currentIndex = -1;
+
 		// Initializing QuillJS.
-		var descEditorEdit = new Quill('#desc-editor-edit', {
+		var $descEditorEdit = new Quill('#desc-editor-edit', {
 				theme: 'snow'
 			}),
-			usageEditorEdit = new Quill('#usage-editor-edit', {
+			$usageEditorEdit = new Quill('#usage-editor-edit', {
 				theme: 'snow'
 			}),
-			warningEditorEdit = new Quill('#warning-editor-edit', {
+			$warningEditorEdit = new Quill('#warning-editor-edit', {
 				theme: 'snow'
 			});
 
@@ -680,8 +666,35 @@ $('document').ready(() => {
 		$('.product-list tr').on('click', function() {
 			var productId = $(this).data('product-id');
 
-			$('#product-edition-modal').modal('open', {
-				preventScrolling: true
+			$.get('/dashboard/products/' + productId, function(data) {
+				console.log(data);
+				// Retrieving the values.
+				Product.ID = data[0]['ProductID'];
+				Product.Name = data[0]['ProductName'];
+				Product.NutritionInfo = data[0]['NutritionInfo'];
+				Product.BrandID = data[0]['BrandID'];
+				Product.CategoryID = data[0]['CategoryID'];
+				Product.Description = data[0]['Description'];
+				Product.Usage = data[0]['Usage'];
+				Product.Warning = data[0]['Warning'];
+
+				// Updating the inputs.
+				$productEditionName.val(Product.Name);
+				$productEditionNutritionInfo.val(Product.NutritionInfo);
+				$productEditionBrand.val(Product.BrandID);
+				$productEditionCategory.val(Product.CategoryID);
+				$descEditorEdit.clipboard.dangerouslyPasteHTML(Product.Description);
+				$usageEditorEdit.clipboard.dangerouslyPasteHTML(Product.Usage);
+				$warningEditorEdit.clipboard.dangerouslyPasteHTML(Product.Warning);
+				$productEditionNutritionInfo.trigger('change');
+
+				// Updating the UI.
+				updateUI();
+
+				// Opening the modal.
+				$productEditionModal.modal('open', {
+					preventScrolling: true
+				});
 			});
 		});
 
@@ -691,12 +704,12 @@ $('document').ready(() => {
 			e.preventDefault();
 
 			// Retrieving information.
-			Product.NutritionInfo = $('#product-edition-nutrition-info').val();
-			Product.BrandID = $('#product-edition-brand').val();
-			Product.CategoryID = $('#product-edition-category').val();
-			Product.Description = descEditorEdit.container.innerHTML;
-			Product.Usage = usageEditorEdit.container.innerHTML;
-			Product.Warning = warningEditorEdit.container.innerHTML;
+			Product.NutritionInfo = $productEditionNutritionInfo.val();
+			Product.BrandID = $productEditionBrand.val();
+			Product.CategoryID = $productEditionCategory.val();
+			Product.Description = $descEditorEdit.container.innerHTML;
+			Product.Usage = $usageEditorEdit.container.innerHTML;
+			Product.Warning = $warningEditorEdit.container.innerHTML;
 
 			if (confirm('هل ترغب في إضافة هذا المنتوج؟')) {
 				$.ajax({
@@ -715,6 +728,7 @@ $('document').ready(() => {
 			if (confirm('هل تريد إعادة ضبط كل شيء؟')) {
 				// Reseting the product tracking object.
 				Product = {
+					ID: Product.ID,
 					Name: '',
 					NutritionInfo: '',
 					BrandID: 0,
@@ -731,7 +745,7 @@ $('document').ready(() => {
 		});
 
 		// Nutrition facts preview.
-		$('#product-edition-nutrition-info').on('change', function() {
+		$productEditionNutritionInfo.on('change', function() {
 			$('.nutrition-facts-edition-preview img').attr('src', $(this).val());
 
 			if (
@@ -744,6 +758,200 @@ $('document').ready(() => {
 			);
 		});
 
-		function updateUI() {}
+		function updateUI() {
+			// Updating the stock count.
+			$('#stock-edition-count').text(
+				Product.Stock.reduce(function(total, stock) {
+					return total + helper.calculateStockQuantity(stock);
+				}, 0)
+			);
+
+			// Clearing the old output.
+			$stockEditionList.empty();
+
+			// Updating the stock list.
+			Product.Stock.forEach(function(stock, index) {
+				var stockFlavors = '';
+
+				$.each(stock.Flavors, function(index, flavor) {
+					var flavorsDropDown = '';
+
+					$.each(flavors, function(index, flv) {
+						flavorsDropDown +=
+							'<option value="' +
+							flv.FlavorID +
+							'" ' +
+							(flv.FlavorID === flavor.FlavorID ? 'selected' : '') +
+							'>' +
+							flv.FlavorName +
+							'</option>';
+					});
+
+					stockFlavors +=
+						'\
+      <li data-flavor-index="' +
+						index +
+						'" class="stock-edition-flavor-entry ' +
+						(index === stock.CurrentIndex ? 'active' : '') +
+						'">\
+        <div class="collapsible-header">\
+          <span class="valign-wrapper">\
+            <i class="fas fa-trash stock-edition-flavor-remove-btn"></i>\
+          </span>\
+          <span class="valign-wrapper">\
+          ' +
+						flavor.Quantity +
+						' &nbsp; <b>الكمية</b> <i class="material-icons">inbox</i>\
+          </span >\
+          <span class="valign-wrapper">\
+          ' +
+						helper.getFlavorNameFromID(flavor.FlavorID) +
+						' &nbsp; <b>النكهة</b> <i class="material-icons">local_drink</i>\
+          </span >\
+        </div >\
+        <div class="collapsible-body">\
+          <div class="row">\
+            <div class="col s6 stock-edition-entry-variant-image-preview">\
+              <img src="/assets/img/backgrounds/placeholder.jpg">\
+            </div>\
+            <div class="col s6">\
+              <div class="row">\
+                <div class="input-field col s12">\
+                  <select name="stock-edition-entry-flavor">\
+                    ' +
+						flavorsDropDown +
+						'\
+                  </select >\
+                  <label>النكهة</label>\
+                </div >\
+              </div >\
+              <div class="row">\
+                <div class="input-field col s12 right-align">\
+                  <label>الكمية <small class="grey-text">&rlm;(درهم)&rlm;</small>\
+                    <input min="0" name="stock-edition-entry-quantity" type="number" value="' +
+						flavor.Quantity +
+						'" class="validate right-align" required>\
+                  </label>\
+                </div>\
+              </div>\
+            </div>\
+          </div>\
+          <div class="row ">\
+            <div class="input-field col s12 stock-edition-entry-variant-image-wrapper">\
+              <label>صورة المنتوج</label>\
+              <input type="url" name="stock-edition-entry-variant-image" class="validate" value="' +
+						flavor.VariantImage +
+						'" required>\
+            </div>\
+          </div>\
+        </div>\
+      </li>\
+    ';
+				});
+
+				$stockEditionList.append(
+					'\
+    <li data-id="' +
+						index +
+						'" class="stock-edition-entry ' +
+						(index === currentIndex ? 'active' : '') +
+						'">\
+      <div class="collapsible-header stock-edition-header">\
+        <span class="valign-wrapper">\
+        <i class="fas fa-trash stock-edition-remove-btn"></i>\
+          <i class="fas fa-star stock-edition-feature-btn ' +
+						(stock.FeaturedVariant ? 'featured' : '') +
+						'"></i>\
+        </span>\
+        <span class="valign-wrapper">\
+        ' +
+						helper.calculateStockQuantity(stock) +
+						'&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
+        </span>\
+        <span class="valign-wrapper">\
+        ' +
+						helper.formatPrice(stock.Price) +
+						'&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
+        </span>\
+        <span class="valign-wrapper">\
+        ' +
+						helper.formatWeight(stock.Weight) +
+						'&nbsp; <b>الوزن</b> <i class="fas fa-balance-scale"></i> \
+        </span>\
+      </div>\
+      <div class="collapsible-body">\
+        <div class="row">\
+          <div class="col s4">\
+            <div class="row">\
+              <div class="col s12 right-align">\
+                <label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>\
+                  <input min="0" name="stock-edition-entry-weight" step="0.001" type="number" value="' +
+						stock.Weight +
+						'" class="validate right-align" required>\
+                </label>\
+              </div>\
+            </div>\
+            <div class="row">\
+              <div class="col s12 right-align">\
+                <label>السعر <small class="grey-text">&rlm;(درهم)&rlm;</small>\
+                  <input min="0" name="stock-edition-entry-price" type="number" step="0.01" value="' +
+						stock.Price +
+						'" class="validate right-align" required>\
+                </label>\
+              </div>\
+            </div>\
+            <div class="row">\
+              <div class="col s8 offset-s2">\
+                <button class="btn btn-block btn-large waves-effect waves-light stock-edition-flavor-add-btn">إضافة نكهة للمنتوج</button>\
+                </label>\
+              </div>\
+            </div>\
+          </div>\
+          <div class="col s7 offset-s1 stock-edition-entry-flavor-list">\
+            <h5 class="right-align">[ ' +
+						stock.Flavors.length +
+						' ] النكهات</h5>\
+            <ul class="collapsible">\
+              ' +
+						stockFlavors +
+						'\
+            </ul>\
+          </div>\
+        </div>\
+      </div>\
+    </li>'
+				);
+			});
+
+			// Re-initializing the dropdowns.
+			$('#product-edition-brand, #product-edition-category').formSelect();
+		}
 	})();
+
+	// Helper functions.
+	var helper = {
+		formatWeight: function(weight) {
+			return weight >= 1 ? weight + 'kg' : weight * 1000 + 'g';
+		},
+		formatPrice: function(price) {
+			return new Intl.NumberFormat('ar-MA', {
+				style: 'currency',
+				currency: 'MAD'
+			}).format(price);
+		},
+		calculateStockQuantity: function(stock) {
+			return stock.Flavors.reduce(function(total, flv) {
+				return total + flv.Quantity;
+			}, 0);
+		},
+		getFlavorNameFromID: function(flavorId) {
+			for (var i = 0; i < flavors.length; i++) {
+				if (flavors[i].FlavorID == flavorId) {
+					return flavors[i].FlavorName;
+				}
+			}
+
+			return 'Unflavored';
+		}
+	};
 });
