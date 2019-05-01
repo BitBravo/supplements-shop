@@ -233,6 +233,11 @@ $('document').ready(() => {
 			// Removing a flavor.
 			Product.Stock[index].Flavors.splice(flavorIndex, 1);
 
+			// Updating the current index.
+			if (index <= Product.Stock[index].CurrentIndex) {
+				Product.Stock[index].CurrentIndex--;
+			}
+
 			// Updating the UI.
 			updateUI();
 		}
@@ -709,6 +714,50 @@ $('document').ready(() => {
 			updateUI();
 		}
 
+		function removeFlavor(index, flavorIndex) {
+			// Removing a flavor.
+			Product.Stock[index].Flavors.splice(flavorIndex, 1);
+
+			// Updating the current index.
+			if (index <= Product.Stock[index].CurrentIndex) {
+				Product.Stock[index].CurrentIndex--;
+			}
+
+			// Updating the UI.
+			updateUI();
+		}
+
+		// Updating the product previews.
+		function updateStockCreationPreviews(ele) {
+			ele
+				.closest('.stock-edition-flavor-entry')
+				.find('.stock-edition-entry-variant-image-preview img')
+				.attr('src', ele.val());
+			ele
+				.closest('.stock-edition-flavor-entry')
+				.find('.stock-edition-entry-variant-image-preview')
+				.css('background-image', 'url(' + ele.val() + ')');
+
+			if (
+				ele
+					.closest('.stock-edition-flavor-entry')
+					.find('.stock-edition-entry-variant-image-preview img')
+					.on('error', function() {
+						ele
+							.closest('.stock-edition-flavor-entry')
+							.find('.stock-edition-entry-variant-image-preview img')
+							.attr('src', '/assets/img/backgrounds/placeholder.jpg');
+						ele
+							.closest('.stock-edition-flavor-entry')
+							.find('.stock-edition-entry-variant-image-preview')
+							.css(
+								'background-image',
+								'url(/assets/img/backgrounds/placeholder.jpg)'
+							);
+					})
+			);
+		}
+
 		// Setting up the dropdowns.
 		$('#product-edition-brand, #product-edition-category').formSelect();
 
@@ -1044,6 +1093,60 @@ $('document').ready(() => {
 				setFeaturedStock(index);
 			});
 
+			// Adding the flavor removal event.
+			$('.stock-edition-flavor-remove-btn').on('click', function(e) {
+				// Stopping event propagation.
+				e.stopPropagation();
+
+				// Getting the stock's index.
+				var index = $(this)
+						.closest('.stock-edition-entry')
+						.data('id'),
+					flavorIndex = $(this)
+						.closest('li')
+						.data('flavor-index');
+
+				// Adding a flavor.
+				removeFlavor(index, flavorIndex);
+			});
+
+			// Adding the index update event.
+			$('#stock-edition-list .stock-edition-header').on('click', function() {
+				if (
+					!$(this)
+						.parent()
+						.hasClass('active')
+				) {
+					currentIndex = $(this)
+						.parent()
+						.data('id');
+				} else {
+					currentIndex = -1;
+				}
+			});
+
+			// Adding the index update event.
+			$(
+				'.stock-edition-entry .stock-edition-flavor-entry .collapsible-header'
+			).on('click', function() {
+				// Getting the stock's index.
+				var index = $(this)
+					.closest('.stock-edition-entry')
+					.data('id');
+
+				if (
+					!$(this)
+						.parent()
+						.hasClass('active')
+				) {
+					Product.Stock[index].CurrentIndex = $(this)
+						.parent()
+						.data('flavor-index');
+				} else {
+					Product.Stock[index].CurrentIndex = -1;
+				}
+			});
+
 			// Re-initializing the collapsibles.
 			$('#stock-edition-list, #stock-edition-list .collapsible').collapsible();
 
@@ -1051,36 +1154,6 @@ $('document').ready(() => {
 			$(
 				'#product-edition-brand, #product-edition-category, #stock-edition-list select'
 			).formSelect();
-		}
-
-		function updateStockCreationPreviews(ele) {
-			ele
-				.closest('.stock-edition-flavor-entry')
-				.find('.stock-edition-entry-variant-image-preview img')
-				.attr('src', ele.val());
-			ele
-				.closest('.stock-edition-flavor-entry')
-				.find('.stock-edition-entry-variant-image-preview')
-				.css('background-image', 'url(' + ele.val() + ')');
-
-			if (
-				ele
-					.closest('.stock-edition-flavor-entry')
-					.find('.stock-edition-entry-variant-image-preview img')
-					.on('error', function() {
-						ele
-							.closest('.stock-edition-flavor-entry')
-							.find('.stock-edition-entry-variant-image-preview img')
-							.attr('src', '/assets/img/backgrounds/placeholder.jpg');
-						ele
-							.closest('.stock-edition-flavor-entry')
-							.find('.stock-edition-entry-variant-image-preview')
-							.css(
-								'background-image',
-								'url(/assets/img/backgrounds/placeholder.jpg)'
-							);
-					})
-			);
 		}
 	})();
 
@@ -1112,6 +1185,7 @@ $('document').ready(() => {
 		groupStock(stock, flavors) {
 			$.each(stock, function(i, s) {
 				s['FeaturedVariant'] = s['FeaturedVariant']['data'][0];
+				s['CurrentIndex'] = s['CurrentIndex'] = -1;
 				s['Flavors'] = [];
 
 				$.each(flavors, function(j, f) {
