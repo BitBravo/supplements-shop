@@ -145,22 +145,22 @@
 								<div class="row">
 									<div class="col s12">
 										{{#if Data.Products}}
-										<table class="striped highlighted-table">
+										<table class="striped">
 											<thead>
 												<tr>
 													<th>اسم المنتج</th>
-													<th>الكمية</th>
-													<th>الفئة</th>
-													<th>تاريخ الإضافة</th>
+													<th class="center-align">الكمية</th>
+													<th class="center-align">الفئة</th>
+													<th class="right-align">تاريخ الإضافة</th>
 												</tr>
 											</thead>
 											<tbody class="product-list">
 												{{#each Data.Products }}
 												<tr data-product-id="{{ this.ProductID }}">
 													<td>{{ this.ProductName }}</td>
-													<td>{{ this.Quantity }}</td>
-													<td>{{ this.Category }}</td>
-													<td>{{ formatDate this.AddedDate }}</td>
+													<td class="center-align">{{ this.Quantity }}</td>
+													<td class="center-align">{{ this.CategoryName }}</td>
+													<td class="right-align">{{ formatDate this.AddedDate }}</td>
 												</tr>
 												{{/each}}
 											</tbody>
