@@ -270,7 +270,6 @@ router.put('/', function(req, res) {
 	conn.query(stmt, function(errors, results) {
 		// Checking if there are any errors.
 		if (errors) throw errors;
-		console.log(req.body.Stock);
 
 		if (req.body['Stock']) {
 			var update = req.body['Stock'].filter(function(stk) {
@@ -345,6 +344,56 @@ router.put('/', function(req, res) {
 							) {
 								// Checking if there are any errors.
 								if (stockPriceErrors) throw stockPriceErrors;
+							});
+						}
+					});
+
+					async.each(upStock['Flavors'], function(flv) {
+						if (flv['VariantID']) {
+							var flavorUpdateStmt = conn.format(
+								'UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ? AND ?? = ?',
+								[
+									'ProductsVariantsFlavors',
+									'VariantImage',
+									flv['VariantImage'],
+									'Quantity',
+									flv['Quantity'],
+									'VariantID',
+									flv['VariantID'],
+									'FlavorID',
+									flv['FlavorID']
+								]
+							);
+
+							conn.query(flavorUpdateStmt, function(
+								flavorUpdateErrors,
+								flavorUpdateResults
+							) {
+								// Checking if there are any errors.
+								if (flavorUpdateErrors) throw flavorUpdateErrors;
+							});
+						} else {
+							var flavorInsertStmt = conn.format(
+								'INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, ?);',
+								[
+									'ProductsVariantsFlavors',
+									'VariantID',
+									'VariantImage',
+									'Quantity',
+									'FlavorID',
+									upStock['VariantID'],
+									flv['VariantImage'],
+									flv['Quantity'],
+									flv['FlavorID']
+								]
+							);
+
+							conn.query(flavorInsertStmt, function(
+								flavorInsertErrors,
+								flavorInsertResults
+							) {
+								// Checking if there are any errors.
+								if (flavorInsertErrors) throw flavorInsertErrors;
 							});
 						}
 					});

@@ -999,7 +999,9 @@ $('document').ready(() => {
             <div class="col s6">\
               <div class="row">\
                 <div class="input-field col s12">\
-                  <select name="stock-edition-entry-flavor" disabled>\
+                  <select name="stock-edition-entry-flavor" ' +
+						(flavor.VariantID ? 'disabled' : '') +
+						'>\
                     ' +
 						flavorsDropDown +
 						'\
