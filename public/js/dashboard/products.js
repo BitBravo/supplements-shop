@@ -910,27 +910,42 @@ $('document').ready(() => {
 			// Preventing the page from loading.
 			e.preventDefault();
 
-			// Closing the modal.
-			$stockEditionModal.modal('close');
-
 			// Getting the inputs.
 			var $stockWeightInput = $(this).find('#stock-edition-modal-weight'),
 				$stockPriceInput = $(this).find('#stock-edition-modal-price');
 
-			// Adding a new stock.
-			addNewStock({
-				VariantID: 0,
-				Weight: $stockWeightInput.val(),
-				Price: $stockPriceInput.val(),
-				CurrentIndex: -1,
-				FeaturedVariant: false,
-				DeletedFlavors: [],
-				Flavors: []
-			});
+			if (
+				Product.Stock.filter(function(prdct) {
+					if (
+						parseInt(prdct.Weight).toFixed(2) ===
+						parseInt($stockWeightInput.val()).toFixed(2)
+					) {
+						return true;
+					} else {
+						return false;
+					}
+				}).length === 0
+			) {
+				// Closing the modal.
+				$stockEditionModal.modal('close');
 
-			// Clearing the inputs.
-			$stockWeightInput.val('');
-			$stockPriceInput.val('');
+				// Adding a new stock.
+				addNewStock({
+					VariantID: 0,
+					Weight: $stockWeightInput.val(),
+					Price: $stockPriceInput.val(),
+					CurrentIndex: -1,
+					FeaturedVariant: false,
+					DeletedFlavors: [],
+					Flavors: []
+				});
+
+				// Clearing the inputs.
+				$stockWeightInput.val('');
+				$stockPriceInput.val('');
+			} else {
+				alert('هناك منتوج بنفس الوزن');
+			}
 		});
 
 		$('#product-delete-btn').on('click', function() {
