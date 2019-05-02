@@ -164,7 +164,7 @@ $('document').ready(() => {
 
 			// Setting the default featured variant.
 			if (Product.Stock.length === 1) {
-				Product.Stock[0].FeaturedVariant = true;
+				setFeaturedStock(0);
 			}
 
 			// Updating the UI.
@@ -637,6 +637,7 @@ $('document').ready(() => {
 	(function() {
 		// Frequently used elements.
 		var $productEditionModal = $('#product-edition-modal'),
+			$stockEditionModal = $('#stock-edition-modal'),
 			$stockEditionList = $('#stock-edition-list'),
 			$productEditionName = $('#product-edition-name'),
 			$productEditionNutritionInfo = $('#product-edition-nutrition-info'),
@@ -669,6 +670,22 @@ $('document').ready(() => {
 			$warningEditorEdit = new Quill('#warning-editor-edit', {
 				theme: 'snow'
 			});
+
+		function addNewStock(stock) {
+			// Adding the stock.
+			Product.Stock.push(stock);
+
+			// Updating the currenr index.
+			currentIndex = Product.Stock.length - 1;
+
+			// Setting the default featured variant.
+			if (Product.Stock.length === 1) {
+				setFeaturedStock(0);
+			}
+
+			// Updating the UI.
+			updateUI();
+		}
 
 		function removeStock(index) {
 			// Remove a stock.
@@ -820,6 +837,7 @@ $('document').ready(() => {
 			e.preventDefault();
 
 			// Retrieving information.
+			Product.Name = $productEditionName.val();
 			Product.NutritionInfo = $productEditionNutritionInfo.val();
 			Product.BrandID = $productEditionBrand.val();
 			Product.CategoryID = $productEditionCategory.val();
@@ -827,7 +845,7 @@ $('document').ready(() => {
 			Product.Usage = $usageEditorEdit.container.innerHTML;
 			Product.Warning = $warningEditorEdit.container.innerHTML;
 
-			if (confirm('هل ترغب في إضافة هذا المنتوج؟')) {
+			if (confirm('هل تريد تحديث هذا المنتوج؟')) {
 				$.ajax({
 					url: '/dashboard/products',
 					type: 'PUT',
@@ -879,6 +897,33 @@ $('document').ready(() => {
 
 			// Updating the UI.
 			updateUI();
+		});
+
+		// Handeling the submit event on the stock-edition-modal.
+		$('#stock-edition-form').on('submit', function(e) {
+			// Preventing the page from loading.
+			e.preventDefault();
+
+			// Closing the modal.
+			$stockEditionModal.modal('close');
+
+			// Getting the inputs.
+			var $stockWeightInput = $(this).find('#stock-edition-modal-weight'),
+				$stockPriceInput = $(this).find('#stock-edition-modal-price');
+
+			// Adding a new stock.
+			addNewStock({
+				VariantID: 0,
+				Weight: $stockWeightInput.val(),
+				Price: $stockPriceInput.val(),
+				CurrentIndex: -1,
+				FeaturedVariant: false,
+				Flavors: []
+			});
+
+			// Clearing the inputs.
+			$stockWeightInput.val('');
+			$stockPriceInput.val('');
 		});
 
 		// Nutrition facts preview.

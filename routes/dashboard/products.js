@@ -244,6 +244,7 @@ router.post('/', function(req, res) {
 
 // Setting up the product edition route.
 router.put('/', function(req, res) {
+	console.log(req.body);
 	res.send();
 });
 
