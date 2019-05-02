@@ -747,6 +747,9 @@ $('document').ready(() => {
 
 		function removeFlavor(index, flavorIndex) {
 			// Removing a flavor.
+			Product.Stock[index].DeletedFlavors.push(
+				Product.Stock[index].Flavors[flavorIndex].FlavorID
+			);
 			Product.Stock[index].Flavors.splice(flavorIndex, 1);
 
 			// Updating the current index.
@@ -921,12 +924,18 @@ $('document').ready(() => {
 				Price: $stockPriceInput.val(),
 				CurrentIndex: -1,
 				FeaturedVariant: false,
+				DeletedFlavors: [],
 				Flavors: []
 			});
 
 			// Clearing the inputs.
 			$stockWeightInput.val('');
 			$stockPriceInput.val('');
+		});
+
+		$('#product-delete-btn').on('click', function() {
+			if (confirm('هل تريد حقًا حذف هذا المنتوج؟')) {
+			}
 		});
 
 		// Nutrition facts preview.
@@ -1344,6 +1353,7 @@ $('document').ready(() => {
 			$.each(stock, function(i, s) {
 				s['FeaturedVariant'] = s['FeaturedVariant']['data'][0] == 1 ? true : 0;
 				s['CurrentIndex'] = s['CurrentIndex'] = -1;
+				s['DeletedFlavors'] = [];
 				s['Flavors'] = [];
 
 				$.each(flavors, function(j, f) {
