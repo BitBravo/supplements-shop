@@ -1,17 +1,14 @@
 {{!-- The carousel. --}}
 <div class="carousel carousel-slider center">
-	<div class="carousel-item grey darken-1 white-text"
-			 href="#one!">
+	<div class="carousel-item grey darken-1 white-text" href="#one!">
 		<h2>First Panel</h2>
 		<p class="white-text">This is your first panel</p>
 	</div>
-	<div class="carousel-item grey darken-2 white-text"
-			 href="#two!">
+	<div class="carousel-item grey darken-2 white-text" href="#two!">
 		<h2>Second Panel</h2>
 		<p class="white-text">This is your second panel</p>
 	</div>
-	<div class="carousel-item grey darken-3 white-text"
-			 href="#three!">
+	<div class="carousel-item grey darken-3 white-text" href="#three!">
 		<h2>Third Panel</h2>
 		<p class="white-text">This is your third panel</p>
 	</div>
@@ -21,8 +18,7 @@
 <section class="products-showcase top-sold grey lighten-3 z-depth-2">
 	<div class="row container showcase-header">
 		<div class="col s12 m12 l6">
-			<a href="/products/"
-				 class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
+			<a href="/products/" class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
 				جميع المنتوجات
 				<i class="fa fa-list"></i>
 			</a>
@@ -44,14 +40,12 @@
 					{{/displayOldPrice}}
 					<div class="card-image waves-effect waves-block waves-light product-card__img">
 						<a href="/products/{{ this.VariantID }}">
-							<img class="activator"
-									 src="{{ this.ProductImage }}">
+							<img class="activator" src="{{ this.VariantImage }}">
 						</a>
 					</div>
 					<div class="product-card__content">
 						<span class="card-title grey-text text-darken-4">
-							<a href="/products/{{ this.VariantID }}"
-								 class="black-text">
+							<a href="/products/{{ this.VariantID }}" class="black-text">
 								{{ this.ProductName }}
 							</a>
 						</span>
@@ -59,7 +53,6 @@
 						<div class="chip">&rlm;{{ formatWeight this.Weight }}
 							{{ weightUnite this.Weight }}
 						</div>
-						<div class="chip">{{ this.FlavorName }}</div>
 					</div>
 					<div class="card-action right-align product-card__price">
 						<div class="row center-align">
@@ -78,11 +71,9 @@
 						</div>
 					</div>
 					<div class="card-action right-align">
-						<a href="javascript:void(0)"
-							 class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
-						<a href="javascript:void(0)"
-							 class="btn waves-effect white green-text product-card__btn"
-							 title="أضف إلى السلة">
+						<a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
+						<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
+							title="أضف إلى السلة">
 							<i class="fa fa-cart-plus"></i>
 						</a>
 					</div>
@@ -100,8 +91,7 @@
 <section class="products-showcase newest-products grey lighten-3 z-depth-2">
 	<div class="row container showcase-header">
 		<div class="col s12 m12 l6">
-			<a href="/products/"
-				 class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
+			<a href="/products/" class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
 				جميع المنتوجات
 				<i class="fa fa-list"></i>
 			</a>
@@ -123,14 +113,12 @@
 					{{/displayOldPrice}}
 					<div class="card-image waves-effect waves-block waves-light product-card__img">
 						<a href="/products/{{ this.VariantID }}">
-							<img class="activator"
-									 src="{{ this.ProductImage }}">
+							<img class="activator" src="{{ this.ProductImage }}">
 						</a>
 					</div>
 					<div class="product-card__content">
 						<span class="card-title grey-text text-darken-4">
-							<a href="/products/{{ this.VariantID }}"
-								 class="black-text">
+							<a href="/products/{{ this.VariantID }}" class="black-text">
 								{{ this.ProductName }}
 							</a>
 						</span>
@@ -157,11 +145,9 @@
 						</div>
 					</div>
 					<div class="card-action right-align">
-						<a href="javascript:void(0)"
-							 class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
-						<a href="javascript:void(0)"
-							 class="btn waves-effect white green-text product-card__btn"
-							 title="أضف إلى السلة">
+						<a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
+						<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
+							title="أضف إلى السلة">
 							<i class="fa fa-cart-plus"></i>
 						</a>
 					</div>
@@ -230,8 +216,7 @@
 		<div class="carousel carousel--brands">
 			{{#if Data.Brands }}
 			{{#each Data.Brands }}
-			<a class="carousel-item"><img src="{{ this.Logo }}"
-						 alt="{{ this.BrandName }}'s logo"></a>
+			<a class="carousel-item"><img src="{{ this.Logo }}" alt="{{ this.BrandName }}'s logo"></a>
 			{{/each}}
 			{{else}}
 			<h4 class="center-align">!&rlm;لا توجد علامات تجارية</h4>

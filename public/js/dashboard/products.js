@@ -60,6 +60,7 @@ $('document').ready(() => {
 			e.preventDefault();
 
 			// Retrieving information.
+			Product.Name = $('#product-creation-name').val();
 			Product.NutritionInfo = $('#product-creation-nutrition-info').val();
 			Product.BrandID = $('#product-creation-brand').val();
 			Product.CategoryID = $('#product-creation-category').val();
