@@ -38,9 +38,12 @@
 						<div class="product-discount__content">{{ calculateDiscount this.OldPrice this.NewPrice }}</div>
 					</div>
 					{{/displayOldPrice}}
-					<div class="card-image waves-effect waves-block waves-light product-card__img">
+					<div class="card-image activator waves-effect waves-block waves-light ">
 						<a href="/products/{{ this.VariantID }}">
-							<img class="activator" src="{{ this.VariantImage }}">
+							<div class="product-card__img"
+								style="background-image: url({{ this.VariantImage }}); background-position-x: center; background-repeat: no-repeat; background-size: contain;">
+							</div>
+							{{!-- <img class="activator responsive-img" src="{{ this.VariantImage }}"> --}}
 						</a>
 					</div>
 					<div class="product-card__content">

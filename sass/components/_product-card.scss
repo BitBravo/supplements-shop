@@ -16,15 +16,19 @@
     text-align: center;
   }
 
-  &__img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 250px;
+  .card-image {
+    padding: 30px 0;
 
-    img {
-      height: 200px;
-      width: 150px !important;
+    .product-card__img {
+      /*display: flex;
+      justify-content: center;
+      align-items: center;*/
+      height: 220px;
+  
+      img {
+        /*height: 200px;
+        width: 150px !important;*/
+      }
     }
   }
 
