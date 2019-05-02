@@ -441,6 +441,32 @@ router.put('/', function(req, res) {
 						// Checking if there are any errors.
 						if (stockPriceErrors) throw stockPriceErrors;
 					});
+
+					async.each(inStock['Flavors'], function(flv) {
+						var flavorInsertStmt = conn.format(
+							'INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, ?);',
+							[
+								'ProductsVariantsFlavors',
+								'VariantID',
+								'VariantImage',
+								'Quantity',
+								'FlavorID',
+								stockInsertResults.insertId,
+								flv['VariantImage'],
+								flv['Quantity'],
+								flv['FlavorID']
+							]
+						);
+						console.log(flavorInsertStmt);
+
+						conn.query(flavorInsertStmt, function(
+							flavorInsertErrors,
+							flavorInsertResults
+						) {
+							// Checking if there are any errors.
+							if (flavorInsertErrors) throw flavorInsertErrors;
+						});
+					});
 				});
 			});
 		}
