@@ -654,6 +654,7 @@ $('document').ready(() => {
 			Description: '',
 			Usage: '',
 			Warning: '',
+			DeletedVariants: [],
 			Stock: []
 		};
 
@@ -689,6 +690,7 @@ $('document').ready(() => {
 
 		function removeStock(index) {
 			// Remove a stock.
+			Product['DeletedVariants'].push(Product.Stock[index].VariantID);
 			Product.Stock.splice(index, 1);
 
 			// Updating the current index.
@@ -870,6 +872,7 @@ $('document').ready(() => {
 					Description: '',
 					Usage: '',
 					Warning: '',
+					DeletedVariants: [],
 					Stock: []
 				};
 
