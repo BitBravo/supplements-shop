@@ -138,8 +138,8 @@
 											<input type="submit" class="btn btn-large waves-effect waves-light" value="إضافة المنتوج">
 										</div>
 									</div>
+								</form>
 							</div>
-							</form>
 							<div id="products-edition-tab" class="col s12">
 								<div class="row">
 									<div class="col s12">
@@ -181,11 +181,24 @@
 											{{#each Data.DeletedProducts}}
 											<li class="collection-item">
 												<div>
-													<input type="hidden" value="{{ this.ProductID }}">
+													<input type="hidden" name="product-id" value="{{ this.ProductID }}">
+													<input type="hidden" name="variant-id" value="{{ this.VariantID }}">
+													<input type="hidden" name="flavor-id" value="{{ this.FlavorID }}">
+
 													<a href="javascript:void(0)" class="secondary-content btn-restore"><i
 															class="material-icons">restore</i></a>
 
-													<b>{{ this.ProductName }}</b>
+													<b>{{ this.Name }}</b>
+
+													{{#if this.Weight}}
+													<div class="chip">&rlm;{{ formatWeight this.Weight }}
+														{{ weightUnite this.Weight }}
+													</div>
+													{{/if}}
+
+													{{#if this.Flavor}}
+													<div class="chip">{{ this.Flavor }}</div>
+													{{/if}}
 												</div>
 											</li>
 											{{/each}}

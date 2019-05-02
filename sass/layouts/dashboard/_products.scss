@@ -10,6 +10,10 @@
   #products-restoration-tab {
     margin-top: 50px;
     overflow-y: auto;
+
+    .chip {
+      margin-left: 10px;
+    }
   }
   
   .product-creation-controls, .product-edition-controls {
