@@ -29,7 +29,7 @@ router.get('/', function(req, res) {
               `PV`.`Weight`, \
               (SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
               (SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
-              (SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage` \
+              (SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
         FROM \
               `ProductsVariants` `PV` \
         INNER JOIN \
@@ -37,7 +37,11 @@ router.get('/', function(req, res) {
         ON \
               `PV`.`ProductID` = `P`.`ProductID` \
         WHERE \
-              `PV`.`FeaturedVariant` = 1 AND `P`.`Deleted` = 0 \
+              `PV`.`FeaturedVariant` = 1 \
+              AND \
+              `P`.`Deleted` = 0 \
+              AND \
+              (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0\
         LIMIT 6; \
         SELECT 1; \
         SELECT `ShippingPrice` FROM `shippingpricehistory` ORDER BY `StartingDate` DESC LIMIT 1;\
