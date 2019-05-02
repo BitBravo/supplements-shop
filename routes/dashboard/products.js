@@ -28,7 +28,7 @@ router.get('/', function(req, res) {
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories`;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT DISTINCT `P`.`ProductID`, `P`.`ProductName`, `P`.`AddedDate`, `C`.`CategoryName`, (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariants` `PV` INNER JOIN `ProductsVariantsFlavors` `PVF` ON `PV`.`VariantID` = `PVF`.`VariantID` WHERE `PV`.`ProductID` = `P`.`ProductID`) AS `Quantity` FROM `Products` `P` INNER JOIN `Categories` `C` ON `P`.`CategoryID` = `C`.`CategoryID` ORDER BY `P`.`AddedDate` DESC;\
+        SELECT DISTINCT `P`.`ProductID`, `P`.`ProductName`, `P`.`AddedDate`, `C`.`CategoryName`, (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariants` `PV` INNER JOIN `ProductsVariantsFlavors` `PVF` ON `PV`.`VariantID` = `PVF`.`VariantID` WHERE `PV`.`ProductID` = `P`.`ProductID` AND `PV`.`Deleted` = 0 AND `PVF`.`Deleted` = 0) AS `Quantity` FROM `Products` `P` INNER JOIN `Categories` `C` ON `P`.`CategoryID` = `C`.`CategoryID` ORDER BY `P`.`AddedDate` DESC;\
         SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND (`P`.`Deleted` = 0 OR `P`.`Deleted` IS NULL) ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`; \
         SELECT * FROM `Brands` WHERE `Deleted` = 0 ORDER BY `BrandName` ASC;\
         SELECT * FROM `Flavors` WHERE `Deleted` = 0 ORDER BY `FlavorName` ASC;\
@@ -84,8 +84,8 @@ router.get('/:productID', function(req, res) {
 	const stmt = conn.format(
 		'\
     SELECT * FROM ?? WHERE ?? = ?;\
-    SELECT ??.??, ??.??, ??.??, (SELECT ??.?? From ProductsPriceHistory ?? WHERE ??.?? = ??.?? ORDER BY ??.?? DESC LIMIT 1) AS ?? FROM ?? ?? WHERE ??.?? = ?;\
-    SELECT ??.??, ??.??, ??.??, ??.?? FROM ?? ?? INNER JOIN ?? ?? ON ??.?? = ??.?? WHERE ??.?? = ?;\
+    SELECT ??.??, ??.??, ??.??, (SELECT ??.?? From ProductsPriceHistory ?? WHERE ??.?? = ??.?? ORDER BY ??.?? DESC LIMIT 1) AS ?? FROM ?? ?? WHERE ??.?? = ? AND ??.?? = 0;\
+    SELECT ??.??, ??.??, ??.??, ??.?? FROM ?? ?? INNER JOIN ?? ?? ON ??.?? = ??.?? WHERE ??.?? = ? AND ??.?? = 0 AND ??.?? = 0;\
   ',
 		[
 			// Meta data.
@@ -114,6 +114,8 @@ router.get('/:productID', function(req, res) {
 			'PV',
 			'ProductID',
 			req.params['productID'],
+			'PV',
+			'Deleted',
 			// Flavors data.
 			'PVF',
 			'VariantID',
@@ -133,7 +135,11 @@ router.get('/:productID', function(req, res) {
 			'VariantID',
 			'PV',
 			'ProductID',
-			req.params['productID']
+			req.params['productID'],
+			'PV',
+			'Deleted',
+			'PVF',
+			'Deleted'
 		]
 	);
 	conn.query(stmt, (error, results) => {
@@ -396,6 +402,28 @@ router.put('/', function(req, res) {
 								if (flavorInsertErrors) throw flavorInsertErrors;
 							});
 						}
+					});
+
+					async.each(upStock['DeletedFlavors'], function(flvId) {
+						var flavorDeletionStmt = conn.format(
+							'UPDATE ?? SET ?? = 1 WHERE ?? = ? AND ?? = ?;',
+							[
+								'ProductsVariantsFlavors',
+								'Deleted',
+								'VariantID',
+								upStock['VariantID'],
+								'FlavorID',
+								flvId
+							]
+						);
+
+						conn.query(flavorDeletionStmt, function(
+							flavorDeletionErrors,
+							flavorDeletionResults
+						) {
+							// Checking of there are any errors.
+							if (flavorDeletionErrors) throw flavorDeletionErrors;
+						});
 					});
 				});
 			});
