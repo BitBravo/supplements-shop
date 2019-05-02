@@ -271,6 +271,7 @@ router.put('/', function(req, res) {
 		// Checkinf if there are any errors.
 		if (errors) throw errors;
 
+		console.log(req.body);
 		// Signaling the client.
 		res.send();
 	});
