@@ -270,6 +270,7 @@ router.put('/', function(req, res) {
 	conn.query(stmt, function(errors, results) {
 		// Checking if there are any errors.
 		if (errors) throw errors;
+		console.log(req.body.Stock);
 
 		if (req.body['Stock']) {
 			var update = req.body['Stock'].filter(function(stk) {

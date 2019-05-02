@@ -1331,7 +1331,7 @@ $('document').ready(() => {
 		},
 		groupStock(stock, flavors) {
 			$.each(stock, function(i, s) {
-				s['FeaturedVariant'] = s['FeaturedVariant']['data'][0];
+				s['FeaturedVariant'] = s['FeaturedVariant']['data'][0] == 1 ? true : 0;
 				s['CurrentIndex'] = s['CurrentIndex'] = -1;
 				s['Flavors'] = [];
 
