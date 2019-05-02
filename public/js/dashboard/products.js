@@ -1071,7 +1071,9 @@ $('document').ready(() => {
                 <label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>\
                   <input min="0" name="stock-edition-entry-weight" step="0.001" type="number" value="' +
 						stock.Weight +
-						'" class="validate right-align" required disabled>\
+						'" class="validate right-align" required ' +
+						(stock.VariantID ? 'disabled' : '') +
+						'>\
                 </label>\
               </div>\
             </div>\
@@ -1205,20 +1207,24 @@ $('document').ready(() => {
 			});
 
 			// Adding the stock update event for price and weight inputs.
-			$('#stock-edition-list input[name=stock-edition-entry-price]').on(
-				'change',
-				function(e) {
-					// Getting the stock's index.
-					var index = $(this)
-						.closest('li')
-						.data('id');
+			$(
+				'#stock-edition-list input[name=stock-edition-entry-price], #stock-edition-list input[name=stock-edition-entry-weight]'
+			).on('change', function(e) {
+				// Getting the stock's index.
+				var index = $(this)
+					.closest('li')
+					.data('id');
 
+				// Updaing the stock.
+				if ($(this).attr('name') === 'stock-edition-entry-weight') {
+					Product.Stock[index].Weight = $(this).val();
+				} else if ($(this).attr('name') === 'stock-edition-entry-price') {
 					Product.Stock[index].Price = $(this).val();
-
-					// Updating the UI.
-					updateUI();
 				}
-			);
+
+				// Updating the UI.
+				updateUI();
+			});
 
 			// Adding the quantity update event.
 			$('#stock-edition-list [name=stock-edition-entry-quantity]').on(
