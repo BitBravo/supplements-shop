@@ -244,8 +244,36 @@ router.post('/', function(req, res) {
 
 // Setting up the product edition route.
 router.put('/', function(req, res) {
-	console.log(req.body);
-	res.send();
+	var stmt = conn.format(
+		'UPDATE ?? SET ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?;',
+		[
+			'Products',
+			'ProductName',
+			req.body['Name'],
+			'NutritionInfo',
+			req.body['NutritionInfo'],
+			'BrandID',
+			req.body['BrandID'],
+			'CategoryID',
+			req.body['CategoryID'],
+			'Description',
+			req.body['Description'],
+			'Warning',
+			req.body['Warning'],
+			'Usage',
+			req.body['Usage'],
+			'ProductID',
+			req.body['ID']
+		]
+	);
+
+	conn.query(stmt, function(errors, results) {
+		// Checkinf if there are any errors.
+		if (errors) throw errors;
+
+		// Signaling the client.
+		res.send();
+	});
 });
 
 // Exporting the route.
