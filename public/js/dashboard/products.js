@@ -935,6 +935,14 @@ $('document').ready(() => {
 
 		$('#product-delete-btn').on('click', function() {
 			if (confirm('هل تريد حقًا حذف هذا المنتوج؟')) {
+				$.ajax({
+					url: '/dashboard/products',
+					type: 'DELETE',
+					data: { ID: Product.ID },
+					success: function() {
+						location.reload();
+					}
+				});
 			}
 		});
 
