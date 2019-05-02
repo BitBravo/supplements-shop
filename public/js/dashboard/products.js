@@ -1332,6 +1332,35 @@ $('document').ready(() => {
 		}
 	})();
 
+	// Product deletion.
+	(function() {
+		$('.dashboard-products .btn-restore').on('click', function() {
+			var data = {
+				productId: $(this)
+					.closest('.collection-item')
+					.find('[name=product-id]')
+					.val(),
+				variantId: $(this)
+					.closest('.collection-item')
+					.find('[name=variant-id]')
+					.val(),
+				flavorId: $(this)
+					.closest('.collection-item')
+					.find('[name=flavor-id]')
+					.val()
+			};
+
+			$.ajax({
+				url: '/dashboard/products/restore',
+				type: 'PUT',
+				data: data,
+				success: function() {
+					location.reload();
+				}
+			});
+		});
+	})();
+
 	// Helper functions.
 	var helper = {
 		formatWeight: function(weight) {

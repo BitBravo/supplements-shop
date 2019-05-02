@@ -32,6 +32,7 @@ router.get('/', function(req, res) {
         SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND (`P`.`Deleted` = 0 OR `P`.`Deleted` IS NULL) ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`; \
         SELECT * FROM `Brands` WHERE `Deleted` = 0 ORDER BY `BrandName` ASC;\
         SELECT * FROM `Flavors` WHERE `Deleted` = 0 ORDER BY `FlavorName` ASC;\
+        SELECT `ProductID`, NULL AS `VariantID`, NULL AS `FlavorID`, `ProductName` AS `Name`, NULL AS `Weight`, NULL AS `Flavor` FROM `Products` WHERE `Deleted` = 1 UNION SELECT `P`.`ProductID`, `PV`.`VariantID` AS `VariantID`, NULL AS `FlavorID`, `P`.`ProductName` AS `Name`, `PV`.`Weight` AS `Weight`, NULL AS `FlavorFlavor` FROM `ProductsVariants` `PV` INNER JOIN `Products` `P` ON `PV`.`ProductID` = `P`.`ProductID` WHERE `PV`.`Deleted` = 1 UNION SELECT `P`.`ProductID`, `PV`.`VariantID` AS `VariantID`, F.`FlavorID` AS `FlavorID`, `P`.`ProductName` AS `Name`, `PV`.`Weight` AS `Weight`, `F`.`FlavorName` AS `Flavor` FROM `ProductsVariants` `PV` INNER JOIN `Products` `P` ON `PV`.`ProductID` = `P`.`ProductID` INNER JOIN `ProductsVariantsFlavors` `PVF` ON `PV`.`VariantID` = `PVF`.`VariantID` INNER JOIN `Flavors` `F` ON `PVF`.`FlavorID` = `F`.`FlavorID` WHERE `PVF`.`Deleted` = 1;\
     ',
 		(error, results) => {
 			// Checking if there are any errors.
@@ -65,7 +66,8 @@ router.get('/', function(req, res) {
 				CategoriesData: formater.groupCategories(results[4]),
 				Brands: results[5],
 				Flavors: results[6],
-				FlavorsJSON: JSON.stringify(results[6])
+				FlavorsJSON: JSON.stringify(results[6]),
+				DeletedProducts: results[7]
 			};
 
 			// Getting the proper copyright date.
@@ -539,6 +541,58 @@ router.delete('/', function(req, res) {
 		if (errors) throw errors;
 	});
 	// Signalign the client.
+	res.send();
+});
+
+// Setting up the product restoration route.
+router.put('/restore', function(req, res) {
+	var data = {
+		productId: parseInt(req.body['productId']),
+		variantId: parseInt(req.body['variantId']),
+		flavorId: parseInt(req.body['flavorId'])
+	};
+
+	if (data.flavorId) {
+		var stmt = conn.format('UPDATE ?? SET ?? = 0 WHERE ?? = ? AND ?? = ?;', [
+			'ProductsVariantsFlavors',
+			'Deleted',
+			'VariantID',
+			data.variantId,
+			'FlavorID',
+			data.flavorId
+		]);
+
+		conn.query(stmt, function(errors, results) {
+			// Checking if there are any errors.
+			if (errors) throw error;
+		});
+	} else if (data.variantId) {
+		var stmt = conn.format('UPDATE ?? SET ?? = 0 WHERE ?? = ?;', [
+			'ProductsVariants',
+			'Deleted',
+			'VariantID',
+			data.variantId
+		]);
+
+		conn.query(stmt, function(errors, results) {
+			// Checking if there are any errors.
+			if (errors) throw error;
+		});
+	} else if (data.productId) {
+		var stmt = conn.format('UPDATE ?? SET ?? = 0 WHERE ?? = ?;', [
+			'Products',
+			'Deleted',
+			'ProductID',
+			data.productId
+		]);
+
+		conn.query(stmt, function(errors, results) {
+			// Checking if there are any errors.
+			if (errors) throw error;
+		});
+	}
+
+	// Signaling the client.
 	res.send();
 });
 
