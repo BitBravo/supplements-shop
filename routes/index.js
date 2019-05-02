@@ -42,8 +42,30 @@ router.get('/', function(req, res) {
               `P`.`Deleted` = 0 \
               AND \
               (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0\
+        ORDER BY RAND() \
         LIMIT 6; \
-        SELECT 1; \
+        SELECT `PV`.`VariantID`, \
+              `P`.`ProductName`, \
+              `PV`.`Weight`, \
+              (SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
+              (SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
+              (SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
+        FROM \
+              `ProductsVariants` `PV` \
+        INNER JOIN \
+              `Products` `P` \
+        ON \
+              `PV`.`ProductID` = `P`.`ProductID` \
+        WHERE \
+              `PV`.`FeaturedVariant` = 1 \
+              AND \
+              `P`.`Deleted` = 0 \
+              AND \
+              (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0\
+        ORDER BY \
+              `P`.`AddedDate`\
+        DESC \
+        LIMIT 6; \
         SELECT `ShippingPrice` FROM `shippingpricehistory` ORDER BY `StartingDate` DESC LIMIT 1;\
         SELECT `ShippingBump` FROM `shippingbumphistory` ORDER BY `StartingDate` DESC LIMIT 1;\
         ',
