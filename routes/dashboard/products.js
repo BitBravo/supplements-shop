@@ -268,10 +268,133 @@ router.put('/', function(req, res) {
 	);
 
 	conn.query(stmt, function(errors, results) {
-		// Checkinf if there are any errors.
+		// Checking if there are any errors.
 		if (errors) throw errors;
 
-		console.log(req.body);
+		if (req.body['Stock']) {
+			var update = req.body['Stock'].filter(function(stk) {
+					if (parseInt(stk.VariantID) !== 0) {
+						return true;
+					} else {
+						return false;
+					}
+				}),
+				insert = req.body['Stock'].filter(function(stk) {
+					if (parseInt(stk.VariantID) === 0) {
+						return true;
+					} else {
+						return false;
+					}
+				});
+
+			// Updates.
+			async.each(update, function(upStock) {
+				var stockUpdateStmt = conn.format(
+					'UPDATE ?? SET ?? = ? WHERE ?? = ?;',
+					[
+						'ProductsVariants',
+						'FeaturedVariant',
+						upStock['FeaturedVariant'] == 'true' ? 1 : 0,
+						'VariantID',
+						upStock['VariantID']
+					]
+				);
+
+				conn.query(stockUpdateStmt, function(
+					stockUpdateErrors,
+					stockUpdateResults
+				) {
+					// Checking if there are any errors.
+					if (stockUpdateErrors) throw stockUpdateErrors;
+
+					var stockPriceCheckStmt = conn.format(
+						'SELECT ?? FROM ?? WHERE ?? = ? ORDER BY ?? DESC LIMIT 1;',
+						[
+							'Price',
+							'ProductsPriceHistory',
+							'VariantID',
+							upStock['VariantID'],
+							'ChangedDate'
+						]
+					);
+
+					conn.query(stockPriceCheckStmt, function(
+						stockPriceCheckErrors,
+						stockPriceCheckResults
+					) {
+						// Checking if there are any errors.
+						if (stockPriceCheckErrors) throw stockPriceCheckErrors;
+
+						if (stockPriceCheckResults[0].Price != upStock['Price']) {
+							var stockPriceStmt = conn.format(
+								'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, NOW());',
+								[
+									'ProductsPriceHistory',
+									'VariantID',
+									'Price',
+									'ChangedDate',
+									upStock['VariantID'],
+									upStock['Price']
+								]
+							);
+
+							conn.query(stockPriceStmt, function(
+								stockPriceErrors,
+								stockPriceResults
+							) {
+								// Checking if there are any errors.
+								if (stockPriceErrors) throw stockPriceErrors;
+							});
+						}
+					});
+				});
+			});
+
+			// Insertions.
+			async.each(insert, function(inStock) {
+				var stockInsertStmt = conn.format(
+					'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, ?);',
+					[
+						'ProductsVariants',
+						'ProductID',
+						'Weight',
+						'FeaturedVariant',
+						req.body['ID'],
+						inStock['Weight'],
+						inStock['FeaturedVariant'] == 'true' ? 1 : 0
+					]
+				);
+
+				conn.query(stockInsertStmt, function(
+					stockInsertErrors,
+					stockInsertResults
+				) {
+					// Checking if there are any errors.
+					if (stockInsertErrors) throw stockInsertErrors;
+
+					var stockPriceStmt = conn.format(
+						'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, NOW());',
+						[
+							'ProductsPriceHistory',
+							'VariantID',
+							'Price',
+							'ChangedDate',
+							stockInsertResults.insertId,
+							inStock['Price']
+						]
+					);
+
+					conn.query(stockPriceStmt, function(
+						stockPriceErrors,
+						stockPriceResults
+					) {
+						// Checking if there are any errors.
+						if (stockPriceErrors) throw stockPriceErrors;
+					});
+				});
+			});
+		}
+
 		// Signaling the client.
 		res.send();
 	});
