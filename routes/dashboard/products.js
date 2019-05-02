@@ -457,7 +457,6 @@ router.put('/', function(req, res) {
 								flv['FlavorID']
 							]
 						);
-						console.log(flavorInsertStmt);
 
 						conn.query(flavorInsertStmt, function(
 							flavorInsertErrors,
@@ -467,6 +466,28 @@ router.put('/', function(req, res) {
 							if (flavorInsertErrors) throw flavorInsertErrors;
 						});
 					});
+				});
+			});
+
+			// Deletions.
+			async.each(req.body['DeletedVariants'], function(variantId) {
+				var stockDeletionStmt = conn.format(
+					'UPDATE ?? SET ?? = 1, ?? = 0 WHERE ?? = ?',
+					[
+						'ProductsVariants',
+						'Deleted',
+						'FeaturedVariant',
+						'VariantID',
+						variantId
+					]
+				);
+
+				conn.query(stockDeletionStmt, function(
+					stockDeletionErrors,
+					stockDelitionResults
+				) {
+					// Checking if there are any errors.
+					if (stockDeletionErrors) throw stockDeletionErrors;
 				});
 			});
 		}
