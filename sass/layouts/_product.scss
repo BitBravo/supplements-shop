@@ -31,21 +31,39 @@
       }
 
       &__img {
+        align-items: center;
         display: flex;
         height: 100%;
         justify-content: center;
-
-        img {
-          height: 200px;
-          margin-top: 30px;
-          width: 130px;
-        }
+        padding: 15px !important;
       }
     }
 
     &__action {
-      .product-variant-select {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+
+      .product-variant-select, .product-flavor-select {
         margin-top: 20px;
+      }
+
+      .product-section__price {
+        justify-self: end;
+
+        del {
+          font-size: 19px;
+        }
+
+        b {
+          font-size: 24px;
+        }
+      }
+      
+      .product-section__buy {
+        display: flex;
+        height: 100%;
+        align-items: flex-end;
       }
     }
   }
@@ -79,17 +97,16 @@
       margin-bottom: 20px;
 
       &__header {
+
         &__img {
+          align-items: flex-start;
           margin-bottom: 40px;
         }
       }
 
       &__action {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
         .product-section__price {
+
           del {
             font-size: 19px;
           }
