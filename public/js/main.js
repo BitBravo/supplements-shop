@@ -102,11 +102,4 @@ $('document').ready(() => {
 	$('#back-btn').on('click', () => {
 		history.back();
 	});
-
-	// Initializing the dashboard-menu dropdown.
-	$('.dropdown-trigger').dropdown({
-		constrainWidth: false,
-		coverTrigger: false,
-		hover: true
-	});
 });
