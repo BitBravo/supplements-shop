@@ -2,6 +2,9 @@ $('document').ready(() => {
 	// Setting up the dropdowns.
 	$('.product-section select').formSelect();
 
+	// Setting up the image previews.
+	$('.materialboxed').materialbox();
+
 	// Setting up the collapsible.
 	$('.product-section .collapsible').collapsible();
 

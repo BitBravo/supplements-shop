@@ -1,11 +1,11 @@
 <script src="/assets/js/product.js"></script>
 
-<section class="container product-section" data-variant-id="{{ Data.ProductVariant.VariantID }}">
+<section class="container product-section" data-variant-id="{{ Data.ProductInfo.VariantID }}">
 	<div class="row product-section__upper">
 		<div class="col s12 m7 l8 card-panel product-section__upper__header">
 			<h4 class="grey lighten-4 hide-on-large-only center-align">{{ Data.ProductInfo.ProductName }}</h4>
 			<div class="col s12 m12 l3 product-section__upper__header__img">
-				<img src="{{ Data.ProductVariant.VariantImage }}" alt="{{ Data.ProductInfo.ProductName }}'s image.">
+				<img src="{{ Data.ProductInfo.VariantImage }}" alt="{{ Data.ProductInfo.ProductName }}'s image.">
 			</div>
 			<div class="col s12 l9 hide-on-med-only">
 				<h4 class="grey lighten-4 center-align hide-on-med-and-down">{{ Data.ProductInfo.ProductName }}</h4>
@@ -13,13 +13,15 @@
 					<tbody>
 						<tr>
 							<td>
-								<div class="chip">&rlm;{{ formatWeight Data.ProductVariant.Weight }}
-									{{ weightUnite Data.ProductVariant.Weight }}
+								<div class="chip">&rlm;{{ formatWeight Data.ProductInfo.Weight }}
+									{{ weightUnite Data.ProductInfo.Weight }}
 								</div>
 							</td>
 							<td>
 								الوزن
 							</td>
+						</tr>
+						<tr>
 							<td>
 								<div class="chip">&rlm;{{ Data.ProductInfo.CategoryName }}</div>
 							</td>
@@ -29,9 +31,11 @@
 						</tr>
 						<tr>
 							<td>
-								<div class="chip">&rlm;{{ Data.ProductVariant.FlavorName }}</div>
+								<div class="chip">&rlm;{{ Data.ProductInfo.FlavorName }}</div>
 							</td>
 							<td>النكهة</td>
+						</tr>
+						<tr>
 							<td>
 								<div class="chip">&rlm;{{ Data.ProductInfo.BrandName }}</div>
 							</td>
@@ -43,8 +47,8 @@
 					<tbody>
 						<tr>
 							<td>
-								<div class="chip">&rlm;{{ formatWeight Data.ProductVariant.Weight }}
-									{{ weightUnite Data.ProductVariant.Weight }}
+								<div class="chip">&rlm;{{ formatWeight Data.ProductInfo.Weight }}
+									{{ weightUnite Data.ProductInfo.Weight }}
 								</div>
 							</td>
 							<td>
@@ -61,7 +65,7 @@
 						</tr>
 						<tr>
 							<td>
-								<div class="chip">&rlm;{{ Data.ProductVariant.FlavorName }}</div>
+								<div class="chip">&rlm;{{ Data.ProductInfo.FlavorName }}</div>
 							</td>
 							<td>النكهة</td>
 						</tr>
@@ -110,16 +114,16 @@
 			</div>
 			<div class="row center-align product-section__price">
 				<div class="col s12">
-					{{#displayOldPrice Data.ProductVariant.OldPrice Data.ProductVariant.NewPrice}}
+					{{#displayOldPrice Data.ProductInfo.OldPrice Data.ProductInfo.NewPrice}}
 					<div class="col s12">
 						<span class="grey-text">
-							<del>{{ formatCurrency Data.ProductVariant.OldPrice }}</del>
+							<del>{{ formatCurrency Data.ProductInfo.OldPrice }}</del>
 						</span>
 					</div>
 					{{/displayOldPrice}}
 					<div class="col s12">
 						<span>
-							<b class="green-text">{{ formatCurrency Data.ProductVariant.NewPrice }}</b>
+							<b class="green-text">{{ formatCurrency Data.ProductInfo.NewPrice }}</b>
 						</span>
 					</div>
 				</div>
@@ -141,8 +145,8 @@
 				<tbody>
 					<tr>
 						<td>
-							<div class="chip">&rlm;{{ formatWeight Data.ProductVariant.Weight }}
-								{{ weightUnite Data.ProductVariant.Weight }}
+							<div class="chip">&rlm;{{ formatWeight Data.ProductInfo.Weight }}
+								{{ weightUnite Data.ProductInfo.Weight }}
 							</div>
 						</td>
 						<td>
@@ -157,7 +161,7 @@
 					</tr>
 					<tr>
 						<td>
-							<div class="chip">&rlm;{{ Data.ProductVariant.FlavorName }}</div>
+							<div class="chip">&rlm;{{ Data.ProductInfo.FlavorName }}</div>
 						</td>
 						<td>النكهة</td>
 						<td>
@@ -186,7 +190,7 @@
 		</ul>
 		<div class="col s12 m3 l3 offset-m1 offset-l1 white card-panel product-section__lower__side">
 			<h4 class="center-align">حقائق غذائية</h4>
-			<img class="responsive-img" src="{{ Data.ProductVariant.NutritionInfo }}"
+			<img class="responsive-img materialboxed" src="{{ Data.ProductInfo.NutritionInfo }}"
 				alt="{{ Data.ProductInfo.ProductName }}'s nutrition facts.">
 		</div>
 	</div>
