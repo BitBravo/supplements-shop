@@ -43,6 +43,11 @@ router.get('/read/:id', login, function(req, res) {
 	});
 });
 
+// Setting up the default mail route.
+router.get('/', login, function(req, res) {
+	res.redirect('/dashboard/mail/0');
+});
+
 // Setting up the mail route.
 router.get('/:mode', login, function(req, res) {
 	const mode =

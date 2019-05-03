@@ -1,10 +1,7 @@
+{{> sidebar NewMail=Data.NewMail }}
 <div class="dashboard dashboard-shipping">
-  <div class="row">
-    <aside class="col s2">
-      {{> sidebar NewMail=Data.NewMail }}
-    </aside>
-
-    <div class="col s10 container dashboard__grid">
+  <div class="row container">
+    <div class="col s12 dashboard__grid">
       <div class="row">
         <div class="card-panel">
           <div class="row valign-wrapper">
@@ -25,25 +22,17 @@
                   </div>
                 </div>
                 <div class="row">
-                  <form action="/dashboard/shipping/bump?_method=PUT"
-                        method="POST">
+                  <form action="/dashboard/shipping/bump?_method=PUT" method="POST">
                     <div class="input-field col s6 offset-s3">
-                      <input id="shipping-bump-input"
-                             type="number"
-                             step="0.01"
-                             min="0"
-                             class="validate"
-                             name="bump"
-                             value="{{ Data.Shipping.Bump }}">
+                      <input id="shipping-bump-input" type="number" step="0.01" min="0" class="validate" name="bump"
+                        value="{{ Data.Shipping.Bump }}">
                       <label for="shipping-bump-input">
                         عثرة الشحن
                         <small class="grey-text">&rlm;(درهم)&rlm;</small>
                       </label>
                     </div>
                     <div class="input-field col s6 offset-s3">
-                      <input type="submit"
-                             value="تحديث"
-                             class="btn btn-large">
+                      <input type="submit" value="تحديث" class="btn btn-large">
                     </div>
                   </form>
                 </div>
@@ -57,25 +46,17 @@
                   <p>رسوم الشحن التي تذهب مع كل عملية شراء تحت عثرة الشحن</p>
                 </div>
                 <div class="row">
-                  <form action="/dashboard/shipping/price?_method=PUT"
-                        method="POST">
+                  <form action="/dashboard/shipping/price?_method=PUT" method="POST">
                     <div class="input-field col s6 offset-s3">
-                      <input id="shipping-price-input"
-                             type="number"
-                             step="0.01"
-                             min="0"
-                             name="price"
-                             class="validate"
-                             value="{{ Data.Shipping.Price }}">
+                      <input id="shipping-price-input" type="number" step="0.01" min="0" name="price" class="validate"
+                        value="{{ Data.Shipping.Price }}">
                       <label for="shipping-price-input">
                         مصاريف الشحن
                         <small class="grey-text">&rlm;(درهم)&rlm;</small>
                       </label>
                     </div>
                     <div class="input-field col s6 offset-s3">
-                      <input type="submit"
-                             value="تحديث"
-                             class="btn btn-large">
+                      <input type="submit" value="تحديث" class="btn btn-large">
                     </div>
                   </form>
                 </div>

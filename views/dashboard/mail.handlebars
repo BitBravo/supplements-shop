@@ -1,91 +1,88 @@
 {{!-- The mail script. --}}
 <script src="/assets/js/dashboard/mail.js"></script>
 
+{{> sidebar NewMail=Data.NewMail }}
 <div class="dashboard dashboard-mail">
-    <div class="row">
-        <aside class="col s2">
-            {{> sidebar NewMail=Data.NewMail }}
-        </aside>
+	<div class="row container">
+		<div class="col s12 dashboard__grid">
+			<div class="row">
+				<div class="card-panel">
+					<div class="row valign-wrapper">
+						<div class="col s3 right-align">
+							<div class="input-field">
+								<select id="mail-mode-select">
+									<option value="1" {{select Data.Mode 0}}>جميع الرسائل</option>
+									<option value="2" {{select Data.Mode 1}}>الرسائل المقروءة</option>
+									<option value="3" {{select Data.Mode 2}}>الرسائل غير المقروءة</option>
+								</select>
+								<label>عرض</label>
+							</div>
+						</div>
+						<div class="col s9">
+							<h4 class="grey-text right-align">
+								[{{ Data.Mail.length }}] البريد
+								<i class="fa fa-envelope"></i>
+							</h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<table class="highlight">
+								<thead>
+									<tr>
+										<th>
+											<label id="select-all-mail-btn">
+												<input type="checkbox" class="filled-in" />
+												<span id="select-all-label">اختيار الكل</span>
+											</label>
+										</th>
+										<th class="grey-text mail-control-buttons right-align" colspan="2">
+											<i class="fas fa-envelope" id="email-unread-btn"></i>
+											<i class="fas fa-envelope-open" id="email-read-btn"></i>
+										</th>
+									</tr>
+								</thead>
 
-        <div class="col s10 container dashboard__grid">
-            <div class="row">
-                <div class="card-panel">
-                    <div class="row valign-wrapper">
-                        <div class="col s3 right-align">
-                            <div class="input-field">
-                                <select id="mail-mode-select">
-                                    <option value="1" {{select Data.Mode 0}}>جميع الرسائل</option>
-                                    <option value="2" {{select Data.Mode 1}}>الرسائل المقروءة</option>
-                                    <option value="3" {{select Data.Mode 2}}>الرسائل غير المقروءة</option>
-                                </select>
-                                <label>عرض</label>
-                            </div>
-                        </div>
-                        <div class="col s9">
-                            <h4 class="grey-text right-align">
-                                [{{ Data.Mail.length }}] البريد
-                                <i class="fa fa-envelope"></i>
-                            </h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
-                            <table class="highlight">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <label id="select-all-mail-btn">
-                                                <input type="checkbox" class="filled-in" />
-                                                <span id="select-all-label">اختيار الكل</span>
-                                            </label>
-                                        </th>
-                                        <th class="grey-text mail-control-buttons right-align" colspan="2">
-                                            <i class="fas fa-envelope" id="email-unread-btn"></i>
-                                            <i class="fas fa-envelope-open" id="email-read-btn"></i>
-                                        </th>
-                                    </tr>
-                                </thead>
+								<tbody>
+									{{#each Data.Mail }}
+									<tr class="{{ isMsgNew this.Read }} grey-text mail" data-id="{{ this.MailID }}">
+										<td>
+											<label>
+												<input type="checkbox" />
+												<span></span>
+											</label>
+										</td>
+										<td>
+											<b>{{ this.SenderName }}</b>
+										</td>
+										<td>
+											{{ this.Message }}
+										</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                                <tbody>
-                                    {{#each Data.Mail }}
-                                    <tr class="{{ isMsgNew this.Read }} grey-text mail" data-id="{{ this.MailID }}">
-                                        <td>
-                                            <label>
-                                                <input type="checkbox" />
-                                                <span></span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <b>{{ this.SenderName }}</b>
-                                        </td>
-                                        <td>
-                                            {{ this.Message }}
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div id="mail-modal" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<h4 class="right-align">
+				البريد
+				<i class="fa fa-envelope"></i>
+			</h4>
 
-    <div id="mail-modal" class="modal modal-fixed-footer">
-        <div class="modal-content">
-            <h4 class="right-align">
-                البريد
-                <i class="fa fa-envelope"></i>
-            </h4>
-
-            <div class="mail-content">
-                <p></p>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
-        </div>
-    </div>
+			<div class="mail-content">
+				<p></p>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
+		</div>
+	</div>
 
 </div>
