@@ -7,40 +7,40 @@
  *
  * @param {Object[]} categories The collection of categories.
  */
-module.exports.groupCategories = function (categories) {
-  const formatedCatgories = [];
+module.exports.groupCategories = function(categories) {
+	const formatedCatgories = [];
 
-  categories.forEach(category => {
-    if (category.CategoryParent == null) {
-      category.SubCategories = (() => {
-        const cats = [];
+	categories.forEach(category => {
+		if (category.CategoryParent == null) {
+			category.SubCategories = (() => {
+				const cats = [];
 
-        categories.forEach(cat => {
-          if (cat.CategoryParent == category.CategoryID) {
-            cats.push(cat);
-          }
-        });
+				categories.forEach(cat => {
+					if (cat.CategoryParent == category.CategoryID) {
+						cats.push(cat);
+					}
+				});
 
-        return cats;
-      })();
+				return cats;
+			})();
 
-      if (category.SubCategories.length) {
-        formatedCatgories.push(category);
-      }
-    }
-  });
+			if (category.SubCategories.length) {
+				formatedCatgories.push(category);
+			}
+		}
+	});
 
-  formatedCatgories.sort((a, b) => {
-    if (a.SubCategories.length > b.SubCategories.length) {
-      return -1;
-    } else if (a.SubCategories.length < b.SubCategories.length) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+	formatedCatgories.sort((a, b) => {
+		if (a.SubCategories.length > b.SubCategories.length) {
+			return -1;
+		} else if (a.SubCategories.length < b.SubCategories.length) {
+			return 1;
+		} else {
+			return 0;
+		}
+	});
 
-  return formatedCatgories;
+	return formatedCatgories;
 };
 
 /**
@@ -48,34 +48,34 @@ module.exports.groupCategories = function (categories) {
  *
  * @param {Object[]} collection The collection of mixed data.
  */
-module.exports.groupVariants = function (collection) {
-  let track = [],
-    groupedCol = [];
+module.exports.groupVariants = function(collection) {
+	let track = [],
+		groupedCol = [];
 
-  collection.forEach(col => {
-    if (!track.includes(col.Weight)) {
-      groupedCol.push({
-        Weight: col.Weight,
-        Flavors: (() => {
-          const flavors = [];
+	collection.forEach(col => {
+		if (!track.includes(col.Weight)) {
+			groupedCol.push({
+				Weight: col.Weight,
+				Flavors: (() => {
+					const flavors = [];
 
-          collection.forEach(c => {
-            if (c.Weight === col.Weight) {
-              flavors.push({
-                VariantID: c.VariantID,
-                FlavorName: c.FlavorName
-              });
-            }
-          });
+					collection.forEach(c => {
+						if (c.Weight === col.Weight) {
+							flavors.push({
+								VariantID: c.VariantID,
+								FlavorName: c.FlavorName
+							});
+						}
+					});
 
-          return flavors;
-        })()
-      });
-      track.push(col.Weight);
-    }
-  });
+					return flavors;
+				})()
+			});
+			track.push(col.Weight);
+		}
+	});
 
-  return groupedCol;
+	return groupedCol;
 };
 
 /**
@@ -83,14 +83,14 @@ module.exports.groupVariants = function (collection) {
  *
  * @param {String} mail The message to truncate.
  */
-module.exports.truncateMessages = function (mail) {
-  for (const m of mail) {
-    if (m.Message.length > 80) {
-      m.Message = m.Message.substring(0, 80) + '...';
-    }
-  }
+module.exports.truncateMessages = function(mail) {
+	for (const m of mail) {
+		if (m.Message.length > 80) {
+			m.Message = m.Message.substring(0, 80) + '...';
+		}
+	}
 
-  return mail;
+	return mail;
 };
 
 /**
@@ -98,19 +98,12 @@ module.exports.truncateMessages = function (mail) {
  *
  * @param {Object[]} data The collection of data to format.
  */
-module.exports.constructAutocompletionData = function (data) {
-  const formatedData = {};
+module.exports.constructAutocompletionData = function(data) {
+	var formatedData = {};
 
-  data.forEach(d => {
-    formatedData[
-      d.ProductName +
-      ' ' +
-      (d.Weight > 1 ? d.Weight : d.Weight * 1000) +
-      (d.Weight > 1 ? 'kg' : 'g') +
-      ' ' +
-      d.FlavorName
-    ] = d.VariantImage;
-  });
+	data.forEach(d => {
+		formatedData[d.ProductName] = d.VariantImage;
+	});
 
-  return formatedData;
+	return formatedData;
 };

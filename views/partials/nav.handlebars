@@ -67,7 +67,7 @@
 		{{!-- Search navbar. --}}
 		<nav class="grey darken-3 hide-on-med-and-down search-navbar">
 			<div class="nav-wrapper">
-				<form method="GEt" action="/products/" class="search-large-form">
+				<form method="GET" action="/products/search" class="search-large-form">
 					<div class="input-field">
 						<input id="search" type="search" name="search" class="autocomplete" placeholder="...بحث" autocomplete="off"
 							spellcheck="false" required>
@@ -83,7 +83,7 @@
 			<div class="nav-wrapper container">
 				<div class="right small-screen-nav">
 					<div class="search-field">
-						<form method="GET" action="/products/" class="search-small-form">
+						<form method="GET" action="/products/search" class="search-small-form">
 							<div class="input-field grey darken-2">
 								<input type="text" name="search" autocomplete="off" spellcheck="false" class="autocomplete right-align"
 									placeholder="...بحث">
@@ -107,19 +107,19 @@
 <div id="product-category-dropdown" class="grey darken-3 dropdown-content category-dropdown">
 	<div class="row">
 		{{#each Data.Categories }}
-			<div class="col">
-				<a href="">
-					<h6>{{this.CategoryName }}</h6>
-				</a>
+		<div class="col">
+			<a href="">
+				<h6>{{this.CategoryName }}</h6>
+			</a>
 
-				<ul>
-					{{#each this.SubCategories }}
-						<li>
-							<a href="">{{ this.CategoryName }}</a>
-						</li>
-					{{/each}}
-				</ul>
-			</div>
+			<ul>
+				{{#each this.SubCategories }}
+				<li>
+					<a href="">{{ this.CategoryName }}</a>
+				</li>
+				{{/each}}
+			</ul>
+		</div>
 		{{/each}}
 	</div>
 </div>
