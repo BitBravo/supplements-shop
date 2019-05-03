@@ -1,0 +1,21 @@
+/**
+	Dashboard-dropdown - Styling rules for the dashboard-dropdown component.
+*/
+
+@charset 'utf-8';
+
+#dashboard-dropdown {
+  width: 250px;
+  
+  li {
+    text-align: right;
+  }
+
+  * {
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
