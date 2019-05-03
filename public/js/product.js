@@ -8,9 +8,20 @@ $('document').ready(() => {
 	// Setting up the collapsible.
 	$('.product-section .collapsible').collapsible();
 
-	// Selecting the correct dropdown.
+	// Selecting the correct variant dropdown value.
 	$.each($('.product-variant-select option'), (i, v) => {
 		if ($(v).val() == $('.product-section').data('variant-id')) {
+			$(v).prop('selected', true);
+		} else {
+			$(v).prop('selected', false);
+		}
+
+		$('.product-section select').formSelect();
+	});
+
+	// Selecting the correct flavor dropdown value.
+	$.each($('.product-flavor-select option'), (i, v) => {
+		if ($(v).val() == $('.product-section').data('flavor-id')) {
 			$(v).prop('selected', true);
 		} else {
 			$(v).prop('selected', false);
