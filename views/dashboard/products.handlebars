@@ -145,6 +145,7 @@
 											<thead>
 												<tr>
 													<th>اسم المنتج</th>
+													<th>العلامة التجارية</th>
 													<th class="center-align">الكمية</th>
 													<th class="center-align">الفئة</th>
 													<th class="right-align">تاريخ الإضافة</th>
@@ -154,6 +155,7 @@
 												{{#each Data.Products }}
 												<tr data-product-id="{{ this.ProductID }}">
 													<td>{{ this.ProductName }}</td>
+													<td>{{ this.BrandName }}</td>
 													<td class="center-align">{{ this.Quantity }}</td>
 													<td class="center-align">{{ this.CategoryName }}</td>
 													<td class="right-align">{{ formatDate this.AddedDate }}</td>
