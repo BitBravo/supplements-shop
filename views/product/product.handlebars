@@ -81,25 +81,41 @@
 					<div class="input-field col s12 product-variant-select">
 						<select>
 							{{#each Data.SimilarVariants }}
-								<optgroup label="&rlm;{{ formatWeight this.Weight }} {{ weightUnite this.Weight }}">
-									{{#each this.Flavors }}
-										<option value="{{ this.VariantID }}">{{ this.FlavorName }}</option>
-									{{/each}}
-								</optgroup>
+							<optgroup label="&rlm;{{ formatWeight this.Weight }} {{ weightUnite this.Weight }}">
+								{{#each this.Flavors }}
+								<option value="{{ this.VariantID }}">{{ this.FlavorName }}</option>
+								{{/each}}
+							</optgroup>
 							{{/each}}
 						</select>
-						<label>منتوجات مماثلة</label>
+						<label>أنواع أخرى</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12">
+					<div class="input-field col s12 product-flavor-select">
+						<select>
+							{{#each Data.SimilarVariants }}
+							<optgroup label="&rlm;{{ formatWeight this.Weight }} {{ weightUnite this.Weight }}">
+								{{#each this.Flavors }}
+								<option value="{{ this.VariantID }}">{{ this.FlavorName }}</option>
+								{{/each}}
+							</optgroup>
+							{{/each}}
+						</select>
+						<label>النكهات</label>
 					</div>
 				</div>
 			</div>
 			<div class="row center-align product-section__price">
 				<div class="col s12">
 					{{#displayOldPrice Data.ProductVariant.OldPrice Data.ProductVariant.NewPrice}}
-						<div class="col s12">
-							<span class="grey-text">
-								<del>{{ formatCurrency Data.ProductVariant.OldPrice }}</del>
-							</span>
-						</div>
+					<div class="col s12">
+						<span class="grey-text">
+							<del>{{ formatCurrency Data.ProductVariant.OldPrice }}</del>
+						</span>
+					</div>
 					{{/displayOldPrice}}
 					<div class="col s12">
 						<span>
