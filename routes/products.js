@@ -67,14 +67,61 @@ router.get('/', function(req, res) {
 
 // Getting all products for autocompletion purposes.
 router.post('/', function(req, res) {
-	conn.query('SELECT 1;', (error, results) => {
+	conn.query(
+		`
+		SELECT
+					PV.VariantID,
+					P.ProductName,
+					(SELECT PVF.VariantImage FROM ProductsVariantsFlavors PVF WHERE PVF.VariantID = PV.VariantID AND PVF.Deleted = 0 LIMIT 1) AS VariantImage
+		FROM
+					ProductsVariants PV
+		INNER JOIN
+					Products P
+		ON
+					PV.ProductID = P.ProductID
+		WHERE
+					PV.FeaturedVariant = 1
+					AND
+					P.Deleted = 0
+					AND
+					(SELECT SUM(PVF.Quantity) FROM ProductsVariantsFlavors PVF WHERE PVF.VariantID = PV.VariantID AND PVF.Deleted = 0) > 0;
+	`,
+		(error, results) => {
+			// Checking if there are any errors.
+			if (error) throw error;
+
+			const data = formater.constructAutocompletionData(results);
+
+			// Sending the retrieved data.
+			res.json({ data });
+		}
+	);
+});
+
+// Setting up the search route.
+router.get('/search', function(req, res) {
+	var stmt = conn.format(
+		'SELECT ??.?? FROM ?? ?? INNER JOIN Products ?? ON ??.?? = ??.?? WHERE P.ProductName = ? AND P.Deleted = 0 AND PV.Deleted = 0 AND PV.FeaturedVariant = 1 LIMIT 1;',
+		[
+			'PV',
+			'VariantID',
+			'ProductsVariants',
+			'PV',
+			'P',
+			'PV',
+			'ProductID',
+			'P',
+			'ProductID',
+			req.query['search']
+		]
+	);
+
+	conn.query(stmt, function(errors, results) {
 		// Checking if there are any errors.
-		if (error) throw error;
+		if (errors) throw errors;
 
-		const data = formater.constructAutocompletionData(results);
-
-		// Sending the retrieved data.
-		res.json({ data });
+		// Redirecting to the products' page.
+		res.redirect('/products/' + results[0]['VariantID']);
 	});
 });
 
