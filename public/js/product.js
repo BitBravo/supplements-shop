@@ -22,8 +22,13 @@ $('document').ready(() => {
 	// Removing the contenteditable attribute from the rich text content areas.
 	$('.ql-editor').prop('contenteditable', false);
 
-	// Adding the page redirect action.
+	// Adding the page redirect action to the variants' select input.
 	$('.product-section select').on('change', function() {
-		window.location.href = '/products/' + $(this).val();
+		//window.location.href = '/products/' + $(this).val();
+	});
+
+	// Adding the page redirect action to the flavors' select inout.
+	$('.product-section select').on('change', function() {
+		//window.location.href = '/products/' + $(this).val();
 	});
 });

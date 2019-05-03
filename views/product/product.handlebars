@@ -84,12 +84,9 @@
 				<div class="col s12">
 					<div class="input-field col s12 product-variant-select">
 						<select>
-							{{#each Data.SimilarVariants }}
-							<optgroup label="&rlm;{{ formatWeight this.Weight }} {{ weightUnite this.Weight }}">
-								{{#each this.Flavors }}
-								<option value="{{ this.VariantID }}">{{ this.FlavorName }}</option>
-								{{/each}}
-							</optgroup>
+							{{#each Data.Variants }}
+							<option value="{{ this.VariantID }}">&rlm;{{ formatWeight this.Weight }}{{ weightUnite this.Weight }}
+							</option>
 							{{/each}}
 						</select>
 						<label>أنواع أخرى</label>
@@ -100,12 +97,8 @@
 				<div class="col s12">
 					<div class="input-field col s12 product-flavor-select">
 						<select>
-							{{#each Data.SimilarVariants }}
-							<optgroup label="&rlm;{{ formatWeight this.Weight }} {{ weightUnite this.Weight }}">
-								{{#each this.Flavors }}
-								<option value="{{ this.VariantID }}">{{ this.FlavorName }}</option>
-								{{/each}}
-							</optgroup>
+							{{#each Data.Flavors }}
+							<option value="{{ this.FlavorID }}">{{ this.FlavorName }}</option>
 							{{/each}}
 						</select>
 						<label>النكهات</label>

@@ -173,7 +173,24 @@ router.get('/:variantID/:flavorID', function(req, res) {
     WHERE 
         PV.VariantID = ? 
         AND
-        PVF.FlavorID = ?;`,
+        PVF.FlavorID = ?;
+    SELECT DISTINCT 
+        PV.VariantID, 
+        PV.Weight 
+    FROM 
+        ProductsVariants PV
+    INNER JOIN 
+        ProductsVariantsFlavors PVF 
+    ON 
+        PV.VariantID = PVF.VariantID 
+    WHERE 
+        PV.ProductID = (SELECT _PV.ProductID FROM ProductsVariants _PV WHERE _PV.VariantID = ?) 
+        AND 
+        PV.Deleted = 0
+        AND
+        PVF.Quantity > 0;
+    SELECT * FROM Flavors;
+    `,
 				[
 					// Config.
 					'PrimaryNumber',
@@ -188,7 +205,8 @@ router.get('/:variantID/:flavorID', function(req, res) {
 					'Categories',
 					// Product.
 					req.params['variantID'],
-					req.params['flavorID']
+					req.params['flavorID'],
+					req.params['variantID']
 				]
 			);
 			conn.query(stmt, (error, results) => {
@@ -218,7 +236,9 @@ router.get('/:variantID/:flavorID', function(req, res) {
 						}
 					},
 					Categories: formater.groupCategories(results[1]),
-					ProductInfo: results[2][0]
+					ProductInfo: results[2][0],
+					Variants: results[3],
+					Flavors: results[4]
 				};
 
 				// Getting the proper copyright date.
