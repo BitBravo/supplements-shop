@@ -188,8 +188,10 @@ router.get('/:variantID/:flavorID', function(req, res) {
         AND 
         PV.Deleted = 0
         AND
-        PVF.Quantity > 0;
-    SELECT * FROM Flavors;
+        PVF.Quantity > 0
+    ORDER BY
+        PV.Weight ASC;
+    SELECT * FROM ProductsVariantsFlavors PVF INNER JOIN Flavors F ON F.FlavorID = PVF.FlavorID WHERE PVF.VariantID = ? AND PVF.Deleted = 0 AND PVF.Quantity > 0;
     `,
 				[
 					// Config.
@@ -206,6 +208,7 @@ router.get('/:variantID/:flavorID', function(req, res) {
 					// Product.
 					req.params['variantID'],
 					req.params['flavorID'],
+					req.params['variantID'],
 					req.params['variantID']
 				]
 			);

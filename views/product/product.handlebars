@@ -85,7 +85,7 @@
 					<div class="input-field col s12 product-variant-select">
 						<select>
 							{{#each Data.Variants }}
-							<option value="{{ this.VariantID }}">&rlm;{{ formatWeight this.Weight }}{{ weightUnite this.Weight }}
+							<option value="{{ this.VariantID }}">&rlm;{{ formatWeight this.Weight }} {{ weightUnite this.Weight }}
 							</option>
 							{{/each}}
 						</select>

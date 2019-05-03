@@ -23,12 +23,13 @@ $('document').ready(() => {
 	$('.ql-editor').prop('contenteditable', false);
 
 	// Adding the page redirect action to the variants' select input.
-	$('.product-section select').on('change', function() {
-		//window.location.href = '/products/' + $(this).val();
+	$('.product-section .product-variant-select select').on('change', function() {
+		window.location.href = '/products/' + $(this).val();
 	});
 
 	// Adding the page redirect action to the flavors' select inout.
-	$('.product-section select').on('change', function() {
-		//window.location.href = '/products/' + $(this).val();
+	$('.product-section .product-flavor-select select').on('change', function() {
+		window.location.href =
+			'/products/' + $('.product-section select').val() + '/' + $(this).val();
 	});
 });
