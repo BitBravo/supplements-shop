@@ -171,32 +171,64 @@
 	<div class="row">
 		<div class="col s12 m12 l6">
 			<div class="card-panel grey-text text-darken-3 extra-info__card">
-				<h3 class="right-align">الشحن موثوق</h3>
-				<p class="right-align">شحن سريع وآمن لمنتوجاتك عبر أمانة في جميع أنحاء المغرب</p>
-				<div class="row extra-info__card__content">
-					<div class="col s6">
-						<i class="fa fa-shipping-fast fa-4x"></i>
+				<div class="hide-on-small-only">
+					<h3 class="right-align">الشحن موثوق</h3>
+					<p class="right-align">شحن سريع وآمن لمنتوجاتك عبر أمانة في جميع أنحاء المغرب</p>
+					<div class="row extra-info__card__content">
+						<div class="col s4">
+							<i class="fa fa-shipping-fast fa-4x"></i>
+						</div>
+						<div class="col s8">
+							<p class="right-align"><b>الشحن مجاني بدءا من</b></p>
+							<p class="right-align yellow-text text-darken-2"><span>{{ formatCurrency Data.Shipping.Bump }}</span>
+							</p>
+						</div>
 					</div>
-					<div class="col s6">
-						<p class="right-align"><b>الشحن مجاني بدءا من</b></p>
-						<p class="right-align yellow-text text-darken-2"><span>{{ formatCurrency Data.Shipping.Bump }}</span>
-						</p>
+				</div>
+				<div class="hide-on-med-and-up">
+					<p class="center-align">
+						<i class="fa fa-shipping-fast fa-4x"></i>
+					</p>
+					<h3 class="center-align">الشحن موثوق</h3>
+					<p class="center-align">شحن سريع وآمن لمنتوجاتك عبر أمانة في جميع أنحاء المغرب</p>
+					<div class="row extra-info__card__content">
+						<div class="col s12">
+							<p class="center-align"><b>الشحن مجاني بدءا من</b></p>
+							<p class="center-align yellow-text text-darken-2"><span>{{ formatCurrency Data.Shipping.Bump }}</span>
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col s12 m12 l6">
 			<div class="card-panel grey darken-3 white-text extra-info__card">
-				<h3 class="right-align">الدفع عن الإستلام</h3>
-				<p class="right-align">رسوم الشحن بأسعار معقولة</p>
-				<div class="row extra-info__card__content">
-					<div class="col s6">
-						<i class="fa fa-hand-holding-usd fa-4x"></i>
+				<div class="hide-on-small-only">
+					<h3 class="right-align">الدفع عن الإستلام</h3>
+					<p class="right-align">رسوم الشحن بأسعار معقولة</p>
+					<div class="row extra-info__card__content">
+						<div class="col s4">
+							<i class="fa fa-hand-holding-usd fa-4x"></i>
+						</div>
+						<div class="col s8">
+							<p class="right-align"><b>مصاريف الشحن</b></p>
+							<p class="right-align yellow-text text-darken-2"><span>{{ formatCurrency Data.Shipping.Price }}</span>
+							</p>
+						</div>
 					</div>
-					<div class="col s6">
-						<p class="right-align"><b>مصاريف الشحن</b></p>
-						<p class="right-align yellow-text text-darken-2"><span>{{ formatCurrency Data.Shipping.Price }}</span>
-						</p>
+				</div>
+				<div class="hide-on-med-and-up">
+					<p class="center-align">
+						<i class="fa fa-hand-holding-usd fa-4x"></i>
+					</p>
+					<h3 class="center-align">الدفع عن الإستلام</h3>
+					<p class="center-align">رسوم الشحن بأسعار معقولة</p>
+					<div class="row extra-info__card__content">
+						<div class="col s12">
+							<p class="center-align"><b>مصاريف الشحن</b></p>
+							<p class="center-align yellow-text text-darken-2"><span>{{ formatCurrency Data.Shipping.Price }}</span>
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
