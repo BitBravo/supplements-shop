@@ -26,7 +26,7 @@ router.get('/', function(req, res) {
 	conn.query(
 		'\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
-        SELECT * FROM `Categories`;\
+        SELECT * FROM `Categories` WHERE `Deleted` = 0;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
         SELECT DISTINCT `P`.`ProductID`, `P`.`ProductName`, `P`.`AddedDate`, `C`.`CategoryName`, IFNULL((SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariants` `PV` INNER JOIN `ProductsVariantsFlavors` `PVF` ON `PV`.`VariantID` = `PVF`.`VariantID` WHERE `PV`.`ProductID` = `P`.`ProductID` AND `PV`.`Deleted` = 0 AND `PVF`.`Deleted` = 0), 0) AS `Quantity` FROM `Products` `P` INNER JOIN `Categories` `C` ON `P`.`CategoryID` = `C`.`CategoryID` WHERE `P`.`Deleted` = 0 ORDER BY `P`.`AddedDate` DESC;\
         SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND (`P`.`Deleted` = 0 OR `P`.`Deleted` IS NULL) ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`; \

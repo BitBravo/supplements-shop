@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
 	conn.query(
 		'\
     SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
-    SELECT * FROM `Categories`; \
+    SELECT * FROM `Categories` WHERE Deleted = 0; \
 		SELECT 1; \
         ',
 		(error, results) => {
@@ -143,7 +143,7 @@ router.get('/:variantID/:flavorID', function(req, res) {
 			var stmt = conn.format(
 				`
     SELECT ??, ??, ??, ??, ??, ??, ?? FROM ??; 
-    SELECT * FROM ??;
+    SELECT * FROM ??  WHERE ?? = 0;
     SELECT 
           *,
           (SELECT PPH.Price FROM ProductsPriceHistory PPH WHERE PPH.VariantID = PV.VariantID ORDER BY PPH.ChangedDate DESC LIMIT 1) AS NewPrice, 
@@ -205,6 +205,7 @@ router.get('/:variantID/:flavorID', function(req, res) {
 					'Config',
 					// Categories.
 					'Categories',
+					'Deleted',
 					// Product.
 					req.params['variantID'],
 					req.params['flavorID'],

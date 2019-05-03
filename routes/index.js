@@ -22,7 +22,7 @@ router.get('/', function(req, res) {
 		'\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
         SELECT * FROM `Brands` WHERE `Deleted` = 0; \
-        SELECT * FROM `Categories`; \
+        SELECT * FROM `Categories` WHERE Deleted = 0; \
         SELECT \
               `PV`.`VariantID`, \
               `P`.`ProductName`, \
