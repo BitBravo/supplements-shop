@@ -4,135 +4,132 @@
 {{!-- The dashboard script. --}}
 <script src="/assets/js/dashboard/dashboard.js"></script>
 
+{{> sidebar NewMail=Data.NewMail}}
 <div class="dashboard dashboard-section">
-    <div class="row">
-        <aside class="col s2">
-            {{> sidebar NewMail=Data.NewMail}}
-        </aside>
-
-        <div class="col s10 container dashboard__grid">
-            <div class="row">
-                <div class="col s3">
-                    <div class="card-panel card-label grey-text">
-                        <div class="row valign-wrapper">
-                            <div class="col"><i class="fa fa-funnel-dollar fa-lg"></i></div>
-                            <div class="col">
-                                <h6>الإيرادات</h6>
-                            </div>
-                        </div>
-                        <div class="row valign-wrapper">
-                            <div class="col s12">
-                                <span>{{ Data.TotalRevenue }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s3">
-                    <div class="card-panel card-label grey-text">
-                        <div class="row valign-wrapper">
-                            <div class="col"><i class="fa fa-outdent fa-lg"></i></div>
-                            <div class="col">
-                                <h6>الطلبات</h6>
-                            </div>
-                        </div>
-                        <div class="row valign-wrapper">
-                            <div class="col s12">
-                                <span>{{ Data.OrdersNum }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s3">
-                    <div class="card-panel card-label grey-text">
-                        <div class="row valign-wrapper">
-                            <div class="col"><i class="fa fa-envelope fa-lg"></i></div>
-                            <div class="col">
-                                <h6>البريد</h6>
-                            </div>
-                        </div>
-                        <div class="row valign-wrapper">
-                            <div class="col s12">
-                                <span>{{ Data.MailNum }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s3">
-                    <div class="card-panel card-label grey-text">
-                        <div class="row valign-wrapper">
-                            <div class="col"><i class="fa fa-prescription-bottle fa-lg"></i></div>
-                            <div class="col">
-                                <h6>المنتوجات</h6>
-                            </div>
-                        </div>
-                        <div class="row valign-wrapper">
-                            <div class="col s12">
-                                <span>{{ Data.ProductsNum }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <div class="card-panel">
-                        <div class="row valign-wrapper">
-                            <div class="col s3 right-align">
-                                <div class="input-field">
-                                    <select>
-                                        <option value="1">الاسبوع الماضي</option>
-                                        <option value="2">الشهر الماضي</option>
-                                        <option value="3">العام الماضي</option>
-                                        <option value="4">عام</option>
-                                    </select>
-                                    <label>تصفية حسب</label>
-                                </div>
-                            </div>
-                            <div class="col s9">
-                                <h4 class="grey-text right-align">
-                                    مخطط للطلبات
-                                    <i class="fa fa-chart-line"></i>
-                                </h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col s12">
-                                <canvas id="orders-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <div class="card-panel">
-                        <div class="row valign-wrapper">
-                            <div class="col s3 right-align">
-                                <div class="input-field">
-                                    <select>
-                                        <option value="1">الاسبوع الماضي</option>
-                                        <option value="2">الشهر الماضي</option>
-                                        <option value="3">العام الماضي</option>
-                                        <option value="4">عام</option>
-                                    </select>
-                                    <label>تصفية حسب</label>
-                                </div>
-                            </div>
-                            <div class="col s9">
-                                <h4 class="grey-text right-align">
-                                    مخطط الإيرادات
-                                    <i class="fa fa-money-bill"></i>
-                                </h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col s12">
-                                <canvas id="revenue-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="row container">
+		<div class="col s12 dashboard__grid">
+			<div class="row">
+				<div class="col s3">
+					<div class="card-panel card-label grey-text">
+						<div class="row valign-wrapper">
+							<div class="col"><i class="fa fa-funnel-dollar fa-lg"></i></div>
+							<div class="col">
+								<h6>الإيرادات</h6>
+							</div>
+						</div>
+						<div class="row valign-wrapper">
+							<div class="col s12">
+								<span>{{ Data.TotalRevenue }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col s3">
+					<div class="card-panel card-label grey-text">
+						<div class="row valign-wrapper">
+							<div class="col"><i class="fa fa-outdent fa-lg"></i></div>
+							<div class="col">
+								<h6>الطلبات</h6>
+							</div>
+						</div>
+						<div class="row valign-wrapper">
+							<div class="col s12">
+								<span>{{ Data.OrdersNum }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col s3">
+					<div class="card-panel card-label grey-text">
+						<div class="row valign-wrapper">
+							<div class="col"><i class="fa fa-envelope fa-lg"></i></div>
+							<div class="col">
+								<h6>البريد</h6>
+							</div>
+						</div>
+						<div class="row valign-wrapper">
+							<div class="col s12">
+								<span>{{ Data.MailNum }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col s3">
+					<div class="card-panel card-label grey-text">
+						<div class="row valign-wrapper">
+							<div class="col"><i class="fa fa-prescription-bottle fa-lg"></i></div>
+							<div class="col">
+								<h6>المنتوجات</h6>
+							</div>
+						</div>
+						<div class="row valign-wrapper">
+							<div class="col s12">
+								<span>{{ Data.ProductsNum }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12">
+					<div class="card-panel">
+						<div class="row valign-wrapper">
+							<div class="col s3 right-align">
+								<div class="input-field">
+									<select>
+										<option value="1">الاسبوع الماضي</option>
+										<option value="2">الشهر الماضي</option>
+										<option value="3">العام الماضي</option>
+										<option value="4">عام</option>
+									</select>
+									<label>تصفية حسب</label>
+								</div>
+							</div>
+							<div class="col s9">
+								<h4 class="grey-text right-align">
+									مخطط للطلبات
+									<i class="fa fa-chart-line"></i>
+								</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12">
+								<canvas id="orders-chart"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12">
+					<div class="card-panel">
+						<div class="row valign-wrapper">
+							<div class="col s3 right-align">
+								<div class="input-field">
+									<select>
+										<option value="1">الاسبوع الماضي</option>
+										<option value="2">الشهر الماضي</option>
+										<option value="3">العام الماضي</option>
+										<option value="4">عام</option>
+									</select>
+									<label>تصفية حسب</label>
+								</div>
+							</div>
+							<div class="col s9">
+								<h4 class="grey-text right-align">
+									مخطط الإيرادات
+									<i class="fa fa-money-bill"></i>
+								</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12">
+								<canvas id="revenue-chart"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
