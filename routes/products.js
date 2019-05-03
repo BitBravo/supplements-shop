@@ -140,72 +140,99 @@ router.get('/:variantID/:flavorID', function(req, res) {
 		if (checkErrors) throw checkErrors;
 
 		if (checkResults.length > 0) {
-			res.send('works');
-		} else {
-			res.redirect('/error');
-		}
-	});
-	/*var stmt = conn.format(
-		`
+			var stmt = conn.format(
+				`
     SELECT ??, ??, ??, ??, ??, ??, ?? FROM ??; 
     SELECT * FROM ??;
-    `,
-		[
-			// Config.
-			'PrimaryNumber',
-			'SecondaryNumber',
-			'FixedNumber',
-			'Email',
-			'Facebook',
-			'Instagram',
-			'Youtube',
-			'Config',
-			// Categories.
-			'Categories'
-		]
-	);
+    SELECT 
+          *,
+          (SELECT PPH.Price FROM ProductsPriceHistory PPH WHERE PPH.VariantID = PV.VariantID ORDER BY PPH.ChangedDate DESC LIMIT 1) AS NewPrice, 
+          (SELECT DISTINCT PPH.Price FROM ProductsPriceHistory PPH WHERE PPH.VariantID = PV.VariantID ORDER BY PPH.ChangedDate DESC LIMIT 1, 1) AS OldPrice
+    FROM 
+        Products P 
+    INNER JOIN 
+        ProductsVariants PV 
+    ON 
+        P.ProductID = PV.ProductID 
+    INNER JOIN 
+        ProductsVariantsFlavors PVF 
+    ON 
+        PV.VariantID = PVF.VariantID 
+    INNER JOIN
+        Flavors F
+    ON
+        F.FlavorID = PVF.FlavorID
+    INNER JOIN
+        Brands B
+    ON
+        B.BrandID = P.BrandID
+    INNER JOIN
+        Categories C
+    ON
+        C.CategoryID = P.CategoryID
+    WHERE 
+        PV.VariantID = ? 
+        AND
+        PVF.FlavorID = ?;`,
+				[
+					// Config.
+					'PrimaryNumber',
+					'SecondaryNumber',
+					'FixedNumber',
+					'Email',
+					'Facebook',
+					'Instagram',
+					'Youtube',
+					'Config',
+					// Categories.
+					'Categories',
+					// Product.
+					req.params['variantID'],
+					req.params['flavorID']
+				]
+			);
+			conn.query(stmt, (error, results) => {
+				// Checking if there are any errors.
+				if (error) throw error;
 
-	conn.query(stmt, (error, results) => {
-		// Checking if there are any errors.
-		if (error) throw error;
-
-		if (true) {
-			// Getting the data.
-			const data = {
-				Config: {
-					Phone: {
-						Primary: results[0][0].PrimaryNumber,
-						Secondary: results[0][0].SecondaryNumber,
-						Fixed: results[0][0].FixedNumber
+				// Getting the data.
+				const data = {
+					Config: {
+						Phone: {
+							Primary: results[0][0].PrimaryNumber,
+							Secondary: results[0][0].SecondaryNumber,
+							Fixed: results[0][0].FixedNumber
+						},
+						Email: results[0][0].Email,
+						Facebook: {
+							Name: results[0][0].Facebook.split('|')[0],
+							Link: results[0][0].Facebook.split('|')[1]
+						},
+						Instagram: {
+							Name: results[0][0].Instagram.split('|')[0],
+							Link: results[0][0].Instagram.split('|')[1]
+						},
+						Youtube: {
+							Name: results[0][0].Youtube.split('|')[0],
+							Link: results[0][0].Youtube.split('|')[1]
+						}
 					},
-					Email: results[0][0].Email,
-					Facebook: {
-						Name: results[0][0].Facebook.split('|')[0],
-						Link: results[0][0].Facebook.split('|')[1]
-					},
-					Instagram: {
-						Name: results[0][0].Instagram.split('|')[0],
-						Link: results[0][0].Instagram.split('|')[1]
-					},
-					Youtube: {
-						Name: results[0][0].Youtube.split('|')[0],
-						Link: results[0][0].Youtube.split('|')[1]
-					}
-				},
-				Categories: formater.groupCategories(results[1])
-			};
+					Categories: formater.groupCategories(results[1]),
+					ProductInfo: results[2][0]
+				};
 
-			// Getting the proper copyright date.
-			data.CopyrightDate = getCopyrightDate();
+				// Getting the proper copyright date.
+				data.CopyrightDate = getCopyrightDate();
 
-			// Rendering the products page.
-			res.render('product/product', {
-				Data: data
+				// Rendering the products page.
+				res.render('product/product', {
+					Data: data
+				});
 			});
 		} else {
 			res.redirect('/error');
 		}
-	});*/
+	});
 });
 
 // Exporting the route.
