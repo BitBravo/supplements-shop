@@ -7,6 +7,15 @@
 
 <div class="dashboard dashboard-products">
 	<div class="row container">
+		{{#if Messages.Product }}
+		<div class="card-panel green lighten-1 right-align flash-card">
+			<i class="fa fa-times fa-lg white-text flash-card__close"></i>
+			<span class="white-text">{{ Messages.Product }}</span>
+			<i class="fa fa-check fa-lg white-text"></i>
+		</div>
+		{{/if}}
+	</div>
+	<div class="row container">
 		<div class="col s12 dashboard__grid">
 			<div class="row">
 				<div class="card-panel">

@@ -75,7 +75,10 @@ router.get('/', function(req, res) {
 
 			// Rendering the products page.
 			res.render('dashboard/products', {
-				Data: data
+				Data: data,
+				Messages: {
+					Product: req.flash('product-flash')
+				}
 			});
 		}
 	);
@@ -244,6 +247,9 @@ router.post('/', function(req, res) {
 				});
 			});
 		}
+
+		// Setting up the flash message.
+		req.flash('product-flash', 'تم إنشاء المنتوج بنجاح');
 
 		// Signalung the client.
 		res.send();
@@ -522,6 +528,9 @@ router.put('/', function(req, res) {
 			});
 		}
 
+		// Setting up the flash message.
+		req.flash('product-flash', 'تم تحديث المنتوج بنجاح');
+
 		// Signaling the client.
 		res.send();
 	});
@@ -540,6 +549,10 @@ router.delete('/', function(req, res) {
 		// Checking if there are any erros.
 		if (errors) throw errors;
 	});
+
+	// Setting up the flash message.
+	req.flash('product-flash', 'تم حذف المنتوج بنجاح');
+
 	// Signalign the client.
 	res.send();
 });
@@ -591,6 +604,9 @@ router.put('/restore', function(req, res) {
 			if (errors) throw error;
 		});
 	}
+
+	// Setting up the flash message.
+	req.flash('product-flash', 'تمت استعادة المنتوج بنجاح');
 
 	// Signaling the client.
 	res.send();

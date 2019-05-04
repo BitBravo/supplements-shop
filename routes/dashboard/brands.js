@@ -67,7 +67,10 @@ router.get('/', function(req, res) {
 
 			// Rendering the brands page.
 			res.render('dashboard/brands', {
-				Data: data
+				Data: data,
+				Messages: {
+					Brand: req.flash('brand-flash')
+				}
 			});
 		}
 	);
@@ -86,6 +89,9 @@ router.post('/', function(req, res) {
 	conn.query(stmt, (error, results) => {
 		// Checking if there are any errors.
 		if (error) throw error;
+
+		// Setting up the flash message.
+		req.flash('brand-flash', 'تم إنشاء العلامة التجارية بنجاح');
 
 		// Rendering the brands page.
 		res.redirect('/dashboard/brands');
@@ -108,6 +114,9 @@ router.put('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
+		// Setting up the flash message.
+		req.flash('brand-flash', 'تم تحديث العلامة التجارية بنجاح');
+
 		// Rendering the brands page.
 		res.redirect('/dashboard/brands');
 	});
@@ -127,6 +136,9 @@ router.delete('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
+		// Setting up the flash message.
+		req.flash('brand-flash', 'تم حذف العلامة التجارية بنجاح');
+
 		// Signaling the client.
 		res.send();
 	});
@@ -145,6 +157,9 @@ router.put('/restore', function(req, res) {
 	conn.query(stmt, (error, results) => {
 		// Checking if there are any errors.
 		if (error) throw error;
+
+		// Setting up the flash message.
+		req.flash('brand-flash', 'تمت استعادة العلامة التجارية بنجاح');
 
 		// Signaling the client.
 		res.send();
