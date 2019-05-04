@@ -9,6 +9,10 @@
 
   &__search {
     margin: 80px 0 100px 0;
+
+    input[type='submit'], input[type='reset'] {
+      width: 100%;
+    }
   }
 
   &__list {

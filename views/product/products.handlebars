@@ -1,64 +1,89 @@
+<script src="/assets/js/products.js"></script>
+
 <section class="container products-section">
 	<div class="row card-panel products-section__search">
 		<div class="col s12">
-
+			<div class="row">
+				<div class="col s12">
+					<form id="search-form">
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">search</i>
+								<input type="text" id="search-keyword" class="autocomplete">
+								<label for="search-keywork">بحث</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s6">
+								<input type="reset" class="btn btn-large" value="إعادة تعيين">
+							</div>
+							<div class="input-field col s6">
+								<input type="submit" class="btn btn-large green" value="بحث">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="row products-section__list">
 		{{#if Data.Products }}
-			{{#each Data.Products }}
-				<div class="col s12 m6 l6 xl4">
-					<div class="card sticky-action product-card">
-						{{#displayOldPrice this.OldPrice this.NewPrice}}
-							<div class="z-depth-1 center-align green white-text product-card__product-discount">
-								<div class="product-discount__content">{{ calculateDiscount this.OldPrice this.NewPrice }}</div>
-							</div>
-						{{/displayOldPrice}}
-						<div class="card-image waves-effect waves-block waves-light product-card__img">
-							<a href="/products/{{ this.VariantID }}">
-								<img class="activator" src="{{ this.ProductImage }}">
-							</a>
+		{{#each Data.Products }}
+		<div class="col s12 m6 l6 xl4">
+			<div class="card sticky-action product-card">
+				{{#displayOldPrice this.OldPrice this.NewPrice}}
+				<div class="z-depth-1 center-align green white-text product-card__product-discount">
+					<div class="product-discount__content">{{ calculateDiscount this.OldPrice this.NewPrice }}</div>
+				</div>
+				{{/displayOldPrice}}
+				<div class="card-image activator waves-effect waves-block waves-light ">
+					<a href="/products/{{ this.VariantID }}">
+						<div class="product-card__img"
+							style="background-image: url({{ this.VariantImage }}); background-position-x: center; background-repeat: no-repeat; background-size: contain;">
 						</div>
-						<div class="product-card__content">
-							<span class="card-title grey-text text-darken-4">
-								<a href="/products/{{ this.VariantID }}" class="black-text">
-									{{ this.ProductName }}
-								</a>
-							</span>
+					</a>
+				</div>
+				<div class="product-card__content">
+					<span class="card-title grey-text text-darken-4">
+						<a href="/products/{{ this.VariantID }}" class="black-text">
+							<small class="grey-text">{{ this.BrandName }}</small>
 							<br>
-							<div class="chip">&rlm;{{ formatWeight this.Weight }}
-								{{ weightUnite this.Weight }}
-							</div>
-							<div class="chip">{{ this.FlavorName }}</div>
+							{{ this.ProductName }}
+						</a>
+					</span>
+					<br>
+					<div class="chip">&rlm;{{ formatWeight this.Weight }}
+						{{ weightUnite this.Weight }}
+					</div>
+				</div>
+				<div class="card-action right-align product-card__price">
+					<div class="row center-align">
+						{{#displayOldPrice this.OldPrice this.NewPrice}}
+						<div class="col s12">
+							<span class="grey-text">
+								<del>{{ formatCurrency this.OldPrice }}</del>
+							</span>
 						</div>
-						<div class="card-action right-align product-card__price">
-							<div class="row center-align">
-								{{#displayOldPrice this.OldPrice this.NewPrice}}
-									<div class="col s12">
-										<span class="grey-text">
-											<del>{{ formatCurrency this.OldPrice }}</del>
-										</span>
-									</div>
-								{{/displayOldPrice}}
-								<div class="col s12">
-									<span>
-										<b class="green-text">{{ formatCurrency this.NewPrice }}</b>
-									</span>
-								</div>
-							</div>
-						</div>
-						<div class="card-action right-align">
-							<a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
-							<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
-								title="أضف إلى السلة">
-								<i class="fa fa-cart-plus"></i>
-							</a>
+						{{/displayOldPrice}}
+						<div class="col s12">
+							<span>
+								<b class="green-text">{{ formatCurrency this.NewPrice }}</b>
+							</span>
 						</div>
 					</div>
 				</div>
-			{{/each}}
+				<div class="card-action right-align">
+					<a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
+					<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
+						title="أضف إلى السلة">
+						<i class="fa fa-cart-plus"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		{{/each}}
 		{{else}}
-			<h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
+		<h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
 		{{/if}}
 	</div>
 </section>
