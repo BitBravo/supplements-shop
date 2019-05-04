@@ -1,17 +1,10 @@
 {{!-- The carousel. --}}
-<div class="carousel carousel-slider center">
-	<div class="carousel-item grey darken-1 white-text" href="#one!">
-		<h2>First Panel</h2>
-		<p class="white-text">This is your first panel</p>
+<div class="carousel carousel-slider center z-depth-2">
+	{{#each Data.Carousel }}
+	<div class="carousel-item">
+		<img src="{{ this.CarouselURL }}" alt="Carousel image.">
 	</div>
-	<div class="carousel-item grey darken-2 white-text" href="#two!">
-		<h2>Second Panel</h2>
-		<p class="white-text">This is your second panel</p>
-	</div>
-	<div class="carousel-item grey darken-3 white-text" href="#three!">
-		<h2>Third Panel</h2>
-		<p class="white-text">This is your third panel</p>
-	</div>
+	{{/each}}
 </div>
 
 {{!-- Top sold section. --}}

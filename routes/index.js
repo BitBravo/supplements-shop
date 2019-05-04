@@ -68,8 +68,9 @@ router.get('/', function(req, res) {
               `P`.`AddedDate`\
         DESC \
         LIMIT 6; \
-        SELECT `ShippingPrice` FROM `shippingpricehistory` ORDER BY `StartingDate` DESC LIMIT 1;\
-        SELECT `ShippingBump` FROM `shippingbumphistory` ORDER BY `StartingDate` DESC LIMIT 1;\
+        SELECT `ShippingPrice` FROM `shippingpricehistory` ORDER BY `StartingDate` DESC LIMIT 1; \
+        SELECT `ShippingBump` FROM `shippingbumphistory` ORDER BY `StartingDate` DESC LIMIT 1; \
+        SELECT `CarouselURL` FROM `Carousel` WHERE `Deleted` = 0 ORDER BY `Index` ASC; \
         ',
 		(error, results) => {
 			// Checking if there are any errors.
@@ -101,6 +102,7 @@ router.get('/', function(req, res) {
 				Categories: formater.groupCategories(results[2]),
 				TopProducts: results[3],
 				NewestProducts: results[4],
+				Carousel: results[7],
 				Shipping: {
 					Price: results[5][0].ShippingPrice,
 					Bump: results[6][0].ShippingBump
