@@ -27,8 +27,8 @@ router.get('/', function(req, res) {
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
         SELECT * FROM `Categories` WHERE `Deleted` = 0; \
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0; \
-        SELECT * FROM `Carousel` WHERE `Deleted` = 0 ORDER BY `Index` ASC; \
-        SELECT * FROM `Carousel` WHERE `Deleted` = 1 ORDER BY `Index` ASC; \
+        SELECT * FROM `Carousel` WHERE `Deleted` = 0; \
+        SELECT * FROM `Carousel` WHERE `Deleted` = 1; \
     ',
 		(error, results) => {
 			// Checking if there are any errors.
@@ -78,39 +78,23 @@ router.get('/', function(req, res) {
 
 // Setting up the carousel creation route.
 router.post('/', function(req, res) {
-	var checkStmt = conn.format('SELECT IFNULL(MAX(??), 0) AS ?? FROM ??', [
-		'Index',
-		'LastIndex',
-		'Carousel'
+	var insertStmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, 0);', [
+		'Carousel',
+		'CarouselUrl',
+		'Deleted',
+		req.body['carousel-url']
 	]);
 
-	conn.query(checkStmt, (checkErrors, checkResults) => {
+	conn.query(insertStmt, function(insertErrors, insertResults) {
 		// Checking if there are any errors.
-		if (checkErrors) throw checkErrors;
-
-		var insertStmt = conn.format(
-			'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, 0);',
-			[
-				'Carousel',
-				'CarouselUrl',
-				'Index',
-				'Deleted',
-				req.body['carousel-url'],
-				parseInt(checkResults[0]['LastIndex']) + 1
-			]
-		);
-
-		conn.query(insertStmt, function(insertErrors, insertResults) {
-			// Checking if there are any errors.
-			if (insertErrors) throw insertErrors;
-		});
-
-		// Setting up the flash message.
-		req.flash('carousel-flash', 'تم إنشاء الصورة المميزة بنجاح');
-
-		// Rendering the brands page.
-		res.redirect('/dashboard/carousel');
+		if (insertErrors) throw insertErrors;
 	});
+
+	// Setting up the flash message.
+	req.flash('carousel-flash', 'تم إنشاء الصورة المميزة بنجاح');
+
+	// Rendering the brands page.
+	res.redirect('/dashboard/carousel');
 });
 
 // Setting up the carousel edition route.

@@ -8,4 +8,8 @@
 	height: auto;
 	margin-top: 350px;
 	padding: 30px 0 50px 0;
+
+	&:first-of-type {
+		margin-top: 70px;
+	}
 }
