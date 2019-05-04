@@ -168,8 +168,90 @@
 		</a>
 	</li>
 	{{#if loggedIn }}
-	<p>LoggedIn</p>
-	{{else}}
-	<p>Not LoggedIn</p>
+	<li class="collection-item">
+		<a href="/dashboard/orders">
+			<div>
+				الطلبات
+				<fa class="fa fa-outdent"></fa>
+				<span class="new badge left" data-badge-caption="جديد">3</span>
+			</div>
+		</a>
+	</li>
+	<li class="collection-item">
+		<a href="/dashboard/mail/0">
+			<div>
+				البريد
+				<fa class="fa fa-envelope"></fa>
+
+				{{#if NewMail }}
+				<span class="new badge left" data-badge-caption="جديد">{{ NewMail }}</span>
+				{{/if}}
+			</div>
+		</a>
+	</li>
+	<li class="collection-item">
+		<a href="/dashboard/products">
+			<div>
+				المنتوجات
+				<fa class="fa fa-prescription-bottle"></fa>
+			</div>
+		</a>
+	</li>
+	<li class="collection-item">
+		<a href="/dashboard/brands">
+			<div>
+				العلامات التجارية
+				<fa class="fa fa-copyright"></fa>
+			</div>
+		</a>
+	</li>
+	<li class="collection-item">
+		<a href="/dashboard/categories">
+			<div>
+				الفئات
+				<fa class="fa fa-layer-group"></fa>
+			</div>
+		</a>
+	</li>
+	<li class="collection-item">
+		<a href="/dashboard/flavors">
+			<div>
+				النكهات
+				<fa class="fa fa-grin-tongue"></fa>
+			</div>
+		</a>
+	</li>
+	<li class="collection-item">
+		<a href="/dashboard/coupons">
+			<div>
+				القسائم
+				<fa class="fa fa-tag"></fa>
+			</div>
+		</a>
+	</li>
+	<li class="collection-item">
+		<a href="/dashboard/shipping">
+			<div>
+				الشحن
+				<fa class="fa fa-shipping-fast"></fa>
+			</div>
+		</a>
+	</li>
+	<li class="collection-item">
+		<a href="/dashboard/config">
+			<div>
+				الإعدادات
+				<fa class="fa fa-cog"></fa>
+			</div>
+		</a>
+	</li>
+	<li class="collection-item">
+		<a href="/login/logout">
+			<div>
+				تسجيل الخروج
+				<fa class="fa fa-sign-out-alt"></fa>
+			</div>
+		</a>
+	</li>
 	{{/if}}
 </ul>
