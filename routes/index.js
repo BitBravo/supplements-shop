@@ -70,7 +70,7 @@ router.get('/', function(req, res) {
         LIMIT 6; \
         SELECT `ShippingPrice` FROM `shippingpricehistory` ORDER BY `StartingDate` DESC LIMIT 1; \
         SELECT `ShippingBump` FROM `shippingbumphistory` ORDER BY `StartingDate` DESC LIMIT 1; \
-        SELECT `CarouselURL` FROM `Carousel` WHERE `Deleted` = 0 ORDER BY `Index` ASC; \
+        SELECT `CarouselURL` FROM `Carousel` WHERE `Deleted` = 0; \
         ',
 		(error, results) => {
 			// Checking if there are any errors.

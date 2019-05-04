@@ -1,11 +1,13 @@
 {{!-- The carousel. --}}
-<div class="carousel carousel-slider center z-depth-2">
+{{#if Data.Carousel }}
+<div class="carousel carousel-slider white center z-depth-2">
 	{{#each Data.Carousel }}
 	<div class="carousel-item">
 		<img src="{{ this.CarouselURL }}" alt="Carousel image.">
 	</div>
 	{{/each}}
 </div>
+{{/if}}
 
 {{!-- Top sold section. --}}
 <section class="products-showcase top-sold grey lighten-3 z-depth-2">

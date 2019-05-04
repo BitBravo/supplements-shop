@@ -215,7 +215,6 @@ CREATE TABLE IF NOT EXISTS `OrdersDetails` (
 CREATE TABLE IF NOT EXISTS `Carousel` (
 	`CarouselID` 				INT NOT NULL AUTO_INCREMENT,
 	`CarouselURL`				TEXT,
-	`Index`							SMALLINT NOT NULL,
 	`Deleted`						BIT NULL DEFAULT 0,
 
 	CONSTRAINT pk_carousel_id PRIMARY KEY (`CarouselID`)
