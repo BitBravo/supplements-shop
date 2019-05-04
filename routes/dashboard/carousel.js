@@ -115,19 +115,17 @@ router.post('/', function(req, res) {
 
 // Setting up the carousel edition route.
 router.put('/', function(req, res) {
-	const stmt = conn.format('UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;', [
-		'Brands',
-		'BrandName',
-		req.body['brand-name'],
-		'Logo',
-		req.body['brand-logo'],
-		'BrandID',
-		req.body['brand-id']
+	const stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', [
+		'Carousel',
+		'CarouselURL',
+		req.body['carousel-url'],
+		'CarouselID',
+		req.body['carousel-id']
 	]);
 
-	conn.query(stmt, (error, results) => {
+	conn.query(stmt, (errors, results) => {
 		// Checking if there are any errors.
-		if (error) throw error;
+		if (errors) throw errors;
 
 		// Setting up the flash message.
 		req.flash('carousel-flash', 'تم تحديث الصورة المميزة بنجاح');

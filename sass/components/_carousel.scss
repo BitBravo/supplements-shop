@@ -12,6 +12,12 @@
 		margin-top: 56px;
 	}
 
+	&.carousel-slider {
+		img {
+			height: 100%;
+		}
+	}
+
 	&.carousel--brands {
 		cursor: pointer;
 		height: 350px;
