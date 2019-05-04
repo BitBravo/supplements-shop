@@ -68,7 +68,7 @@ router.get('/', function(req, res) {
 	}
 });
 
-// Setting up the login request.
+// Setting up the login route.
 router.post('/', function(req, res) {
 	const sentPassword = sha1(req.body.password);
 
@@ -87,6 +87,12 @@ router.post('/', function(req, res) {
 			allow: isAllowed
 		});
 	});
+});
+
+// Setting up the logout route.
+router.get('/logout', function(req, res) {
+	req.session.loggedIn = false;
+	res.redirect('/');
 });
 
 // Exporting the route.
