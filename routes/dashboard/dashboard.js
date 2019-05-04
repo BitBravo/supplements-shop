@@ -88,7 +88,10 @@ router.get('/', login, function(req, res) {
 
 			// Rendering the dashboard page.
 			res.render('dashboard/dashboard', {
-				Data: data
+				Data: data,
+				Messages: {
+					Login: req.flash('login')
+				}
 			});
 		}
 	);

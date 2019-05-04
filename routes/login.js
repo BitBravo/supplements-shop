@@ -81,6 +81,9 @@ router.post('/', function(req, res) {
 		if (sentPassword === results[0].Password) {
 			req.session.loggedIn = true;
 			isAllowed = true;
+
+			// Setting up the flash messages.
+			req.flash('login', 'لقد قمت بتسجيل الدخول بنجاح');
 		}
 
 		res.json({
@@ -91,7 +94,10 @@ router.post('/', function(req, res) {
 
 // Setting up the logout route.
 router.get('/logout', function(req, res) {
+	// Loggin out.
 	req.session.loggedIn = false;
+
+	// Redirecting to the main page
 	res.redirect('/');
 });
 
