@@ -103,8 +103,11 @@
 	{{!-- The footer's partial. --}}
 	{{> footer }}
 
-	{{!-- Fallback dropdown. --}}
+	{{#if loggedIn }}
+	{{> sidebar NewMail=Data.NewMail }}
+	{{else}}
 	<div id="dashboard-dropdown" class="dropdown-content"></div>
+	{{/if}}
 </body>
 
 </html>
