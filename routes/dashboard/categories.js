@@ -67,7 +67,10 @@ router.get('/', function(req, res) {
 
 			// Rendering the categories page.
 			res.render('dashboard/categories', {
-				Data: data
+				Data: data,
+				Messages: {
+					Category: req.flash('category-flash')
+				}
 			});
 		}
 	);
@@ -90,6 +93,9 @@ router.post('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
+		// Setting up the flash message.
+		req.flash('category-flash', 'تم إنشاء الفئة بنجاح');
+
 		// Rendering the categories page.
 		res.redirect('/dashboard/categories');
 	});
@@ -108,6 +114,9 @@ router.put('/', function(req, res) {
 	conn.query(stmt, (error, results) => {
 		// Checking if there are any errors.
 		if (error) throw error;
+
+		// Setting up the flash message.
+		req.flash('category-flash', 'تم تحديث الفئة بنجاح');
 
 		// Rendering the categories page.
 		res.redirect('/dashboard/categories');
@@ -128,6 +137,9 @@ router.delete('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
+		// Setting up the flash message.
+		req.flash('category-flash', 'تم حذف الفئة بنجاح');
+
 		// Signaling the client.
 		res.send();
 	});
@@ -146,6 +158,9 @@ router.put('/restore', function(req, res) {
 	conn.query(stmt, (error, results) => {
 		// Checking if there are any errors.
 		if (error) throw error;
+
+		// Setting up the flash message.
+		req.flash('category-flash', 'تمت استعادة الفئة بنجاح');
 
 		// Signaling the client.
 		res.send();
