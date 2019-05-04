@@ -76,6 +76,12 @@ app.use('/assets', express.static(path.join(__dirname + '/node_modules')));
 // Connecting to the database.
 conn.connect();
 
+// Updating the logg-in status.
+app.use(function(req, res, next) {
+	res.locals.loggedIn = req.session.loggedIn;
+	next();
+});
+
 // Routing.
 app.use(routers.index);
 app.use('/products', routers.products);
