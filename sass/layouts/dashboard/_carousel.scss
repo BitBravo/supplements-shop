@@ -1,0 +1,22 @@
+/**
+    Carousel - The carousel page's styling rules.
+*/
+
+@charset 'utf-8';
+
+.dashboard-carousel {
+	#carousel-creation-tab,
+	#carousel-edition-tab,
+	#carousel-restoration-tab {
+		margin-top: 50px;
+		overflow-y: auto;
+
+		input[type='submit'], input[type='button'] {
+			width: 200px;
+		}
+	}
+
+	.materialboxed {
+		width: 100%;
+	}
+}

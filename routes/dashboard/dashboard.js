@@ -20,6 +20,7 @@ const express = require('express'),
 		flavors: require('./flavors'),
 		coupons: require('./coupons'),
 		shipping: require('./shipping'),
+		carousel: require('./carousel'),
 		config: require('./config')
 	},
 	router = express.Router();
@@ -35,6 +36,7 @@ router.use('/categories', routes.categories);
 router.use('/flavors', routes.flavors);
 router.use('/coupons', routes.coupons);
 router.use('/shipping', routes.shipping);
+router.use('/carousel', routes.carousel);
 router.use('/config', routes.config);
 
 // Setting up dashboard route.
