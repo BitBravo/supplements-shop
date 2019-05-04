@@ -64,7 +64,14 @@ router.get('/', function(req, res) {
 
 			// Rendering the config page.
 			res.render('dashboard/config', {
-				Data: data
+				Data: data,
+				Messages: {
+					Config: req.flash('config'),
+					Password: {
+						Success: req.flash('password-success'),
+						Error: req.flash('password-error')
+					}
+				}
 			});
 		}
 	);
@@ -104,6 +111,9 @@ router.post('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
+		// Setting up the flash message.
+		req.flash('config', 'تم تحديث الإعدادات بنجاح');
+
 		// redirecting to the config page.
 		res.redirect('/dashboard/config');
 	});
@@ -126,12 +136,19 @@ router.put('/', function(req, res) {
 					hashedPassword
 				]);
 
+			// Setting up the flash message.
+			req.flash('password-success', 'تم تحديث كلمة المرور بنجاح');
+
 			conn.query(stmt, (error, results) => {
 				// Throwing the error.
 				if (error) throw error;
 			});
+		} else {
+			// Setting up the flash message.
+			req.flash('password-error', 'كلمة مرور خاطئة');
 		}
 
+		// Redirecting to the config page.
 		res.redirect('/dashboard/config');
 	});
 });

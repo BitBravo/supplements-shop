@@ -1,5 +1,33 @@
 <div class="dashboard dashboard-config">
 	<div class="row container">
+		<div class="col s12">
+			{{!-- The config flash message. --}}
+			{{#if Messages.Config }}
+			<div class="card-panel green lighten-1 right-align flash-card">
+				<i class="fa fa-times fa-lg white-text flash-card__close"></i>
+				<span class="white-text">{{ Messages.Config }}</span>
+				<i class="fa fa-check fa-lg white-text"></i>
+			</div>
+			{{/if}}
+
+			{{!-- The config error message. --}}
+			{{#if Messages.Password.Success }}
+			<div class="card-panel green lighten-1 right-align flash-card">
+				<i class="fa fa-times fa-lg white-text flash-card__close"></i>
+				<span class="white-text">{{ Messages.Password.Success }}</span>
+				<i class="fa fa-check fa-lg white-text"></i>
+			</div>
+			{{/if}}
+			{{#if Messages.Password.Error }}
+			<div class="card-panel red lighten-1 right-align flash-card">
+				<i class="fa fa-times fa-lg white-text flash-card__close"></i>
+				<span class="white-text">{{ Messages.Password.Error }}</span>
+				<i class="fa fa-exclamation-triangle fa-lg white-text"></i>
+			</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="row container">
 		<div class="col s12 dashboard__grid">
 			<div class="row">
 				<div class="card-panel">

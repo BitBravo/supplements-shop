@@ -69,7 +69,17 @@ router.get('/', function(req, res) {
 
 			// Rendering the shipping page.
 			res.render('dashboard/shipping', {
-				Data: data
+				Data: data,
+				Messages: {
+					Price: {
+						Success: req.flash('price-success'),
+						Error: req.flash('price-error')
+					},
+					Bump: {
+						Success: req.flash('bump-success'),
+						Error: req.flash('bump-error')
+					}
+				}
 			});
 		}
 	);
@@ -88,12 +98,23 @@ router.put('/price', (req, res) => {
 						req.body['price'] +
 						');',
 					(_errors, _results) => {
+						// Checking if there are any errors.
 						if (_errors) throw _errors;
 					}
 				);
-			}
 
-			res.redirect('/dashboard/shipping');
+				// Setting up the flash message.
+				req.flash('price-success', 'تم تحديث سعر الشحن بنجاح');
+
+				// Redirecting to the shipping route.
+				res.redirect('/dashboard/shipping');
+			} else {
+				// Setting up the flash message.
+				req.flash('price-error', 'تحتاج إلى إدخال سعر مختلف عن السعر الحالي');
+
+				// Redirecting to the shipping route.
+				res.redirect('/dashboard/shipping');
+			}
 		}
 	);
 });
@@ -111,12 +132,26 @@ router.put('/bump', (req, res) => {
 						req.body['bump'] +
 						');',
 					(errors, results) => {
+						// Checking if there are any errors.
 						if (errors) throw errors;
 					}
 				);
-			}
 
-			res.redirect('/dashboard/shipping');
+				// Setting up the flash message.
+				req.flash('bump-success', 'تم تحديث عثرة الشحن بنجاح');
+
+				// Redirecting to the shipping route.
+				res.redirect('/dashboard/shipping');
+			} else {
+				// Setting up the flash message.
+				req.flash(
+					'bump-error',
+					'تحتاج إلى إدخال عثرة مختلفة عن العثرة الحالية'
+				);
+
+				// Redirecting to the shipping route.
+				res.redirect('/dashboard/shipping');
+			}
 		}
 	);
 });
