@@ -18,6 +18,7 @@ const path = require('path'),
 	bodyParser = require('body-parser'),
 	exphbs = require('express-handlebars'),
 	mysql = require('mysql'),
+	flash = require('connect-flash'),
 	database = require('./helpers/database'),
 	getCopyrightDate = require('./helpers/copyright'),
 	formater = require('./helpers/formater'),
@@ -75,6 +76,9 @@ app.use('/assets', express.static(path.join(__dirname + '/node_modules')));
 
 // Connecting to the database.
 conn.connect();
+
+// Setting up connect-flash.
+app.use(flash());
 
 // Updating the logg-in status.
 app.use(function(req, res, next) {

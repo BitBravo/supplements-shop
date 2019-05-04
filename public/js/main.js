@@ -102,4 +102,11 @@ $('document').ready(() => {
 	$('#back-btn').on('click', () => {
 		history.back();
 	});
+
+	// Flash message dismiss
+	$('.flash-card .flash-card__close').on('click', function() {
+		$(this)
+			.closest('.flash-card')
+			.slideUp();
+	});
 });

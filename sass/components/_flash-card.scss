@@ -1,0 +1,30 @@
+/**
+    Flash-card - Styling rules for the flash-card component.
+*/
+
+@charset 'utf-8';
+
+.flash-card {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  span {
+    flex-basis: 100%;
+  }
+
+  &__close {
+    cursor: pointer;
+    transition-property: color;
+    transition-duration: .3s;
+
+    &:hover {
+      color: $color-light !important;
+    }
+  }
+
+  .fa {
+    margin-left: 20px;
+  }
+}
