@@ -67,7 +67,10 @@ router.get('/', function(req, res) {
 
 			// Rendering the flavors page.
 			res.render('dashboard/flavors', {
-				Data: data
+				Data: data,
+				Messages: {
+					Flavor: req.flash('flavor-flash')
+				}
 			});
 		}
 	);
@@ -84,6 +87,9 @@ router.post('/', function(req, res) {
 	conn.query(stmt, (error, results) => {
 		// Checking if there are any errors.
 		if (error) throw error;
+
+		// Setting up the flash message.
+		req.flash('flavor-flash', 'تم إنشاء النكهة بنجاح');
 
 		// Rendering the flavors page.
 		res.redirect('/dashboard/flavors');
@@ -104,6 +110,9 @@ router.put('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
+		// Setting up the flash message.
+		req.flash('flavor-flash', 'تم تحديث النكهة بنجاح');
+
 		// Rendering the flavors page.
 		res.redirect('/dashboard/flavors');
 	});
@@ -123,6 +132,9 @@ router.delete('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
+		// Setting up the flash message.
+		req.flash('flavor-flash', 'تم حذف النكهة بنجاح');
+
 		// Signaling the client.
 		res.send();
 	});
@@ -141,6 +153,9 @@ router.put('/restore', function(req, res) {
 	conn.query(stmt, (error, results) => {
 		// Checking if there are any errors.
 		if (error) throw error;
+
+		// Setting up the flash message.
+		req.flash('flavor-flash', 'تمت استعادة النكهة بنجاح');
 
 		// Signaling the client.
 		res.send();
