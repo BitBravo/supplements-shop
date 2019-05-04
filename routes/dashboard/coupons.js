@@ -67,7 +67,10 @@ router.get('/', function(req, res) {
 
 			// Rendering the coupons page.
 			res.render('dashboard/coupons', {
-				Data: data
+				Data: data,
+				Messages: {
+					Coupon: req.flash('coupon-flash')
+				}
 			});
 		}
 	);
@@ -105,6 +108,9 @@ router.post('/', function(req, res) {
 		conn.query(_stmt, (_error, _results) => {
 			// Checking if there are any errors.
 			if (_error) throw _error;
+
+			// Setting up the flash message.
+			req.flash('coupon-flash', 'تم إنشاء القسيمة بنجاح');
 
 			// Rendering the coupons page.
 			res.redirect('/dashboard/coupons');
@@ -146,6 +152,9 @@ router.put('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
+		// Setting up the flash message.
+		req.flash('coupon-flash', 'تم تحديث القسيمة بنجاح');
+
 		// Rendering the coupons page.
 		res.redirect('/dashboard/coupons');
 	});
@@ -165,6 +174,9 @@ router.delete('/', function(req, res) {
 		// Checking if there are any errors.
 		if (error) throw error;
 
+		// Setting up the flash message.
+		req.flash('coupon-flash', 'تم حذف القسيمة بنجاح');
+
 		// Signaling the client.
 		res.send();
 	});
@@ -183,6 +195,9 @@ router.put('/restore', function(req, res) {
 	conn.query(stmt, (error, results) => {
 		// Checking if there are any errors.
 		if (error) throw error;
+
+		// Setting up the flash message.
+		req.flash('coupon-flash', 'تمت استعادة القسيمة بنجاح');
 
 		// Signaling the client.
 		res.send();
