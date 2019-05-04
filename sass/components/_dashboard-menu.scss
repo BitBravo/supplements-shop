@@ -5,10 +5,15 @@
 @charset 'utf-8';
 
 #dashboard-dropdown {
+  overflow: initial;
   width: 250px;
   
   li {
     text-align: right;
+
+    .fa,.fas,.fab {
+      margin-left: 10px;
+    }
   }
 
   * {
