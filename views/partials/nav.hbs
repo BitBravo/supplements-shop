@@ -1,6 +1,6 @@
 {{!-- The navbar. --}}
 <div class="navbar-fixed">
-	<nav class="nav-extended grey darken-4">
+	<nav class="nav-extended grey darken-3">
 
 		{{!-- Upper navbar. --}}
 		<div class="nav-wrapper container">
@@ -18,19 +18,19 @@
 			<div class="right hide-on-med-and-down">
 
 				{{!-- Phone number. --}}
-				<a class="grey-text" href="tel:{{ Data.Config.Phone.Primary }}">
-					<i class="fa fa-phone nav-phone nav-icon"></i>
+				<a class="nav-phone" href="tel:{{ Data.Config.Phone.Primary }}">
+					<i class="fa fa-phone  nav-icon"></i>
 					<b>{{ Data.Config.Phone.Primary }}</b>
 				</a>
 
 				{{!-- Social icons. --}}
-				<a class="left nav-social grey-text" href="{{ Data.Config.Facebook.Link }}" target="_blank">
-					<i class="fab fa-facebook-f"></i>
+				<a class="left nav-social" href="{{ Data.Config.Facebook.Link }}" target="_blank">
+					<i class="fab fa-facebook"></i>
 				</a>
-				<a class="left nav-social grey-text" href="{{ Data.Config.Instagram.Link }}" target="_blank">
+				<a class="left nav-social" href="{{ Data.Config.Instagram.Link }}" target="_blank">
 					<i class="fab fa-instagram"></i>
 				</a>
-				<a class="left nav-social grey-text" href="{{ Data.Config.Youtube.Link }}" target="_blank">
+				<a class="left nav-social" href="{{ Data.Config.Youtube.Link }}" target="_blank">
 					<i class="fab fa-youtube"></i>
 				</a>
 			</div>
