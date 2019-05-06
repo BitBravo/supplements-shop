@@ -197,4 +197,10 @@
       margin-left: 10px;
     }
   }
+
+  .nav-lower {
+    a:hover {
+      background-color: $color-dark;
+    }
+  }
 }

@@ -7,21 +7,29 @@
 .category-dropdown {
   padding: 10px 20px;
 
-  a {
-    color: $color-light--dark !important;
-
+  li {
     &:hover {
-      color: $color-dark !important;
+      background-color: transparent;
     }
 
-    h6 {
-      color: $color-light;
-      margin-bottom: 20px;
-      padding: 15px 5px;
-
+    a {
+      color: $color-light--dark !important;
+      
       &:hover {
-        color: $color-light--light;
+        background-color: $color-dark;
       }
+  
+    }
+  }
+
+  h6 {
+    color: $color-light;
+    margin-bottom: 20px;
+    padding: 15px 5px;
+
+    &:hover {
+      color: $color-light--light;
+      background-color: $color-dark;
     }
   }
 
