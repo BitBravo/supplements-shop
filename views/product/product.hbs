@@ -4,13 +4,21 @@
 	data-flavor-id="{{ Data.ProductInfo.FlavorID }}">
 	<div class="row product-section__upper">
 		<div class="col s12 m7 l8 card-panel product-section__upper__header">
-			<h4 class="grey lighten-4 hide-on-large-only center-align">{{ Data.ProductInfo.ProductName }}</h4>
+			<div class="row grey lighten-4 valign-wrapper hide-on-large-only">
+				<div class="col s12">
+					<h4 class="center-align">{{ Data.ProductInfo.ProductName }}</h4>
+				</div>
+			</div>
 			<div class="col s12 m12 l3 product-section__upper__header__img">
 				<img src="{{ Data.ProductInfo.VariantImage }}" alt="{{ Data.ProductInfo.ProductName }}'s image."
 					class="responsive-img materialboxed">
 			</div>
-			<div class="col s12 l9 hide-on-med-only">
-				<h4 class="grey lighten-4 center-align hide-on-med-and-down">{{ Data.ProductInfo.ProductName }}</h4>
+			<div class="col s12 l9 hide-on-med-only hide-on-med-and-down product-info-table">
+				<div class="row grey lighten-4 valign-wrapper">
+					<div class="col s12">
+						<h4 class="center-align">{{ Data.ProductInfo.ProductName }}</h4>
+					</div>
+				</div>
 				<table class="centered striped grey lighten-4 hide-on-small-and-down">
 					<tbody>
 						<tr>
@@ -191,7 +199,6 @@
 			</li>
 		</ul>
 		<div class="col s12 m3 l3 offset-m1 offset-l1 white card-panel product-section__lower__side">
-			<h4 class="center-align">حقائق غذائية</h4>
 			<img class="responsive-img materialboxed" src="{{ Data.ProductInfo.NutritionInfo }}"
 				alt="{{ Data.ProductInfo.ProductName }}'s nutrition facts.">
 		</div>
