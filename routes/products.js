@@ -56,7 +56,7 @@ router.get('/', function(req, res) {
 						Secondary: results[0][0].SecondaryNumber,
 						Fixed: results[0][0].FixedNumber
 					},
-					Email: results[0].Email,
+					Email: results[0][0].Email,
 					Facebook: {
 						Name: results[0][0].Facebook.split('|')[0],
 						Link: results[0][0].Facebook.split('|')[1]
