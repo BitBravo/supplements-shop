@@ -59,10 +59,15 @@
           font-size: 24px;
         }
       }
+
+      .product-section__quantity {
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+      }
       
       .product-section__buy {
         display: flex;
-        height: 100%;
         align-items: flex-end;
       }
     }
