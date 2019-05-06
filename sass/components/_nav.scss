@@ -10,7 +10,20 @@
   }
 
   .brand-logo {
-    margin-left: 13px;
+    opacity: 0.8;
+    margin-left: 10px;
+    transition-duration: 0.3s;
+    transition-property: opacity;
+
+    img {
+      position: relative;
+      top: -6px;
+      width: 120px;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   .nav-social {

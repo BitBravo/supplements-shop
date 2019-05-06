@@ -134,12 +134,12 @@ CREATE TABLE IF NOT EXISTS `Products` (
 	CONSTRAINT fk_products_brd FOREIGN KEY (`BrandID`) REFERENCES `Brands` (`BrandID`)
 );
 
-
 -- ProductsVariants.
 CREATE TABLE IF NOT EXISTS `ProductsVariants` (
 	`VariantID`         INT NOT NULL AUTO_INCREMENT,
 	`ProductID`         INT NOT NULL,
-	`Weight`            FLOAT NOT NULL,
+	`VariantValue`			FLOAT NOT NULL,
+	`VariantType`				TINYINT NOT NULL DEFAULT 1,
 	`FeaturedVariant`   BIT NOT NULL DEFAULT 0,
 	`Deleted`           BIT NOT NULL DEFAULT 0,
 
@@ -170,12 +170,12 @@ CREATE TABLE IF NOT EXISTS `ProductsPriceHistory` (
 	CONSTRAINT fk_price_history_id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`)
 );
 
--- OrderStates.
-CREATE TABLE IF NOT EXISTS `OrderStates` (
-	`StateID`       		TINYINT NOT NULL AUTO_INCREMENT,
-	`StateName`     		VARCHAR(50) NOT NULL,
+-- ProductsTags.
+CREATE TABLE IF NOT EXISTS `ProductsTags` (
+	`VariantID`					INT NOT NULL,
+	`Tag`								VARCHAR(100) NOT NULL,
 
-	CONSTRAINT pk_order_states_id PRIMARY KEY (`StateID`)
+	CONSTRAINT pk_products_tags_id PRIMARY KEY (`VariantID`, `Tag`)
 );
 
 -- Orders.
@@ -194,7 +194,6 @@ CREATE TABLE IF NOT EXISTS `Orders` (
 	`Deleted`           BIT NOT NULL DEFAULT 0,
 
 	CONSTRAINT pk_orders_id PRIMARY KEY (`OrderID`),
-	CONSTRAINT fk_orders_st FOREIGN KEY (`StateID`) REFERENCES `OrderStates` (`StateID`),
 	CONSTRAINT fk_orders_cp FOREIGN KEY (`CouponID`) REFERENCES `Coupons` (`CouponID`)
 );
 
@@ -216,9 +215,11 @@ CREATE TABLE IF NOT EXISTS `Carousel` (
 	`CarouselID` 				INT NOT NULL AUTO_INCREMENT,
 	`CarouselURL`				TEXT,
 	`Deleted`						BIT NULL DEFAULT 0,
+	`Tag`								VARCHAR(100) NOT NULL,
 
 	CONSTRAINT pk_carousel_id PRIMARY KEY (`CarouselID`)
 );
+
 
 /**
 	Data insertion.
@@ -235,9 +236,6 @@ INSERT INTO `Config` VALUES (
 	'supplementmaroc|https://www.instagram.com/supplementmaroc/',
 	'supmar|https://www.youtube.com/'
 );
-
--- OrderStates insertion.
-INSERT INTO `OrderStates` (`StateName`) VALUES ('Issued'), ('Delivered'), ('Cancelled'), ('Rejected');
 
 -- ShippingPriceHistory insertion.
 INSERT INTO `ShippingPriceHistory`(`ShippingPrice`) VALUES (49);
