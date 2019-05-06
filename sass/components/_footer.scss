@@ -43,7 +43,9 @@
 	@media screen and (max-width: $break-point--tablet) {
 		&__extra,
 		&__content,
-		&__content &__contact-list,
+		&__content .contact-list .contact-list__item,
+		&__content h5,
+		&__content p,
 		&__copyright {
 			text-align: center;
 		}
