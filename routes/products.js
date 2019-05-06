@@ -141,8 +141,13 @@ router.get('/search', function(req, res) {
 		// Checking if there are any errors.
 		if (errors) throw errors;
 
-		// Redirecting to the products' page.
-		res.redirect('/products/' + results[0]['VariantID']);
+		if (results.length > 0) {
+			// Redirecting to the products' page.
+			res.redirect('/products/' + results[0]['VariantID']);
+		} else {
+			// Redirecting to the search page.
+			res.redirect('/products');
+		}
 	});
 });
 
