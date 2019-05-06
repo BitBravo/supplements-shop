@@ -49,8 +49,8 @@
 							</a>
 						</span>
 						<br>
-						<div class="chip">&rlm;{{ formatWeight this.Weight }}
-							{{ weightUnite this.Weight }}
+						<div class="chip">&rlm;{{ formatMeasurement this.VariantValue this.VariantType }}
+							{{ formatMeasurementUnit this.VariantType this.VariantValue }}
 						</div>
 					</div>
 					<div class="card-action right-align product-card__price">
@@ -126,8 +126,8 @@
 							</a>
 						</span>
 						<br>
-						<div class="chip">&rlm;{{ formatWeight this.Weight }}
-							{{ weightUnite this.Weight }}
+						<div class="chip">&rlm;{{ formatMeasurement this.VariantValue this.VariantType }}
+							{{ formatMeasurementUnit this.VariantType this.VariantValue }}
 						</div>
 					</div>
 					<div class="card-action right-align product-card__price">

@@ -11,6 +11,9 @@ $('document').ready(() => {
 	// Initializing the materialbox.
 	$('.dashboard-products .materialboxed').materialbox();
 
+	// Setting up the dropdowns.
+	$('#stock-creation-modal-type, #stock-edition-modal-type').formSelect();
+
 	// Product creation.
 	(function() {
 		// Getting frequently used elements.
@@ -127,12 +130,14 @@ $('document').ready(() => {
 			$stockCreationModal.modal('close');
 
 			// Getting the inputs.
-			var $stockWeightInput = $(this).find('#stock-creation-modal-weight'),
-				$stockPriceInput = $(this).find('#stock-creation-modal-price');
+			var $stockValueInput = $(this).find('#stock-creation-modal-value'),
+				$stockTypeInput = $(this).find('#stock-creation-modal-type');
+			$stockPriceInput = $(this).find('#stock-creation-modal-price');
 
 			// Adding a new stock.
 			addNewStock({
-				Weight: $stockWeightInput.val(),
+				Value: $stockValueInput.val(),
+				Type: $stockTypeInput.val(),
 				Price: $stockPriceInput.val(),
 				CurrentIndex: -1,
 				FeaturedVariant: false,
@@ -140,7 +145,8 @@ $('document').ready(() => {
 			});
 
 			// Clearing the inputs.
-			$stockWeightInput.val('');
+			$stockValueInput.val('');
+			$stockTypeInput.val('');
 			$stockPriceInput.val('');
 		});
 
@@ -388,20 +394,36 @@ $('document').ready(() => {
 						helper.formatPrice(stock.Price) +
 						'&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
         </span>\
-        <span class="valign-wrapper">\
-        ' +
-						helper.formatWeight(stock.Weight) +
-						'&nbsp; <b>الوزن</b> <i class="fas fa-balance-scale"></i> \
+				<span class="valign-wrapper">\
+						' +
+						helper.formatMeasurement(stock.Value, stock.Type) +
+						'&nbsp; <b>القياس</b> <i class="fas fa-balance-scale"></i> \
         </span>\
       </div>\
       <div class="collapsible-body">\
         <div class="row">\
-          <div class="col s4">\
+					<div class="col s4">\
+						<div class="row"> \
+							<div class="input-field col s12"> \
+								<select name="stock-creation-entry-type"> \
+									<option ' +
+						(stock.Type === '1' ? 'selected' : '') +
+						' value="1">الكيلوغرام</option> \
+									<option ' +
+						(stock.Type === '2' ? 'selected' : '') +
+						' value="2">الحصة</option> \
+									<option ' +
+						(stock.Type === '3' ? 'selected' : '') +
+						' value="3">الحزمة</option> \
+								</select> \
+								<label>وحدة قياس</label> \
+							</div> \
+						</div> \
             <div class="row">\
               <div class="col s12 right-align">\
-                <label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>\
-                  <input min="0" name="stock-creation-entry-weight" step="0.001" type="number" value="' +
-						stock.Weight +
+                <label>القياس\
+                  <input min="0" name="stock-creation-entry-value" step="0.001" type="number" value="' +
+						stock.Value +
 						'" class="validate right-align" required>\
                 </label>\
               </div>\
@@ -473,16 +495,17 @@ $('document').ready(() => {
 
 			// Adding the stock update event for price and weight inputs.
 			$(
-				'#stock-creation-list input[name=stock-creation-entry-price], #stock-creation-list input[name=stock-creation-entry-weight]'
+				'#stock-creation-list input[name=stock-creation-entry-price], #stock-creation-list input[name=stock-creation-entry-value], #stock-creation-list select[name=stock-creation-entry-type]'
 			).on('change', function(e) {
 				// Getting the stock's index.
 				var index = $(this)
 					.closest('li')
 					.data('id');
-
 				// Updaing the stock.
-				if ($(this).attr('name') === 'stock-creation-entry-weight') {
-					Product.Stock[index].Weight = $(this).val();
+				if ($(this).attr('name') === 'stock-creation-entry-value') {
+					Product.Stock[index].Value = $(this).val();
+				} else if ($(this).attr('name') === 'stock-creation-entry-type') {
+					Product.Stock[index].Type = $(this).val();
 				} else if ($(this).attr('name') === 'stock-creation-entry-price') {
 					Product.Stock[index].Price = $(this).val();
 				}
@@ -560,22 +583,25 @@ $('document').ready(() => {
 			});
 
 			// Adding the flavor update event.
-			$('.stock-creation-entry select').on('change', function(e) {
-				// Getting the stock's index.
-				var index = $(this)
-						.closest('.stock-creation-entry')
-						.data('id'),
-					flavorIndex = $(this)
-						.closest('li')
-						.data('flavor-index'),
-					newFlavorId = parseInt($(e.target).val());
+			$('.stock-creation-entry .stock-creation-flavor-entry select').on(
+				'change',
+				function(e) {
+					// Getting the stock's index.
+					var index = $(this)
+							.closest('.stock-creation-entry')
+							.data('id'),
+						flavorIndex = $(this)
+							.closest('li')
+							.data('flavor-index'),
+						newFlavorId = parseInt($(e.target).val());
 
-				// Updating the flavor.
-				Product.Stock[index].Flavors[flavorIndex].FlavorID = newFlavorId;
+					// Updating the flavor.
+					Product.Stock[index].Flavors[flavorIndex].FlavorID = newFlavorId;
 
-				// Updating the UI.
-				updateUI();
-			});
+					// Updating the UI.
+					updateUI();
+				}
+			);
 
 			// Adding the quantity update event.
 			$('#stock-creation-list [name=stock-creation-entry-quantity]').on(
@@ -912,14 +938,16 @@ $('document').ready(() => {
 			e.preventDefault();
 
 			// Getting the inputs.
-			var $stockWeightInput = $(this).find('#stock-edition-modal-weight'),
-				$stockPriceInput = $(this).find('#stock-edition-modal-price');
+			var $stockValueInput = $(this).find('#stock-edition-modal-value'),
+				$stockTypeInput = $(this).find('#stock-edition-modal-type');
+			$stockPriceInput = $(this).find('#stock-edition-modal-price');
 
 			if (
 				Product.Stock.filter(function(prdct) {
 					if (
-						parseInt(prdct.Weight).toFixed(2) ===
-						parseInt($stockWeightInput.val()).toFixed(2)
+						parseFloat(prdct.Value).toFixed(2) ===
+							parseFloat($stockValueInput.val()).toFixed(2) &&
+						parseInt(prdct.Type) === parseInt($stockTypeInput.val())
 					) {
 						return true;
 					} else {
@@ -933,7 +961,8 @@ $('document').ready(() => {
 				// Adding a new stock.
 				addNewStock({
 					VariantID: 0,
-					Weight: $stockWeightInput.val(),
+					Value: $stockValueInput.val(),
+					Type: $stockTypeInput.val(),
 					Price: $stockPriceInput.val(),
 					CurrentIndex: -1,
 					FeaturedVariant: false,
@@ -942,10 +971,11 @@ $('document').ready(() => {
 				});
 
 				// Clearing the inputs.
-				$stockWeightInput.val('');
+				$stockValueInput.val('');
+				$stockTypeInput.val('');
 				$stockPriceInput.val('');
 			} else {
-				alert('هناك منتوج بنفس الوزن');
+				alert('هناك منتوج بنفس القياس');
 			}
 		});
 
@@ -1094,25 +1124,39 @@ $('document').ready(() => {
 						'&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
         </span>\
         <span class="valign-wrapper">\
-        ' +
-						helper.formatWeight(stock.Weight) +
-						'&nbsp; <b>الوزن</b> <i class="fas fa-balance-scale"></i> \
+						' +
+						helper.formatMeasurement(stock.Value, stock.Type) +
+						'&nbsp; <b>القياس</b> <i class="fas fa-balance-scale"></i> \
         </span>\
       </div>\
       <div class="collapsible-body">\
         <div class="row">\
           <div class="col s12">\
-            <div class="row">\
-              <div class="col s12 right-align">\
-                <label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>\
-                  <input min="0" name="stock-edition-entry-weight" step="0.001" type="number" value="' +
-						stock.Weight +
-						'" class="validate right-align" required ' +
-						(stock.VariantID ? 'disabled' : '') +
-						'>\
-                </label>\
-              </div>\
-            </div>\
+							<div class="row"> \
+							<div class="input-field col s12"> \
+								<select name="stock-edition-entry-type"> \
+									<option ' +
+						(stock.Type === 1 ? 'selected' : '') +
+						' value="1">الكيلوغرام</option> \
+												<option ' +
+						(stock.Type === 2 ? 'selected' : '') +
+						' value="2">الحصة</option> \
+												<option ' +
+						(stock.Type === 3 ? 'selected' : '') +
+						' value="3">الحزمة</option> \
+								</select> \
+								<label>وحدة قياس</label> \
+							</div> \
+						</div> \
+						<div class="row">\
+							<div class="col s12 right-align">\
+								<label>القياس\
+									<input min="0" name="stock-edition-entry-value" step="0.001" type="number" value="' +
+						stock.Value +
+						'" class="validate right-align" required>\
+								</label>\
+							</div>\
+						</div>\
             <div class="row">\
               <div class="col s12 right-align">\
                 <label>السعر <small class="grey-text">&rlm;(درهم)&rlm;</small>\
@@ -1208,22 +1252,25 @@ $('document').ready(() => {
 			});
 
 			// Adding the flavor update event.
-			$('.stock-edition-entry select').on('change', function(e) {
-				// Getting the stock's index.
-				var index = $(this)
-						.closest('.stock-edition-entry')
-						.data('id'),
-					flavorIndex = $(this)
-						.closest('li')
-						.data('flavor-index'),
-					newFlavorId = parseInt($(e.target).val());
+			$('.stock-edition-entry .stock-creation-flavor-entry select').on(
+				'change',
+				function(e) {
+					// Getting the stock's index.
+					var index = $(this)
+							.closest('.stock-edition-entry')
+							.data('id'),
+						flavorIndex = $(this)
+							.closest('li')
+							.data('flavor-index'),
+						newFlavorId = parseInt($(e.target).val());
 
-				// Updating the flavor.
-				Product.Stock[index].Flavors[flavorIndex].FlavorID = newFlavorId;
+					// Updating the flavor.
+					Product.Stock[index].Flavors[flavorIndex].FlavorID = newFlavorId;
 
-				// Updating the UI.
-				updateUI();
-			});
+					// Updating the UI.
+					updateUI();
+				}
+			);
 
 			// Adding the flavor removal event.
 			$('.stock-edition-flavor-remove-btn').on('click', function(e) {
@@ -1244,7 +1291,7 @@ $('document').ready(() => {
 
 			// Adding the stock update event for price and weight inputs.
 			$(
-				'#stock-edition-list input[name=stock-edition-entry-price], #stock-edition-list input[name=stock-edition-entry-weight]'
+				'#stock-edition-list input[name=stock-edition-entry-price], #stock-edition-list input[name=stock-edition-entry-value], #stock-edition-list select[name=stock-edition-entry-type]'
 			).on('change', function(e) {
 				// Getting the stock's index.
 				var index = $(this)
@@ -1252,8 +1299,10 @@ $('document').ready(() => {
 					.data('id');
 
 				// Updaing the stock.
-				if ($(this).attr('name') === 'stock-edition-entry-weight') {
-					Product.Stock[index].Weight = $(this).val();
+				if ($(this).attr('name') === 'stock-edition-entry-value') {
+					Product.Stock[index].Value = $(this).val();
+				} else if ($(this).attr('name') === 'stock-edition-entry-type') {
+					Product.Stock[index].Type = $(this).val();
 				} else if ($(this).attr('name') === 'stock-edition-entry-price') {
 					Product.Stock[index].Price = $(this).val();
 				}
@@ -1379,8 +1428,28 @@ $('document').ready(() => {
 
 	// Helper functions.
 	var helper = {
-		formatWeight: function(weight) {
-			return weight >= 1 ? weight + 'kg' : weight * 1000 + 'g';
+		formatMeasurement: function(value, type) {
+			var formatedMeasurement = '';
+
+			switch (parseInt(type)) {
+				case 1: {
+					formatedMeasurement =
+						parseInt(value) >= 1 ? value + ' كلغ' : value * 1000 + ' غرام';
+					break;
+				}
+				case 2: {
+					formatedMeasurement =
+						parseInt(value) > 1 ? value + ' حصص' : value + ' حصة';
+					break;
+				}
+				case 3: {
+					formatedMeasurement =
+						parseInt(value) > 1 ? value + ' حزم' : value + ' حزمة';
+					break;
+				}
+			}
+
+			return formatedMeasurement;
 		},
 		formatPrice: function(price) {
 			return new Intl.NumberFormat('ar-MA', {
@@ -1406,6 +1475,8 @@ $('document').ready(() => {
 			$.each(stock, function(i, s) {
 				s['FeaturedVariant'] = s['FeaturedVariant']['data'][0] == 1 ? true : 0;
 				s['CurrentIndex'] = s['CurrentIndex'] = -1;
+				s['Value'] = s['VariantValue'];
+				s['Type'] = s['VariantType'];
 				s['DeletedFlavors'] = [];
 				s['Flavors'] = [];
 

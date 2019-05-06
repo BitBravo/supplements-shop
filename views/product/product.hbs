@@ -23,8 +23,9 @@
 					<tbody>
 						<tr>
 							<td>
-								<div class="chip">&rlm;{{ formatWeight Data.ProductInfo.Weight }}
-									{{ weightUnite Data.ProductInfo.Weight }}
+								<div class="chip">
+									&rlm;{{ formatMeasurement Data.ProductInfo.VariantValue Data.ProductInfo.VariantType }}
+									{{ formatMeasurementUnit Data.ProductInfo.VariantType Data.ProductInfo.VariantValue }}
 								</div>
 							</td>
 							<td>
@@ -57,8 +58,9 @@
 					<tbody>
 						<tr>
 							<td>
-								<div class="chip">&rlm;{{ formatWeight Data.ProductInfo.Weight }}
-									{{ weightUnite Data.ProductInfo.Weight }}
+								<div class="chip">
+									&rlm;{{ formatMeasurement Data.ProductInfo.VariantValue Data.ProductInfo.VariantType }}
+									{{ formatMeasurementUnit Data.ProductInfo.VariantType Data.ProductInfo.VariantValue }}
 								</div>
 							</td>
 							<td>
@@ -95,8 +97,11 @@
 					<div class="input-field col s12 product-variant-select">
 						<select>
 							{{#each Data.Variants }}
-							<option value="{{ this.VariantID }}">&rlm;{{ formatWeight this.Weight }} {{ weightUnite this.Weight }}
-							</option>
+							<option value="{{ this.VariantID }}">{{ 
+								formatMeasurementUnit this.VariantType this.VariantValue 
+								}} {{ 
+									formatMeasurement this.VariantValue this.VariantType 
+									}}</option>
 							{{/each}}
 						</select>
 						<label>أنواع أخرى</label>
@@ -155,8 +160,8 @@
 				<tbody>
 					<tr>
 						<td>
-							<div class="chip">&rlm;{{ formatWeight Data.ProductInfo.Weight }}
-								{{ weightUnite Data.ProductInfo.Weight }}
+							<div class="chip">&rlm;{{ formatMeasurement Data.ProductInfo.VariantValue Data.ProductInfo.VariantType }}
+								{{ formatMeasurementUnit Data.ProductInfo.VariantType Data.ProductInfo.VariantValue }}
 							</div>
 						</td>
 						<td>

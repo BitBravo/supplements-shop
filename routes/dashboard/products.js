@@ -89,7 +89,7 @@ router.get('/:productID', function(req, res) {
 	const stmt = conn.format(
 		'\
     SELECT * FROM ?? WHERE ?? = ?;\
-    SELECT ??.??, ??.??, ??.??, (SELECT ??.?? From ProductsPriceHistory ?? WHERE ??.?? = ??.?? ORDER BY ??.?? DESC LIMIT 1) AS ?? FROM ?? ?? WHERE ??.?? = ? AND ??.?? = 0;\
+    SELECT ??.??, ??.??, ??.??, ??.??, (SELECT ??.?? From ProductsPriceHistory ?? WHERE ??.?? = ??.?? ORDER BY ??.?? DESC LIMIT 1) AS ?? FROM ?? ?? WHERE ??.?? = ? AND ??.?? = 0;\
     SELECT ??.??, ??.??, ??.??, ??.?? FROM ?? ?? INNER JOIN ?? ?? ON ??.?? = ??.?? WHERE ??.?? = ? AND ??.?? = 0 AND ??.?? = 0;\
   ',
 		[
@@ -101,7 +101,9 @@ router.get('/:productID', function(req, res) {
 			'PV',
 			'VariantID',
 			'PV',
-			'Weight',
+			'VariantValue',
+			'PV',
+			'VariantType',
 			'PV',
 			'FeaturedVariant',
 			'PPH',
@@ -188,15 +190,17 @@ router.post('/', function(req, res) {
 		if (req.body['Stock']) {
 			async.each(req.body['Stock'], function(productStock) {
 				var variantStmt = conn.format(
-					'INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, 0);',
+					'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, 0);',
 					[
 						'ProductsVariants',
 						'ProductID',
-						'Weight',
+						'VariantValue',
+						'VariantType',
 						'FeaturedVariant',
 						'Deleted',
 						results.insertId,
-						productStock['Weight'],
+						productStock['Value'],
+						productStock['Type'],
 						productStock['FeaturedVariant'] == 'true' ? 1 : 0
 					]
 				);
@@ -304,11 +308,13 @@ router.put('/', function(req, res) {
 			// Updates.
 			async.each(update, function(upStock) {
 				var stockUpdateStmt = conn.format(
-					'UPDATE ?? SET ?? = ? WHERE ?? = ?;',
+					'UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;',
 					[
 						'ProductsVariants',
 						'FeaturedVariant',
 						upStock['FeaturedVariant'] == 'true' ? 1 : 0,
+						'VariantType',
+						upStock['Type'],
 						'VariantID',
 						upStock['VariantID']
 					]
@@ -439,14 +445,16 @@ router.put('/', function(req, res) {
 			// Insertions.
 			async.each(insert, function(inStock) {
 				var stockInsertStmt = conn.format(
-					'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, ?);',
+					'INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, ?);',
 					[
 						'ProductsVariants',
 						'ProductID',
-						'Weight',
+						'VariantValue',
+						'VariantType',
 						'FeaturedVariant',
 						req.body['ID'],
-						inStock['Weight'],
+						inStock['Value'],
+						inStock['Type'],
 						inStock['FeaturedVariant'] == 'true' ? 1 : 0
 					]
 				);

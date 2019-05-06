@@ -197,9 +197,9 @@
 
 													<b>{{ this.Name }}</b>
 
-													{{#if this.Weight}}
-													<div class="chip">&rlm;{{ formatWeight this.Weight }}
-														{{ weightUnite this.Weight }}
+													{{#if this.VariantValue}}
+													<div class="chip">&rlm;{{ formatMeasurement this.VariantValue this.VariantType }}
+														{{ formatMeasurementUnit this.VariantType this.VariantValue }}
 													</div>
 													{{/if}}
 
@@ -228,9 +228,19 @@
 			<form id="stock-creation-form">
 				<div class="modal-content">
 					<div class="row">
+						<div class="input-field col s12">
+							<select id="stock-creation-modal-type" required>
+								<option value="1">الكيلوغرام</option>
+								<option value="2">الحصة</option>
+								<option value="3">الحزمة</option>
+							</select>
+							<label for="stock-creation-modal-type">وحدة قياس</label>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col s12 right-align">
-							<label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>
-								<input id="stock-creation-modal-weight" min="0" step="0.001" type="number" class="validate right-align"
+							<label>القياس
+								<input id="stock-creation-modal-value" min="0" step="0.001" type="number" class="validate right-align"
 									required>
 							</label>
 						</div>
@@ -255,9 +265,19 @@
 			<form id="stock-edition-form">
 				<div class="modal-content">
 					<div class="row">
+						<div class="input-field col s12">
+							<select id="stock-edition-modal-type" required>
+								<option value="1">الكيلوغرام</option>
+								<option value="2">الحصة</option>
+								<option value="3">الحزمة</option>
+							</select>
+							<label for="stock-edition-modal-type">وحدة قياس</label>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col s12 right-align">
 							<label>الوزن <small class="grey-text">&rlm;(كلغ)&rlm;</small>
-								<input id="stock-edition-modal-weight" min="0" step="0.001" type="number" class="validate right-align"
+								<input id="stock-edition-modal-value" min="0" step="0.001" type="number" class="validate right-align"
 									required>
 							</label>
 						</div>
