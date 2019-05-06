@@ -62,13 +62,14 @@ app.use(bodyParser.json());
 
 // Setting up handlebars.
 app.engine(
-	'handlebars',
+	'hbs',
 	exphbs({
+		extname: 'hbs',
 		defaultLayout: 'main',
 		helpers: require('./helpers/hbs')
 	})
 );
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
 
 // Static assets.
 app.use('/assets', express.static(path.join(__dirname + '/public')));
