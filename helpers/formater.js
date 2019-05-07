@@ -107,3 +107,43 @@ module.exports.constructAutocompletionData = function(data) {
 
 	return formatedData;
 };
+
+/**
+ * Formats a proper search query.
+ *
+ * @param {Object[]} data The collection params to form the query from.
+ */
+module.exports.formatSearchQuery = function(queryData) {
+	var query = '',
+		keys = Object.keys(queryData);
+
+	if (keys.length > 0) {
+		/*if (keys.indexOf('price') !== -1) {
+			try {
+				var price = JSON.parse(queryData['price']);
+
+				query +=
+					'AND (Price BETWEEN ' + price['Min'] + ' AND ' + price['Max'] + ') ';
+			} catch (e) {}
+		}*/
+
+		if (keys.indexOf('search') !== -1) {
+			try {
+				var keyword = queryData['search'];
+
+				query += "AND (`P`.`ProductName` LIKE '%" + keyword + "%') ";
+			} catch (e) {}
+		}
+
+		/*if (keys.indexOf('brands') !== -1) {
+			try {
+				var brands = JSON.parse(queryData['brands']);
+				console.log(brands);
+
+				query += 'AND ((`B`.`BrandName`) IN (' + brands + ')) ';
+			} catch (e) {}
+		}*/
+	}
+
+	return query;
+};
