@@ -23,6 +23,9 @@
 		"url": "https://github.com/EOussama/supplments-maroc-store/issues"
 	},
 	"homepage": "https://github.com/EOussama/supplments-maroc-store#readme",
+	"engines": {
+		"node": "11.9.0"
+	},
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^5.8.1",
 		"async": "^2.6.2",
