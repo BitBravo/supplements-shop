@@ -111,14 +111,14 @@
 	<div class="row">
 		{{#each Data.Categories }}
 		<div class="col">
-			<a href="">
+			<a href='/products?categories=%5B"{{ this.CategoryName }}"%5D'>
 				<h6>{{this.CategoryName }}</h6>
 			</a>
 
 			<ul>
 				{{#each this.SubCategories }}
 				<li>
-					<a href="">{{ this.CategoryName }}</a>
+					<a href='/products?categories=%5B"{{ this.CategoryName }}"%5D'>{{ this.CategoryName }}</a>
 				</li>
 				{{/each}}
 			</ul>
