@@ -6,7 +6,8 @@ $('document').ready(() => {
 		$searchFlavors = $('#search-flavors'),
 		searchPrice = document.getElementById('search-price'),
 		$searchAdvanced = $('#search-advanced'),
-		$searchAdvancedSection = $('#search-advanced-section');
+		$searchAdvancedSection = $('#search-advanced-section'),
+		$priecePreview = $('#price-preview');
 
 	// Setting up the search object.
 	var Search = {
@@ -19,6 +20,9 @@ $('document').ready(() => {
 			Max: Infinity
 		}
 	};
+
+	// Getting data.
+	var data = JSON.parse($('#autocomplete-json').text());
 
 	// Setting up the dropdowns.
 	$('.product-section select').formSelect();
@@ -76,13 +80,13 @@ $('document').ready(() => {
 
 	// Setting up the price input.
 	noUiSlider.create(searchPrice, {
-		start: [0, 100],
+		start: [0, data['MaxPrice']],
 		connect: true,
 		step: 1,
 		orientation: 'horizontal',
 		range: {
 			min: 0,
-			max: 100
+			max: data['MaxPrice']
 		},
 		format: wNumb({
 			decimals: 0
@@ -95,6 +99,17 @@ $('document').ready(() => {
 	// Toggle the advanced search section.
 	$searchAdvanced.on('change', function() {
 		$searchAdvancedSection.slideToggle();
+	});
+
+	// The priece update event handler.
+	searchPrice.noUiSlider.on('update', function(values, handle) {
+		$priecePreview.text(
+			'[' +
+				parseInt(searchPrice.noUiSlider.get()[0]) +
+				' - ' +
+				parseInt(searchPrice.noUiSlider.get()[1]) +
+				']'
+		);
 	});
 
 	// Search submit event handler.
@@ -122,8 +137,8 @@ $('document').ready(() => {
 				return flavor.tag;
 			}),
 			Price: {
-				Min: searchPrice.noUiSlider.get()[0],
-				Max: searchPrice.noUiSlider.get()[1]
+				Min: parseInt(searchPrice.noUiSlider.get()[0]),
+				Max: parseInt(searchPrice.noUiSlider.get()[1])
 			}
 		};
 
@@ -151,4 +166,6 @@ $('document').ready(() => {
 			i--;
 		}
 	});
+
+	console.log(data);
 });

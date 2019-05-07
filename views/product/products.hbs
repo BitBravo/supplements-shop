@@ -42,7 +42,10 @@
 								<div id="search-flavors" class="chips chips-placeholder chips-initial chips-autocomplete"></div>
 							</div>
 							<div class="input-field col s12">
-								<p class="grey-text right-align">السعر</p>
+								<p class="grey-text right-align"><span id="price-preview"></span> &nbsp;
+									السعر
+									<small>(درهم)&rlm;</small>
+								</p>
 								<div id="search-price"></div>
 							</div>
 						</div>
@@ -119,4 +122,8 @@
 		<h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
 		{{/if}}
 	</div>
+
+	<script type="application/json" id="autocomplete-json">
+			{{{ Data.JSON }}}
+	</script>
 </section>
