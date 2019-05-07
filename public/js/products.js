@@ -27,22 +27,39 @@ $('document').ready(() => {
 	// Getting initialization data.
 	var decodedURI = decodeURI(location.href),
 		paramsArray = decodedURI.substring(decodedURI.indexOf('?') + 1).split('&'),
-		initData = {};
+		initData = {
+			search: '',
+			brands: [],
+			categories: [],
+			flavors: [],
+			price: {
+				Min: 0,
+				Max: data['MaxPrice']
+			}
+		};
 
-	$.each(paramsArray, function(index, param) {
-		var json,
-			splitPram = param.split('='),
-			paramKey = splitPram[0],
-			paramValue = splitPram[1];
+	try {
+		if (
+			paramsArray.length > 0 &&
+			paramsArray[0] !== '' &&
+			paramsArray[0] !== decodedURI
+		) {
+			$.each(paramsArray, function(index, param) {
+				var json,
+					splitPram = param.split('='),
+					paramKey = splitPram[0],
+					paramValue = splitPram[1];
 
-		if (paramValue[0] === '{' || paramValue[0] === '[') {
-			json = JSON.parse(paramValue);
-		} else {
-			json = paramValue;
+				if (paramValue[0] === '{' || paramValue[0] === '[') {
+					json = JSON.parse(paramValue);
+				} else {
+					json = paramValue;
+				}
+
+				initData[paramKey] = json;
+			});
 		}
-
-		initData[paramKey] = json;
-	});
+	} catch (e) {}
 
 	// Setting up the dropdowns.
 	$('.product-section select').formSelect();
