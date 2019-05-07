@@ -18,7 +18,7 @@ conn.connect();
 
 // Setting up products route.
 router.get('/', function(req, res) {
-	console.log(formater.formatSearchQuery(req.query));
+	console.log(formater.formatSearchQuery(req.query, conn));
 	conn.query(
 		'\
 				SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
@@ -28,7 +28,7 @@ router.get('/', function(req, res) {
 							`P`.`ProductName`, \
 							`PV`.`VariantValue`, \
 							`PV`.`VariantType`, \
-							(SELECT `B`.`BrandName` FROM `Brands` `B` WHERE `B`.`BrandID` = `P`.`BrandID`) AS `BrandName`, \
+							`B`.`BrandName`, \
 							(SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
 							(SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
 							(SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
@@ -38,6 +38,14 @@ router.get('/', function(req, res) {
 							`Products` `P` \
 				ON \
 							`PV`.`ProductID` = `P`.`ProductID` \
+				INNER JOIN \
+							`Brands` `B` \
+				ON \
+							`B`.`BrandID` = `P`.`BrandID` \
+				INNER JOIN \
+							`Categories` `C` \
+				ON \
+							`C`.`CategoryID` = `P`.`CategoryID` \
 				WHERE \
 							`P`.`Deleted` = 0 \
 							AND \
@@ -45,14 +53,13 @@ router.get('/', function(req, res) {
 							AND \
 							(SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0 \
 							' +
-			formater.formatSearchQuery(req.query) +
+			formater.formatSearchQuery(req.query, conn) +
 			' \
 			ORDER BY \
 							`PV`.`FeaturedVariant` \
 							DESC; \
 			SELECT `BrandName` FROM `Brands` WHERE `Deleted` = 0; \
 			SELECT `C`.`CategoryName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND `P`.`Deleted` = 0 UNION SELECT `CategoryName` FROM `Categories` WHERE `Deleted` = 0 AND `CategoryParent` IS NULL; \
-			SELECT `FlavorName` FROM `Flavors` WHERE `Deleted` = 0; \
 			SELECT MAX(`Price`) AS `MaxPrice` FROM `ProductsPriceHistory`; \
     ',
 		(error, results) => {
@@ -86,8 +93,7 @@ router.get('/', function(req, res) {
 				JSON: JSON.stringify({
 					Brands: results[3],
 					Categories: results[4],
-					Flavors: results[5],
-					MaxPrice: parseInt(results[6][0]['MaxPrice'])
+					MaxPrice: parseInt(results[5][0]['MaxPrice'])
 				})
 			};
 
