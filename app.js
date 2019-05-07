@@ -38,10 +38,6 @@ const path = require('path'),
 		login: require('./routes/login')
 	};
 
-// Setting up the app.
-app.set('port', process.env.PORT || 3000);
-app.set('ip', process.env.IP || '127.0.0.1');
-
 // Setting up sessions.
 app.set('trust proxy', 1);
 app.use(
@@ -140,9 +136,10 @@ app.get('*', (req, res) => {
 });
 
 // Listening.
-app.listen(app.get('port'), app.get('ip'), () => {
+app.listen(process.env.PORT || 3000, () => {
 	// Logging.
 	console.log(
-		`Supplements Maroc has successfully started on port ${app.get('port')}.`
+		`Supplements Maroc has successfully started on port ${process.env.PORT ||
+			3000}.`
 	);
 });
