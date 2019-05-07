@@ -1,6 +1,7 @@
 $('document').ready(() => {
 	// Frenquently used elements.
-	var $searchBrands = $('#search-brands'),
+	var $searchKeyword = $('#search-keyword'),
+		$searchBrands = $('#search-brands'),
 		$searchCategories = $('#search-categories'),
 		$searchFlavors = $('#search-flavors'),
 		searchPrice = document.getElementById('search-price'),
@@ -100,6 +101,31 @@ $('document').ready(() => {
 	$('#search-form').on('submit', function(e) {
 		// Stopping the page from loading.
 		e.preventDefault();
+
+		// Puting up the search object.
+		Search = {
+			Name: $searchKeyword.val(),
+			Brands: $.map(M.Chips.getInstance($searchBrands).chipsData, function(
+				brand
+			) {
+				return brand.tag;
+			}),
+			Categories: $.map(
+				M.Chips.getInstance($searchCategories).chipsData,
+				function(category) {
+					return category.tag;
+				}
+			),
+			Flavors: $.map(M.Chips.getInstance($searchFlavors).chipsData, function(
+				flavor
+			) {
+				return flavor.tag;
+			}),
+			Price: {
+				Min: searchPrice.noUiSlider.get()[0],
+				Max: searchPrice.noUiSlider.get()[1]
+			}
+		};
 
 		console.log(Search);
 	});
