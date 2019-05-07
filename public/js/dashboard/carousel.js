@@ -4,7 +4,7 @@ $('document').ready(() => {
 
 	// Initializing the character counter.
 	$(
-		'#carousel-creation-tab input[type=url], #carousel-edition-tab input[type=url]'
+		'#carousel-creation-tab input[type=url], #carousel-creation-tab input[type=text], #carousel-edition-tab input[type=url]'
 	).characterCounter();
 
 	// Initializing the brand image box.

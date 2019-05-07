@@ -69,7 +69,8 @@ router.get('/', function(req, res) {
 			res.render('dashboard/carousel', {
 				Data: data,
 				Messages: {
-					Carousel: req.flash('carousel-flash')
+					Success: req.flash('carousel-flash'),
+					Error: req.flash('carousel-error')
 				}
 			});
 		}
@@ -78,31 +79,51 @@ router.get('/', function(req, res) {
 
 // Setting up the carousel creation route.
 router.post('/', function(req, res) {
-	var insertStmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, 0);', [
+	var checkStmt = conn.format('SELECT 1 FROM ?? WHERE ?? = ?;', [
 		'Carousel',
-		'CarouselUrl',
-		'Deleted',
-		req.body['carousel-url']
+		'Tag',
+		req.body['carousel-tag']
 	]);
 
-	conn.query(insertStmt, function(insertErrors, insertResults) {
-		// Checking if there are any errors.
-		if (insertErrors) throw insertErrors;
+	conn.query(checkStmt, function(checkErrors, checkResults) {
+		if (checkResults.length === 0) {
+			var insertStmt = conn.format(
+				'INSERT INTO ?? (??, ??, ??) VALUES (?, ?, 0);',
+				[
+					'Carousel',
+					'CarouselUrl',
+					'Tag',
+					'Deleted',
+					req.body['carousel-url'],
+					req.body['carousel-tag']
+				]
+			);
+
+			conn.query(insertStmt, function(insertErrors, insertResults) {
+				// Checking if there are any errors.
+				if (insertErrors) throw insertErrors;
+			});
+
+			// Setting up the flash message.
+			req.flash('carousel-flash', 'تم إنشاء الصورة المميزة بنجاح');
+		} else {
+			// Setting up the flash message.
+			req.flash('carousel-error', 'هذه العلامة موجودة');
+		}
+
+		// Rendering the brands page.
+		res.redirect('/dashboard/carousel');
 	});
-
-	// Setting up the flash message.
-	req.flash('carousel-flash', 'تم إنشاء الصورة المميزة بنجاح');
-
-	// Rendering the brands page.
-	res.redirect('/dashboard/carousel');
 });
 
 // Setting up the carousel edition route.
 router.put('/', function(req, res) {
-	const stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', [
+	const stmt = conn.format('UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;', [
 		'Carousel',
 		'CarouselURL',
 		req.body['carousel-url'],
+		'Tag',
+		req.body['carousel-tag'],
 		'CarouselID',
 		req.body['carousel-id']
 	]);

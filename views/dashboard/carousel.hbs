@@ -3,10 +3,16 @@
 
 <div class="dashboard dashboard-carousel">
   <div class="row container">
-    {{#if Messages.Carousel }}
+    {{#if Messages.Error }}
+    <div class="card-panel red lighten-1 right-align flash-card">
+      <i class="fa fa-times fa-lg white-text flash-card__close"></i>
+      <span class="white-text">{{ Messages.Error }}</span>
+      <i class="fa fa-check fa-lg white-text"></i>
+    </div>
+    {{else}}
     <div class="card-panel green lighten-1 right-align flash-card">
       <i class="fa fa-times fa-lg white-text flash-card__close"></i>
-      <span class="white-text">{{ Messages.Carousel }}</span>
+      <span class="white-text">{{ Messages.Success }}</span>
       <i class="fa fa-check fa-lg white-text"></i>
     </div>
     {{/if}}
@@ -41,6 +47,13 @@
                         </div>
                       </div>
                       <div class="row">
+                        <div class="input-field col s12">
+                          <input id="carousel-tag" type="text" name="carousel-tag" class="validate" data-length="100"
+                            maxlength="100">
+                          <label for="carousel-tag">الكلمة المرتبطة</label>
+                        </div>
+                      </div>
+                      <div class="row">
                         <div class="col s12">
                           <img id="carousel-creation-preview" class="materialboxed"
                             src="/assets/img/backgrounds/placeholder.jpg" alt="Carousel image">
@@ -69,9 +82,16 @@
                           <form action="/dashboard/carousel?_method=PUT" method="POST">
                             <div class="row">
                               <div class="input-field col s12">
-                                <input id="carousel-url-{{ this.CarouselID }}" type="text" name="carousel-url"
+                                <input id="carousel-url-{{ this.CarouselID }}" type="url" name="carousel-url"
                                   class="validate" data-length="300" value="{{ this.CarouselURL }}" required>
                                 <label for="carousel-url-{{ this.CarouselID }}">الصور المميزة</label>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="input-field col s12">
+                                <input id="carousel-tag-{{ this.CarouselID }}" type="text" name="carousel-tag"
+                                  class="validate" data-length="100" maxlength="100" value="{{ this.Tag }}" required>
+                                <label for="carousel-tag-{{ this.CarouselID }}">الكلمة المرتبطة</label>
                               </div>
                             </div>
                             <input type="hidden" name="carousel-id" value="{{ this.CarouselID }}">
