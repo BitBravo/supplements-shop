@@ -24,6 +24,26 @@ $('document').ready(() => {
 	// Getting data.
 	var data = JSON.parse($('#autocomplete-json').text());
 
+	// Getting initialization data.
+	var decodedURI = decodeURI(location.href),
+		paramsArray = decodedURI.substring(decodedURI.indexOf('?') + 1).split('&'),
+		initData = {};
+
+	$.each(paramsArray, function(index, param) {
+		var json,
+			splitPram = param.split('='),
+			paramKey = splitPram[0],
+			paramValue = splitPram[1];
+
+		if (paramValue[0] === '{' || paramValue[0] === '[') {
+			json = JSON.parse(paramValue);
+		} else {
+			json = paramValue;
+		}
+
+		initData[paramKey] = json;
+	});
+
 	// Setting up the dropdowns.
 	$('.product-section select').formSelect();
 
@@ -33,16 +53,16 @@ $('document').ready(() => {
 	// Setting up the collapsible.
 	$('.product-section .collapsible').collapsible();
 
+	// Set a default value to the search input.
+	$searchKeyword.val(initData['search']);
+
 	// Setting up the brands input.
 	$searchBrands.chips({
+		data: getInitData(initData['brands']),
 		placeholder: 'علامة تجارية',
 		secondaryPlaceholder: '+ علامة تجارية',
 		autocompleteOptions: {
-			data: {
-				Apple: null,
-				Microsoft: null,
-				Google: null
-			},
+			data: getAutoComletionData(data['Brands'], 'BrandName'),
 			limit: 5,
 			minLength: 1
 		}
@@ -50,14 +70,11 @@ $('document').ready(() => {
 
 	// Setting up the categories input.
 	$searchCategories.chips({
+		data: getInitData(initData['categories']),
 		placeholder: 'فئة',
 		secondaryPlaceholder: '+ فئة',
 		autocompleteOptions: {
-			data: {
-				Apple: null,
-				Microsoft: null,
-				Google: null
-			},
+			data: getAutoComletionData(data['Categories'], 'CategoryName'),
 			limit: 5,
 			minLength: 1
 		}
@@ -65,14 +82,11 @@ $('document').ready(() => {
 
 	// Setting up the flavors input.
 	$searchFlavors.chips({
+		data: getInitData(initData['flavors']),
 		placeholder: 'نكهة',
 		secondaryPlaceholder: '+ نكهة',
 		autocompleteOptions: {
-			data: {
-				Apple: null,
-				Microsoft: null,
-				Google: null
-			},
+			data: getAutoComletionData(data['Flavors'], 'FlavorName'),
 			limit: 5,
 			minLength: 1
 		}
@@ -80,7 +94,7 @@ $('document').ready(() => {
 
 	// Setting up the price input.
 	noUiSlider.create(searchPrice, {
-		start: [0, data['MaxPrice']],
+		start: [initData['price']['Min'], initData['price']['Max']],
 		connect: true,
 		step: 1,
 		orientation: 'horizontal',
@@ -142,7 +156,31 @@ $('document').ready(() => {
 			}
 		};
 
-		console.log(Search);
+		// Setting up the search query.
+		var query = '';
+
+		if (Search.Price) {
+			query += 'price=' + JSON.stringify(Search.Price);
+		}
+
+		if (Search.Name.length > 0) {
+			query += '&search=' + Search.Name;
+		}
+
+		if (Search.Brands.length > 0) {
+			query += '&brands=' + JSON.stringify(Search.Brands);
+		}
+
+		if (Search.Categories.length > 0) {
+			query += '&categories=' + JSON.stringify(Search.Categories);
+		}
+
+		if (Search.Flavors.length > 0) {
+			query += '&flavors=' + JSON.stringify(Search.Flavors);
+		}
+
+		// Redirection.
+		location.href = encodeURI('/products?' + query);
 	});
 
 	// Search reset event handler.
@@ -165,7 +203,24 @@ $('document').ready(() => {
 			searchFlavorsInstance.deleteChip(i);
 			i--;
 		}
+
+		searchPrice.noUiSlider.set([0, data['MaxPrice']]);
+		$searchAdvancedSection.slideUp();
 	});
 
-	console.log(data);
+	function getAutoComletionData(autocompleteData, nameKey) {
+		var autoData = {};
+
+		$.each(autocompleteData, function(index, value) {
+			autoData[value[nameKey]] = null;
+		});
+
+		return autoData;
+	}
+
+	function getInitData(data) {
+		return $.map(data, function(dt) {
+			return { tag: dt };
+		});
+	}
 });
