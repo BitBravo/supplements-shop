@@ -20,31 +20,31 @@ conn.connect();
 router.get('/', function(req, res) {
 	conn.query(
 		'\
-    SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
-    SELECT * FROM `Categories` WHERE Deleted = 0; \
-		SELECT\
-					`PV`.`VariantID`, \
-					`P`.`ProductName`, \
-					`PV`.`VariantValue`, \
-		 			`PV`.`VariantType`, \
-					(SELECT `B`.`BrandName` FROM `Brands` `B` WHERE `B`.`BrandID` = `P`.`BrandID`) AS `BrandName`, \
-					(SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
-					(SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
-					(SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
-		FROM \
-					`ProductsVariants` `PV` \
-		INNER JOIN \
-					`Products` `P` \
-		ON \
-					`PV`.`ProductID` = `P`.`ProductID` \
-		WHERE \
-					`P`.`Deleted` = 0 \
-					AND \
-					`PV`.`Deleted` = 0 \
-					AND \
-					(SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0 \
-		ORDER BY `PV`.`FeaturedVariant` DESC; \
-        ',
+			SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
+			SELECT * FROM `Categories` WHERE Deleted = 0; \
+			SELECT\
+						`PV`.`VariantID`, \
+						`P`.`ProductName`, \
+						`PV`.`VariantValue`, \
+						`PV`.`VariantType`, \
+						(SELECT `B`.`BrandName` FROM `Brands` `B` WHERE `B`.`BrandID` = `P`.`BrandID`) AS `BrandName`, \
+						(SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
+						(SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
+						(SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
+			FROM \
+						`ProductsVariants` `PV` \
+			INNER JOIN \
+						`Products` `P` \
+			ON \
+						`PV`.`ProductID` = `P`.`ProductID` \
+			WHERE \
+						`P`.`Deleted` = 0 \
+						AND \
+						`PV`.`Deleted` = 0 \
+						AND \
+						(SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0 \
+			ORDER BY `PV`.`FeaturedVariant` DESC; \
+    ',
 		(error, results) => {
 			// Checking if there are any errors.
 			if (error) throw error;

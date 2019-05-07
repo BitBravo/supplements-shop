@@ -1,3 +1,7 @@
+{{!-- No UISlider. --}}
+<script src="/assets/materialize-css/extras/noUiSlider/nouislider.min.js"></script>
+<link rel="stylesheet" href="/assets/materialize-css/extras/noUiSlider/nouislider.css">
+
 <script src="/assets/js/products.js"></script>
 
 <section class="container products-section">
@@ -8,9 +12,38 @@
 					<form id="search-form">
 						<div class="row">
 							<div class="input-field col s12">
-								<i class="material-icons prefix">search</i>
-								<input type="text" id="search-keyword" class="autocomplete">
-								<label for="search-keywork">بحث</label>
+								<p class="grey-text right-align">البحث</p>
+								<input type="text" id="search-keyword" class="autocomplete" placeholder="بحث">
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<div id="search-advanced" class="switch right-align">
+									<label>
+										عرض البحث المتقدم
+										<input type="checkbox">
+										<span class="lever"></span>
+										إخفاء البحث المتقدم
+									</label>
+								</div>
+							</div>
+						</div>
+						<div id="search-advanced-section" class="row">
+							<div class="input-field col s12">
+								<p class="grey-text right-align">العلامة التجارية</p>
+								<div id="search-brands" class="chips chips-placeholder chips-initial chips-autocomplete"></div>
+							</div>
+							<div class="input-field col s12">
+								<p class="grey-text right-align">الفئات</p>
+								<div id="search-categories" class="chips chips-placeholder chips-initial chips-autocomplete"></div>
+							</div>
+							<div class="input-field col s12">
+								<p class="grey-text right-align">النكهات</p>
+								<div id="search-flavors" class="chips chips-placeholder chips-initial chips-autocomplete"></div>
+							</div>
+							<div class="input-field col s12">
+								<p class="grey-text right-align">السعر</p>
+								<div id="search-price"></div>
 							</div>
 						</div>
 						<div class="row">
