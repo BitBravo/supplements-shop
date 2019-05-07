@@ -111,9 +111,10 @@ module.exports.constructAutocompletionData = function(data) {
 /**
  * Formats a proper search query.
  *
- * @param {Object[]} data The collection params to form the query from.
+ * @param {Object[]} queryDatan The collection params to form the query from.
+ * @param {Object[]} conn The connection object.
  */
-module.exports.formatSearchQuery = function(queryData) {
+module.exports.formatSearchQuery = function(queryData, conn) {
 	var query = '',
 		keys = Object.keys(queryData);
 
@@ -131,18 +132,53 @@ module.exports.formatSearchQuery = function(queryData) {
 			try {
 				var keyword = queryData['search'];
 
-				query += "AND (`P`.`ProductName` LIKE '%" + keyword + "%') ";
+				query += conn.format("AND (??.?? LIKE '%" + keyword + "%') ", [
+					'P',
+					'ProductName',
+					keyword
+				]);
 			} catch (e) {}
 		}
 
-		/*if (keys.indexOf('brands') !== -1) {
+		if (keys.indexOf('brands') !== -1) {
 			try {
 				var brands = JSON.parse(queryData['brands']);
-				console.log(brands);
 
-				query += 'AND ((`B`.`BrandName`) IN (' + brands + ')) ';
+				query += conn.format('AND (??.?? IN (?)) ', ['B', 'BrandName', brands]);
 			} catch (e) {}
-		}*/
+		}
+
+		if (keys.indexOf('categories') !== -1) {
+			try {
+				var categories = JSON.parse(queryData['categories']);
+
+				query += conn.format(
+					'AND (??.?? IN (?) OR (SELECT ??.?? FROM ?? ?? INNER JOIN ?? ?? ON ??.?? = ??.?? WHERE ??.?? IS NULL AND ??.?? = 0 AND ??.?? = P.CategoryID) IN (?)) ',
+					[
+						'C',
+						'CategoryName',
+						categories,
+						'CP',
+						'CategoryName',
+						'Categories',
+						'CP',
+						'Categories',
+						'_C',
+						'CP',
+						'CategoryID',
+						'_C',
+						'CategoryParent',
+						'CP',
+						'CategoryParent',
+						'CP',
+						'Deleted',
+						'_C',
+						'CategoryID',
+						categories
+					]
+				);
+			} catch (e) {}
+		}
 	}
 
 	return query;

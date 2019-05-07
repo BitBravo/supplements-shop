@@ -3,7 +3,6 @@ $('document').ready(() => {
 	var $searchKeyword = $('#search-keyword'),
 		$searchBrands = $('#search-brands'),
 		$searchCategories = $('#search-categories'),
-		$searchFlavors = $('#search-flavors'),
 		searchPrice = document.getElementById('search-price'),
 		$searchAdvanced = $('#search-advanced'),
 		$searchAdvancedSection = $('#search-advanced-section'),
@@ -14,7 +13,6 @@ $('document').ready(() => {
 		Name: '',
 		Brands: [],
 		Categories: [],
-		Flavors: [],
 		Price: {
 			Min: 0,
 			Max: Infinity
@@ -31,7 +29,6 @@ $('document').ready(() => {
 			search: '',
 			brands: [],
 			categories: [],
-			flavors: [],
 			price: {
 				Min: 0,
 				Max: data['MaxPrice']
@@ -97,18 +94,6 @@ $('document').ready(() => {
 		}
 	});
 
-	// Setting up the flavors input.
-	$searchFlavors.chips({
-		data: getInitData(initData['flavors']),
-		placeholder: 'نكهة',
-		secondaryPlaceholder: '+ نكهة',
-		autocompleteOptions: {
-			data: getAutoComletionData(data['Flavors'], 'FlavorName'),
-			limit: 5,
-			minLength: 1
-		}
-	});
-
 	// Setting up the price input.
 	noUiSlider.create(searchPrice, {
 		start: [initData['price']['Min'], initData['price']['Max']],
@@ -162,11 +147,6 @@ $('document').ready(() => {
 					return category.tag;
 				}
 			),
-			Flavors: $.map(M.Chips.getInstance($searchFlavors).chipsData, function(
-				flavor
-			) {
-				return flavor.tag;
-			}),
 			Price: {
 				Min: parseInt(searchPrice.noUiSlider.get()[0]),
 				Max: parseInt(searchPrice.noUiSlider.get()[1])
@@ -192,10 +172,6 @@ $('document').ready(() => {
 			query += '&categories=' + JSON.stringify(Search.Categories);
 		}
 
-		if (Search.Flavors.length > 0) {
-			query += '&flavors=' + JSON.stringify(Search.Flavors);
-		}
-
 		// Redirection.
 		location.href = encodeURI('/products?' + query);
 	});
@@ -203,8 +179,7 @@ $('document').ready(() => {
 	// Search reset event handler.
 	$('#search-form').on('reset', function() {
 		var searchBrandsInstance = M.Chips.getInstance($searchBrands),
-			searchCategoriesInstance = M.Chips.getInstance($searchCategories),
-			searchFlavorsInstance = M.Chips.getInstance($searchFlavors);
+			searchCategoriesInstance = M.Chips.getInstance($searchCategories);
 
 		for (var i = 0; i < searchBrandsInstance.chipsData.length; i++) {
 			searchBrandsInstance.deleteChip(i);
@@ -213,11 +188,6 @@ $('document').ready(() => {
 
 		for (var i = 0; i < searchCategoriesInstance.chipsData.length; i++) {
 			searchCategoriesInstance.deleteChip(i);
-			i--;
-		}
-
-		for (var i = 0; i < searchFlavorsInstance.chipsData.length; i++) {
-			searchFlavorsInstance.deleteChip(i);
 			i--;
 		}
 
