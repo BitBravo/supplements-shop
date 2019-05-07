@@ -2,12 +2,13 @@
 {{#if Data.Carousel }}
 <div class="carousel carousel-slider white center z-depth-2">
 	{{#each Data.Carousel }}
-	<div class="carousel-item">
+	<a href="/products?tag={{ this.Tag }}" target="_blank" class="carousel-item">
 		<img src="{{ this.CarouselURL }}" alt="Carousel image.">
-	</div>
+	</a>
 	{{/each}}
 </div>
 {{/if}}
+
 
 {{!-- Top sold section. --}}
 <section class="products-showcase top-sold grey lighten-3 z-depth-2">
@@ -74,15 +75,15 @@
 						<a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
 							title="أضف إلى السلة">
 							<i class="fa fa-cart-plus"></i>
-						</a>
 					</div>
 				</div>
 			</div>
-			{{/each}}
-			{{else}}
-			<h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
-			{{/if}}
 		</div>
+		{{/each}}
+		{{else}}
+		<h4 class="center-align">!&rlm;لا توجد منتوجات</h4>
+		{{/if}}
+	</div>
 	</div>
 </section>
 
