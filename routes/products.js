@@ -44,6 +44,10 @@ router.get('/', function(req, res) {
 						AND \
 						(SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0 \
 			ORDER BY `PV`.`FeaturedVariant` DESC; \
+		SELECT `BrandID`, `BrandName`, `Logo` FROM `Brands` WHERE `Deleted` = 0; \
+		SELECT `C`.`CategoryID`, `C`.`CategoryName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND `P`.`Deleted` = 0 UNION SELECT `CategoryID`, `CategoryName` FROM `Categories` WHERE `Deleted` = 0 AND `CategoryParent` IS NULL; \
+		SELECT `FlavorID`, `FlavorName` FROM `Flavors` WHERE `Deleted` = 0; \
+		SELECT MAX(`Price`) AS `MaxPrice` FROM `ProductsPriceHistory`; \
     ',
 		(error, results) => {
 			// Checking if there are any errors.
@@ -72,7 +76,13 @@ router.get('/', function(req, res) {
 					}
 				},
 				Categories: formater.groupCategories(results[1]),
-				Products: results[2]
+				Products: results[2],
+				JSON: JSON.stringify({
+					Brands: results[3],
+					Categories: results[4],
+					Flavors: results[5],
+					MaxPrice: parseInt(results[6][0]['MaxPrice'])
+				})
 			};
 
 			// Getting the proper copyright date.
