@@ -251,7 +251,8 @@
 		<div class="carousel carousel--brands">
 			{{#if Data.Brands }}
 			{{#each Data.Brands }}
-			<a class="carousel-item"><img src="{{ this.Logo }}" alt="{{ this.BrandName }}'s logo"></a>
+			<a href='/products?brands=%5B"{{ this.BrandName }}"%5D' class="carousel-item"><img src="{{ this.Logo }}"
+					alt="{{ this.BrandName }}'s logo"></a>
 			{{/each}}
 			{{else}}
 			<h4 class="center-align">!&rlm;لا توجد علامات تجارية</h4>
