@@ -43,8 +43,12 @@
 			<div class="nav-wrapper container">
 				<ul class="left">
 					<li><a href="/">الصفحة الرئيسية</a></li>
-					<li><a href="/products" class="dropdown-trigger" data-target="product-category-dropdown"><i
-								class="material-icons left">arrow_drop_down</i> جميع المنتوجات</a>
+					<li><a href="/products" class="dropdown-trigger" data-target="product-category-dropdown">
+							{{#if Data.Categories }}
+							<i class="material-icons left">arrow_drop_down</i>
+							{{/if}}
+							جميع المنتوجات
+						</a>
 					</li>
 					<li><a href="javascript:void(0)" class="contact-btn">اتصل بنا</a></li>
 					<li><a href="javascript:void(0)" class="about-btn">معلومات عنا</a></li>
@@ -61,8 +65,11 @@
 							<small class="red cart-button__badge">0</small>
 						</a>
 					</li>
-					<li><a href="/dashboard" class="dropdown-trigger" data-target="dashboard-dropdown"><i
-								class="fa fa-cog nav-icon"></i></a></li>
+					<li>
+						<a href="/dashboard" class="dropdown-trigger" data-target="dashboard-dropdown">
+							<i class="fa fa-cog nav-icon"></i>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -107,6 +114,7 @@
 </div>
 
 {{!-- Products Category Menu. --}}
+{{#if Data.Categories }}
 <div id="product-category-dropdown" class="grey darken-4 dropdown-content category-dropdown">
 	<div class="row">
 		{{#each Data.Categories }}
@@ -126,6 +134,9 @@
 		{{/each}}
 	</div>
 </div>
+{{else}}
+<div id="product-category-dropdown"></div>
+{{/if}}
 
 {{!-- Nav sidebar. --}}
 <ul class=" sidenav right-align grey lighten-3" id="nav-sidebar">
