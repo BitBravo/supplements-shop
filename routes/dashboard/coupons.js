@@ -79,13 +79,16 @@ router.get('/', function(req, res) {
 // Setting the coupon creation route.
 router.post('/', function(req, res) {
 	const couponCode = req.body['coupon-code'],
+		couponTimes = req.body['coupon-times'],
 		couponDiscount = req.body['coupon-discount'],
 		couponState = req.body['coupon-state'] == 'false' ? 0 : 1,
-		stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', [
+		stmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, ?, ?);', [
 			'Coupons',
 			'CouponCode',
+			'Times',
 			'Activated',
 			couponCode,
+			couponTimes,
 			couponState
 		]);
 
@@ -121,12 +124,13 @@ router.post('/', function(req, res) {
 // Setting up the coupon edition route.
 router.put('/', function(req, res) {
 	const couponID = req.body['coupon-id'],
+		couponTimes = req.body['coupon-times'],
 		couponState = req.body['coupon-state'] ? 1 : 0,
 		couponDiscount = req.body['coupon-discount'],
 		couponOldDiscount = req.body['coupon-old-discount'],
 		stmt = conn.format(
 			'\
-            UPDATE ?? SET ?? = ? WHERE ?? = ?; \
+            UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?; \
             ' +
 				(couponDiscount != couponOldDiscount
 					? 'INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?);'
@@ -135,6 +139,8 @@ router.put('/', function(req, res) {
             ',
 			[
 				'Coupons',
+				'Times',
+				couponTimes,
 				'Activated',
 				couponState,
 				'CouponID',

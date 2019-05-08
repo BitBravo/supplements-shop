@@ -168,7 +168,7 @@ router.get('/search', function(req, res) {
 			res.redirect('/products/' + results[0]['VariantID']);
 		} else {
 			// Redirecting to the search page.
-			res.redirect('/products');
+			res.redirect('/products?search=' + req.query['search']);
 		}
 	});
 });
