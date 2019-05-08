@@ -96,13 +96,13 @@ $('document').ready(() => {
 
 	// Setting up the price input.
 	noUiSlider.create(searchPrice, {
-		start: [initData['price']['Min'], initData['price']['Max']],
+		start: [initData['price']['Min'] || 0, initData['price']['Max'] || 1],
 		connect: true,
 		step: 1,
 		orientation: 'horizontal',
 		range: {
 			min: 0,
-			max: data['MaxPrice']
+			max: data['MaxPrice'] || 1
 		},
 		format: wNumb({
 			decimals: 0
