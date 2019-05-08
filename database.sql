@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `Categories` (
 CREATE TABLE IF NOT EXISTS `Coupons` (
 	`CouponID`          SMALLINT NOT NULL AUTO_INCREMENT,
 	`CouponCode`        VARCHAR(50) NOT NULL,
+	`Times`							SMALLINT NOT NULL,
 	`Activated`         BIT NOT NULL DEFAULT 1,
 	`Deleted`           BIT NOT NULL DEFAULT 0,
 
