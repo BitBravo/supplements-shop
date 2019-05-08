@@ -50,6 +50,13 @@
 											</div>
 											<div class="row">
 												<div class="input-field col s12">
+													<input id="coupon-times" type="number" name="coupon-times" class="validate" min="1"
+														data-length="3" value="{{ this.Times }}" required>
+													<label for="coupon-times-{{ this.CouponID }}">عدد الاستخدام</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="input-field col s12">
 													<div class="switch">
 														<p class="grey-text">حالة القسيمة
 															<label class="right">
@@ -93,6 +100,13 @@
 																<input id="coupon-discount" type="number" name="coupon-discount" class="validate"
 																	max="100" min="1" data-length="3" value="{{ this.CouponDiscount }}" required>
 																<label for="coupon-discount-{{ this.CouponID }}">الخصم</label>
+															</div>
+														</div>
+														<div class="row">
+															<div class="input-field col s12">
+																<input id="coupon-times" type="number" name="coupon-times" class="validate" max="100"
+																	min="1" data-length="3" value="{{ this.Times }}" required>
+																<label for="coupon-times-{{ this.CouponID }}">عدد الاستخدام</label>
 															</div>
 														</div>
 														<div class="row">
