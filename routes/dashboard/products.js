@@ -205,10 +205,11 @@ router.post('/', function(req, res) {
 						results.insertId,
 						productStock['Value'],
 						productStock['Type'],
-						productStock['Tags'] == null ? '' : productStock['Tags'].join(','),
+						productStock['Tags'].join(','),
 						productStock['FeaturedVariant'] == 'true' ? 1 : 0
 					]
 				);
+				console.log(variantStmt);
 
 				conn.query(variantStmt, function(variantErrors, variantResults) {
 					// Checking if there are any errors.
