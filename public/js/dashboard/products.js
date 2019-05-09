@@ -147,7 +147,6 @@ $('document').ready(() => {
 
 			// Clearing the inputs.
 			$stockValueInput.val('');
-			$stockTypeInput.val('');
 			$stockPriceInput.val('');
 		});
 
@@ -1008,7 +1007,6 @@ $('document').ready(() => {
 
 				// Clearing the inputs.
 				$stockValueInput.val('');
-				$stockTypeInput.val('');
 				$stockPriceInput.val('');
 			} else {
 				alert('هناك منتوج بنفس القياس');
@@ -1201,7 +1199,13 @@ $('document').ready(() => {
 						'" class="validate right-align" required>\
                 </label>\
               </div>\
-            </div>\
+						</div>\
+						<div class="row"> \
+							<div class="input-field col s12"> \
+								<p class="grey-text right-align">الكلمات المرتبطة</p> \
+								<div name="stock-edition-entry-tags" class="chips chips-placeholder chips-initial"></div> \
+							</div> \
+						</div> \
             <div class="row">\
               <div class="col s8 offset-s2">\
                 <button class="btn btn-block btn-large waves-effect waves-light stock-edition-flavor-add-btn">إضافة نكهة للمنتوج</button>\
@@ -1425,6 +1429,34 @@ $('document').ready(() => {
 
 			// Re-initializing the collapsibles.
 			$('#stock-edition-list, #stock-edition-list .collapsible').collapsible();
+
+			// Re-initializing the chips input.
+			$.each($('#stock-edition-list div.chips'), function(index, chip) {
+				$(chip).chips({
+					data: $.map(Product.Stock[index].Tags, function(tag) {
+						return { tag };
+					}),
+					placeholder: 'كلمة مرتبطة',
+					secondaryPlaceholder: '+ كلمة مرتبطة',
+					onChipAdd: function() {
+						// Updating the tags.
+						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
+							tag
+						) {
+							return tag['tag'].indexOf(',') === -1 ? tag['tag'] : null;
+						});
+						updateUI();
+					},
+					onChipDelete: function() {
+						// Updating the tags.
+						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
+							tag
+						) {
+							return tag['tag'].indexOf(',') === -1 ? tag['tag'] : null;
+						});
+					}
+				});
+			});
 
 			// Re-initializing the dropdowns.
 			$(
