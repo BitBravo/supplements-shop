@@ -1013,6 +1013,7 @@ $('document').ready(() => {
 			}
 		});
 
+		// Handeling the delete event.
 		$('#product-delete-btn').on('click', function() {
 			if (confirm('هل تريد حقًا حذف هذا المنتوج؟')) {
 				$.ajax({
@@ -1170,13 +1171,13 @@ $('document').ready(() => {
 							<div class="input-field col s12"> \
 								<select name="stock-edition-entry-type"> \
 									<option ' +
-						(stock.Type === 1 ? 'selected' : '') +
+						(stock.Type === '1' ? 'selected' : '') +
 						' value="1">الكيلوغرام</option> \
 												<option ' +
-						(stock.Type === 2 ? 'selected' : '') +
+						(stock.Type === '2' ? 'selected' : '') +
 						' value="2">الحصة</option> \
 												<option ' +
-						(stock.Type === 3 ? 'selected' : '') +
+						(stock.Type === '3' ? 'selected' : '') +
 						' value="3">الحزمة</option> \
 								</select> \
 								<label>وحدة قياس</label> \
