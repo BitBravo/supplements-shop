@@ -310,13 +310,15 @@ router.put('/', function(req, res) {
 			// Updates.
 			async.each(update, function(upStock) {
 				var stockUpdateStmt = conn.format(
-					'UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;',
+					'UPDATE ?? SET ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?;',
 					[
 						'ProductsVariants',
 						'FeaturedVariant',
 						upStock['FeaturedVariant'] == 'true' ? 1 : 0,
 						'VariantType',
 						upStock['Type'],
+						'Tags',
+						upStock['Tags'].join(','),
 						'VariantID',
 						upStock['VariantID']
 					]
@@ -447,15 +449,17 @@ router.put('/', function(req, res) {
 			// Insertions.
 			async.each(insert, function(inStock) {
 				var stockInsertStmt = conn.format(
-					'INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, ?);',
+					'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?);',
 					[
 						'ProductsVariants',
 						'ProductID',
 						'VariantValue',
+						'Tags',
 						'VariantType',
 						'FeaturedVariant',
 						req.body['ID'],
 						inStock['Value'],
+						inStock['Tags'].join(','),
 						inStock['Type'],
 						inStock['FeaturedVariant'] == 'true' ? 1 : 0
 					]
