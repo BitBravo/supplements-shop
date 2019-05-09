@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `ProductsVariants` (
 	`ProductID`         INT NOT NULL,
 	`VariantValue`			FLOAT NOT NULL,
 	`VariantType`				TINYINT NOT NULL DEFAULT 1,
+	`Tags`							TEXT NULL,
 	`FeaturedVariant`   BIT NOT NULL DEFAULT 0,
 	`Deleted`           BIT NOT NULL DEFAULT 0,
 
@@ -169,14 +170,6 @@ CREATE TABLE IF NOT EXISTS `ProductsPriceHistory` (
 
 	CONSTRAINT pk_price_history_id PRIMARY KEY (`VariantID`, `ChangedDate`),
 	CONSTRAINT fk_price_history_id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`)
-);
-
--- ProductsTags.
-CREATE TABLE IF NOT EXISTS `ProductsTags` (
-	`VariantID`					INT NOT NULL,
-	`Tag`								VARCHAR(100) NOT NULL,
-
-	CONSTRAINT pk_products_tags_id PRIMARY KEY (`VariantID`, `Tag`)
 );
 
 -- Orders.

@@ -190,17 +190,19 @@ router.post('/', function(req, res) {
 		if (req.body['Stock']) {
 			async.each(req.body['Stock'], function(productStock) {
 				var variantStmt = conn.format(
-					'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, 0);',
+					'INSERT INTO ?? (??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?, 0);',
 					[
 						'ProductsVariants',
 						'ProductID',
 						'VariantValue',
 						'VariantType',
+						'Tags',
 						'FeaturedVariant',
 						'Deleted',
 						results.insertId,
 						productStock['Value'],
 						productStock['Type'],
+						productStock['Tags'] == null ? '' : productStock['Tags'].join(','),
 						productStock['FeaturedVariant'] == 'true' ? 1 : 0
 					]
 				);
