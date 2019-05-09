@@ -141,7 +141,8 @@ $('document').ready(() => {
 				Price: $stockPriceInput.val(),
 				CurrentIndex: -1,
 				FeaturedVariant: false,
-				Flavors: []
+				Flavors: [],
+				Tags: []
 			});
 
 			// Clearing the inputs.
@@ -280,6 +281,7 @@ $('document').ready(() => {
 		}
 
 		function updateUI() {
+			console.log(Product);
 			// Updating the stock count.
 			$('#stock-creation-count').text(
 				Product.Stock.reduce(function(total, stock) {
@@ -436,7 +438,13 @@ $('document').ready(() => {
 						'" class="validate right-align" required>\
                 </label>\
               </div>\
-            </div>\
+						</div>\
+						<div class="row"> \
+							<div class="input-field col s12"> \
+								<p class="grey-text right-align">الكلمات المرتبطة</p> \
+								<div name="stock-creation-entry-tags" class="chips chips-placeholder chips-initial"></div> \
+							</div> \
+						</div> \
             <div class="row">\
               <div class="col s8 offset-s2">\
                 <button class="btn btn-block btn-large waves-effect waves-light stock-creation-flavor-add-btn">إضافة نكهة للمنتوج</button>\
@@ -654,6 +662,33 @@ $('document').ready(() => {
 			$(
 				'#stock-creation-list, #stock-creation-list .collapsible'
 			).collapsible();
+
+			// Re-initializing the chips input.
+			$.each($('#stock-creation-list div.chips'), function(index, chip) {
+				$(chip).chips({
+					data: $.map(Product.Stock[index].Tags, function(tag) {
+						return { tag };
+					}),
+					placeholder: 'كلمة مرتبطة',
+					secondaryPlaceholder: '+ كلمة مرتبطة',
+					onChipAdd: function() {
+						// Updating the tags.
+						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
+							tag
+						) {
+							return tag['tag'];
+						});
+					},
+					onChipDelete: function() {
+						// Updating the tags.
+						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
+							tag
+						) {
+							return tag['tag'];
+						});
+					}
+				});
+			});
 
 			// Re-initializing the dropdowns.
 			$('#stock-creation-list select').formSelect();
@@ -967,7 +1002,8 @@ $('document').ready(() => {
 					CurrentIndex: -1,
 					FeaturedVariant: false,
 					DeletedFlavors: [],
-					Flavors: []
+					Flavors: [],
+					Tags: []
 				});
 
 				// Clearing the inputs.
