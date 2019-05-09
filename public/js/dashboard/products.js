@@ -281,7 +281,6 @@ $('document').ready(() => {
 		}
 
 		function updateUI() {
-			console.log(Product);
 			// Updating the stock count.
 			$('#stock-creation-count').text(
 				Product.Stock.reduce(function(total, stock) {
@@ -676,15 +675,16 @@ $('document').ready(() => {
 						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
 							tag
 						) {
-							return tag['tag'];
+							return tag['tag'].indexOf(',') === -1 ? tag['tag'] : null;
 						});
+						updateUI();
 					},
 					onChipDelete: function() {
 						// Updating the tags.
 						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
 							tag
 						) {
-							return tag['tag'];
+							return tag['tag'].indexOf(',') === -1 ? tag['tag'] : null;
 						});
 					}
 				});
