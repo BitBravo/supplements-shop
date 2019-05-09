@@ -1547,6 +1547,7 @@ $('document').ready(() => {
 				s['Type'] = s['VariantType'];
 				s['DeletedFlavors'] = [];
 				s['Flavors'] = [];
+				s['Tags'] = s['Tags'].split(',');
 
 				$.each(flavors, function(j, f) {
 					if (f['VariantID'] === s['VariantID']) {
