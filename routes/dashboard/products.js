@@ -205,11 +205,10 @@ router.post('/', function(req, res) {
 						results.insertId,
 						productStock['Value'],
 						productStock['Type'],
-						productStock['Tags'].join(','),
+						productStock['Tags'] != null ? productStock['Tags'].join(',') : '',
 						productStock['FeaturedVariant'] == 'true' ? 1 : 0
 					]
 				);
-				console.log(variantStmt);
 
 				conn.query(variantStmt, function(variantErrors, variantResults) {
 					// Checking if there are any errors.
@@ -322,7 +321,7 @@ router.put('/', function(req, res) {
 						'VariantType',
 						upStock['Type'],
 						'Tags',
-						upStock['Tags'].join(','),
+						upStock['Tags'] != null ? upStock['Tags'].join(',') : '',
 						'VariantID',
 						upStock['VariantID']
 					]
@@ -463,7 +462,7 @@ router.put('/', function(req, res) {
 						'FeaturedVariant',
 						req.body['ID'],
 						inStock['Value'],
-						inStock['Tags'].join(','),
+						inStock['Tags'] != null ? inStock['Tags'].join(',') : '',
 						inStock['Type'],
 						inStock['FeaturedVariant'] == 'true' ? 1 : 0
 					]

@@ -1293,9 +1293,10 @@ $('document').ready(() => {
 			});
 
 			// Adding the flavor update event.
-			$('.stock-edition-entry .stock-creation-flavor-entry select').on(
+			$('.stock-edition-entry .stock-edition-flavor-entry select').on(
 				'change',
 				function(e) {
+					console.log('ddd');
 					// Getting the stock's index.
 					var index = $(this)
 							.closest('.stock-edition-entry')
@@ -1446,6 +1447,8 @@ $('document').ready(() => {
 						) {
 							return tag['tag'].indexOf(',') === -1 ? tag['tag'] : null;
 						});
+
+						// Updating the UI.
 						updateUI();
 					},
 					onChipDelete: function() {
@@ -1548,7 +1551,8 @@ $('document').ready(() => {
 				s['Type'] = s['VariantType'];
 				s['DeletedFlavors'] = [];
 				s['Flavors'] = [];
-				s['Tags'] = s['Tags'].split(',');
+				s['Tags'] =
+					s['Tags'] != null && s['Tags'].length > 0 ? s['Tags'].split(',') : [];
 
 				$.each(flavors, function(j, f) {
 					if (f['VariantID'] === s['VariantID']) {
