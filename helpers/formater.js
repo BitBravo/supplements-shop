@@ -119,14 +119,18 @@ module.exports.formatSearchQuery = function(queryData, conn) {
 		keys = Object.keys(queryData);
 
 	if (keys.length > 0) {
-		/*if (keys.indexOf('price') !== -1) {
+		if (keys.indexOf('price') !== -1) {
 			try {
 				var price = JSON.parse(queryData['price']);
 
 				query +=
-					'AND (Price BETWEEN ' + price['Min'] + ' AND ' + price['Max'] + ') ';
+					'AND ((SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) BETWEEN ' +
+					price['Min'] +
+					' AND ' +
+					price['Max'] +
+					') ';
 			} catch (e) {}
-		}*/
+		}
 
 		if (keys.indexOf('tag') !== -1) {
 			try {
