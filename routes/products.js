@@ -18,7 +18,6 @@ conn.connect();
 
 // Setting up products route.
 router.get('/', function(req, res) {
-	console.log(formater.formatSearchQuery(req.query, conn));
 	conn.query(
 		'\
 				SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
@@ -53,11 +52,13 @@ router.get('/', function(req, res) {
 							AND \
 							(SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0 \
 							' +
-			formater.formatSearchQuery(req.query, conn) +
+			formater.formatSearchFilterQuery(req.query, conn) +
 			' \
 			ORDER BY \
 							`PV`.`FeaturedVariant` \
-							DESC; \
+							' +
+			formater.formatSearchSortQuery(req.query) +
+			'; \
 			SELECT `BrandName` FROM `Brands` WHERE `Deleted` = 0; \
 			SELECT `C`.`CategoryName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND `P`.`Deleted` = 0 UNION SELECT `CategoryName` FROM `Categories` WHERE `Deleted` = 0 AND `CategoryParent` IS NULL; \
 			SELECT MAX(`Price`) AS `MaxPrice` FROM `ProductsPriceHistory`; \
