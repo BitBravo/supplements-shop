@@ -36,6 +36,10 @@ $('document').ready(() => {
 			price: {
 				Min: 0,
 				Max: data['MaxPrice']
+			},
+			sorting: {
+				Mode: 'ASC',
+				By: 1
 			}
 		};
 
@@ -62,16 +66,18 @@ $('document').ready(() => {
 		}
 	} catch (e) {}
 
-	// Setting up the dropdowns.
-	$('.product-section select, #search-sort-by, #search-sort-mode').formSelect();
-
 	// Setting up the image previews.
 	$('.materialboxed').materialbox();
 
 	// Setting up the collapsible.
 	$('.product-section .collapsible').collapsible();
 
-	// Set a default value to the search input.
+	// Setting a default value for the sorting dropdowns.
+	$('#search-sort-mode').val(initData['sorting']['Mode'] || 'ASC');
+	$('#search-sort-by').val(initData['sorting']['By'] || '1');
+	$('.product-section select, #search-sort-by, #search-sort-mode').formSelect();
+
+	// Setting a default value to the search input.
 	$searchKeyword.val(initData['search']);
 
 	// Setting up the brands input.

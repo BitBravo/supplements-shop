@@ -230,10 +230,16 @@ module.exports.formatSearchSortQuery = function(queryData) {
 				}
 
 				if (byKey != null) {
-					query += 'DESC, ' + byKey + ' ' + sorting['Mode'];
+					query += byKey + ' ' + sorting['Mode'];
+				} else {
+					query += '`PV`.`FeaturedVariant` DESC';
 				}
 			} catch (e) {}
+		} else {
+			query += '`PV`.`FeaturedVariant` DESC';
 		}
+	} else {
+		query += '`PV`.`FeaturedVariant` DESC';
 	}
 
 	return query;
