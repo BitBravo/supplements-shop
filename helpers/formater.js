@@ -128,6 +128,18 @@ module.exports.formatSearchQuery = function(queryData, conn) {
 			} catch (e) {}
 		}*/
 
+		if (keys.indexOf('tag') !== -1) {
+			try {
+				var keyword = queryData['tag'];
+
+				query += conn.format("AND (??.?? LIKE '%" + keyword + "%') ", [
+					'PV',
+					'Tags',
+					keyword
+				]);
+			} catch (e) {}
+		}
+
 		if (keys.indexOf('search') !== -1) {
 			try {
 				var keyword = queryData['search'];
