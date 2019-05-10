@@ -225,12 +225,37 @@ $('document').ready(() => {
 		}
 
 		function addFlavor(index, flavor) {
-			// Adding a flavor.
-			Product.Stock[index].Flavors.push(flavor);
+			var unUsedFlavor = (function() {
+				var flvList = $.map(Product.Stock[index]['Flavors'], function(f) {
+					return f['FlavorID'];
+				});
 
-			// Updating the current index.
-			Product.Stock[index].CurrentIndex =
-				Product.Stock[index].Flavors.length - 1;
+				var unUsedFlavors = $.map(flavors, function(flv) {
+					return flvList.indexOf(flv['FlavorID']) === -1
+						? flv['FlavorID']
+						: null;
+				});
+
+				if (unUsedFlavors == null) {
+					return null;
+				} else {
+					return unUsedFlavors[0];
+				}
+			})();
+
+			if (unUsedFlavor != null) {
+				// Override flavorId.
+				flavor['FlavorID'] = unUsedFlavor;
+
+				// Adding a flavor.
+				Product.Stock[index].Flavors.push(flavor);
+
+				// Updating the current index.
+				Product.Stock[index].CurrentIndex =
+					Product.Stock[index].Flavors.length - 1;
+			} else {
+				alert('لا توجد نكهات متبقية');
+			}
 
 			// Updating the UI.
 			updateUI();
@@ -799,12 +824,37 @@ $('document').ready(() => {
 		}
 
 		function addFlavor(index, flavor) {
-			// Adding a flavor.
-			Product.Stock[index].Flavors.push(flavor);
+			var unUsedFlavor = (function() {
+				var flvList = $.map(Product.Stock[index]['Flavors'], function(f) {
+					return f['FlavorID'];
+				});
 
-			// Updating the current index.
-			Product.Stock[index].CurrentIndex =
-				Product.Stock[index].Flavors.length - 1;
+				var unUsedFlavors = $.map(flavors, function(flv) {
+					return flvList.indexOf(flv['FlavorID']) === -1
+						? flv['FlavorID']
+						: null;
+				});
+
+				if (unUsedFlavors == null) {
+					return null;
+				} else {
+					return unUsedFlavors[0];
+				}
+			})();
+
+			if (unUsedFlavor != null) {
+				// Override flavorId.
+				flavor['FlavorID'] = unUsedFlavor;
+
+				// Adding a flavor.
+				Product.Stock[index].Flavors.push(flavor);
+
+				// Updating the current index.
+				Product.Stock[index].CurrentIndex =
+					Product.Stock[index].Flavors.length - 1;
+			} else {
+				alert('لا توجد نكهات متبقية');
+			}
 
 			// Updating the UI.
 			updateUI();
@@ -1304,7 +1354,6 @@ $('document').ready(() => {
 			$('.stock-edition-entry .stock-edition-flavor-entry select').on(
 				'change',
 				function(e) {
-					console.log('ddd');
 					// Getting the stock's index.
 					var index = $(this)
 							.closest('.stock-edition-entry')
