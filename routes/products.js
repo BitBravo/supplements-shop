@@ -18,55 +18,57 @@ conn.connect();
 
 // Setting up products route.
 router.get('/', function(req, res) {
-	conn.query(
+	var stmt =
 		'\
-				SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
-				SELECT * FROM `Categories` WHERE Deleted = 0; \
-				SELECT\
-							`PV`.`VariantID`, \
-							`P`.`ProductName`, \
-							`PV`.`VariantValue`, \
-							`PV`.`VariantType`, \
-							`B`.`BrandName`, \
-							(SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
-							(SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
-							(SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
-				FROM \
-							`ProductsVariants` `PV` \
-				INNER JOIN \
-							`Products` `P` \
-				ON \
-							`PV`.`ProductID` = `P`.`ProductID` \
-				INNER JOIN \
-							`Brands` `B` \
-				ON \
-							`B`.`BrandID` = `P`.`BrandID` \
-				INNER JOIN \
-							`Categories` `C` \
-				ON \
-							`C`.`CategoryID` = `P`.`CategoryID` \
-				WHERE \
-							`P`.`Deleted` = 0 \
-							AND \
-							`PV`.`Deleted` = 0 \
-							AND \
-							(SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0 \
-							' +
-			formater.formatSearchFilterQuery(req.query, conn) +
-			' \
-			ORDER BY \
-							`PV`.`FeaturedVariant` \
-							' +
-			formater.formatSearchSortQuery(req.query) +
-			'; \
-			SELECT `BrandName` FROM `Brands` WHERE `Deleted` = 0; \
-			SELECT `C`.`CategoryName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND `P`.`Deleted` = 0 UNION SELECT `CategoryName` FROM `Categories` WHERE `Deleted` = 0 AND `CategoryParent` IS NULL; \
-			SELECT MAX(`Price`) AS `MaxPrice` FROM `ProductsPriceHistory`; \
-    ',
-		(error, results) => {
-			// Checking if there are any errors.
-			if (error) throw error;
+	SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
+	SELECT * FROM `Categories` WHERE Deleted = 0; \
+	SELECT\
+				`PV`.`VariantID`, \
+				`P`.`ProductName`, \
+				`PV`.`VariantValue`, \
+				`PV`.`VariantType`, \
+				`B`.`BrandName`, \
+				(SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
+				(SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
+				(SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
+	FROM \
+				`ProductsVariants` `PV` \
+	INNER JOIN \
+				`Products` `P` \
+	ON \
+				`PV`.`ProductID` = `P`.`ProductID` \
+	INNER JOIN \
+				`Brands` `B` \
+	ON \
+				`B`.`BrandID` = `P`.`BrandID` \
+	INNER JOIN \
+				`Categories` `C` \
+	ON \
+				`C`.`CategoryID` = `P`.`CategoryID` \
+	WHERE \
+				`P`.`Deleted` = 0 \
+				AND \
+				`PV`.`Deleted` = 0 \
+				AND \
+				(SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0 \
+				' +
+		formater.formatSearchFilterQuery(req.query, conn) +
+		' \
+ORDER BY \
+				' +
+		formater.formatSearchSortQuery(req.query) +
+		'; \
+SELECT `BrandName` FROM `Brands` WHERE `Deleted` = 0; \
+SELECT `C`.`CategoryName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND `P`.`Deleted` = 0 UNION SELECT `CategoryName` FROM `Categories` WHERE `Deleted` = 0 AND `CategoryParent` IS NULL; \
+SELECT MAX(`Price`) AS `MaxPrice` FROM `ProductsPriceHistory`; \
+';
 
+	conn.query(stmt, (error, results) => {
+		// Checking if there are any errors.
+		if (error) {
+			console.error(error);
+			res.redirect('/error');
+		} else {
 			// Getting the data.
 			const data = {
 				Config: {
@@ -106,7 +108,7 @@ router.get('/', function(req, res) {
 				Data: data
 			});
 		}
-	);
+	});
 });
 
 // Getting all products for autocompletion purposes.
