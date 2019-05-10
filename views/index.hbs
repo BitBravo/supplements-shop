@@ -2,7 +2,7 @@
 {{#if Data.Carousel }}
 <div class="carousel carousel-slider white center z-depth-2">
 	{{#each Data.Carousel }}
-	<a href="/products?tag={{ this.Tag }}" target="_blank" class="carousel-item">
+	<a href="/products?tag={{ this.Tag }}" class="carousel-item">
 		<img src="{{ this.CarouselURL }}" alt="Carousel image.">
 	</a>
 	{{/each}}
