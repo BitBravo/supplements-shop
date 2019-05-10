@@ -109,12 +109,12 @@ module.exports.constructAutocompletionData = function(data) {
 };
 
 /**
- * Formats a proper search query.
+ * Formats a proper search filter query.
  *
  * @param {Object[]} queryDatan The collection params to form the query from.
  * @param {Object[]} conn The connection object.
  */
-module.exports.formatSearchQuery = function(queryData, conn) {
+module.exports.formatSearchFilterQuery = function(queryData, conn) {
 	var query = '',
 		keys = Object.keys(queryData);
 
@@ -193,6 +193,45 @@ module.exports.formatSearchQuery = function(queryData, conn) {
 						categories
 					]
 				);
+			} catch (e) {}
+		}
+	}
+
+	return query;
+};
+
+/**
+ * Formats a proper search sort query.
+ *
+ * @param {Object[]} queryDatan The collection params to form the query from.
+ */
+module.exports.formatSearchSortQuery = function(queryData) {
+	var query = '',
+		keys = Object.keys(queryData);
+
+	if (keys.length > 0) {
+		if (keys.indexOf('sorting') !== -1) {
+			try {
+				var sorting = JSON.parse(queryData['sorting']),
+					byKey = '';
+
+				switch (parseInt(sorting['By'])) {
+					case 1:
+						byKey = '`P`.`ProductName`';
+						break;
+					case 2:
+						byKey = '`NewPrice`';
+						break;
+					case 3:
+						byKey = '`P`.`AddedDate`';
+						break;
+					default:
+						byKey = null;
+				}
+
+				if (byKey != null) {
+					query += 'DESC, ' + byKey + ' ' + sorting['Mode'];
+				}
 			} catch (e) {}
 		}
 	}

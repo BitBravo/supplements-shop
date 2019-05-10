@@ -16,6 +16,10 @@ $('document').ready(() => {
 		Price: {
 			Min: 0,
 			Max: Infinity
+		},
+		Sorting: {
+			By: 1,
+			Mode: 'ASC'
 		}
 	};
 
@@ -59,7 +63,7 @@ $('document').ready(() => {
 	} catch (e) {}
 
 	// Setting up the dropdowns.
-	$('.product-section select').formSelect();
+	$('.product-section select, #search-sort-by, #search-sort-mode').formSelect();
 
 	// Setting up the image previews.
 	$('.materialboxed').materialbox();
@@ -150,6 +154,10 @@ $('document').ready(() => {
 			Price: {
 				Min: parseInt(searchPrice.noUiSlider.get()[0]),
 				Max: parseInt(searchPrice.noUiSlider.get()[1])
+			},
+			Sorting: {
+				By: $('#search-sort-by').val(),
+				Mode: $('#search-sort-mode').val()
 			}
 		};
 
@@ -170,6 +178,10 @@ $('document').ready(() => {
 
 		if (Search.Categories.length > 0) {
 			query += '&categories=' + JSON.stringify(Search.Categories);
+		}
+
+		if (Search.Sorting) {
+			query += '&sorting=' + JSON.stringify(Search.Sorting);
 		}
 
 		// Redirection.
