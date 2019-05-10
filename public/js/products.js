@@ -59,6 +59,10 @@ $('document').ready(() => {
 					json = JSON.parse(paramValue);
 				} else {
 					json = paramValue;
+
+					if (paramKey === 'search') {
+						json = json.replace('%', ' ');
+					}
 				}
 
 				initData[paramKey] = json;
@@ -145,7 +149,7 @@ $('document').ready(() => {
 
 		// Puting up the search object.
 		Search = {
-			Name: $searchKeyword.val(),
+			Name: $searchKeyword.val().replace(' ', '%'),
 			Brands: $.map(M.Chips.getInstance($searchBrands).chipsData, function(
 				brand
 			) {
