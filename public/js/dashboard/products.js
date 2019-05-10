@@ -297,12 +297,16 @@ $('document').ready(() => {
 				$.each(stock.Flavors, function(index, flavor) {
 					var flavorsDropDown = '';
 
-					$.each(flavors, function(index, flv) {
+					$.each(flavors, function(idx, flv) {
 						flavorsDropDown +=
 							'<option value="' +
 							flv.FlavorID +
 							'" ' +
 							(flv.FlavorID === flavor.FlavorID ? 'selected' : '') +
+							' ' +
+							(helper.isFlavorAllowed(stock.Flavors, flv.FlavorID)
+								? ''
+								: 'disabled') +
 							'>' +
 							flv.FlavorName +
 							'</option>';
@@ -1065,6 +1069,10 @@ $('document').ready(() => {
 							flv.FlavorID +
 							'" ' +
 							(flv.FlavorID === flavor.FlavorID ? 'selected' : '') +
+							' ' +
+							(helper.isFlavorAllowed(stock.Flavors, flv.FlavorID)
+								? ''
+								: 'disabled') +
 							'>' +
 							flv.FlavorName +
 							'</option>';
@@ -1543,7 +1551,7 @@ $('document').ready(() => {
 
 			return 'Unflavored';
 		},
-		groupStock(stock, flavors) {
+		groupStock: function(stock, flavors) {
 			$.each(stock, function(i, s) {
 				s['FeaturedVariant'] = s['FeaturedVariant']['data'][0] == 1 ? true : 0;
 				s['CurrentIndex'] = s['CurrentIndex'] = -1;
@@ -1562,6 +1570,13 @@ $('document').ready(() => {
 			});
 
 			return stock.slice();
+		},
+		isFlavorAllowed: function(flavors, flavor) {
+			var flavorsList = $.map(flavors, function(flv) {
+				return flv['FlavorID'];
+			});
+
+			return flavorsList.indexOf(flavor) === -1;
 		}
 	};
 });
