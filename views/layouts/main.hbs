@@ -44,7 +44,19 @@
 	<title>Supplements Maroc</title>
 </head>
 
-<body>
+<body class="loading">
+	<div id="global-preloader" class="grey lighten-3">
+		<div class="row">
+			<div class="col s12">
+				<img src="/assets/img/logos/logo.png" alt="Supplements Maroc logo.">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12">
+				<h6 class="grey-text">جار التحميل...&rlm;</h6>
+			</div>
+		</div>
+	</div>
 
 	{{!-- The nav's partial. --}}
 	{{> nav }}
@@ -104,9 +116,9 @@
 	{{> footer }}
 
 	{{#if loggedIn }}
-	{{> sidebar NewMail=Data.NewMail }}
+		{{> sidebar NewMail=Data.NewMail }}
 	{{else}}
-	<div id="dashboard-dropdown" class="dropdown-content"></div>
+		<div id="dashboard-dropdown" class="dropdown-content"></div>
 	{{/if}}
 </body>
 
