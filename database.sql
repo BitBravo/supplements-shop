@@ -165,11 +165,34 @@ CREATE TABLE `ProductsVariantsFlavors` (
 -- ProductsPriceHistory.
 CREATE TABLE IF NOT EXISTS `ProductsPriceHistory` (
 	`VariantID`         INT NOT NULL,
-	`Price`             DECIMAL(12, 2) NOT NULL,
+	`Price`             DECIMAL(12, 2) NOT NULL DEFAULT 1,
 	`ChangedDate`       DATETIME NOT NULL DEFAULT NOW(),
 
 	CONSTRAINT pk_price_history_id PRIMARY KEY (`VariantID`, `ChangedDate`),
 	CONSTRAINT fk_price_history_id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`)
+);
+
+-- Packs.
+CREATE TABLE IF NOT EXISTS `Packs` (
+	`PackID`						INT NOT NULL AUTO_INCREMENT,
+	`PackImage`     		TEXT NULL,
+	`Discount`					DECIMAL(12, 2) NOT NULL DEFAULT 0,
+	`Deleted`           BIT NOT NULL DEFAULT 0,
+
+	CONSTRAINT pk_packs_id PRIMARY KEY (`PackID`)
+);
+
+-- PacksVariants.
+CREATE TABLE IF NOT EXISTS `PacksVariants` (
+	`PackVariantID`			INT NOT NULL AUTO_INCREMENT,
+	`PackID`						INT NOT NULL,
+	`VariantID`         INT NOT NULL,
+	`Index`							SMALLINT NOT NULL,
+	`Deleted`           BIT NOT NULL DEFAULT 0,
+
+	CONSTRAINT pk_packs_variants_id PRIMARY KEY (`PackVariantID`),
+	CONSTRAINT fk_packs_pack_id FOREIGN KEY (`PackID`) REFERENCES `Packs` (`PackID`),
+	CONSTRAINT fk_packs_variant_id FOREIGN KEY (`VariantID`) REFERENCES `ProductsVariants` (`VariantID`)
 );
 
 -- Orders.
@@ -208,8 +231,9 @@ CREATE TABLE IF NOT EXISTS `OrdersDetails` (
 CREATE TABLE IF NOT EXISTS `Carousel` (
 	`CarouselID` 				INT NOT NULL AUTO_INCREMENT,
 	`CarouselURL`				TEXT,
-	`Deleted`						BIT NULL DEFAULT 0,
 	`Tag`								VARCHAR(100) NOT NULL,
+	`Index`							SMALLINT NOT NULL,
+	`Deleted`						BIT NULL DEFAULT 0,
 
 	CONSTRAINT pk_carousel_id PRIMARY KEY (`CarouselID`)
 );
