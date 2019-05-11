@@ -4,17 +4,18 @@
 <div class="dashboard dashboard-carousel">
   <div class="row container">
     {{#if Messages.Error }}
-    <div class="card-panel red lighten-1 right-align flash-card">
-      <i class="fa fa-times fa-lg white-text flash-card__close"></i>
-      <span class="white-text">{{ Messages.Error }}</span>
-      <i class="fa fa-check fa-lg white-text"></i>
-    </div>
-    {{else}}
-    <div class="card-panel green lighten-1 right-align flash-card">
-      <i class="fa fa-times fa-lg white-text flash-card__close"></i>
-      <span class="white-text">{{ Messages.Success }}</span>
-      <i class="fa fa-check fa-lg white-text"></i>
-    </div>
+      <div class="card-panel red lighten-1 right-align flash-card">
+        <i class="fa fa-times fa-lg white-text flash-card__close"></i>
+        <span class="white-text">{{ Messages.Error }}</span>
+        <i class="fa fa-check fa-lg white-text"></i>
+      </div>
+    {{/if}}
+    {{#if Messages.Success }}
+      <div class="card-panel green lighten-1 right-align flash-card">
+        <i class="fa fa-times fa-lg white-text flash-card__close"></i>
+        <span class="white-text">{{ Messages.Success }}</span>
+        <i class="fa fa-check fa-lg white-text"></i>
+      </div>
     {{/if}}
   </div>
   <div class="row container">
@@ -73,48 +74,50 @@
                 <div class="row">
                   <div class="col s12">
                     {{#if Data.Carousel}}
-                    <ul class="collapsible">
-                      {{#each Data.Carousel }}
-                      <li>
-                        <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
-                          {{ this.CarouselURL }}</div>
-                        <div class="collapsible-body">
-                          <form action="/dashboard/carousel?_method=PUT" method="POST">
-                            <div class="row">
-                              <div class="input-field col s12">
-                                <input id="carousel-url-{{ this.CarouselID }}" type="url" name="carousel-url"
-                                  class="validate" data-length="300" value="{{ this.CarouselURL }}" required>
-                                <label for="carousel-url-{{ this.CarouselID }}">الصور المميزة</label>
-                              </div>
+                      <ul class="collapsible">
+                        {{#each Data.Carousel }}
+                          <li>
+                            <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
+                              {{ this.CarouselURL }}</div>
+                            <div class="collapsible-body">
+                              <form action="/dashboard/carousel?_method=PUT" method="POST">
+                                <div class="row">
+                                  <div class="input-field col s12">
+                                    <input id="carousel-url-{{ this.CarouselID }}" type="url" name="carousel-url"
+                                      class="validate" data-length="300" value="{{ this.CarouselURL }}" required>
+                                    <label for="carousel-url-{{ this.CarouselID }}">الصور المميزة</label>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="input-field col s12">
+                                    <input id="carousel-tag-{{ this.CarouselID }}" type="text" name="carousel-tag"
+                                      class="validate" data-length="100" maxlength="100" value="{{ this.Tag }}"
+                                      required>
+                                    <label for="carousel-tag-{{ this.CarouselID }}">الكلمة المرتبطة</label>
+                                  </div>
+                                </div>
+                                <input type="hidden" name="carousel-id" value="{{ this.CarouselID }}">
+                                <div class="row">
+                                  <div class="col s6 center-align">
+                                    <input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
+                                      value="تحديث">
+                                  </div>
+                                  <div class="col s6 center-align">
+                                    <input type="button"
+                                      class="btn btn-large waves-effect waves-light grey lighten-3 btn-delete"
+                                      value="حذف">
+                                    <input type="hidden" value="{{ this.CarouselID }}">
+                                  </div>
+                                </div>
+                              </form>
                             </div>
-                            <div class="row">
-                              <div class="input-field col s12">
-                                <input id="carousel-tag-{{ this.CarouselID }}" type="text" name="carousel-tag"
-                                  class="validate" data-length="100" maxlength="100" value="{{ this.Tag }}" required>
-                                <label for="carousel-tag-{{ this.CarouselID }}">الكلمة المرتبطة</label>
-                              </div>
-                            </div>
-                            <input type="hidden" name="carousel-id" value="{{ this.CarouselID }}">
-                            <div class="row">
-                              <div class="col s6 center-align">
-                                <input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
-                                  value="تحديث">
-                              </div>
-                              <div class="col s6 center-align">
-                                <input type="button"
-                                  class="btn btn-large waves-effect waves-light grey lighten-3 btn-delete" value="حذف">
-                                <input type="hidden" value="{{ this.CarouselID }}">
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </li>
-                      {{/each}}
-                    </ul>
+                          </li>
+                        {{/each}}
+                      </ul>
                     {{else}}
-                    <ul class="collection">
-                      <li class="collection-item center-align">لا توجد صور مميزة حاليا</li>
-                    </ul>
+                      <ul class="collection">
+                        <li class="collection-item center-align">لا توجد صور مميزة حاليا</li>
+                      </ul>
                     {{/if}}
                   </div>
                 </div>
@@ -123,23 +126,23 @@
                 <div class="row">
                   <div class="col s12">
                     {{#if Data.DeletedCarousels}}
-                    <ul class="collection">
-                      {{#each Data.DeletedCarousels }}
-                      <li class="collection-item">
-                        <div>
-                          <input type="hidden" value="{{ this.CarouselID }}">
-                          <a href="javascript:void(0)" class="secondary-content btn-restore"><i
-                              class="material-icons">restore</i></a>
+                      <ul class="collection">
+                        {{#each Data.DeletedCarousels }}
+                          <li class="collection-item">
+                            <div>
+                              <input type="hidden" value="{{ this.CarouselID }}">
+                              <a href="javascript:void(0)" class="secondary-content btn-restore"><i
+                                  class="material-icons">restore</i></a>
 
-                          <b>{{ this.CarouselURL }}</b>
-                        </div>
-                      </li>
-                      {{/each}}
-                    </ul>
+                              <b>{{ this.CarouselURL }}</b>
+                            </div>
+                          </li>
+                        {{/each}}
+                      </ul>
                     {{else}}
-                    <ul class="collection">
-                      <li class="collection-item center-align">لا توجد صور مميزة محذوفة</li>
-                    </ul>
+                      <ul class="collection">
+                        <li class="collection-item center-align">لا توجد صور مميزة محذوفة</li>
+                      </ul>
                     {{/if}}
                   </div>
                 </div>

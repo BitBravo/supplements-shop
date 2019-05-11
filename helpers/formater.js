@@ -7,7 +7,7 @@
  *
  * @param {Object[]} categories The collection of categories.
  */
-module.exports.groupCategories = function(categories) {
+module.exports.groupCategories = function (categories) {
 	const formatedCatgories = [];
 
 	categories.forEach(category => {
@@ -48,7 +48,7 @@ module.exports.groupCategories = function(categories) {
  *
  * @param {Object[]} collection The collection of mixed data.
  */
-module.exports.groupVariants = function(collection) {
+module.exports.groupVariants = function (collection) {
 	let track = [],
 		groupedCol = [];
 
@@ -83,7 +83,7 @@ module.exports.groupVariants = function(collection) {
  *
  * @param {String} mail The message to truncate.
  */
-module.exports.truncateMessages = function(mail) {
+module.exports.truncateMessages = function (mail) {
 	for (const m of mail) {
 		if (m.Message.length > 80) {
 			m.Message = m.Message.substring(0, 80) + '...';
@@ -98,7 +98,7 @@ module.exports.truncateMessages = function(mail) {
  *
  * @param {Object[]} data The collection of data to format.
  */
-module.exports.constructAutocompletionData = function(data) {
+module.exports.constructAutocompletionData = function (data) {
 	var formatedData = {};
 
 	data.forEach(d => {
@@ -114,7 +114,7 @@ module.exports.constructAutocompletionData = function(data) {
  * @param {Object[]} queryDatan The collection params to form the query from.
  * @param {Object[]} conn The connection object.
  */
-module.exports.formatSearchFilterQuery = function(queryData, conn) {
+module.exports.formatSearchFilterQuery = function (queryData, conn) {
 	var query = '',
 		keys = Object.keys(queryData);
 
@@ -129,7 +129,7 @@ module.exports.formatSearchFilterQuery = function(queryData, conn) {
 					' AND ' +
 					price['Max'] +
 					') ';
-			} catch (e) {}
+			} catch (e) { }
 		}
 
 		if (keys.indexOf('tag') !== -1) {
@@ -141,7 +141,7 @@ module.exports.formatSearchFilterQuery = function(queryData, conn) {
 					'Tags',
 					keyword
 				]);
-			} catch (e) {}
+			} catch (e) { }
 		}
 
 		if (keys.indexOf('search') !== -1) {
@@ -153,7 +153,7 @@ module.exports.formatSearchFilterQuery = function(queryData, conn) {
 					'ProductName',
 					keyword
 				]);
-			} catch (e) {}
+			} catch (e) { }
 		}
 
 		if (keys.indexOf('brands') !== -1) {
@@ -161,7 +161,7 @@ module.exports.formatSearchFilterQuery = function(queryData, conn) {
 				var brands = JSON.parse(queryData['brands']);
 
 				query += conn.format('AND (??.?? IN (?)) ', ['B', 'BrandName', brands]);
-			} catch (e) {}
+			} catch (e) { }
 		}
 
 		if (keys.indexOf('categories') !== -1) {
@@ -193,7 +193,7 @@ module.exports.formatSearchFilterQuery = function(queryData, conn) {
 						categories
 					]
 				);
-			} catch (e) {}
+			} catch (e) { }
 		}
 	}
 
@@ -205,7 +205,7 @@ module.exports.formatSearchFilterQuery = function(queryData, conn) {
  *
  * @param {Object[]} queryDatan The collection params to form the query from.
  */
-module.exports.formatSearchSortQuery = function(queryData) {
+module.exports.formatSearchSortQuery = function (queryData) {
 	var query = '',
 		keys = Object.keys(queryData);
 
@@ -234,7 +234,7 @@ module.exports.formatSearchSortQuery = function(queryData) {
 				} else {
 					query += '`PV`.`FeaturedVariant` DESC';
 				}
-			} catch (e) {}
+			} catch (e) { }
 		} else {
 			query += '`PV`.`FeaturedVariant` DESC';
 		}
