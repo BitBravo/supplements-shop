@@ -104,9 +104,15 @@ $('document').ready(() => {
 	});
 
 	// Flash message dismiss
-	$('.flash-card .flash-card__close').on('click', function() {
+	$('.flash-card .flash-card__close').on('click', function () {
 		$(this)
 			.closest('.flash-card')
 			.slideUp();
 	});
+
+	// Displaying the content.
+	setTimeout(function () {
+		$('#global-preloader').fadeOut();
+		$('body').removeClass('loading');
+	}, 500);
 });

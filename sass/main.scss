@@ -1,6 +1,11 @@
+/**
+    Mail - The file that links together all individual modules.
+*/
+
 @charset 'utf-8';
 
 @import 'utils/utils';
+@import 'animations/animations';
 @import 'global/global';
 @import 'layouts/layouts';
 @import 'components/components';
