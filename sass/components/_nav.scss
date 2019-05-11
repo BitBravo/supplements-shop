@@ -5,6 +5,11 @@
 @charset 'utf-8';
 
 .navbar-fixed {
+  .big-nav-icon {
+    height: 64px;
+    overflow: hidden;
+  }
+
   .nav-icon {
     font-size: 20px;
   }
@@ -32,11 +37,11 @@
     transition-property: opacity;
 
     .fab.fa-youtube {
-      color:#c4302b;
+      color: #c4302b;
     }
 
     .fab.fa-instagram {
-      background: -webkit-linear-gradient(225deg, #833AB4, #FFDC80);
+      background: -webkit-linear-gradient(225deg, #833ab4, #ffdc80);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -44,25 +49,25 @@
     .fab.fa-facebook {
       color: #3b5998;
     }
-    
+
     &:hover {
       opacity: 1;
     }
-    
+
     &:not(:first-of-type) {
       margin-right: 20px;
     }
   }
-  
+
   .nav-phone {
     opacity: 0.5;
     transition-duration: 0.3s;
     transition-property: opacity;
-    
+
     &:hover {
       opacity: 1;
     }
-    
+
     .fa-phone {
       font-size: 20px;
       margin-right: 8px;

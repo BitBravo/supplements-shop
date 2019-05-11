@@ -45,7 +45,7 @@
 					<li><a href="/">الصفحة الرئيسية</a></li>
 					<li><a href="/products" class="dropdown-trigger" data-target="product-category-dropdown">
 							{{#if Data.Categories }}
-							<i class="material-icons left">arrow_drop_down</i>
+								<i class="material-icons left">arrow_drop_down</i>
 							{{/if}}
 							جميع المنتوجات
 						</a>
@@ -54,18 +54,18 @@
 					<li><a href="javascript:void(0)" class="about-btn">معلومات عنا</a></li>
 				</ul>
 				<ul class="right">
-					<li class="search-btn">
+					<li class="search-btn big-nav-icon">
 						<a href="javascript:void(0)">
 							<i class="fa fa-search nav-icon"></i>
 						</a>
 					</li>
-					<li>
+					<li class=" big-nav-icon">
 						<a href="javascript:void(0)" class="cart-button">
 							<i class="fa fa-shopping-cart nav-icon"></i>
 							<small class="red cart-button__badge">0</small>
 						</a>
 					</li>
-					<li>
+					<li class=" big-nav-icon">
 						<a href="/dashboard" class="dropdown-trigger" data-target="dashboard-dropdown">
 							<i class="fa fa-cog nav-icon"></i>
 						</a>
@@ -115,27 +115,27 @@
 
 {{!-- Products Category Menu. --}}
 {{#if Data.Categories }}
-<div id="product-category-dropdown" class="grey darken-4 dropdown-content category-dropdown">
-	<div class="row">
-		{{#each Data.Categories }}
-		<div class="col">
-			<a href='/products?categories=%5B"{{ this.CategoryName }}"%5D'>
-				<h6>{{this.CategoryName }}</h6>
-			</a>
+	<div id="product-category-dropdown" class="grey darken-4 dropdown-content category-dropdown">
+		<div class="row">
+			{{#each Data.Categories }}
+				<div class="col">
+					<a href='/products?categories=%5B"{{ this.CategoryName }}"%5D'>
+						<h6>{{this.CategoryName }}</h6>
+					</a>
 
-			<ul>
-				{{#each this.SubCategories }}
-				<li>
-					<a href='/products?categories=%5B"{{ this.CategoryName }}"%5D'>{{ this.CategoryName }}</a>
-				</li>
-				{{/each}}
-			</ul>
+					<ul>
+						{{#each this.SubCategories }}
+							<li>
+								<a href='/products?categories=%5B"{{ this.CategoryName }}"%5D'>{{ this.CategoryName }}</a>
+							</li>
+						{{/each}}
+					</ul>
+				</div>
+			{{/each}}
 		</div>
-		{{/each}}
 	</div>
-</div>
 {{else}}
-<div id="product-category-dropdown"></div>
+	<div id="product-category-dropdown"></div>
 {{/if}}
 
 {{!-- Nav sidebar. --}}
@@ -181,98 +181,98 @@
 		</a>
 	</li>
 	{{#if loggedIn }}
-	<li class="collection-item">
-		<a href="/dashboard/orders">
-			<div>
-				الطلبات
-				<fa class="fa fa-outdent"></fa>
-				<span class="new badge left" data-badge-caption="جديد">3</span>
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/dashboard/mail/0">
-			<div>
-				البريد
-				<fa class="fa fa-envelope"></fa>
+		<li class="collection-item">
+			<a href="/dashboard/orders">
+				<div>
+					الطلبات
+					<fa class="fa fa-outdent"></fa>
+					<span class="new badge left" data-badge-caption="جديد">3</span>
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/dashboard/mail/0">
+				<div>
+					البريد
+					<fa class="fa fa-envelope"></fa>
 
-				{{#if NewMail }}
-				<span class="new badge left" data-badge-caption="جديد">{{ NewMail }}</span>
-				{{/if}}
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/dashboard/products">
-			<div>
-				المنتوجات
-				<fa class="fa fa-prescription-bottle"></fa>
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/dashboard/brands">
-			<div>
-				العلامات التجارية
-				<fa class="fa fa-copyright"></fa>
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/dashboard/categories">
-			<div>
-				الفئات
-				<fa class="fa fa-layer-group"></fa>
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/dashboard/flavors">
-			<div>
-				النكهات
-				<fa class="fa fa-grin-tongue"></fa>
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/dashboard/coupons">
-			<div>
-				القسائم
-				<fa class="fa fa-tag"></fa>
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/dashboard/shipping">
-			<div>
-				الشحن
-				<fa class="fa fa-shipping-fast"></fa>
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/dashboard/carousel">
-			<div>
-				الصور المميزة
-				<fa class="fa fa-image fa-lg"></fa>
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/dashboard/config">
-			<div>
-				الإعدادات
-				<fa class="fa fa-cog"></fa>
-			</div>
-		</a>
-	</li>
-	<li class="collection-item">
-		<a href="/login/logout">
-			<div>
-				تسجيل الخروج
-				<fa class="fa fa-sign-out-alt"></fa>
-			</div>
-		</a>
-	</li>
+					{{#if NewMail }}
+						<span class="new badge left" data-badge-caption="جديد">{{ NewMail }}</span>
+					{{/if}}
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/dashboard/products">
+				<div>
+					المنتوجات
+					<fa class="fa fa-prescription-bottle"></fa>
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/dashboard/brands">
+				<div>
+					العلامات التجارية
+					<fa class="fa fa-copyright"></fa>
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/dashboard/categories">
+				<div>
+					الفئات
+					<fa class="fa fa-layer-group"></fa>
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/dashboard/flavors">
+				<div>
+					النكهات
+					<fa class="fa fa-grin-tongue"></fa>
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/dashboard/coupons">
+				<div>
+					القسائم
+					<fa class="fa fa-tag"></fa>
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/dashboard/shipping">
+				<div>
+					الشحن
+					<fa class="fa fa-shipping-fast"></fa>
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/dashboard/carousel">
+				<div>
+					الصور المميزة
+					<fa class="fa fa-image fa-lg"></fa>
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/dashboard/config">
+				<div>
+					الإعدادات
+					<fa class="fa fa-cog"></fa>
+				</div>
+			</a>
+		</li>
+		<li class="collection-item">
+			<a href="/login/logout">
+				<div>
+					تسجيل الخروج
+					<fa class="fa fa-sign-out-alt"></fa>
+				</div>
+			</a>
+		</li>
 	{{/if}}
 </ul>
