@@ -1,23 +1,40 @@
-// Importing the dependancies.
-const express = require('express'),
+/**
+ * Importing the dependancies
+ */
+var express = require('express'),
 	mysql = require('mysql'),
-	database = require('./../helpers/database'),
+	router = express.Router(),
+	databaseConfig = require('./../config/database'),
 	getCopyrightDate = require('./../helpers/copyright'),
-	formater = require('../helpers/formater'),
-	conn = mysql.createConnection({
-		database: database.name,
-		host: database.host,
-		password: database.password,
-		user: database.user,
-		multipleStatements: true
-	}),
-	router = express.Router();
+	formater = require('./../helpers/formater');
 
-// Connecting to the database.
+
+
+/**
+ * Configurations
+ */
+var conn = mysql.createConnection({
+	database: databaseConfig.name,
+	host: databaseConfig.host,
+	password: databaseConfig.password,
+	user: databaseConfig.user,
+	multipleStatements: true
+});
+
+
+
+/**
+ * Connecting to the database
+ */
 conn.connect();
 
+
+
+/**
+ * Routing
+ */
 // Setting up products route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
 	var stmt =
 		'\
 	SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
@@ -112,7 +129,7 @@ SELECT MAX(`Price`) AS `MaxPrice` FROM `ProductsPriceHistory`; \
 });
 
 // Getting all products for autocompletion purposes.
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
 	conn.query(
 		`
 		SELECT
@@ -145,7 +162,7 @@ router.post('/', function(req, res) {
 });
 
 // Setting up the search route.
-router.get('/search', function(req, res) {
+router.get('/search', function (req, res) {
 	var stmt = conn.format(
 		'SELECT ??.?? FROM ?? ?? INNER JOIN Products ?? ON ??.?? = ??.?? WHERE P.ProductName = ? AND P.Deleted = 0 AND PV.Deleted = 0 AND PV.FeaturedVariant = 1 LIMIT 1;',
 		[
@@ -162,7 +179,7 @@ router.get('/search', function(req, res) {
 		]
 	);
 
-	conn.query(stmt, function(errors, results) {
+	conn.query(stmt, function (errors, results) {
 		// Checking if there are any errors.
 		if (errors) throw errors;
 
@@ -177,7 +194,7 @@ router.get('/search', function(req, res) {
 });
 
 // Setting up product route.
-router.get('/:variantID', function(req, res) {
+router.get('/:variantID', function (req, res) {
 	const stmt = conn.format(
 		'SELECT ?? FROM ?? WHERE ?? = ? AND ?? = 0 AND ?? > 0 ORDER BY ?? LIMIT 1;',
 		[
@@ -207,7 +224,7 @@ router.get('/:variantID', function(req, res) {
 });
 
 // Setting up product with flavor route.
-router.get('/:variantID/:flavorID', function(req, res) {
+router.get('/:variantID/:flavorID', function (req, res) {
 	var checkStmt = conn.format(
 		'SELECT 1 FROM ?? ?? INNER JOIN ?? ?? ON ??.?? = ??.?? WHERE ??.?? = ? AND ??.?? = ? AND ??.?? = 0 AND ??.?? > 0 AND ??.?? = 0',
 		[
@@ -233,7 +250,7 @@ router.get('/:variantID/:flavorID', function(req, res) {
 			'Deleted'
 		]
 	);
-	conn.query(checkStmt, function(checkErrors, checkResults) {
+	conn.query(checkStmt, function (checkErrors, checkResults) {
 		// Checking if there are any errors.
 		if (checkErrors) throw checkErrors;
 

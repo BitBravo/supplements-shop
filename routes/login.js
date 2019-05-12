@@ -1,24 +1,41 @@
-// Importing the dependancies.
-const express = require('express'),
-	sha1 = require('sha1'),
+/**
+ * Importing the dependancies
+ */
+var express = require('express'),
 	mysql = require('mysql'),
-	database = require('./../helpers/database'),
+	sha1 = require('sha1'),
+	router = express.Router(),
+	databaseConfig = require('./../config/database'),
 	getCopyrightDate = require('./../helpers/copyright'),
-	formater = require('../helpers/formater'),
-	conn = mysql.createConnection({
-		database: database.name,
-		host: database.host,
-		password: database.password,
-		user: database.user,
-		multipleStatements: true
-	}),
-	router = express.Router();
+	formater = require('./../helpers/formater');
 
-// Connecting to the database.
+
+
+/**
+ * Configurations
+ */
+var conn = mysql.createConnection({
+	database: databaseConfig.name,
+	host: databaseConfig.host,
+	password: databaseConfig.password,
+	user: databaseConfig.user,
+	multipleStatements: true
+});
+
+
+
+/**
+ * Connecting to the database
+ */
 conn.connect();
 
+
+
+/**
+ * Routing
+ */
 // Setting up login route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
 	if (req.session.loggedIn) {
 		res.redirect('/dashboard');
 	} else {
@@ -69,7 +86,7 @@ router.get('/', function(req, res) {
 });
 
 // Setting up the login route.
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
 	const sentPassword = sha1(req.body.password);
 
 	conn.query('SELECT `Password` FROM `Config`;', (error, results) => {
@@ -93,7 +110,7 @@ router.post('/', function(req, res) {
 });
 
 // Setting up the logout route.
-router.get('/logout', function(req, res) {
+router.get('/logout', function (req, res) {
 	// Loggin out.
 	req.session.loggedIn = false;
 

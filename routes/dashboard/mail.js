@@ -1,28 +1,56 @@
-// Importing the dependancies.
-const express = require('express'),
+/**
+ * Importing the dependancies
+ */
+var express = require('express'),
 	mysql = require('mysql'),
 	moment = require('moment'),
-	database = require('../../helpers/database'),
-	getCopyrightDate = require('../../helpers/copyright'),
-	formater = require('../../helpers/formater'),
+	router = express.Router(),
 	login = require('./../../helpers/login'),
-	conn = mysql.createConnection({
-		database: database.name,
-		host: database.host,
-		password: database.password,
-		user: database.user,
-		multipleStatements: true
-	}),
-	router = express.Router();
+	databaseConfig = require('./../../config/database'),
+	getCopyrightDate = require('./../../helpers/copyright'),
+	formater = require('./../../helpers/formater');
 
-// Connecting to the database.
+
+
+/**
+ * Configurations
+ */
+var conn = mysql.createConnection({
+	database: databaseConfig.name,
+	host: databaseConfig.host,
+	password: databaseConfig.password,
+	user: databaseConfig.user,
+	multipleStatements: true
+});
+
+
+
+/**
+ * Connecting to the database
+ */
 conn.connect();
 
-// Setting the local timezone.
+
+
+/**
+ * Using the login middleware
+ */
+router.use(login);
+
+
+
+/**
+ * Setting up the local timezone
+ */
 moment.locale('ar-ma');
 
+
+
+/**
+ * Routing
+ */
 // Setting up the mail retrieval route.
-router.get('/read/:id', login, function(req, res) {
+router.get('/read/:id', login, function (req, res) {
 	const mailId = req.params.id;
 
 	stmt = mysql.format(
@@ -44,12 +72,12 @@ router.get('/read/:id', login, function(req, res) {
 });
 
 // Setting up the default mail route.
-router.get('/', login, function(req, res) {
+router.get('/', login, function (req, res) {
 	res.redirect('/dashboard/mail/0');
 });
 
 // Setting up the mail route.
-router.get('/:mode', login, function(req, res) {
+router.get('/:mode', login, function (req, res) {
 	const mode =
 		req.params.mode > 2 ? 2 : req.params.mode < 0 ? 0 : req.params.mode;
 
@@ -58,8 +86,8 @@ router.get('/:mode', login, function(req, res) {
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories` WHERE `Deleted` = 0;\
         SELECT * FROM `Mail` ' +
-			(mode == 0 ? '' : mode == 1 ? 'WHERE `Read` = 1' : 'WHERE `Read` = 0') +
-			' ORDER BY `IssueDate` DESC;\
+		(mode == 0 ? '' : mode == 1 ? 'WHERE `Read` = 1' : 'WHERE `Read` = 0') +
+		' ORDER BY `IssueDate` DESC;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
     ',
 		(error, results) => {
@@ -106,12 +134,12 @@ router.get('/:mode', login, function(req, res) {
 });
 
 // Setting up the mail creation route.
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
 	const mail = {
-			username: req.body.username,
-			email: req.body.email,
-			message: req.body.message
-		},
+		username: req.body.username,
+		email: req.body.email,
+		message: req.body.message
+	},
 		stmt = mysql.format(
 			'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, NOW(), ?);',
 			[
@@ -138,7 +166,7 @@ router.post('/', function(req, res) {
 });
 
 // Setting up the mail update (read) route.
-router.delete('/', login, function(req, res) {
+router.delete('/', login, function (req, res) {
 	const ids = req.body.ids,
 		stmt = mysql.format('UPDATE ?? SET ?? = ? WHERE ?? IN (?);', [
 			'Mail',
@@ -156,7 +184,7 @@ router.delete('/', login, function(req, res) {
 });
 
 // Setting up the mail update (unread) route.
-router.put('/', login, function(req, res) {
+router.put('/', login, function (req, res) {
 	const ids = req.body.ids,
 		stmt = mysql.format('UPDATE ?? SET ?? = ? WHERE ?? IN (?);', [
 			'Mail',

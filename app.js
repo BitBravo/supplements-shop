@@ -10,9 +10,17 @@
  *
  */
 
-// Importing the dependancies.
-const path = require('path'),
+
+
+/**
+ * Importing the dependancies
+ */
+var
+	// Utils
+	path = require('path'),
 	dotenv = require('dotenv-extended').load({ overrideProcessEnv: true }),
+
+	// Dependancies
 	express = require('express'),
 	methodOverride = require('method-override'),
 	bodyParser = require('body-parser'),
@@ -20,18 +28,27 @@ const path = require('path'),
 	mysql = require('mysql'),
 	flash = require('connect-flash'),
 	favicon = require('express-favicon'),
-	database = require('./helpers/database'),
-	getCopyrightDate = require('./helpers/copyright'),
+	session = require('express-session'),
+	databaseConfig = require('./config/database'),
 	formater = require('./helpers/formater'),
+	getCopyrightDate = require('./helpers/copyright');
+
+
+
+/**
+ * Configurations
+ */
+var
+	// Database config
 	conn = mysql.createConnection({
-		database: database.name,
-		host: database.host,
-		password: database.password,
-		user: database.user,
+		database: databaseConfig.name,
+		host: databaseConfig.host,
+		password: databaseConfig.password,
+		user: databaseConfig.user,
 		multipleStatements: true
 	}),
-	session = require('express-session'),
-	app = express(),
+
+	// Getting the routes
 	routers = {
 		dashboard: require('./routes/dashboard/dashboard'),
 		index: require('./routes/index'),
@@ -39,11 +56,45 @@ const path = require('path'),
 		login: require('./routes/login')
 	};
 
-// Setting up sessions.
+
+
+/**
+ * Initializing the app
+ */
+var app = express();
+
+// Connecting to the database.
+conn.connect();
+
+// Setting up handlebars.
+app.engine(
+	'hbs',
+	exphbs({
+		extname: 'hbs',
+		defaultLayout: 'main',
+		helpers: require('./helpers/hbs')
+	})
+);
+
+
+
+/**
+ * Setting up the app's variable
+ */
+app.set('port', process.env.PORT || 3000);
 app.set('trust proxy', 1);
+app.set('view engine', 'hbs');
+
+
+
+/**
+ * Setting up the middlewares
+ */
+
+// Setting up sessions.
 app.use(
 	session({
-		secret: '2gQqHgF2NuH3KGJP',
+		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
 		cookie: { secure: false }
@@ -57,24 +108,6 @@ app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Setting up handlebars.
-app.engine(
-	'hbs',
-	exphbs({
-		extname: 'hbs',
-		defaultLayout: 'main',
-		helpers: require('./helpers/hbs')
-	})
-);
-app.set('view engine', 'hbs');
-
-// Static assets.
-app.use('/assets', express.static(path.join(__dirname + '/public')));
-app.use('/assets', express.static(path.join(__dirname + '/node_modules')));
-
-// Connecting to the database.
-conn.connect();
-
 // Setting up connect-flash.
 app.use(flash());
 
@@ -87,7 +120,19 @@ app.use(function (req, res, next) {
 	next();
 });
 
-// Routing.
+
+
+/**
+ * Setting up the public assets
+ */
+app.use('/assets', express.static(path.join(__dirname + '/public')));
+app.use('/assets', express.static(path.join(__dirname + '/node_modules')));
+
+
+
+/**
+ * Routing
+ */
 app.use(routers.index);
 app.use('/products', routers.products);
 app.use('/dashboard', routers.dashboard);
@@ -139,5 +184,9 @@ app.get('*', (req, res) => {
 	);
 });
 
-// Exporting the app
+
+
+/**
+ * Exporting the app
+ */
 module.exports = app;

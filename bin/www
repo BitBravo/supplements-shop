@@ -10,16 +10,22 @@
  *
  */
 
-// Importing the dependancies
+
+
+/**
+ * Importing the dependancies
+ */
 var app = require('./../app'),
   http = require('http'),
   server = http.createServer(app);
 
-// Listening.
-server.listen(process.env.PORT || 3000, () => {
-  // Logging.
+
+
+/**
+ * Starting to the app
+ */
+server.listen(app.get('port'), function () {
   console.log(
-    `Supplements Maroc has successfully started on port ${process.env.PORT ||
-    3000}.`
+    'Supplements Maroc has successfully started on port ' + app.get('port') + '.'
   );
 });

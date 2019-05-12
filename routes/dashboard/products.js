@@ -1,28 +1,48 @@
-// Importing the dependancies.
-const express = require('express'),
+/**
+ * Importing the dependancies
+ */
+var express = require('express'),
 	mysql = require('mysql'),
-	database = require('../../helpers/database'),
-	getCopyrightDate = require('../../helpers/copyright'),
-	formater = require('../../helpers/formater'),
+	router = express.Router(),
 	login = require('./../../helpers/login'),
-	async = require('async'),
-	conn = mysql.createConnection({
-		database: database.name,
-		host: database.host,
-		password: database.password,
-		user: database.user,
-		multipleStatements: true
-	}),
-	router = express.Router();
+	databaseConfig = require('./../../config/database'),
+	getCopyrightDate = require('./../../helpers/copyright'),
+	formater = require('./../../helpers/formater');
 
-// Connecting to the database.
+
+
+/**
+ * Configurations
+ */
+var conn = mysql.createConnection({
+	database: databaseConfig.name,
+	host: databaseConfig.host,
+	password: databaseConfig.password,
+	user: databaseConfig.user,
+	multipleStatements: true
+});
+
+
+
+/**
+ * Connecting to the database
+ */
 conn.connect();
 
-// Using the login middleware.
+
+
+/**
+ * Using the login middleware
+ */
 router.use(login);
 
+
+
+/**
+ * Routing
+ */
 // Setting up the products route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
 	conn.query(
 		'\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
@@ -88,7 +108,7 @@ router.get('/', function(req, res) {
 });
 
 // Setting up the product retrieval route.
-router.get('/:productID', function(req, res) {
+router.get('/:productID', function (req, res) {
 	const stmt = conn.format(
 		'\
     SELECT * FROM ?? WHERE ?? = ?;\
@@ -168,7 +188,7 @@ router.get('/:productID', function(req, res) {
 });
 
 // Setting the product creation route.
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
 	var stmt = conn.format(
 		'INSERT INTO ?? (??, ??, ??, ??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, 0);',
 		[
@@ -192,14 +212,14 @@ router.post('/', function(req, res) {
 		]
 	);
 
-	conn.query(stmt, function(errors, results) {
+	conn.query(stmt, function (errors, results) {
 		// Checking if there are any errors.
 		if (errors) {
 			console.error(errors);
 			res.redirect('/error');
 		} else {
 			if (req.body['Stock']) {
-				async.each(req.body['Stock'], function(productStock) {
+				async.each(req.body['Stock'], function (productStock) {
 					var variantStmt = conn.format(
 						'INSERT INTO ?? (??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?, 0);',
 						[
@@ -220,13 +240,13 @@ router.post('/', function(req, res) {
 						]
 					);
 
-					conn.query(variantStmt, function(variantErrors, variantResults) {
+					conn.query(variantStmt, function (variantErrors, variantResults) {
 						// Checking if there are any errors.
 						if (variantErrors) {
 							console.error(variantErrors);
 							res.redirect('/error');
 						} else {
-							async.each(productStock['Flavors'], function(stockFlavor) {
+							async.each(productStock['Flavors'], function (stockFlavor) {
 								var flavorsStmt = conn.format(
 									'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, 0);',
 									[
@@ -243,7 +263,7 @@ router.post('/', function(req, res) {
 									]
 								);
 
-								conn.query(flavorsStmt, function(
+								conn.query(flavorsStmt, function (
 									flavorsErrors,
 									flavorsResults
 								) {
@@ -268,7 +288,7 @@ router.post('/', function(req, res) {
 							]
 						);
 
-						conn.query(priceStmt, function(priceErrors, priceResults) {
+						conn.query(priceStmt, function (priceErrors, priceResults) {
 							// Checking if there are any errors.
 							if (priceErrors) {
 								console.error(priceErrors);
@@ -289,7 +309,7 @@ router.post('/', function(req, res) {
 });
 
 // Setting up the product edition route.
-router.put('/', function(req, res) {
+router.put('/', function (req, res) {
 	var stmt = conn.format(
 		'UPDATE ?? SET ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?;',
 		[
@@ -313,21 +333,21 @@ router.put('/', function(req, res) {
 		]
 	);
 
-	conn.query(stmt, function(errors, results) {
+	conn.query(stmt, function (errors, results) {
 		// Checking if there are any errors.
 		if (errors) {
 			console.error(errors);
 			res.redirect('/error');
 		} else {
 			if (req.body['Stock']) {
-				var update = req.body['Stock'].filter(function(stk) {
-						if (parseInt(stk.VariantID) !== 0) {
-							return true;
-						} else {
-							return false;
-						}
-					}),
-					insert = req.body['Stock'].filter(function(stk) {
+				var update = req.body['Stock'].filter(function (stk) {
+					if (parseInt(stk.VariantID) !== 0) {
+						return true;
+					} else {
+						return false;
+					}
+				}),
+					insert = req.body['Stock'].filter(function (stk) {
 						if (parseInt(stk.VariantID) === 0) {
 							return true;
 						} else {
@@ -336,7 +356,7 @@ router.put('/', function(req, res) {
 					});
 
 				// Updates.
-				async.each(update, function(upStock) {
+				async.each(update, function (upStock) {
 					var stockUpdateStmt = conn.format(
 						'UPDATE ?? SET ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?;',
 						[
@@ -352,7 +372,7 @@ router.put('/', function(req, res) {
 						]
 					);
 
-					conn.query(stockUpdateStmt, function(
+					conn.query(stockUpdateStmt, function (
 						stockUpdateErrors,
 						stockUpdateResults
 					) {
@@ -372,7 +392,7 @@ router.put('/', function(req, res) {
 								]
 							);
 
-							conn.query(stockPriceCheckStmt, function(
+							conn.query(stockPriceCheckStmt, function (
 								stockPriceCheckErrors,
 								stockPriceCheckResults
 							) {
@@ -394,7 +414,7 @@ router.put('/', function(req, res) {
 											]
 										);
 
-										conn.query(stockPriceStmt, function(
+										conn.query(stockPriceStmt, function (
 											stockPriceErrors,
 											stockPriceResults
 										) {
@@ -409,7 +429,7 @@ router.put('/', function(req, res) {
 							});
 						}
 
-						async.each(upStock['Flavors'], function(flv) {
+						async.each(upStock['Flavors'], function (flv) {
 							if (flv['VariantID']) {
 								var flavorUpdateStmt = conn.format(
 									'UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ? AND ?? = ?',
@@ -426,7 +446,7 @@ router.put('/', function(req, res) {
 									]
 								);
 
-								conn.query(flavorUpdateStmt, function(
+								conn.query(flavorUpdateStmt, function (
 									flavorUpdateErrors,
 									flavorUpdateResults
 								) {
@@ -449,7 +469,7 @@ router.put('/', function(req, res) {
 									]
 								);
 
-								conn.query(flavorInsertStmt, function(
+								conn.query(flavorInsertStmt, function (
 									flavorInsertErrors,
 									flavorInsertResults
 								) {
@@ -459,7 +479,7 @@ router.put('/', function(req, res) {
 							}
 						});
 
-						async.each(upStock['DeletedFlavors'], function(flvId) {
+						async.each(upStock['DeletedFlavors'], function (flvId) {
 							var flavorDeletionStmt = conn.format(
 								'UPDATE ?? SET ?? = 1 WHERE ?? = ? AND ?? = ?;',
 								[
@@ -472,7 +492,7 @@ router.put('/', function(req, res) {
 								]
 							);
 
-							conn.query(flavorDeletionStmt, function(
+							conn.query(flavorDeletionStmt, function (
 								flavorDeletionErrors,
 								flavorDeletionResults
 							) {
@@ -484,7 +504,7 @@ router.put('/', function(req, res) {
 				});
 
 				// Insertions.
-				async.each(insert, function(inStock) {
+				async.each(insert, function (inStock) {
 					var stockInsertStmt = conn.format(
 						'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?);',
 						[
@@ -502,7 +522,7 @@ router.put('/', function(req, res) {
 						]
 					);
 
-					conn.query(stockInsertStmt, function(
+					conn.query(stockInsertStmt, function (
 						stockInsertErrors,
 						stockInsertResults
 					) {
@@ -523,7 +543,7 @@ router.put('/', function(req, res) {
 								]
 							);
 
-							conn.query(stockPriceStmt, function(
+							conn.query(stockPriceStmt, function (
 								stockPriceErrors,
 								stockPriceResults
 							) {
@@ -534,7 +554,7 @@ router.put('/', function(req, res) {
 								}
 							});
 
-							async.each(inStock['Flavors'], function(flv) {
+							async.each(inStock['Flavors'], function (flv) {
 								var flavorInsertStmt = conn.format(
 									'INSERT INTO ?? (??, ??, ??, ??) VALUES (?, ?, ?, ?);',
 									[
@@ -550,7 +570,7 @@ router.put('/', function(req, res) {
 									]
 								);
 
-								conn.query(flavorInsertStmt, function(
+								conn.query(flavorInsertStmt, function (
 									flavorInsertErrors,
 									flavorInsertResults
 								) {
@@ -566,7 +586,7 @@ router.put('/', function(req, res) {
 				});
 
 				// Deletions.
-				async.each(req.body['DeletedVariants'], function(variantId) {
+				async.each(req.body['DeletedVariants'], function (variantId) {
 					var stockDeletionStmt = conn.format(
 						'UPDATE ?? SET ?? = 1, ?? = 0 WHERE ?? = ?',
 						[
@@ -578,7 +598,7 @@ router.put('/', function(req, res) {
 						]
 					);
 
-					conn.query(stockDeletionStmt, function(
+					conn.query(stockDeletionStmt, function (
 						stockDeletionErrors,
 						stockDelitionResults
 					) {
@@ -601,7 +621,7 @@ router.put('/', function(req, res) {
 });
 
 // Setting up the product's deletion route.
-router.delete('/', function(req, res) {
+router.delete('/', function (req, res) {
 	var stmt = conn.format('UPDATE ?? SET ?? = 1 WHERE ?? = ?;', [
 		'Products',
 		'Deleted',
@@ -609,7 +629,7 @@ router.delete('/', function(req, res) {
 		req.body['ID']
 	]);
 
-	conn.query(stmt, function(errors, results) {
+	conn.query(stmt, function (errors, results) {
 		// Checking if there are any erros.
 		if (errors) {
 			console.error(errors);
@@ -625,7 +645,7 @@ router.delete('/', function(req, res) {
 });
 
 // Setting up the product restoration route.
-router.put('/restore', function(req, res) {
+router.put('/restore', function (req, res) {
 	var data = {
 		productId: parseInt(req.body['productId']),
 		variantId: parseInt(req.body['variantId']),
@@ -642,7 +662,7 @@ router.put('/restore', function(req, res) {
 			data.flavorId
 		]);
 
-		conn.query(stmt, function(errors, results) {
+		conn.query(stmt, function (errors, results) {
 			// Checking if there are any errors.
 			if (errors) {
 				console.error(errors);
@@ -657,7 +677,7 @@ router.put('/restore', function(req, res) {
 			data.variantId
 		]);
 
-		conn.query(stmt, function(errors, results) {
+		conn.query(stmt, function (errors, results) {
 			// Checking if there are any errors.
 			if (errors) {
 				console.error(errors);
@@ -672,7 +692,7 @@ router.put('/restore', function(req, res) {
 			data.productId
 		]);
 
-		conn.query(stmt, function(errors, results) {
+		conn.query(stmt, function (errors, results) {
 			// Checking if there are any errors.
 			if (errors) {
 				console.error(errors);
