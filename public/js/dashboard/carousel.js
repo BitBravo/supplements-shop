@@ -13,11 +13,15 @@ $('document').ready(() => {
 	// Initializing the collapsibles.
 	$('.dashboard-carousel .collapsible').collapsible();
 
+	// Initializing the sortable items.
+	//$('.dashboard-carousel #sortable').sortable();
+	//$('.dashboard-carousel #sortable').disableSelection();
+
 	// Loading the image preview.
-	$('#carousel-url').on('change', function() {
+	$('#carousel-url').on('change', function () {
 		$('#carousel-creation-preview').attr('src', $(this).val());
 
-		$('#carousel-creation-preview').on('error', function() {
+		$('#carousel-creation-preview').on('error', function () {
 			$('#carousel-creation-preview').attr(
 				'src',
 				'/assets/img/backgrounds/placeholder.jpg'
@@ -26,7 +30,7 @@ $('document').ready(() => {
 	});
 
 	// Deleting a brand.
-	$('.dashboard-carousel .btn-delete').on('click', function() {
+	$('.dashboard-carousel .btn-delete').on('click', function () {
 		var carouselId = $(this)
 			.next()
 			.val();
@@ -35,14 +39,14 @@ $('document').ready(() => {
 			url: '/dashboard/carousel',
 			type: 'DELETE',
 			data: { carouselId },
-			success: function() {
+			success: function () {
 				location.reload();
 			}
 		});
 	});
 
 	// Restoring a brand.
-	$('.dashboard-carousel .btn-restore').on('click', function() {
+	$('.dashboard-carousel .btn-restore').on('click', function () {
 		var carouselId = $(this)
 			.prev()
 			.val();
@@ -51,7 +55,7 @@ $('document').ready(() => {
 			url: '/dashboard/carousel/restore',
 			type: 'PUT',
 			data: { carouselId },
-			success: function() {
+			success: function () {
 				location.reload();
 			}
 		});
