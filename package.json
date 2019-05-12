@@ -4,8 +4,8 @@
 	"description": "Online store for selling workout-related protein products.",
 	"main": "app.js",
 	"scripts": {
-		"start": "node ./app.js $PORT",
-		"dev": "npx nodemon ./app.js",
+		"start": "node ./bin/www",
+		"dev": "npx nodemon ./bin/www",
 		"sass": "npx gulp sass",
 		"sass:watch": "npx gulp sass:watch"
 	},

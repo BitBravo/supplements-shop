@@ -139,11 +139,5 @@ app.get('*', (req, res) => {
 	);
 });
 
-// Listening.
-app.listen(process.env.PORT || 3000, () => {
-	// Logging.
-	console.log(
-		`Supplements Maroc has successfully started on port ${process.env.PORT ||
-		3000}.`
-	);
-});
+// Exporting the app
+module.exports = app;
