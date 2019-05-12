@@ -19,6 +19,7 @@ const path = require('path'),
 	exphbs = require('express-handlebars'),
 	mysql = require('mysql'),
 	flash = require('connect-flash'),
+	favicon = require('express-favicon'),
 	database = require('./helpers/database'),
 	getCopyrightDate = require('./helpers/copyright'),
 	formater = require('./helpers/formater'),
@@ -77,8 +78,11 @@ conn.connect();
 // Setting up connect-flash.
 app.use(flash());
 
+// Setting up the favicon.
+app.use(favicon(path.join(__dirname + '/public/img/favicon.ico')));
+
 // Updating the logg-in status.
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 	res.locals.loggedIn = req.session.loggedIn;
 	next();
 });
@@ -140,6 +144,6 @@ app.listen(process.env.PORT || 3000, () => {
 	// Logging.
 	console.log(
 		`Supplements Maroc has successfully started on port ${process.env.PORT ||
-			3000}.`
+		3000}.`
 	);
 });
