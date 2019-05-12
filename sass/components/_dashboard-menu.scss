@@ -8,26 +8,28 @@
   overflow: initial;
   width: 250px;
 
-  &::after {
-    border-bottom: 20px solid $color-light--light;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    content: '';
-    height: 0;
-    position: absolute;
-    top: -20px;
-    width: 0;
-  }
-
-  @media screen and (min-width: 1236px) {
+  &.loggedin {
     &::after {
-      left: 10px;
+      border-bottom: 20px solid $color-light--light;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      content: '';
+      height: 0;
+      position: absolute;
+      top: -20px;
+      width: 0;
     }
-  }
 
-  @media screen and (max-width: 1236px) {
-    &::after {
-      right: 10px;
+    @media screen and (min-width: 1236px) {
+      &::after {
+        left: 10px;
+      }
+    }
+
+    @media screen and (max-width: 1236px) {
+      &::after {
+        right: 10px;
+      }
     }
   }
 
