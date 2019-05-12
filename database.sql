@@ -187,7 +187,6 @@ CREATE TABLE IF NOT EXISTS `PacksVariants` (
 	`PackVariantID`			INT NOT NULL AUTO_INCREMENT,
 	`PackID`						INT NOT NULL,
 	`VariantID`         INT NOT NULL,
-	`Index`							SMALLINT NOT NULL,
 	`Deleted`           BIT NOT NULL DEFAULT 0,
 
 	CONSTRAINT pk_packs_variants_id PRIMARY KEY (`PackVariantID`),
@@ -232,7 +231,6 @@ CREATE TABLE IF NOT EXISTS `Carousel` (
 	`CarouselID` 				INT NOT NULL AUTO_INCREMENT,
 	`CarouselURL`				TEXT,
 	`Tag`								VARCHAR(100) NOT NULL,
-	`Index`							SMALLINT NOT NULL,
 	`Deleted`						BIT NULL DEFAULT 0,
 
 	CONSTRAINT pk_carousel_id PRIMARY KEY (`CarouselID`)
