@@ -1,27 +1,48 @@
-// Importing the dependancies.
-const express = require('express'),
+/**
+ * Importing the dependancies
+ */
+var express = require('express'),
 	mysql = require('mysql'),
-	database = require('../../helpers/database'),
-	getCopyrightDate = require('../../helpers/copyright'),
-	formater = require('../../helpers/formater'),
+	router = express.Router(),
 	login = require('./../../helpers/login'),
-	conn = mysql.createConnection({
-		database: database.name,
-		host: database.host,
-		password: database.password,
-		user: database.user,
-		multipleStatements: true
-	}),
-	router = express.Router();
+	databaseConfig = require('./../../config/database'),
+	getCopyrightDate = require('./../../helpers/copyright'),
+	formater = require('./../../helpers/formater');
 
-// Connecting to the database.
+
+
+/**
+ * Configurations
+ */
+var conn = mysql.createConnection({
+	database: databaseConfig.name,
+	host: databaseConfig.host,
+	password: databaseConfig.password,
+	user: databaseConfig.user,
+	multipleStatements: true
+});
+
+
+
+/**
+ * Connecting to the database
+ */
 conn.connect();
 
-// Using the login middleware.
+
+
+/**
+ * Using the login middleware
+ */
 router.use(login);
 
+
+
+/**
+ * Routing
+ */
 // Setting up the shipping route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
 	conn.query(
 		'\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
@@ -95,8 +116,8 @@ router.put('/price', (req, res) => {
 			if (results[0].ShippingPrice != req.body['price']) {
 				conn.query(
 					'INSERT INTO `ShippingPriceHistory` (`ShippingPrice`) VALUES (' +
-						req.body['price'] +
-						');',
+					req.body['price'] +
+					');',
 					(_errors, _results) => {
 						// Checking if there are any errors.
 						if (_errors) throw _errors;
@@ -129,8 +150,8 @@ router.put('/bump', (req, res) => {
 			if (results[0].ShippingBump != req.body['bump']) {
 				conn.query(
 					'INSERT INTO `ShippingBumpHistory` (`ShippingBump`) VALUES (' +
-						req.body['bump'] +
-						');',
+					req.body['bump'] +
+					');',
 					(errors, results) => {
 						// Checking if there are any errors.
 						if (errors) throw errors;

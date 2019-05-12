@@ -1,34 +1,61 @@
-// Importing the dependancies.
-const express = require('express'),
+/**
+ * Importing the dependancies
+ */
+var express = require('express'),
 	mysql = require('mysql'),
-	database = require('../../helpers/database'),
-	getCopyrightDate = require('../../helpers/copyright'),
-	formater = require('../../helpers/formater'),
+	router = express.Router(),
 	login = require('./../../helpers/login'),
-	conn = mysql.createConnection({
-		database: database.name,
-		host: database.host,
-		password: database.password,
-		user: database.user,
-		multipleStatements: true
-	}),
-	routes = {
-		products: require('./products'),
-		mail: require('./mail'),
-		brands: require('./brands'),
-		categories: require('./categories'),
-		flavors: require('./flavors'),
-		coupons: require('./coupons'),
-		shipping: require('./shipping'),
-		carousel: require('./carousel'),
-		config: require('./config')
-	},
-	router = express.Router();
+	databaseConfig = require('./../../config/database'),
+	getCopyrightDate = require('./../../helpers/copyright'),
+	formater = require('./../../helpers/formater');
 
-// Connecting to the database.
+
+
+/**
+ * Configurations
+ */
+var conn = mysql.createConnection({
+	database: databaseConfig.name,
+	host: databaseConfig.host,
+	password: databaseConfig.password,
+	user: databaseConfig.user,
+	multipleStatements: true
+});
+
+
+
+/**
+ * Connecting to the database
+ */
 conn.connect();
 
-// Routing dashboard related routes.
+
+
+/**
+ * Using the login middleware
+ */
+router.use(login);
+
+
+
+/**
+ * Settign up the routes
+ */
+
+// Getting the routes
+var routes = {
+	products: require('./products'),
+	mail: require('./mail'),
+	brands: require('./brands'),
+	categories: require('./categories'),
+	flavors: require('./flavors'),
+	coupons: require('./coupons'),
+	shipping: require('./shipping'),
+	carousel: require('./carousel'),
+	config: require('./config')
+};
+
+// Routing dashboard related routes
 router.use('/products', routes.products);
 router.use('/mail', routes.mail);
 router.use('/brands', routes.brands);
@@ -39,8 +66,14 @@ router.use('/shipping', routes.shipping);
 router.use('/carousel', routes.carousel);
 router.use('/config', routes.config);
 
+
+
+/**
+ * Routing
+ */
+
 // Setting up dashboard route.
-router.get('/', login, function(req, res) {
+router.get('/', login, function (req, res) {
 	conn.query(
 		"\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\

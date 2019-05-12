@@ -1,27 +1,49 @@
-// Importing the dependancies.
-const express = require('express'),
+/**
+ * Importing the dependancies
+ */
+var express = require('express'),
 	mysql = require('mysql'),
-	database = require('../../helpers/database'),
-	getCopyrightDate = require('../../helpers/copyright'),
-	formater = require('../../helpers/formater'),
+	router = express.Router(),
 	login = require('./../../helpers/login'),
-	conn = mysql.createConnection({
-		database: database.name,
-		host: database.host,
-		password: database.password,
-		user: database.user,
-		multipleStatements: true
-	}),
-	router = express.Router();
+	databaseConfig = require('./../../config/database'),
+	getCopyrightDate = require('./../../helpers/copyright'),
+	formater = require('./../../helpers/formater');
 
-// Connecting to the database.
+
+
+/**
+ * Configurations
+ */
+var conn = mysql.createConnection({
+	database: databaseConfig.name,
+	host: databaseConfig.host,
+	password: databaseConfig.password,
+	user: databaseConfig.user,
+	multipleStatements: true
+});
+
+
+
+/**
+ * Connecting to the database
+ */
 conn.connect();
 
-// Using the login middleware.
+
+
+/**
+ * Using the login middleware
+ */
 router.use(login);
 
+
+
+/**
+ * Routing
+ */
+
 // Setting up the coupons route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
 	conn.query(
 		'\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
@@ -77,7 +99,7 @@ router.get('/', function(req, res) {
 });
 
 // Setting the coupon creation route.
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
 	const couponCode = req.body['coupon-code'],
 		couponTimes = req.body['coupon-times'],
 		couponDiscount = req.body['coupon-discount'],
@@ -122,7 +144,7 @@ router.post('/', function(req, res) {
 });
 
 // Setting up the coupon edition route.
-router.put('/', function(req, res) {
+router.put('/', function (req, res) {
 	const couponID = req.body['coupon-id'],
 		couponTimes = req.body['coupon-times'],
 		couponState = req.body['coupon-state'] ? 1 : 0,
@@ -132,10 +154,10 @@ router.put('/', function(req, res) {
 			'\
             UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?; \
             ' +
-				(couponDiscount != couponOldDiscount
-					? 'INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?);'
-					: '') +
-				' \
+			(couponDiscount != couponOldDiscount
+				? 'INSERT INTO ?? (??, ??, ??) VALUES (?, NOW(), ?);'
+				: '') +
+			' \
             ',
 			[
 				'Coupons',
@@ -167,7 +189,7 @@ router.put('/', function(req, res) {
 });
 
 // Setting up the deletion route.
-router.delete('/', function(req, res) {
+router.delete('/', function (req, res) {
 	var couponId = req.body['couponId'],
 		stmt = conn.format('UPDATE ?? SET ?? = 1 WHERE ?? = ?;', [
 			'Coupons',
@@ -189,7 +211,7 @@ router.delete('/', function(req, res) {
 });
 
 // Setting up the restoration route.
-router.put('/restore', function(req, res) {
+router.put('/restore', function (req, res) {
 	var couponId = req.body['couponId'],
 		stmt = conn.format('UPDATE ?? SET ?? = 0 WHERE ?? = ?;', [
 			'Coupons',

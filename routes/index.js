@@ -1,23 +1,41 @@
-// Importing the dependancies.
-const express = require('express'),
+/**
+ * Importing the dependancies
+ */
+var express = require('express'),
 	mysql = require('mysql'),
-	database = require('./../helpers/database'),
+	sha1 = require('sha1'),
+	router = express.Router(),
+	databaseConfig = require('./../config/database'),
 	getCopyrightDate = require('./../helpers/copyright'),
-	formater = require('../helpers/formater'),
-	conn = mysql.createConnection({
-		database: database.name,
-		host: database.host,
-		password: database.password,
-		user: database.user,
-		multipleStatements: true
-	}),
-	router = express.Router();
+	formater = require('./../helpers/formater');
 
-// Connecting to the database.
+
+
+/**
+ * Configurations
+ */
+var conn = mysql.createConnection({
+	database: databaseConfig.name,
+	host: databaseConfig.host,
+	password: databaseConfig.password,
+	user: databaseConfig.user,
+	multipleStatements: true
+});
+
+
+
+/**
+ * Connecting to the database
+ */
 conn.connect();
 
+
+
+/**
+ * Routing
+ */
 // Setting up index route.
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
 	conn.query(
 		'\
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
