@@ -1,3 +1,6 @@
+{{!-- JQuery UI --}}
+<script src="/assets/jquery-ui-dist/jquery-ui.js"></script>
+
 {{!-- The carousel script. --}}
 <script src="/assets/js/dashboard/carousel.js"></script>
 
@@ -74,7 +77,7 @@
                 <div class="row">
                   <div class="col s12">
                     {{#if Data.Carousel}}
-                      <ul class="collapsible">
+                      <ul id="sortable" class="collapsible">
                         {{#each Data.Carousel }}
                           <li>
                             <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
