@@ -13,10 +13,6 @@ $('document').ready(() => {
 	// Initializing the collapsibles.
 	$('.dashboard-carousel .collapsible').collapsible();
 
-	// Initializing the sortable items.
-	//$('.dashboard-carousel #sortable').sortable();
-	//$('.dashboard-carousel #sortable').disableSelection();
-
 	// Loading the image preview.
 	$('#carousel-url').on('change', function () {
 		$('#carousel-creation-preview').attr('src', $(this).val());
