@@ -1,0 +1,25 @@
+/**
+ *
+ * @name:       supplements-maroc
+ * @version:    1.0.0
+ * @author:     EOussama
+ * @license     GPL-3.0
+ * @source:     https://github.com/EOussama/supplements-maroc
+ *
+ * Online store for selling workout-related protein products.
+ *
+ */
+
+// Importing the dependancies
+var app = require('./../app'),
+  http = require('http'),
+  server = http.createServer(app);
+
+// Listening.
+server.listen(process.env.PORT || 3000, () => {
+  // Logging.
+  console.log(
+    `Supplements Maroc has successfully started on port ${process.env.PORT ||
+    3000}.`
+  );
+});
