@@ -3,6 +3,7 @@
  */
 var express = require('express'),
 	mysql = require('mysql'),
+	async = require('async'),
 	router = express.Router(),
 	login = require('./../../helpers/login'),
 	databaseConfig = require('./../../config/database'),
