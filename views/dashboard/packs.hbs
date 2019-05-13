@@ -35,15 +35,23 @@
                 <div class="row">
                   <div class="col s12">
                     <form action="/dashboard/packs" method="POST">
-                      <div class="row">
+                      <div class="row valign-wrapper">
                         <div class="col s6">
+                          <img src="/assets/img/backgrounds/placeholder.jpg" alt="The pack's image."
+                            class="responsive-img materialboxed">
                         </div>
-                        <div class="col s6">
+                        <div class="col s4 offset-s1">
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <input id="pack-image" type="url" name="pack-image" class="validate" required>
+                              <label for="pack-image">صورةالحزمة</label>
+                            </div>
+                          </div>
                           <div class="row">
                             <div class="input-field col s12">
                               <input id="pack-discount" type="number" step="0.01" min="0" name="pack-discount"
-                                class="validate" required>
-                              <label for="pack-discount">الخصم</label>
+                                class="validate" value="0" required>
+                              <label for="pack-discount">الخصم <small class="grey-text">&rlm;(درهم)&rlm;</small></label>
                             </div>
                           </div>
                           <div class="row">
@@ -54,17 +62,31 @@
                                     <option value="{{ this.ProductID }}">{{ this.ProductName }}</option>
                                   {{/each}}
                                 </select>
-                                <label>منتوجات</label>
-                                <input type="hidden" id="category-parent-par" name="category-parent" value="0">
+                                <label>المنتوجات</label>
+                              </div>
+                            {{else}}
+                              <div class="input-field col s12">
+                                <select disabled="true" id="packs-creation-products-select" data-empty="true">
+                                  <option value="0">لا توجد منتوجات</option>
+                                </select>
+                                <label>المنتوجات</label>
                               </div>
                             {{/if}}
                           </div>
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <select id="packs-creation-variants-select"></select>
+                              <label>أنواع المنتوج</label>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col s12 center-align">
-                          <input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
-                            value="إضافة">
+                      <div class="row tab-controls">
+                        <div class="col s6 center-align">
+                          <input type="reset" class="btn btn-large waves-effect waves-light" value="إعادة تعيين">
+                        </div>
+                        <div class="col s6 center-align">
+                          <input type="submit" class="btn btn-large waves-effect waves-light green" value="إضافة">
                         </div>
                       </div>
                     </form>
@@ -74,13 +96,13 @@
               <div id="packs-edition-tab" class="col s12">
                 <div class="row">
                   <div class="col s12">
-                    {{#if Data.CategoriesData}}
+                    {{#if Data.Packs}}
                       <ul class="collapsible">
-                        {{#each Data.CategoriesData }}
+                        {{#each Data.Packs }}
                           <li>
                             <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
                               {{ this.CategoryName }} &nbsp; <span class="grey-text">
-                                [{{ categoryTag this.CategoryParentName }}] </span>
+                                [{{ this.CategoryParentName }}] </span>
                             </div>
                             <div class="collapsible-body">
                               <form action="/dashboard/categories?_method=PUT" method="POST">
@@ -112,7 +134,7 @@
                       </ul>
                     {{else}}
                       <ul class="collection">
-                        <li class="collection-item center-align">لا توجد فئات حاليا
+                        <li class="collection-item center-align">لا توجد حزم حاليا
                         </li>
                       </ul>
                     {{/if}}
@@ -122,23 +144,23 @@
               <div id="packs-restoration-tab" class="col s12">
                 <div class="row">
                   <div class="col s12">
-                    {{#if Data.DeletedCategoriesData}}
+                    {{#if Data.DeletedPacks}}
                       <ul class="collection">
-                        {{#each Data.DeletedCategoriesData }}
+                        {{#each Data.DeletedPacks }}
                           <li class="collection-item">
                             <div>
                               <input type="hidden" value="{{ this.CategoryID }}">
                               <a href="javascript:void(0)" class="secondary-content btn-restore"><i
                                   class="material-icons">restore</i></a>
 
-                              <b>{{ this.CategoryName }} [{{ categoryTag this.CategoryParentName }}]</b>
+                              <b>{{ this.CategoryName }} [{{ this.CategoryParentName }}]</b>
                             </div>
                           </li>
                         {{/each}}
                       </ul>
                     {{else}}
                       <ul class="collection">
-                        <li class="collection-item center-align">لا توجد فئات محذوفة
+                        <li class="collection-item center-align">لا توجد حزم محذوفة
                         </li>
                       </ul>
                     {{/if}}
