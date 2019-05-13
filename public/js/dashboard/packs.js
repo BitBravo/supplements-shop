@@ -31,6 +31,28 @@ $('document').ready(() => {
     $(this).attr('src', '/assets/img/backgrounds/placeholder.jpg');
   });
 
+  // Products change event handler
+  $creationProductsSelect.on('change', function () {
+    var productID = $(this).val();
+
+    if (productID) {
+      disableVariantsCreation();
+      $.get('/dashboard/packs/variants/' + productID, function (response) {
+        if (response !== false) {
+          $creationVariantsSelect.empty();
+          $creationVariantsSelect.prop('disabled', false);
+          $creationSubmit.prop('disabled', false);
+
+          $.each(response, function (index, variant) {
+            $creationVariantsSelect.append('<option value="' + variant['VariantID'] + '">' + formatVariantName(variant['VariantType'], variant['VariantValue']) + '</option>');
+          });
+
+          updateUI();
+        }
+      });
+    }
+  });
+
   // Creation reset event.
   $('.dashboard-packs #packs-creation-tab form').on('reset', function () {
     // Reseting the preview
@@ -68,23 +90,64 @@ $('document').ready(() => {
   // updating the UI
   updateUI();
 
+  // Triggering the products creation change event
+  $creationProductsSelect.trigger('change');
+
+  // Disabling the variants' select
+  function disableVariantsCreation() {
+    $creationVariantsSelect.empty();
+    $creationVariantsSelect.prop('disabled', true);
+    $creationVariantsSelect.append('<option value="0">لا توجد أي أنواع</option>');
+
+    $creationSubmit.prop('disabled', true);
+  }
+
+  // Formating the variant name
+  function formatVariantName(variantType, variantValue) {
+    var formatedVariantType = '', formatedVariantValue = 0;
+
+    formatedVariantValue = (function () {
+      var output = '';
+
+      if (parseInt(variantType) === 1) {
+        output = variantValue >= 1 ? variantValue : variantValue * 1000;
+      } else {
+        output = parseInt(variantValue);
+      }
+
+      return output;
+    })();
+
+    formatedVariantType = (function () {
+      var output = '';
+
+      switch (parseInt(variantType)) {
+        case 1: {
+          output = parseFloat(variantValue) >= 1 ? 'كلغ' : 'غرام';
+          break;
+        }
+        case 2: {
+          output = parseInt(variantValue) > 1 ? 'حصص' : 'حصة';
+          break;
+        }
+        case 3: {
+          output = parseInt(variantValue) > 1 ? 'حزم' : 'حزمة';
+          break;
+        }
+      }
+
+      return output;
+    })();
+
+    return formatedVariantType + ' ' + formatedVariantValue;
+  }
+
   // UI update
   function updateUI() {
     var productsFound = $creationProductsSelect.data('empty');
 
     if (productsFound === true) {
-
-      // $.get('/dashboard/packs/variants/' + productID, function () {
-
-      // });
-      $creationVariantsSelect.empty();
-      $creationVariantsSelect.prop('disabled', true);
-      $creationVariantsSelect.append('<option value="0">لا توجد أي أنواع</option>');
-
-      $creationSubmit.prop('disabled', true);
-      console.log('not found');
-    } else {
-      console.log('found');
+      disableVariantsCreation();
     }
 
     // Re-initializing the select inputs
