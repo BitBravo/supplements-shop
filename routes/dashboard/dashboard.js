@@ -45,6 +45,7 @@ router.use(login);
 // Getting the routes
 var routes = {
 	products: require('./products'),
+	packs: require('./packs'),
 	mail: require('./mail'),
 	brands: require('./brands'),
 	categories: require('./categories'),
@@ -57,6 +58,7 @@ var routes = {
 
 // Routing dashboard related routes
 router.use('/products', routes.products);
+router.use('/packs', routes.packs);
 router.use('/mail', routes.mail);
 router.use('/brands', routes.brands);
 router.use('/categories', routes.categories);
