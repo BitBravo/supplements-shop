@@ -42,7 +42,7 @@ router.use(login);
  * Routing
  */
 
-// Setting up the categories route.
+// Setting up the packs route.
 router.get('/', function (req, res) {
   conn.query(
     '\
@@ -87,11 +87,11 @@ router.get('/', function (req, res) {
       // Getting the proper copyright date.
       data.CopyrightDate = getCopyrightDate();
 
-      // Rendering the categories page.
-      res.render('dashboard/categories', {
+      // Rendering the packs page.
+      res.render('dashboard/packs', {
         Data: data,
         Messages: {
-          Category: req.flash('category-flash')
+          Pack: req.flash('pack-flash')
         }
       });
     }
@@ -116,7 +116,7 @@ router.post('/', function (req, res) {
     if (error) throw error;
 
     // Setting up the flash message.
-    req.flash('category-flash', 'تم إنشاء الفئة بنجاح');
+    req.flash('pack-flash', 'تم إنشاء الفئة بنجاح');
 
     // Rendering the categories page.
     res.redirect('/dashboard/categories');
@@ -138,7 +138,7 @@ router.put('/', function (req, res) {
     if (error) throw error;
 
     // Setting up the flash message.
-    req.flash('category-flash', 'تم تحديث الفئة بنجاح');
+    req.flash('pack-flash', 'تم تحديث الفئة بنجاح');
 
     // Rendering the categories page.
     res.redirect('/dashboard/categories');
@@ -160,7 +160,7 @@ router.delete('/', function (req, res) {
     if (error) throw error;
 
     // Setting up the flash message.
-    req.flash('category-flash', 'تم حذف الفئة بنجاح');
+    req.flash('pack-flash', 'تم حذف الفئة بنجاح');
 
     // Signaling the client.
     res.send();
@@ -182,7 +182,7 @@ router.put('/restore', function (req, res) {
     if (error) throw error;
 
     // Setting up the flash message.
-    req.flash('category-flash', 'تمت استعادة الفئة بنجاح');
+    req.flash('pack-flash', 'تمت استعادة الفئة بنجاح');
 
     // Signaling the client.
     res.send();
