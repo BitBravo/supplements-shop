@@ -12,8 +12,17 @@
     overflow-y: auto;
 
     input[type='submit'],
+    input[type='reset'],
     input[type='button'] {
       width: 200px;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     }
+  }
+
+  .tab-controls {
+    margin-top: 80px;
   }
 }

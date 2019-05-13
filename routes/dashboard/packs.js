@@ -49,8 +49,9 @@ router.get('/', function (req, res) {
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories` WHERE `Deleted` = 0;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 0 AND (`P`.`Deleted` = 0 OR `P`.`Deleted` IS NULL) ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`;\
-        SELECT `C`.*, `P`.`CategoryName` AS `CategoryParentName` FROM `Categories` `C` LEFT JOIN `Categories` `P` ON `C`.`CategoryParent` = `P`.`CategoryID` WHERE `C`.`Deleted` = 1 ORDER BY `C`.`CategoryParent`, `C`.`CategoryName`;\
+        SELECT 1;\
+        SELECT 1;\
+        SELECT 1;\
     ',
     (error, results) => {
       // Checking if there are any errors.
@@ -80,8 +81,9 @@ router.get('/', function (req, res) {
         },
         Categories: formater.groupCategories(results[1]),
         NewMail: results[2][0].NewMail,
-        CategoriesData: results[3],
-        DeletedCategoriesData: results[4]
+        Products: results[3],
+        Packs: results[4],
+        DeletedPacks: results[5]
       };
 
       // Getting the proper copyright date.
