@@ -53,10 +53,20 @@ $('document').ready(() => {
     }
   });
 
-  // Creation reset event.
+  // Creation reset event
   $('.dashboard-packs #packs-creation-tab form').on('reset', function () {
     // Reseting the preview
     $creationPreview.attr('src', '/assets/img/backgrounds/placeholder.jpg');
+  });
+
+  // Creation submit event
+  $('.dashboard-packs #packs-creation-tab form').on('submit', function (e) {
+    // Stoping the form from submiting
+    e.preventDefault();
+
+    if (confirm('هل ترغب في إضافة هذه الحزمة') === true) {
+
+    }
   });
 
   // Deleting a pack.
