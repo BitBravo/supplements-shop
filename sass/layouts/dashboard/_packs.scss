@@ -1,0 +1,19 @@
+/**
+    Packs - The packs page's styling rules.
+*/
+
+@charset 'utf-8';
+
+.dashboard-packs {
+  #packs-creation-tab,
+  #packs-edition-tab,
+  #packs-restoration-tab {
+    margin-top: 50px;
+    overflow-y: auto;
+
+    input[type='submit'],
+    input[type='button'] {
+      width: 200px;
+    }
+  }
+}

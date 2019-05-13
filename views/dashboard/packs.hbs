@@ -1,0 +1,155 @@
+{{!-- The packs script. --}}
+<script src="/assets/js/dashboard/packs.js"></script>
+
+<div class="dashboard dashboard-packs">
+  <div class="row container">
+    {{#if Messages.Pack }}
+      <div class="card-panel green lighten-1 right-align flash-card">
+        <i class="fa fa-times fa-lg white-text flash-card__close"></i>
+        <span class="white-text">{{ Messages.Pack }}</span>
+        <i class="fa fa-check fa-lg white-text"></i>
+      </div>
+    {{/if}}
+  </div>
+  <div class="row container">
+    <div class="col s12 dashboard__grid">
+      <div class="row">
+        <div class="card-panel">
+          <div class="row valign-wrapper">
+            <div class="col s12">
+              <h4 class="grey-text right-align">
+                [{{ Data.CategoriesData.length }}] حزم
+                <i class="fa fa-layer-group"></i>
+              </h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <ul id="packs-tabs" class="tabs">
+                <li class="tab col s4"><a href="#packs-edition-tab">تحرير الحزم</a>
+                </li>
+                <li class="tab col s4"><a href="#packs-creation-tab">إضافة حزمة جديدة</a></li>
+                <li class="tab col s4"><a href="#packs-restoration-tab">استعادة الحزم</a></li>
+              </ul>
+              <div id="packs-creation-tab" class="col s12">
+                <div class="row">
+                  <div class="col s12">
+                    <form action="/dashboard/packs" method="POST">
+                      <div class="row">
+                        <div class="col s6">
+                        </div>
+                        <div class="col s6">
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <input id="pack-discount" type="number" step="0.01" min="0" name="pack-discount"
+                                class="validate" required>
+                              <label for="pack-discount">الخصم</label>
+                            </div>
+                          </div>
+                          <div class="row">
+                            {{#if Data.Products }}
+                              <div class="input-field col s12">
+                                <select id="products-select">
+                                  {{#each Data.Products }}
+                                    <option value="{{ this.ProductID }}">{{ this.ProductName }}</option>
+                                  {{/each}}
+                                </select>
+                                <label>منتوجات</label>
+                                <input type="hidden" id="category-parent-par" name="category-parent" value="0">
+                              </div>
+                            {{/if}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col s12 center-align">
+                          <input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
+                            value="إضافة">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div id="packs-edition-tab" class="col s12">
+                <div class="row">
+                  <div class="col s12">
+                    {{#if Data.CategoriesData}}
+                      <ul class="collapsible">
+                        {{#each Data.CategoriesData }}
+                          <li>
+                            <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
+                              {{ this.CategoryName }} &nbsp; <span class="grey-text">
+                                [{{ categoryTag this.CategoryParentName }}] </span>
+                            </div>
+                            <div class="collapsible-body">
+                              <form action="/dashboard/categories?_method=PUT" method="POST">
+                                <div class="row">
+                                  <div class="input-field col s12">
+                                    <input id="category-name-{{ this.CategoryID }}" type="text" name="category-name"
+                                      class="validate" data-length="50" value="{{ this.CategoryName }}" required>
+                                    <label for="category-name-{{ this.CategoryID }}">اسم
+                                      الفئة</label>
+                                  </div>
+                                </div>
+                                <input type="hidden" name="category-id" value="{{ this.CategoryID }}">
+                                <div class="row">
+                                  <div class="col s6 center-align">
+                                    <input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
+                                      value="تحديث">
+                                  </div>
+                                  <div class="col s6 center-align">
+                                    <input type="button"
+                                      class="btn btn-large waves-effect waves-light grey lighten-3 btn-delete"
+                                      value="حذف">
+                                    <input type="hidden" value="{{ this.CategoryID }}">
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </li>
+                        {{/each}}
+                      </ul>
+                    {{else}}
+                      <ul class="collection">
+                        <li class="collection-item center-align">لا توجد فئات حاليا
+                        </li>
+                      </ul>
+                    {{/if}}
+                  </div>
+                </div>
+              </div>
+              <div id="packs-restoration-tab" class="col s12">
+                <div class="row">
+                  <div class="col s12">
+                    {{#if Data.DeletedCategoriesData}}
+                      <ul class="collection">
+                        {{#each Data.DeletedCategoriesData }}
+                          <li class="collection-item">
+                            <div>
+                              <input type="hidden" value="{{ this.CategoryID }}">
+                              <a href="javascript:void(0)" class="secondary-content btn-restore"><i
+                                  class="material-icons">restore</i></a>
+
+                              <b>{{ this.CategoryName }} [{{ categoryTag this.CategoryParentName }}]</b>
+                            </div>
+                          </li>
+                        {{/each}}
+                      </ul>
+                    {{else}}
+                      <ul class="collection">
+                        <li class="collection-item center-align">لا توجد فئات محذوفة
+                        </li>
+                      </ul>
+                    {{/if}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
