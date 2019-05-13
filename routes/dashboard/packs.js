@@ -100,6 +100,20 @@ router.get('/', function (req, res) {
   );
 });
 
+// Setting up the products retrieval route
+router.get('/variants/:productID', function (req, res) {
+  var stmt = conn.format('SELECT `PV`.`VariantID`, `PV`.`VariantValue`, `PV`.`VariantType` FROM `ProductsVariants` `PV` WHERE (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID`) > 0 AND `PV`.`Deleted` = 0 AND `PV`.`ProductID` = ? ORDER BY `PV`.`VariantType` ASC;', [req.params['productID']]);
+
+  conn.query(stmt, (error, results) => {
+    // Checking if there are any errors.
+    if (!error) {
+      res.json(results);
+    } else {
+      res.send(false);
+    }
+  });
+});
+
 // Setting the category creation route.
 router.post('/', function (req, res) {
   const categoryName = req.body['category-name'],
@@ -118,7 +132,7 @@ router.post('/', function (req, res) {
     if (error) throw error;
 
     // Setting up the flash message.
-    req.flash('pack-flash', 'تم إنشاء الفئة بنجاح');
+    req.flash('pack-flash', 'تم إنشاء الحزمة بنجاح');
 
     // Rendering the categories page.
     res.redirect('/dashboard/categories');
