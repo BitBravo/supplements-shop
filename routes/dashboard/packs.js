@@ -49,7 +49,7 @@ router.get('/', function (req, res) {
         SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
         SELECT * FROM `Categories` WHERE `Deleted` = 0;\
         SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT 1;\
+        SELECT `ProductID`, `ProductName` FROM `Products` WHERE `Deleted` = 0;\
         SELECT 1;\
         SELECT 1;\
     ',
