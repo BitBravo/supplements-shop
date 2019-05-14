@@ -15,7 +15,7 @@ $('document').ready(() => {
 	$('#stock-creation-modal-type, #stock-edition-modal-type').formSelect();
 
 	// Product creation.
-	(function() {
+	(function () {
 		// Getting frequently used elements.
 		var $stockCreationList = $('#stock-creation-list'),
 			$stockCreationModal = $('#stock-creation-modal');
@@ -37,8 +37,8 @@ $('document').ready(() => {
 
 		// Initializing QuillJS.
 		var descEditor = new Quill('#desc-editor', {
-				theme: 'snow'
-			}),
+			theme: 'snow'
+		}),
 			usageEditor = new Quill('#usage-editor', {
 				theme: 'snow'
 			}),
@@ -58,7 +58,7 @@ $('document').ready(() => {
 		).characterCounter();
 
 		// Submiting a new product creation to the server-side.
-		$('#product-creation-form').on('submit', function(e) {
+		$('#product-creation-form').on('submit', function (e) {
 			// Stopping the page from reloading.
 			e.preventDefault();
 
@@ -72,14 +72,14 @@ $('document').ready(() => {
 			Product.Warning = warningEditor.container.innerHTML;
 
 			if (confirm('هل ترغب في إضافة هذا المنتوج؟')) {
-				$.post('/dashboard/products', Product, function() {
+				$.post('/dashboard/products', Product, function () {
 					location.reload();
 				});
 			}
 		});
 
 		// Reseting the product creation.
-		$('#product-creation-form').on('reset', function() {
+		$('#product-creation-form').on('reset', function () {
 			if (confirm('هل تريد إعادة ضبط كل شيء؟')) {
 				// Reseting the product tracking object.
 				Product = {
@@ -108,11 +108,11 @@ $('document').ready(() => {
 		});
 
 		// Nutrition facts preview.
-		$('#product-creation-nutrition-info').on('change', function() {
+		$('#product-creation-nutrition-info').on('change', function () {
 			$('.nutrition-facts-creation-preview img').attr('src', $(this).val());
 
 			if (
-				$('.nutrition-facts-creation-preview img').on('error', function() {
+				$('.nutrition-facts-creation-preview img').on('error', function () {
 					$('.nutrition-facts-creation-preview img').attr(
 						'src',
 						'/assets/img/backgrounds/placeholder.jpg'
@@ -122,7 +122,7 @@ $('document').ready(() => {
 		});
 
 		// Handeling the submit event on the stock-creation-modal.
-		$('#stock-creation-form').on('submit', function(e) {
+		$('#stock-creation-form').on('submit', function (e) {
 			// Preventing the page from loading.
 			e.preventDefault();
 
@@ -151,7 +151,7 @@ $('document').ready(() => {
 		});
 
 		// Handeling the click event on the stock-creation-clear-btn.
-		$('#stock-creation-clear-btn').on('click', function() {
+		$('#stock-creation-clear-btn').on('click', function () {
 			// Clearing the created stock.
 			Product.Stock = [];
 
@@ -187,15 +187,15 @@ $('document').ready(() => {
 				currentIndex === index
 					? -1
 					: currentIndex >= 0
-					? currentIndex < index
-						? currentIndex
-						: currentIndex - 1
-					: -1;
+						? currentIndex < index
+							? currentIndex
+							: currentIndex - 1
+						: -1;
 
 			// Setting the default featured variant.
 			if (Product.Stock.length > 0) {
 				if (
-					Product.Stock.filter(function(s) {
+					Product.Stock.filter(function (s) {
 						if (s.FeaturedVariant) {
 							return true;
 						} else {
@@ -225,12 +225,12 @@ $('document').ready(() => {
 		}
 
 		function addFlavor(index, flavor) {
-			var unUsedFlavor = (function() {
-				var flvList = $.map(Product.Stock[index]['Flavors'], function(f) {
+			var unUsedFlavor = (function () {
+				var flvList = $.map(Product.Stock[index]['Flavors'], function (f) {
 					return f['FlavorID'];
 				});
 
-				var unUsedFlavors = $.map(flavors, function(flv) {
+				var unUsedFlavors = $.map(flavors, function (flv) {
 					return flvList.indexOf(flv['FlavorID']) === -1
 						? flv['FlavorID']
 						: null;
@@ -288,7 +288,7 @@ $('document').ready(() => {
 				ele
 					.closest('.stock-creation-flavor-entry')
 					.find('.stock-creation-entry-variant-image-preview img')
-					.on('error', function() {
+					.on('error', function () {
 						ele
 							.closest('.stock-creation-flavor-entry')
 							.find('.stock-creation-entry-variant-image-preview img')
@@ -307,7 +307,7 @@ $('document').ready(() => {
 		function updateUI() {
 			// Updating the stock count.
 			$('#stock-creation-count').text(
-				Product.Stock.reduce(function(total, stock) {
+				Product.Stock.reduce(function (total, stock) {
 					return total + helper.calculateStockQuantity(stock);
 				}, 0)
 			);
@@ -316,13 +316,13 @@ $('document').ready(() => {
 			$stockCreationList.empty();
 
 			// Updating the stock list.
-			Product.Stock.forEach(function(stock, index) {
+			Product.Stock.forEach(function (stock, index) {
 				var stockFlavors = '';
 
-				$.each(stock.Flavors, function(index, flavor) {
+				$.each(stock.Flavors, function (index, flavor) {
 					var flavorsDropDown = '';
 
-					$.each(flavors, function(idx, flv) {
+					$.each(flavors, function (idx, flv) {
 						flavorsDropDown +=
 							'<option value="' +
 							flv.FlavorID +
@@ -402,31 +402,31 @@ $('document').ready(() => {
 				$stockCreationList.append(
 					'\
     <li data-id="' +
-						index +
-						'" class="stock-creation-entry ' +
-						(index === currentIndex ? 'active' : '') +
-						'">\
+					index +
+					'" class="stock-creation-entry ' +
+					(index === currentIndex ? 'active' : '') +
+					'">\
       <div class="collapsible-header stock-creation-header">\
         <span class="valign-wrapper">\
         <i class="fas fa-trash stock-creation-remove-btn"></i>\
           <i class="fas fa-star stock-creation-feature-btn ' +
-						(stock.FeaturedVariant ? 'featured' : '') +
-						'"></i>\
+					(stock.FeaturedVariant ? 'featured' : '') +
+					'"></i>\
         </span>\
         <span class="valign-wrapper">\
         ' +
-						helper.calculateStockQuantity(stock) +
-						'&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
+					helper.calculateStockQuantity(stock) +
+					'&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
         </span>\
         <span class="valign-wrapper">\
         ' +
-						helper.formatPrice(stock.Price) +
-						'&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
+					helper.formatPrice(stock.Price) +
+					'&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
         </span>\
 				<span class="valign-wrapper">\
 						' +
-						helper.formatMeasurement(stock.Value, stock.Type) +
-						'&nbsp; <b>القياس</b> <i class="fas fa-balance-scale"></i> \
+					helper.formatMeasurement(stock.Value, stock.Type) +
+					'&nbsp; <b>القياس</b> <i class="fas fa-balance-scale"></i> \
         </span>\
       </div>\
       <div class="collapsible-body">\
@@ -436,14 +436,14 @@ $('document').ready(() => {
 							<div class="input-field col s12"> \
 								<select name="stock-creation-entry-type"> \
 									<option ' +
-						(stock.Type === '1' ? 'selected' : '') +
-						' value="1">الكيلوغرام</option> \
+					(stock.Type === '1' ? 'selected' : '') +
+					' value="1">الكيلوغرام</option> \
 									<option ' +
-						(stock.Type === '2' ? 'selected' : '') +
-						' value="2">الحصة</option> \
+					(stock.Type === '2' ? 'selected' : '') +
+					' value="2">الحصة</option> \
 									<option ' +
-						(stock.Type === '3' ? 'selected' : '') +
-						' value="3">الحزمة</option> \
+					(stock.Type === '3' ? 'selected' : '') +
+					' value="3">القطعة</option> \
 								</select> \
 								<label>وحدة قياس</label> \
 							</div> \
@@ -452,8 +452,8 @@ $('document').ready(() => {
               <div class="col s12 right-align">\
                 <label>القياس\
                   <input min="0" name="stock-creation-entry-value" step="0.001" type="number" value="' +
-						stock.Value +
-						'" class="validate right-align" required>\
+					stock.Value +
+					'" class="validate right-align" required>\
                 </label>\
               </div>\
             </div>\
@@ -461,8 +461,8 @@ $('document').ready(() => {
               <div class="col s12 right-align">\
                 <label>السعر <small class="grey-text">&rlm;(درهم)&rlm;</small>\
                   <input min="0" name="stock-creation-entry-price" type="number" step="0.01" value="' +
-						stock.Price +
-						'" class="validate right-align" required>\
+					stock.Price +
+					'" class="validate right-align" required>\
                 </label>\
               </div>\
 						</div>\
@@ -481,12 +481,12 @@ $('document').ready(() => {
           </div>\
           <div class="col s7 offset-s1 stock-creation-entry-flavor-list">\
             <h5 class="right-align">[ ' +
-						stock.Flavors.length +
-						' ] النكهات</h5>\
+					stock.Flavors.length +
+					' ] النكهات</h5>\
             <ul class="collapsible">\
               ' +
-						stockFlavors +
-						'\
+					stockFlavors +
+					'\
             </ul>\
           </div>\
         </div>\
@@ -496,7 +496,7 @@ $('document').ready(() => {
 			});
 
 			// Adding the stock remove click event.
-			$('#stock-creation-list .stock-creation-remove-btn').on('click', function(
+			$('#stock-creation-list .stock-creation-remove-btn').on('click', function (
 				e
 			) {
 				// Stopping event propagation.
@@ -514,7 +514,7 @@ $('document').ready(() => {
 			// Adding the stock featuring click event.
 			$('#stock-creation-list .stock-creation-feature-btn').on(
 				'click',
-				function(e) {
+				function (e) {
 					// Stopping event propagation.
 					e.stopPropagation();
 
@@ -531,7 +531,7 @@ $('document').ready(() => {
 			// Adding the stock update event for price and weight inputs.
 			$(
 				'#stock-creation-list input[name=stock-creation-entry-price], #stock-creation-list input[name=stock-creation-entry-value], #stock-creation-list select[name=stock-creation-entry-type]'
-			).on('change', function(e) {
+			).on('change', function (e) {
 				// Getting the stock's index.
 				var index = $(this)
 					.closest('li')
@@ -550,7 +550,7 @@ $('document').ready(() => {
 			});
 
 			// Adding the index update event.
-			$('#stock-creation-list .stock-creation-header').on('click', function() {
+			$('#stock-creation-list .stock-creation-header').on('click', function () {
 				if (
 					!$(this)
 						.parent()
@@ -565,7 +565,7 @@ $('document').ready(() => {
 			});
 
 			// Adding the flavor addition event.
-			$('.stock-creation-flavor-add-btn').on('click', function() {
+			$('.stock-creation-flavor-add-btn').on('click', function () {
 				// Getting the stock's index.
 				var index = $(this)
 					.closest('li')
@@ -580,14 +580,14 @@ $('document').ready(() => {
 			});
 
 			// Adding the flavor removal event.
-			$('.stock-creation-flavor-remove-btn').on('click', function(e) {
+			$('.stock-creation-flavor-remove-btn').on('click', function (e) {
 				// Stopping event propagation.
 				e.stopPropagation();
 
 				// Getting the stock's index.
 				var index = $(this)
-						.closest('.stock-creation-entry')
-						.data('id'),
+					.closest('.stock-creation-entry')
+					.data('id'),
 					flavorIndex = $(this)
 						.closest('li')
 						.data('flavor-index');
@@ -598,7 +598,7 @@ $('document').ready(() => {
 
 			$(
 				'.stock-creation-entry .stock-creation-flavor-entry .collapsible-header'
-			).on('click', function() {
+			).on('click', function () {
 				// Getting the stock's index.
 				var index = $(this)
 					.closest('.stock-creation-entry')
@@ -620,11 +620,11 @@ $('document').ready(() => {
 			// Adding the flavor update event.
 			$('.stock-creation-entry .stock-creation-flavor-entry select').on(
 				'change',
-				function(e) {
+				function (e) {
 					// Getting the stock's index.
 					var index = $(this)
-							.closest('.stock-creation-entry')
-							.data('id'),
+						.closest('.stock-creation-entry')
+						.data('id'),
 						flavorIndex = $(this)
 							.closest('li')
 							.data('flavor-index'),
@@ -641,11 +641,11 @@ $('document').ready(() => {
 			// Adding the quantity update event.
 			$('#stock-creation-list [name=stock-creation-entry-quantity]').on(
 				'change',
-				function(e) {
+				function (e) {
 					// Getting the stock's index.
 					var index = $(this)
-							.closest('.stock-creation-entry')
-							.data('id'),
+						.closest('.stock-creation-entry')
+						.data('id'),
 						flavorIndex = $(this)
 							.closest('li')
 							.data('flavor-index'),
@@ -660,11 +660,11 @@ $('document').ready(() => {
 			);
 
 			// Variants' image preview.
-			$('[name=stock-creation-entry-variant-image]').on('change', function(e) {
+			$('[name=stock-creation-entry-variant-image]').on('change', function (e) {
 				// Getting the stock's index.
 				var index = $(this)
-						.closest('.stock-creation-entry')
-						.data('id'),
+					.closest('.stock-creation-entry')
+					.data('id'),
 					flavorIndex = $(this)
 						.closest('li')
 						.data('flavor-index'),
@@ -678,7 +678,7 @@ $('document').ready(() => {
 			});
 
 			// Updaing the previews.
-			$.each($('[name=stock-creation-entry-variant-image]'), function(
+			$.each($('[name=stock-creation-entry-variant-image]'), function (
 				index,
 				ele
 			) {
@@ -691,25 +691,25 @@ $('document').ready(() => {
 			).collapsible();
 
 			// Re-initializing the chips input.
-			$.each($('#stock-creation-list div.chips'), function(index, chip) {
+			$.each($('#stock-creation-list div.chips'), function (index, chip) {
 				$(chip).chips({
-					data: $.map(Product.Stock[index].Tags, function(tag) {
+					data: $.map(Product.Stock[index].Tags, function (tag) {
 						return { tag };
 					}),
 					placeholder: 'كلمة مرتبطة',
 					secondaryPlaceholder: '+ كلمة مرتبطة',
-					onChipAdd: function() {
+					onChipAdd: function () {
 						// Updating the tags.
-						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
+						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function (
 							tag
 						) {
 							return tag['tag'].indexOf(',') === -1 ? tag['tag'] : null;
 						});
 						updateUI();
 					},
-					onChipDelete: function() {
+					onChipDelete: function () {
 						// Updating the tags.
-						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
+						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function (
 							tag
 						) {
 							return tag['tag'].indexOf(',') === -1 ? tag['tag'] : null;
@@ -724,7 +724,7 @@ $('document').ready(() => {
 	})();
 
 	// Product edition.
-	(function() {
+	(function () {
 		// Frequently used elements.
 		var $productEditionModal = $('#product-edition-modal'),
 			$stockEditionModal = $('#stock-edition-modal'),
@@ -753,8 +753,8 @@ $('document').ready(() => {
 
 		// Initializing QuillJS.
 		var $descEditorEdit = new Quill('#desc-editor-edit', {
-				theme: 'snow'
-			}),
+			theme: 'snow'
+		}),
 			$usageEditorEdit = new Quill('#usage-editor-edit', {
 				theme: 'snow'
 			}),
@@ -788,14 +788,14 @@ $('document').ready(() => {
 				currentIndex === index
 					? -1
 					: currentIndex >= 0
-					? currentIndex < index
-						? currentIndex
-						: currentIndex - 1
-					: -1;
+						? currentIndex < index
+							? currentIndex
+							: currentIndex - 1
+						: -1;
 
 			// Setting the default featured variant.
 			if (
-				Product.Stock.filter(function(s) {
+				Product.Stock.filter(function (s) {
 					if (s.FeaturedVariant) {
 						return true;
 					} else {
@@ -824,12 +824,12 @@ $('document').ready(() => {
 		}
 
 		function addFlavor(index, flavor) {
-			var unUsedFlavor = (function() {
-				var flvList = $.map(Product.Stock[index]['Flavors'], function(f) {
+			var unUsedFlavor = (function () {
+				var flvList = $.map(Product.Stock[index]['Flavors'], function (f) {
 					return f['FlavorID'];
 				});
 
-				var unUsedFlavors = $.map(flavors, function(flv) {
+				var unUsedFlavors = $.map(flavors, function (flv) {
 					return flvList.indexOf(flv['FlavorID']) === -1
 						? flv['FlavorID']
 						: null;
@@ -891,7 +891,7 @@ $('document').ready(() => {
 				ele
 					.closest('.stock-edition-flavor-entry')
 					.find('.stock-edition-entry-variant-image-preview img')
-					.on('error', function() {
+					.on('error', function () {
 						ele
 							.closest('.stock-edition-flavor-entry')
 							.find('.stock-edition-entry-variant-image-preview img')
@@ -916,10 +916,10 @@ $('document').ready(() => {
 		).characterCounter();
 
 		// Adding the clikc event to open the product edition modal.
-		$('.product-list tr').on('click', function() {
+		$('.product-list tr').on('click', function () {
 			var productId = $(this).data('product-id');
 
-			$.get('/dashboard/products/' + productId, function(data) {
+			$.get('/dashboard/products/' + productId, function (data) {
 				// Retrieving the values.
 				Product.ID = data[0][0]['ProductID'];
 				Product.Name = data[0][0]['ProductName'];
@@ -952,7 +952,7 @@ $('document').ready(() => {
 		});
 
 		// Submiting a new product edition to the server-side.
-		$('#product-edition-form').on('submit', function(e) {
+		$('#product-edition-form').on('submit', function (e) {
 			// Stopping the page from reloading.
 			e.preventDefault();
 
@@ -970,7 +970,7 @@ $('document').ready(() => {
 					url: '/dashboard/products',
 					type: 'PUT',
 					data: Product,
-					success: function() {
+					success: function () {
 						location.reload();
 					}
 				});
@@ -978,7 +978,7 @@ $('document').ready(() => {
 		});
 
 		// Reseting the product edition.
-		$('#product-edition-form').on('reset', function() {
+		$('#product-edition-form').on('reset', function () {
 			if (confirm('هل تريد إعادة ضبط كل شيء؟')) {
 				// Reseting the product tracking object.
 				Product = {
@@ -1009,7 +1009,7 @@ $('document').ready(() => {
 		});
 
 		// Handeling the click event on the stock-edition-clear-btn.
-		$('#stock-edition-clear-btn').on('click', function() {
+		$('#stock-edition-clear-btn').on('click', function () {
 			// Clearing the created stock.
 			Product.Stock = [];
 
@@ -1021,7 +1021,7 @@ $('document').ready(() => {
 		});
 
 		// Handeling the submit event on the stock-edition-modal.
-		$('#stock-edition-form').on('submit', function(e) {
+		$('#stock-edition-form').on('submit', function (e) {
 			// Preventing the page from loading.
 			e.preventDefault();
 
@@ -1031,10 +1031,10 @@ $('document').ready(() => {
 			$stockPriceInput = $(this).find('#stock-edition-modal-price');
 
 			if (
-				Product.Stock.filter(function(prdct) {
+				Product.Stock.filter(function (prdct) {
 					if (
 						parseFloat(prdct.Value).toFixed(2) ===
-							parseFloat($stockValueInput.val()).toFixed(2) &&
+						parseFloat($stockValueInput.val()).toFixed(2) &&
 						parseInt(prdct.Type) === parseInt($stockTypeInput.val())
 					) {
 						return true;
@@ -1068,13 +1068,13 @@ $('document').ready(() => {
 		});
 
 		// Handeling the delete event.
-		$('#product-delete-btn').on('click', function() {
+		$('#product-delete-btn').on('click', function () {
 			if (confirm('هل تريد حقًا حذف هذا المنتوج؟')) {
 				$.ajax({
 					url: '/dashboard/products',
 					type: 'DELETE',
 					data: { ID: Product.ID },
-					success: function() {
+					success: function () {
 						location.reload();
 					}
 				});
@@ -1082,11 +1082,11 @@ $('document').ready(() => {
 		});
 
 		// Nutrition facts preview.
-		$productEditionNutritionInfo.on('change', function() {
+		$productEditionNutritionInfo.on('change', function () {
 			$('.nutrition-facts-edition-preview img').attr('src', $(this).val());
 
 			if (
-				$('.nutrition-facts-edition-preview img').on('error', function() {
+				$('.nutrition-facts-edition-preview img').on('error', function () {
 					$('.nutrition-facts-edition-preview img').attr(
 						'src',
 						'/assets/img/backgrounds/placeholder.jpg'
@@ -1098,7 +1098,7 @@ $('document').ready(() => {
 		function updateUI() {
 			// Updating the stock count.
 			$('#stock-edition-count').text(
-				Product.Stock.reduce(function(total, stock) {
+				Product.Stock.reduce(function (total, stock) {
 					return total + helper.calculateStockQuantity(stock);
 				}, 0)
 			);
@@ -1107,13 +1107,13 @@ $('document').ready(() => {
 			$stockEditionList.empty();
 
 			// Updating the stock list.
-			Product.Stock.forEach(function(stock, index) {
+			Product.Stock.forEach(function (stock, index) {
 				var stockFlavors = '';
 
-				$.each(stock.Flavors, function(index, flavor) {
+				$.each(stock.Flavors, function (index, flavor) {
 					var flavorsDropDown = '';
 
-					$.each(flavors, function(index, flv) {
+					$.each(flavors, function (index, flv) {
 						flavorsDropDown +=
 							'<option value="' +
 							flv.FlavorID +
@@ -1195,31 +1195,31 @@ $('document').ready(() => {
 				$stockEditionList.append(
 					'\
     <li data-id="' +
-						index +
-						'" class="stock-edition-entry ' +
-						(index === currentIndex ? 'active' : '') +
-						'">\
+					index +
+					'" class="stock-edition-entry ' +
+					(index === currentIndex ? 'active' : '') +
+					'">\
       <div class="collapsible-header stock-edition-header">\
         <span class="valign-wrapper">\
         <i class="fas fa-trash stock-edition-remove-btn"></i>\
           <i class="fas fa-star stock-edition-feature-btn ' +
-						(stock.FeaturedVariant ? 'featured' : '') +
-						'"></i>\
+					(stock.FeaturedVariant ? 'featured' : '') +
+					'"></i>\
         </span>\
         <span class="valign-wrapper">\
         ' +
-						helper.calculateStockQuantity(stock) +
-						'&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
+					helper.calculateStockQuantity(stock) +
+					'&nbsp; <b>الكمية</b> <i class="material-icons">inbox</i> \
         </span>\
         <span class="valign-wrapper">\
         ' +
-						helper.formatPrice(stock.Price) +
-						'&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
+					helper.formatPrice(stock.Price) +
+					'&nbsp; <b>السعر</b> <i class="material-icons">attach_money</i> \
         </span>\
         <span class="valign-wrapper">\
 						' +
-						helper.formatMeasurement(stock.Value, stock.Type) +
-						'&nbsp; <b>القياس</b> <i class="fas fa-balance-scale"></i> \
+					helper.formatMeasurement(stock.Value, stock.Type) +
+					'&nbsp; <b>القياس</b> <i class="fas fa-balance-scale"></i> \
         </span>\
       </div>\
       <div class="collapsible-body">\
@@ -1229,14 +1229,14 @@ $('document').ready(() => {
 							<div class="input-field col s12"> \
 								<select name="stock-edition-entry-type"> \
 									<option ' +
-						(stock.Type === '1' ? 'selected' : '') +
-						' value="1">الكيلوغرام</option> \
+					(stock.Type === '1' ? 'selected' : '') +
+					' value="1">الكيلوغرام</option> \
 												<option ' +
-						(stock.Type === '2' ? 'selected' : '') +
-						' value="2">الحصة</option> \
+					(stock.Type === '2' ? 'selected' : '') +
+					' value="2">الحصة</option> \
 												<option ' +
-						(stock.Type === '3' ? 'selected' : '') +
-						' value="3">الحزمة</option> \
+					(stock.Type === '3' ? 'selected' : '') +
+					' value="3">القطعة</option> \
 								</select> \
 								<label>وحدة قياس</label> \
 							</div> \
@@ -1245,8 +1245,8 @@ $('document').ready(() => {
 							<div class="col s12 right-align">\
 								<label>القياس\
 									<input min="0" name="stock-edition-entry-value" step="0.001" type="number" value="' +
-						stock.Value +
-						'" class="validate right-align" required>\
+					stock.Value +
+					'" class="validate right-align" required>\
 								</label>\
 							</div>\
 						</div>\
@@ -1254,8 +1254,8 @@ $('document').ready(() => {
               <div class="col s12 right-align">\
                 <label>السعر <small class="grey-text">&rlm;(درهم)&rlm;</small>\
                   <input min="0" name="stock-edition-entry-price" type="number" step="0.01" value="' +
-						stock.Price +
-						'" class="validate right-align" required>\
+					stock.Price +
+					'" class="validate right-align" required>\
                 </label>\
               </div>\
 						</div>\
@@ -1275,12 +1275,12 @@ $('document').ready(() => {
           <div class="row">\
             <div class="col s12 stock-edition-entry-flavor-list">\
               <h5 class="right-align">[ ' +
-						stock.Flavors.length +
-						' ] النكهات</h5>\
+					stock.Flavors.length +
+					' ] النكهات</h5>\
               <ul class="collapsible">\
                 ' +
-						stockFlavors +
-						'\
+					stockFlavors +
+					'\
               </ul>\
             </div>\
           </div>\
@@ -1293,7 +1293,7 @@ $('document').ready(() => {
 			// Adding the image preview event handeler.
 			$('#stock-edition-list [name=stock-edition-entry-variant-image]').on(
 				'change',
-				function() {
+				function () {
 					updateStockCreationPreviews($(this));
 				}
 			);
@@ -1304,7 +1304,7 @@ $('document').ready(() => {
 			);
 
 			// Adding the stock remove click event.
-			$('#stock-edition-list .stock-edition-remove-btn').on('click', function(
+			$('#stock-edition-list .stock-edition-remove-btn').on('click', function (
 				e
 			) {
 				// Stopping event propagation.
@@ -1320,7 +1320,7 @@ $('document').ready(() => {
 			});
 
 			// Adding the stock featuring click event.
-			$('#stock-edition-list .stock-edition-feature-btn').on('click', function(
+			$('#stock-edition-list .stock-edition-feature-btn').on('click', function (
 				e
 			) {
 				// Stopping event propagation.
@@ -1336,7 +1336,7 @@ $('document').ready(() => {
 			});
 
 			// Adding the flavor addition event.
-			$('.stock-edition-flavor-add-btn').on('click', function() {
+			$('.stock-edition-flavor-add-btn').on('click', function () {
 				// Getting the stock's index.
 				var index = $(this)
 					.closest('li')
@@ -1353,11 +1353,11 @@ $('document').ready(() => {
 			// Adding the flavor update event.
 			$('.stock-edition-entry .stock-edition-flavor-entry select').on(
 				'change',
-				function(e) {
+				function (e) {
 					// Getting the stock's index.
 					var index = $(this)
-							.closest('.stock-edition-entry')
-							.data('id'),
+						.closest('.stock-edition-entry')
+						.data('id'),
 						flavorIndex = $(this)
 							.closest('li')
 							.data('flavor-index'),
@@ -1372,14 +1372,14 @@ $('document').ready(() => {
 			);
 
 			// Adding the flavor removal event.
-			$('.stock-edition-flavor-remove-btn').on('click', function(e) {
+			$('.stock-edition-flavor-remove-btn').on('click', function (e) {
 				// Stopping event propagation.
 				e.stopPropagation();
 
 				// Getting the stock's index.
 				var index = $(this)
-						.closest('.stock-edition-entry')
-						.data('id'),
+					.closest('.stock-edition-entry')
+					.data('id'),
 					flavorIndex = $(this)
 						.closest('li')
 						.data('flavor-index');
@@ -1391,7 +1391,7 @@ $('document').ready(() => {
 			// Adding the stock update event for price and weight inputs.
 			$(
 				'#stock-edition-list input[name=stock-edition-entry-price], #stock-edition-list input[name=stock-edition-entry-value], #stock-edition-list select[name=stock-edition-entry-type]'
-			).on('change', function(e) {
+			).on('change', function (e) {
 				// Getting the stock's index.
 				var index = $(this)
 					.closest('li')
@@ -1413,11 +1413,11 @@ $('document').ready(() => {
 			// Adding the quantity update event.
 			$('#stock-edition-list [name=stock-edition-entry-quantity]').on(
 				'change',
-				function(e) {
+				function (e) {
 					// Getting the stock's index.
 					var index = $(this)
-							.closest('.stock-edition-entry')
-							.data('id'),
+						.closest('.stock-edition-entry')
+						.data('id'),
 						flavorIndex = $(this)
 							.closest('li')
 							.data('flavor-index'),
@@ -1432,11 +1432,11 @@ $('document').ready(() => {
 			);
 
 			// Variants' image preview.
-			$('[name=stock-edition-entry-variant-image]').on('change', function(e) {
+			$('[name=stock-edition-entry-variant-image]').on('change', function (e) {
 				// Getting the stock's index.
 				var index = $(this)
-						.closest('.stock-edition-entry')
-						.data('id'),
+					.closest('.stock-edition-entry')
+					.data('id'),
 					flavorIndex = $(this)
 						.closest('li')
 						.data('flavor-index'),
@@ -1450,7 +1450,7 @@ $('document').ready(() => {
 			});
 
 			// Adding the index update event.
-			$('#stock-edition-list .stock-edition-header').on('click', function() {
+			$('#stock-edition-list .stock-edition-header').on('click', function () {
 				if (
 					!$(this)
 						.parent()
@@ -1467,7 +1467,7 @@ $('document').ready(() => {
 			// Adding the index update event.
 			$(
 				'.stock-edition-entry .stock-edition-flavor-entry .collapsible-header'
-			).on('click', function() {
+			).on('click', function () {
 				// Getting the stock's index.
 				var index = $(this)
 					.closest('.stock-edition-entry')
@@ -1490,16 +1490,16 @@ $('document').ready(() => {
 			$('#stock-edition-list, #stock-edition-list .collapsible').collapsible();
 
 			// Re-initializing the chips input.
-			$.each($('#stock-edition-list div.chips'), function(index, chip) {
+			$.each($('#stock-edition-list div.chips'), function (index, chip) {
 				$(chip).chips({
-					data: $.map(Product.Stock[index].Tags, function(tag) {
+					data: $.map(Product.Stock[index].Tags, function (tag) {
 						return { tag };
 					}),
 					placeholder: 'كلمة مرتبطة',
 					secondaryPlaceholder: '+ كلمة مرتبطة',
-					onChipAdd: function() {
+					onChipAdd: function () {
 						// Updating the tags.
-						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
+						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function (
 							tag
 						) {
 							return tag['tag'].indexOf(',') === -1 ? tag['tag'] : null;
@@ -1508,9 +1508,9 @@ $('document').ready(() => {
 						// Updating the UI.
 						updateUI();
 					},
-					onChipDelete: function() {
+					onChipDelete: function () {
 						// Updating the tags.
-						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function(
+						Product.Stock[index].Tags = $.map($(this)[0].chipsData, function (
 							tag
 						) {
 							return tag['tag'].indexOf(',') === -1 ? tag['tag'] : null;
@@ -1527,8 +1527,8 @@ $('document').ready(() => {
 	})();
 
 	// Product deletion.
-	(function() {
-		$('.dashboard-products .btn-restore').on('click', function() {
+	(function () {
+		$('.dashboard-products .btn-restore').on('click', function () {
 			var data = {
 				productId: $(this)
 					.closest('.collection-item')
@@ -1548,7 +1548,7 @@ $('document').ready(() => {
 				url: '/dashboard/products/restore',
 				type: 'PUT',
 				data: data,
-				success: function() {
+				success: function () {
 					location.reload();
 				}
 			});
@@ -1557,7 +1557,7 @@ $('document').ready(() => {
 
 	// Helper functions.
 	var helper = {
-		formatMeasurement: function(value, type) {
+		formatMeasurement: function (value, type) {
 			var formatedMeasurement = '';
 
 			switch (parseInt(type)) {
@@ -1573,25 +1573,25 @@ $('document').ready(() => {
 				}
 				case 3: {
 					formatedMeasurement =
-						parseInt(value) > 1 ? value + ' حزم' : value + ' حزمة';
+						parseInt(value) > 1 ? value + ' قطع' : value + ' قطعة';
 					break;
 				}
 			}
 
 			return formatedMeasurement;
 		},
-		formatPrice: function(price) {
+		formatPrice: function (price) {
 			return new Intl.NumberFormat('ar-MA', {
 				style: 'currency',
 				currency: 'MAD'
 			}).format(price);
 		},
-		calculateStockQuantity: function(stock) {
-			return stock.Flavors.reduce(function(total, flv) {
+		calculateStockQuantity: function (stock) {
+			return stock.Flavors.reduce(function (total, flv) {
 				return total + flv.Quantity;
 			}, 0);
 		},
-		getFlavorNameFromID: function(flavorId) {
+		getFlavorNameFromID: function (flavorId) {
 			for (var i = 0; i < flavors.length; i++) {
 				if (flavors[i].FlavorID == flavorId) {
 					return flavors[i].FlavorName;
@@ -1600,8 +1600,8 @@ $('document').ready(() => {
 
 			return 'Unflavored';
 		},
-		groupStock: function(stock, flavors) {
-			$.each(stock, function(i, s) {
+		groupStock: function (stock, flavors) {
+			$.each(stock, function (i, s) {
 				s['FeaturedVariant'] = s['FeaturedVariant']['data'][0] == 1 ? true : 0;
 				s['CurrentIndex'] = s['CurrentIndex'] = -1;
 				s['Value'] = s['VariantValue'];
@@ -1611,7 +1611,7 @@ $('document').ready(() => {
 				s['Tags'] =
 					s['Tags'] != null && s['Tags'].length > 0 ? s['Tags'].split(',') : [];
 
-				$.each(flavors, function(j, f) {
+				$.each(flavors, function (j, f) {
 					if (f['VariantID'] === s['VariantID']) {
 						s['Flavors'].push(f);
 					}
@@ -1620,8 +1620,8 @@ $('document').ready(() => {
 
 			return stock.slice();
 		},
-		isFlavorAllowed: function(flavors, flavor) {
-			var flavorsList = $.map(flavors, function(flv) {
+		isFlavorAllowed: function (flavors, flavor) {
+			var flavorsList = $.map(flavors, function (flv) {
 				return flv['FlavorID'];
 			});
 

@@ -4,7 +4,7 @@ module.exports = {
 	 *
 	 * @param {Int} read Whether or not the message is read.
 	 */
-	isMsgNew: function(read) {
+	isMsgNew: function (read) {
 		if (read.readInt8(0) == 0) {
 			return 'new';
 		}
@@ -16,7 +16,7 @@ module.exports = {
 	 * @param {Int} mode The current mail mode.
 	 * @param {Int} option The according select value.
 	 */
-	select: function(mode, option) {
+	select: function (mode, option) {
 		if (mode == option) {
 			return 'selected';
 		}
@@ -27,7 +27,7 @@ module.exports = {
 	 *
 	 * @param {String} categoryParent The category's parent name.
 	 */
-	categoryTag: function(categoryParent) {
+	categoryTag: function (categoryParent) {
 		if (categoryParent == null) {
 			return 'فئة رئيسية';
 		} else {
@@ -40,7 +40,7 @@ module.exports = {
 	 *
 	 * @param {Bit} state Whether or not the coupon is active or idle.
 	 */
-	couponState: function(state) {
+	couponState: function (state) {
 		if (state.readInt8(0) == 1) {
 			return 'checked';
 		}
@@ -51,7 +51,7 @@ module.exports = {
 	 *
 	 * @param {Date} date The date to format.
 	 */
-	formatDate: function(date) {
+	formatDate: function (date) {
 		const moment = require('moment');
 
 		// Setting the local timezone.
@@ -65,7 +65,7 @@ module.exports = {
 	 *
 	 * @param {Decimal} value The value to format.
 	 */
-	formatCurrency: function(value) {
+	formatCurrency: function (value) {
 		return new Intl.NumberFormat('ar-MA', {
 			style: 'currency',
 			currency: 'MAD'
@@ -79,7 +79,7 @@ module.exports = {
 	 * @param {Decimal} newPrice The new price.
 	 * @param {Object} options The helper's options.
 	 */
-	displayOldPrice: function(oldPrice, newPrice, options) {
+	displayOldPrice: function (oldPrice, newPrice, options) {
 		return oldPrice > newPrice && oldPrice != null
 			? options.fn(this)
 			: options.inverse(this);
@@ -91,7 +91,7 @@ module.exports = {
 	 * @param {Decimal} oldPrice The old price.
 	 * @param {Decimal} newPrice The new price.
 	 */
-	calculateDiscount: function(oldPrice, newPrice) {
+	calculateDiscount: function (oldPrice, newPrice) {
 		return `-${Math.round(((oldPrice - newPrice) * 100) / oldPrice)}%`;
 	},
 
@@ -100,7 +100,7 @@ module.exports = {
 	 *
 	 * @param {Float} weight The weight to base the unite off of.
 	 */
-	formatMeasurementUnit: function(type, value) {
+	formatMeasurementUnit: function (type, value) {
 		var output = '';
 
 		switch (parseInt(type)) {
@@ -113,7 +113,7 @@ module.exports = {
 				break;
 			}
 			case 3: {
-				output = parseInt(value) > 1 ? 'حزم' : 'حزمة';
+				output = parseInt(value) > 1 ? 'قطع' : 'قطعة';
 				break;
 			}
 		}
@@ -126,7 +126,7 @@ module.exports = {
 	 *
 	 * @param {Float} weight The weight to format.
 	 */
-	formatMeasurement: function(value, type) {
+	formatMeasurement: function (value, type) {
 		var output = '';
 
 		if (parseInt(type) === 1) {
