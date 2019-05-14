@@ -102,7 +102,13 @@ $('document').ready(() => {
       e.preventDefault();
 
       if (confirm('هل ترغب في إضافة هذه الحزمة') === true) {
-
+        $.post('/dashboard/packs', {
+          'pack-discount': $('#pack-discount').val(),
+          'pack-image': $('#pack-image').val(),
+          'pack-variants': pack.Variants
+        }, function () {
+          location.reload();
+        });
       }
     });
 
