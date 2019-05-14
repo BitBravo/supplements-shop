@@ -36,47 +36,50 @@
                   <div class="col s12">
                     <form action="/dashboard/packs" method="POST">
                       <div class="row valign-wrapper">
-                        <div class="col s6">
-                          <img src="/assets/img/backgrounds/placeholder.jpg" alt="The pack's image."
-                            class="responsive-img materialboxed">
-                        </div>
-                        <div class="col s4 offset-m1">
-                          <div class="row">
-                            <div class="input-field col s12">
-                              <input id="pack-image" type="url" name="pack-image" class="validate" required>
-                              <label for="pack-image">صورةالحزمة</label>
-                            </div>
+                        <div class="col s10 offset-s1">
+                          <div class="col s8">
+                            <img src="/assets/img/backgrounds/placeholder.jpg" alt="The pack's image."
+                              class="responsive-img materialboxed">
                           </div>
-                          <div class="row">
-                            <div class="input-field col s12">
-                              <input id="pack-discount" type="number" step="0.01" min="0" name="pack-discount"
-                                class="validate" value="0" required>
-                              <label for="pack-discount">الخصم <small class="grey-text">&rlm;(درهم)&rlm;</small></label>
-                            </div>
-                          </div>
-                          <div class="row">
-                            {{#if Data.Products }}
+                          <div class="col s4">
+                            <div class="row">
                               <div class="input-field col s12">
-                                <select id="packs-creation-products-select">
-                                  {{#each Data.Products }}
-                                    <option value="{{ this.ProductID }}">{{ this.ProductName }}</option>
-                                  {{/each}}
-                                </select>
-                                <label>المنتوجات</label>
+                                <input id="pack-image" type="url" name="pack-image" class="validate" required>
+                                <label for="pack-image">صورةالحزمة</label>
                               </div>
-                            {{else}}
+                            </div>
+                            <div class="row">
                               <div class="input-field col s12">
-                                <select disabled="true" id="packs-creation-products-select" data-empty="true">
-                                  <option value="0">لا توجد منتوجات</option>
-                                </select>
-                                <label>المنتوجات</label>
+                                <input id="pack-discount" type="number" step="0.01" min="0" name="pack-discount"
+                                  class="validate" value="0" required>
+                                <label for="pack-discount">الخصم <small
+                                    class="grey-text">&rlm;(درهم)&rlm;</small></label>
                               </div>
-                            {{/if}}
-                          </div>
-                          <div class="row">
-                            <div class="input-field col s12">
-                              <select id="packs-creation-variants-select" disabled="true"></select>
-                              <label>أنواع المنتوج</label>
+                            </div>
+                            <div class="row">
+                              {{#if Data.Products }}
+                                <div class="input-field col s12">
+                                  <select id="packs-creation-products-select">
+                                    {{#each Data.Products }}
+                                      <option value="{{ this.ProductID }}">{{ this.ProductName }}</option>
+                                    {{/each}}
+                                  </select>
+                                  <label>المنتوجات</label>
+                                </div>
+                              {{else}}
+                                <div class="input-field col s12">
+                                  <select disabled="true" id="packs-creation-products-select" data-empty="true">
+                                    <option value="0">لا توجد منتوجات</option>
+                                  </select>
+                                  <label>المنتوجات</label>
+                                </div>
+                              {{/if}}
+                            </div>
+                            <div class="row">
+                              <div class="input-field col s12">
+                                <select id="packs-creation-variants-select" disabled="true"></select>
+                                <label>أنواع المنتوج</label>
+                              </div>
                             </div>
                           </div>
                         </div>

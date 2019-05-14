@@ -79,8 +79,21 @@ $('document').ready(() => {
 
     // Creation reset event
     $('.dashboard-packs #packs-creation-tab form').on('reset', function () {
-      // Reseting the preview
-      $creationPreview.attr('src', '/assets/img/backgrounds/placeholder.jpg');
+      if (confirm('هل ترغب في إعادة تعيين هذه الحزمة') === true) {
+
+        // Reseting the preview
+        $creationPreview.attr('src', '/assets/img/backgrounds/placeholder.jpg');
+
+        // Reseting the pack
+        pack = {
+          Disount: 0,
+          PackImage: '',
+          Variants: []
+        }
+
+        // Updating the UI
+        updateUI();
+      }
     });
 
     // Creation submit event
