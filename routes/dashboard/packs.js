@@ -193,15 +193,16 @@ router.delete('/', function (req, res) {
 
 // Setting up the restoration route.
 router.put('/restore', function (req, res) {
-  var categoryId = req.body['categoryId'],
+  console.log(res.body);
+  /*var categoryId = req.body['categoryId'],
     stmt = conn.format('UPDATE ?? SET ?? = 0 WHERE ?? = ?;', [
-      'Categories',
+      'Packs',
       'Deleted',
-      'CategoryID',
+      'PackID',
       categoryId
-    ]);
+    ]);*/
 
-  conn.query(stmt, (error, results) => {
+  /*conn.query(stmt, (error, results) => {
     // Checking if there are any errors.
     if (error) throw error;
 
@@ -210,7 +211,7 @@ router.put('/restore', function (req, res) {
 
     // Signaling the client.
     res.send();
-  });
+  });*/
 });
 
 // Exporting the route.

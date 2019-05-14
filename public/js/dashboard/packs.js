@@ -269,17 +269,15 @@ $('document').ready(() => {
 // Pack deletion
 (function () {
   $('.dashboard-packs .btn-restore').on('click', function () {
-    var data = {
-      packId: $(this).prev().val()
-    };
+    var packId = $(this).prev().val();
 
-    // $.ajax({
-    //   url: '/dashboard/packs/restore',
-    //   type: 'PUT',
-    //   data: data,
-    //   success: function () {
-    //     location.reload();
-    //   }
-    // });
+    $.ajax({
+      url: "/dashboard/packs/restore",
+      type: "PUT",
+      data: { packId },
+      success: function () {
+        location.reload();
+      }
+    })
   });
 })();
