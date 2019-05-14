@@ -444,6 +444,12 @@ $('document').ready(() => {
 									<option ' +
 					(stock.Type === '3' ? 'selected' : '') +
 					' value="3">القطعة</option> \
+									<option ' +
+					(stock.Type === '4' ? 'selected' : '') +
+					' value="4">الحزمة</option> \
+									<option ' +
+					(stock.Type === '5' ? 'selected' : '') +
+					' value="5">الملعقة</option> \
 								</select> \
 								<label>وحدة قياس</label> \
 							</div> \
@@ -1231,12 +1237,18 @@ $('document').ready(() => {
 									<option ' +
 					(stock.Type === '1' ? 'selected' : '') +
 					' value="1">الكيلوغرام</option> \
-												<option ' +
+									<option ' +
 					(stock.Type === '2' ? 'selected' : '') +
 					' value="2">الحصة</option> \
-												<option ' +
+									<option ' +
 					(stock.Type === '3' ? 'selected' : '') +
 					' value="3">القطعة</option> \
+									<option ' +
+					(stock.Type === '4' ? 'selected' : '') +
+					' value="4">الحزمة</option> \
+									<option ' +
+					(stock.Type === '5' ? 'selected' : '') +
+					' value="5">الملعقة</option> \
 								</select> \
 								<label>وحدة قياس</label> \
 							</div> \
@@ -1574,6 +1586,16 @@ $('document').ready(() => {
 				case 3: {
 					formatedMeasurement =
 						parseInt(value) > 1 ? value + ' قطع' : value + ' قطعة';
+					break;
+				}
+				case 4: {
+					formatedMeasurement =
+						parseInt(value) > 1 ? value + ' حزم' : value + ' حزمة';
+					break;
+				}
+				case 5: {
+					formatedMeasurement =
+						parseInt(value) > 1 ? value + ' ملاعق' : value + ' ملعقة';
 					break;
 				}
 			}
