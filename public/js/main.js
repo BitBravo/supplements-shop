@@ -1,5 +1,5 @@
 // Reseting the scrolling position
-window.onbeforeunload = function () { window.scrollTo(0, 0); }
+//window.onbeforeunload = function () { window.scrollTo(0, 0); }
 
 $('document').ready(function () {
 	// Initializing the search box
