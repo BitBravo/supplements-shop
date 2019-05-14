@@ -25,4 +25,13 @@
   .tab-controls {
     margin-top: 80px;
   }
+
+  .stock-creation-products-panel {
+    min-height: 70px;
+
+    .products-list .card-content {
+      height: 180px;
+      overflow-y: auto;
+    }
+  }
 }
