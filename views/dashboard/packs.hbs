@@ -128,8 +128,7 @@
                         {{#each Data.Packs }}
                           <li>
                             <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
-                              {{ this.CategoryName }} &nbsp; <span class="grey-text">
-                                [{{ this.CategoryParentName }}] </span>
+                              {{ this.PackName }}
                             </div>
                             <div class="collapsible-body">
                               <form action="/dashboard/categories?_method=PUT" method="POST">
@@ -176,11 +175,11 @@
                         {{#each Data.DeletedPacks }}
                           <li class="collection-item">
                             <div>
-                              <input type="hidden" value="{{ this.CategoryID }}">
+                              <input type="hidden" value="{{ this.PackID }}">
                               <a href="javascript:void(0)" class="secondary-content btn-restore"><i
                                   class="material-icons">restore</i></a>
 
-                              <b>{{ this.CategoryName }} [{{ this.CategoryParentName }}]</b>
+                              <b>{{ this.PackName }}</b>
                             </div>
                           </li>
                         {{/each}}
