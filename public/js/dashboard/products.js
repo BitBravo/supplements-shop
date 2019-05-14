@@ -1235,19 +1235,19 @@ $('document').ready(() => {
 							<div class="input-field col s12"> \
 								<select name="stock-edition-entry-type"> \
 									<option ' +
-					(stock.Type === '1' ? 'selected' : '') +
+					(stock.Type === 1 ? 'selected' : '') +
 					' value="1">الكيلوغرام</option> \
 									<option ' +
-					(stock.Type === '2' ? 'selected' : '') +
+					(stock.Type === 2 ? 'selected' : '') +
 					' value="2">الحصة</option> \
 									<option ' +
-					(stock.Type === '3' ? 'selected' : '') +
+					(stock.Type === 3 ? 'selected' : '') +
 					' value="3">القطعة</option> \
 									<option ' +
-					(stock.Type === '4' ? 'selected' : '') +
+					(stock.Type === 4 ? 'selected' : '') +
 					' value="4">الحزمة</option> \
 									<option ' +
-					(stock.Type === '5' ? 'selected' : '') +
+					(stock.Type === 5 ? 'selected' : '') +
 					' value="5">الملعقة</option> \
 								</select> \
 								<label>وحدة قياس</label> \
