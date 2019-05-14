@@ -116,6 +116,14 @@ module.exports = {
 				output = parseInt(value) > 1 ? 'قطع' : 'قطعة';
 				break;
 			}
+			case 4: {
+				output = parseInt(value) > 1 ? 'حزم' : 'حزمة';
+				break;
+			}
+			case 5: {
+				output = parseInt(value) > 1 ? 'ملاعق' : 'ملعقة';
+				break;
+			}
 		}
 
 		return output;
