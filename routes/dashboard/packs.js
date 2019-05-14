@@ -3,6 +3,7 @@
  */
 var express = require('express'),
   mysql = require('mysql'),
+  async = require('async'),
   router = express.Router(),
   login = require('./../../helpers/login'),
   databaseConfig = require('./../../config/database'),
@@ -116,27 +117,34 @@ router.get('/variants/:productID', function (req, res) {
 
 // Setting the category creation route.
 router.post('/', function (req, res) {
-  const categoryName = req.body['category-name'],
-    categoryParent =
-      req.body['category-parent'] == 0 ? null : req.body['category-parent'],
-    stmt = conn.format('INSERT INTO ?? (??, ??) VALUES (?, ?);', [
-      'Categories',
-      'CategoryName',
-      'CategoryParent',
-      categoryName,
-      categoryParent
-    ]);
+  var stmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, ?, 0);', ['Packs', 'PackImage', 'Discount', 'Deleted', req.body['pack-image'], req.body['pack-discount']]);
 
-  conn.query(stmt, (error, results) => {
+  conn.query(stmt, function (error, results) {
     // Checking if there are any errors.
-    if (error) throw error;
+    if (error) {
+      console.error(error);
+      res.redirect('/error');
+    } else {
+      if (req.body['pack-variants']) {
+        async.each(req.body['pack-variants'], function (variant) {
+          var variantStmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, ?, 0);', ['PacksVariants', 'PackID', 'VariantID', 'Deleted', results.insertId, variant['VariantID']]);
 
-    // Setting up the flash message.
-    req.flash('pack-flash', 'تم إنشاء الحزمة بنجاح');
-
-    // Rendering the categories page.
-    res.redirect('/dashboard/categories');
+          conn.query(variantStmt, function (variantError) {
+            if (variantError) {
+              console.error(variantError);
+              res.redirect('/error');
+            }
+          });
+        });
+      }
+    }
   });
+
+  // Setting up the flash message.
+  req.flash('pack-flash', 'تم إنشاء الحزمة بنجاح');
+
+  // Rendering the packs page.
+  res.send();
 });
 
 // Setting up the category edition route.
