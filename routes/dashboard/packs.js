@@ -102,7 +102,21 @@ router.get('/', function (req, res) {
 });
 
 router.get('/:packID', function (req, res) {
-  res.send('Data...');
+  var stmt = conn.format('\
+    SELECT ??, ?? FROM ?? WHERE ?? = ?; \
+    SELECT PV.PackVariantID, PV.VariantID, PVr.VariantType, PVr.VariantValue, P.ProductName FROM PacksVariants PV INNER JOIN ProductsVariants PVr ON PV.VariantID = PVr.VariantID INNER JOIN Products P ON  PVr.ProductID = P.ProductID WHERE PV.PackID = ?; \
+    ', [
+      'PackImage', 'Discount', 'Packs', 'PackID', req.params['packID'],
+      req.params['packID']
+    ]);
+
+  conn.query(stmt, function (errors, results) {
+    if (errors) {
+      console.error(errors);
+    } else {
+      res.json(results);
+    }
+  });
 });
 
 // Setting up the products retrieval route

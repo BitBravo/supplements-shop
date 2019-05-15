@@ -188,12 +188,75 @@
             <br>
             <div class="col s12">
               <form id="pack-edition-form">
+                <div class="row valign-wrapper">
+                  <div class="col s10 offset-s1">
+                    <div class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input id="pack-edition-image" type="url" name="pack-image" class="validate" required>
+                          <label for="pack-edition-image">صورةالحزمة</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col s12">
+                          <img src="/assets/img/backgrounds/placeholder.jpg" alt="The pack's image."
+                            class="responsive-img materialboxed">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input id="pack-edition-discount" type="number" step="0.01" min="0" name="pack-discount" class="validate" value="0"
+                            required>
+                          <label for="pack-edition-discount">الخصم <small class="grey-text">&rlm;(درهم)&rlm;</small></label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        {{#if Data.Products }}
+                          <div class="input-field col s12">
+                            <select id="packs-edition-products-select">
+                              {{#each Data.Products }}
+                                <option value="{{ this.ProductID }}">{{ this.ProductName }}</option>
+                              {{/each}}
+                            </select>
+                            <label>المنتوجات</label>
+                          </div>
+                        {{else}}
+                          <div class="input-field col s12">
+                            <select disabled="true" id="packs-edition-products-select" data-empty="true">
+                              <option value="0">لا توجد منتوجات</option>
+                            </select>
+                            <label>المنتوجات</label>
+                          </div>
+                        {{/if}}
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <select id="packs-edition-variants-select" disabled="true"></select>
+                          <label>أنواع المنتوج</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="row">
-
+                  <div class="col s10 offset-s1 card-panel stock-edition-products-panel">
+                    <div class="card-title">
+                      <h5 class="right-align">
+                        [<span></span>] المنتوجات
+                      </h5>
+                    </div>
+                    <div class="row products-list"></div>
+                  </div>
                 </div>
                 <div class="row pack-edition-controls">
                   <div class="col s12">
                     <input type="submit" class="btn btn-large green waves-effect waves-light" value="تحديث المنتوج">
+                  </div>
+                  <div class="col s12">
+                    <input type="button" class="btn btn-large waves-effect waves-light"
+                      id="stock-edition-add-products-btn" value="إضافة المنتوج إلى الحزمة">
                   </div>
                   <div class="col s12">
                     <input type="reset" class="btn btn-large waves-effect waves-light" value="إعادة تعيين">

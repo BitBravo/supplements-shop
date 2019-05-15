@@ -26,7 +26,8 @@
     margin-top: 80px;
   }
 
-  .stock-creation-products-panel {
+  .stock-creation-products-panel,
+  .stock-edition-products-panel {
     min-height: 70px;
 
     .products-list .card-content {
@@ -66,5 +67,9 @@
         width: 300px;
       }
     }
+  }
+
+  #pack-edition-modal img {
+    margin: auto;
   }
 }
