@@ -171,12 +171,12 @@ router.put('/', function (req, res) {
 
 // Setting up the deletion route.
 router.delete('/', function (req, res) {
-  var categoryId = req.body['categoryId'],
+  var packId = req.body['packId'],
     stmt = conn.format('UPDATE ?? SET ?? = 1 WHERE ?? = ?;', [
-      'Categories',
+      'Packs',
       'Deleted',
-      'CategoryID',
-      categoryId
+      'PackID',
+      packId
     ]);
 
   conn.query(stmt, (error, results) => {

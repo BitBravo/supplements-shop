@@ -253,6 +253,21 @@ $('document').ready(() => {
 
   // Pack deletion
   (function () {
+    // Handeling the delete event
+    $('.dashboard-packs .btn-delete').on('click', function () {
+      var packId = $(this).next().val();
+
+      $.ajax({
+        url: "/dashboard/packs",
+        type: "DELETE",
+        data: { packId },
+        success: function () {
+          location.reload();
+        }
+      });
+    });
+
+    // Handeling the restoration event
     $('.dashboard-packs .btn-restore').on('click', function () {
       var packId = $(this).prev().val();
 
@@ -263,7 +278,7 @@ $('document').ready(() => {
         success: function () {
           location.reload();
         }
-      })
+      });
     });
   })();
 });
