@@ -47,12 +47,12 @@ router.use(login);
 router.get('/', function (req, res) {
   conn.query(
     '\
-        SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`;\
-        SELECT * FROM `Categories` WHERE `Deleted` = 0;\
-        SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0;\
-        SELECT `ProductID`, `ProductName` FROM `Products` WHERE `Deleted` = 0;\
-        SELECT `PacksVariants`.`PackID`, GROUP_CONCAT(`Products`.`ProductName` SEPARATOR " + ") AS `PackName`, `Packs`.`AddedDate`, COUNT(0) AS `Quantity` FROM `Packs` INNER JOIN `PacksVariants` ON `Packs`.`PackID` = `PacksVariants`.`PackID` INNER JOIN `ProductsVariants` ON `ProductsVariants`.`VariantID` = `PacksVariants`.`VariantID` INNER JOIN `Products` ON `Products`.`ProductID` = `ProductsVariants`.`ProductID` where `Packs`.`Deleted` = 0 GROUP BY `Packs`.`PackID` ORDER BY `Packs`.`AddedDate` DESC;\
-        SELECT `PacksVariants`.`PackID`, GROUP_CONCAT(`Products`.`ProductName` SEPARATOR " + ") AS `PackName` FROM `Packs` INNER JOIN `PacksVariants` ON `Packs`.`PackID` = `PacksVariants`.`PackID` INNER JOIN `ProductsVariants` ON `ProductsVariants`.`VariantID` = `PacksVariants`.`VariantID` INNER JOIN `Products` ON `Products`.`ProductID` = `ProductsVariants`.`ProductID` where `Packs`.`Deleted` = 1 GROUP BY `Packs`.`PackID`;\
+        SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
+        SELECT * FROM `Categories` WHERE `Deleted` = 0; \
+        SELECT COUNT(`MailID`) AS `NewMail` FROM `Mail` WHERE `Read` = 0; \
+        SELECT `ProductID`, `ProductName` FROM `Products` WHERE `Deleted` = 0; \
+        SELECT `PacksVariants`.`PackID`, GROUP_CONCAT(`Products`.`ProductName` SEPARATOR " + ") AS `PackName`, `Packs`.`AddedDate`, COUNT(0) AS `Quantity` FROM `Packs` INNER JOIN `PacksVariants` ON `Packs`.`PackID` = `PacksVariants`.`PackID` INNER JOIN `ProductsVariants` ON `ProductsVariants`.`VariantID` = `PacksVariants`.`VariantID` INNER JOIN `Products` ON `Products`.`ProductID` = `ProductsVariants`.`ProductID` where `Packs`.`Deleted` = 0 GROUP BY `Packs`.`PackID` ORDER BY `Packs`.`AddedDate` DESC; \
+        SELECT `PacksVariants`.`PackID`, GROUP_CONCAT(`Products`.`ProductName` SEPARATOR " + ") AS `PackName` FROM `Packs` INNER JOIN `PacksVariants` ON `Packs`.`PackID` = `PacksVariants`.`PackID` INNER JOIN `ProductsVariants` ON `ProductsVariants`.`VariantID` = `PacksVariants`.`VariantID` INNER JOIN `Products` ON `Products`.`ProductID` = `ProductsVariants`.`ProductID` where `Packs`.`Deleted` = 1 GROUP BY `Packs`.`PackID`; \
     ',
     (error, results) => {
       // Checking if there are any errors.
@@ -101,6 +101,7 @@ router.get('/', function (req, res) {
   );
 });
 
+// Setting up the pack retreival route
 router.get('/:packID', function (req, res) {
   var stmt = conn.format('\
     SELECT ??, ?? FROM ?? WHERE ?? = ?; \
