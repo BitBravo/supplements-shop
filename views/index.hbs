@@ -14,7 +14,7 @@
 	<section class="products-showcase top-sold grey lighten-3 z-depth-2">
 		<div class="row container showcase-header">
 			<div class="col s12 m12 l6">
-				<a href="/products/" class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
+				<a href="/packs/" class="waves-effect waves-light btn btn-large btn-icon showcase-header__btn">
 					جميع الحزم
 					<i class="fa fa-list"></i>
 				</a>
@@ -32,13 +32,13 @@
 								<div class="z-depth-1 center-align green white-text product-card__product-discount">
 									<div class="product-discount__content">
 										<small>
-											{{ formatCurrency this.Discount }}
+											-{{ formatCurrency this.Discount }}
 										</small>
 									</div>
 								</div>
 							{{/displayOldPrice}}
 							<div class="card-image activator waves-effect waves-block waves-light ">
-								<a href="/pack/{{ this.PackID }}">
+								<a href="/packs/{{ this.PackID }}">
 									<div class="product-card__img"
 										style="background-image: url({{ this.PackImage }}); background-position-x: center; background-repeat: no-repeat; background-size: contain;">
 									</div>
@@ -46,7 +46,7 @@
 							</div>
 							<div class="product-card__content">
 								<span class="card-title grey-text text-darken-4">
-									<a href="/pack/{{ this.PackId }}" class="black-text">
+									<a href="/packs/{{ this.PackId }}" class="black-text">
 										{{ this.PackName }}
 									</a>
 								</span>
