@@ -28,6 +28,15 @@
 				{{#each Data.Packs }}
 					<div class="col s12 m6 l6 xl4">
 						<div class="card sticky-action product-card">
+							{{#displayOldPrice this.Price this.Discount }}
+								<div class="z-depth-1 center-align green white-text product-card__product-discount">
+									<div class="product-discount__content">
+										<small>
+											{{ formatCurrency this.Discount }}
+										</small>
+									</div>
+								</div>
+							{{/displayOldPrice}}
 							<div class="card-image activator waves-effect waves-block waves-light ">
 								<a href="/pack/{{ this.PackID }}">
 									<div class="product-card__img"
