@@ -124,44 +124,31 @@
                 <div class="row">
                   <div class="col s12">
                     {{#if Data.Packs}}
-                      <ul class="collapsible">
-                        {{#each Data.Packs }}
-                          <li>
-                            <div class="collapsible-header"><i class="fa fa-edit grey-text"></i>
-                              {{ this.PackName }}
-                            </div>
-                            <div class="collapsible-body">
-                              <form action="/dashboard/categories?_method=PUT" method="POST">
-                                <div class="row">
-                                  <div class="input-field col s12">
-                                    <input id="category-name-{{ this.CategoryID }}" type="text" name="category-name"
-                                      class="validate" data-length="50" value="{{ this.CategoryName }}" required>
-                                    <label for="category-name-{{ this.CategoryID }}">اسم
-                                      الفئة</label>
-                                  </div>
-                                </div>
-                                <input type="hidden" name="category-id" value="{{ this.CategoryID }}">
-                                <div class="row">
-                                  <div class="col s6 center-align">
-                                    <input type="submit" class="btn btn-large waves-effect waves-light grey lighten-3"
-                                      value="تحديث">
-                                  </div>
-                                  <div class="col s6 center-align">
-                                    <input type="button"
-                                      class="btn btn-large waves-effect waves-light grey lighten-3 btn-delete"
-                                      value="حذف">
-                                    <input type="hidden" value="{{ this.PackID }}">
-                                  </div>
-                                </div>
-                              </form>
-                            </div>
-                          </li>
-                        {{/each}}
-                      </ul>
+                      <table class="striped">
+                        <thead>
+                          <tr>
+                            <th>اسم المنتج</th>
+                            <th>العلامة التجارية</th>
+                            <th class="center-align">الكمية</th>
+                            <th class="center-align">الفئة</th>
+                            <th class="right-align">تاريخ الإضافة</th>
+                          </tr>
+                        </thead>
+                        <tbody class="product-list">
+                          {{#each Data.Packs }}
+                            <tr data-product-id="{{ this.PackID }}">
+                              <td>{{ this.PackName }}</td>
+                              <td>{{ this.BrandName }}</td>
+                              <td class="center-align">{{ this.Quantity }}</td>
+                              <td class="center-align">{{ this.Price }}</td>
+                            </tr>
+                          {{/each}}
+                        </tbody>
+                      </table>
+
                     {{else}}
                       <ul class="collection">
-                        <li class="collection-item center-align">لا توجد حزم حاليا
-                        </li>
+                        <li class="collection-item center-align">لا توجد حزم حاليا</li>
                       </ul>
                     {{/if}}
                   </div>

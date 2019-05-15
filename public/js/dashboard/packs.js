@@ -251,6 +251,11 @@ $('document').ready(() => {
     }
   })();
 
+  // Pack edition
+  (function () {
+
+  })();
+
   // Pack deletion
   (function () {
     // Handeling the delete event
