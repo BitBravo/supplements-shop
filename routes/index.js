@@ -90,7 +90,8 @@ router.get('/', function (req, res) {
         LIMIT 6; \
         SELECT `ShippingPrice` FROM `shippingpricehistory` ORDER BY `StartingDate` DESC LIMIT 1; \
         SELECT `ShippingBump` FROM `shippingbumphistory` ORDER BY `StartingDate` DESC LIMIT 1; \
-        SELECT `CarouselURL`, `Tag` FROM `Carousel` WHERE `Deleted` = 0; \
+				SELECT `CarouselURL`, `Tag` FROM `Carousel` WHERE `Deleted` = 0; \
+				SELECT `Packs`.`PackImage`, `PacksVariants`.`PackID`, GROUP_CONCAT(`Products`.`ProductName` SEPARATOR " + ") AS `PackName`, (SELECT SUM((SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `p_v`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1)) FROM `PacksVariants` `p_v` WHERE `p_v`.`PackID` = `Packs`.`PackID`) AS `Price` FROM `Packs` INNER JOIN `PacksVariants` ON `Packs`.`PackID` = `PacksVariants`.`PackID` INNER JOIN `ProductsVariants` ON `ProductsVariants`.`VariantID` = `PacksVariants`.`VariantID` INNER JOIN `Products` ON `Products`.`ProductID` = `ProductsVariants`.`ProductID` where `Packs`.`Deleted` = 0 GROUP BY `Packs`.`PackID` ORDER BY `Packs`.`AddedDate` DESC; \
         ',
 		(error, results) => {
 			// Checking if there are any errors.
@@ -123,6 +124,7 @@ router.get('/', function (req, res) {
 				TopProducts: results[3],
 				NewestProducts: results[4],
 				Carousel: results[7],
+				Packs: results[8],
 				Shipping: {
 					Price: results[5][0].ShippingPrice,
 					Bump: results[6][0].ShippingBump
