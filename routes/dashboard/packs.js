@@ -167,24 +167,30 @@ router.post('/', function (req, res) {
 
 // Setting up the category edition route.
 router.put('/', function (req, res) {
-  const stmt = conn.format('UPDATE ?? SET ?? = ? WHERE ?? = ?;', [
-    'Categories',
-    'CategoryName',
-    req.body['category-name'],
-    'CategoryID',
-    req.body['category-id']
-  ]);
+  var packsToUpdate = [],
+    packsToInsert = [];
 
-  conn.query(stmt, (error, results) => {
-    // Checking if there are any errors.
-    if (error) throw error;
-
-    // Setting up the flash message.
-    req.flash('pack-flash', 'تم تحديث الفئة بنجاح');
-
-    // Rendering the categories page.
-    res.redirect('/dashboard/categories');
+  packsToInsert = req.body['pack-variants'].filter(function (variant) {
+    return variant['PackVariantID'] == null ? variant : null;
   });
+
+  if (packsToInsert.length > 0) {
+    async.each(packsToInsert, function (packVariant) {
+      var stmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, ?, 0);', ['PacksVariants', 'PackID', 'VariantID', 'Deleted', req.body['pack-id'], packVariant['VariantID']]);
+
+      conn.query(stmt, function (errors, results) {
+        if (errors) {
+          console.error(errors);
+        }
+      });
+    });
+  }
+
+  // Setting up the flash message.
+  req.flash('pack-flash', 'تم تحديث الفئة بنجاح');
+
+  // Signaling the client
+  res.send();
 });
 
 // Setting up the deletion route.
