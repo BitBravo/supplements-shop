@@ -167,30 +167,55 @@ router.post('/', function (req, res) {
 
 // Setting up the category edition route.
 router.put('/', function (req, res) {
-  var packsToUpdate = [],
-    packsToInsert = [];
+  var stmt = conn.format('UPDATE ?? SET ?? = ?, ?? = ? WHERE ?? = ?;', ['Packs', 'Discount', req.body['pack-discount'], 'PackImage', req.body['pack-image'], 'PackID', req.body['pack-id']]);
 
-  packsToInsert = req.body['pack-variants'].filter(function (variant) {
-    return variant['PackVariantID'] == null ? variant : null;
-  });
+  conn.query(stmt, function (errors, results) {
+    if (errors) {
+      console.error(errors);
+    } else {
 
-  if (packsToInsert.length > 0) {
-    async.each(packsToInsert, function (packVariant) {
-      var stmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, ?, 0);', ['PacksVariants', 'PackID', 'VariantID', 'Deleted', req.body['pack-id'], packVariant['VariantID']]);
+      var packsToDelete = [],
+        packsToInsert = [];
 
-      conn.query(stmt, function (errors, results) {
-        if (errors) {
-          console.error(errors);
-        }
+      packsToInsert = req.body['pack-variants'].filter(function (variant) {
+        return variant['PackVariantID'] == null ? variant : null;
       });
-    });
-  }
 
-  // Setting up the flash message.
-  req.flash('pack-flash', 'تم تحديث الفئة بنجاح');
+      if (packsToInsert.length > 0) {
+        async.each(packsToInsert, function (packVariant) {
+          var stmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, ?, 0);', ['PacksVariants', 'PackID', 'VariantID', 'Deleted', req.body['pack-id'], packVariant['VariantID']]);
 
-  // Signaling the client
-  res.send();
+          conn.query(stmt, function (errors, results) {
+            if (errors) {
+              console.error(errors);
+            }
+          });
+        });
+      }
+
+      packsToDelete = req.body['pack-variants'].filter(function (variant) {
+        return variant['PackVariantID'] != null ? variant : null;
+      }).map(function (variant) {
+        return variant['PackVariantID'];
+      });
+
+      if (packsToDelete.length > 0) {
+        var stmt = conn.format('DELETE FROM ?? WHERE ?? = ? AND ?? NOT IN (?);', ['PacksVariants', 'PackID', req.body['pack-id'], 'PackVariantID', packsToDelete]);
+
+        conn.query(stmt, function (errors, results) {
+          if (errors) {
+            console.error(errors);
+          }
+        });
+      }
+
+      // Setting up the flash message.
+      req.flash('pack-flash', 'تم تحديث الفئة بنجاح');
+
+      // Signaling the client
+      res.send();
+    }
+  });
 });
 
 // Setting up the deletion route.
