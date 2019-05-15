@@ -101,6 +101,10 @@ router.get('/', function (req, res) {
   );
 });
 
+router.get('/:packID', function (req, res) {
+  res.send('Data...');
+});
+
 // Setting up the products retrieval route
 router.get('/variants/:productID', function (req, res) {
   var stmt = conn.format('SELECT `PV`.`VariantID`, `PV`.`VariantValue`, `PV`.`VariantType` FROM `ProductsVariants` `PV` WHERE (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID`) > 0 AND `PV`.`Deleted` = 0 AND `PV`.`ProductID` = ? ORDER BY `PV`.`VariantType` ASC;', [req.params['productID']]);

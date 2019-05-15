@@ -921,7 +921,7 @@ $('document').ready(() => {
 			'.dashboard-products #product-edition-name, .dashboard-products #product-edition-nutrition-info'
 		).characterCounter();
 
-		// Adding the clikc event to open the product edition modal.
+		// Adding the click event to open the product edition modal.
 		$('.product-list tr').on('click', function () {
 			var productId = $(this).data('product-id');
 

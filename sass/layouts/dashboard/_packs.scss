@@ -46,4 +46,25 @@
       }
     }
   }
+
+  .pack-edition-controls {
+    margin-top: 80px;
+
+    .col {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      &:not(:last-of-type) {
+        margin-bottom: 20px !important;
+      }
+
+      input[type='submit'],
+      input[type='reset'],
+      input[type='button'] {
+        color: $color-light;
+        width: 300px;
+      }
+    }
+  }
 }
