@@ -1,6 +1,3 @@
-// Reseting the scrolling position
-//window.onbeforeunload = function () { window.scrollTo(0, 0); }
-
 $('document').ready(function () {
 	// Initializing the search box
 	$.post('/products/', results => {
@@ -113,6 +110,7 @@ $('document').ready(function () {
 			.slideUp();
 	});
 
+	$('body,html').animate({ scrollTop: 0 }, 300);
 	// Displaying the content.
 	setTimeout(function () {
 		$('#global-preloader').fadeOut();
