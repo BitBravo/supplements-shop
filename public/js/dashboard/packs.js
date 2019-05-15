@@ -126,20 +126,6 @@ $('document').ready(() => {
       })
     });
 
-    // Restoring a pack.
-    $('.dashboard-packs .btn-restore').on('click', function () {
-      var categoryId = $(this).prev().val();
-
-      $.ajax({
-        url: "/dashboard/categories/restore",
-        type: "PUT",
-        data: { categoryId },
-        success: function () {
-          location.reload();
-        }
-      })
-    });
-
     // Adding a product to the pack
     $('#stock-creation-add-products-btn').on('click', function () {
 
@@ -264,20 +250,20 @@ $('document').ready(() => {
       $('.dashboard-packs select').formSelect();
     }
   })();
+
+  // Pack deletion
+  (function () {
+    $('.dashboard-packs .btn-restore').on('click', function () {
+      var packId = $(this).prev().val();
+
+      $.ajax({
+        url: "/dashboard/packs/restore",
+        type: "PUT",
+        data: { packId },
+        success: function () {
+          location.reload();
+        }
+      })
+    });
+  })();
 });
-
-// Pack deletion
-(function () {
-  $('.dashboard-packs .btn-restore').on('click', function () {
-    var packId = $(this).prev().val();
-
-    $.ajax({
-      url: "/dashboard/packs/restore",
-      type: "PUT",
-      data: { packId },
-      success: function () {
-        location.reload();
-      }
-    })
-  });
-})();
