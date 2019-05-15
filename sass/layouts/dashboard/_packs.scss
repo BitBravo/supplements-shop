@@ -34,4 +34,16 @@
       overflow-y: auto;
     }
   }
+
+  .packs-list {
+    tr {
+      cursor: pointer;
+      transition-duration: 0.3s;
+      transition-property: background-color;
+
+      &:hover {
+        background-color: $color-light;
+      }
+    }
+  }
 }

@@ -127,20 +127,17 @@
                       <table class="striped">
                         <thead>
                           <tr>
-                            <th>اسم المنتج</th>
-                            <th>العلامة التجارية</th>
-                            <th class="center-align">الكمية</th>
-                            <th class="center-align">الفئة</th>
+                            <th>اسم الحزمة</th>
+                            <th class="center-align">منتوجات</th>
                             <th class="right-align">تاريخ الإضافة</th>
                           </tr>
                         </thead>
-                        <tbody class="product-list">
+                        <tbody class="packs-list">
                           {{#each Data.Packs }}
-                            <tr data-product-id="{{ this.PackID }}">
+                            <tr data-pack-id="{{ this.PackID }}">
                               <td>{{ this.PackName }}</td>
-                              <td>{{ this.BrandName }}</td>
                               <td class="center-align">{{ this.Quantity }}</td>
-                              <td class="center-align">{{ this.Price }}</td>
+                              <td class="right-align">{{ formatDate this.AddedDate }}</td>
                             </tr>
                           {{/each}}
                         </tbody>
