@@ -279,7 +279,6 @@ $('document').ready(() => {
         // Updating the modal's inputs
         $editionInput.val(pack.PackImage);
         $editionDiscount.val(pack.Disount);
-        console.log(data, pack);
 
         // Updating the UI
         updateUI();
@@ -352,13 +351,19 @@ $('document').ready(() => {
       e.preventDefault();
 
       if (confirm('هل ترغب في تحديث هذه الحزمة') === true) {
-        /*$.post('/dashboard/packs', {
-          'pack-discount': $('#pack-discount').val(),
-          'pack-image': $('#pack-image').val(),
-          'pack-variants': pack.Variants
-        }, function () {
-          location.reload();
-        });*/
+        $.ajax({
+          url: '/dashboard/packs',
+          type: 'PUT',
+          data: {
+            'pack-id': $packEditionModal.data('pack-id'),
+            'pack-discount': $('#pack-edition-discount').val(),
+            'pack-image': $editionInput.val(),
+            'pack-variants': pack.Variants
+          },
+          success: function () {
+            location.reload();
+          }
+        })
       }
     });
 
@@ -493,14 +498,16 @@ $('document').ready(() => {
     $('#pack-delete-btn').on('click', function () {
       var packId = $(this).closest('.modal').data('pack-id');
 
-      $.ajax({
-        url: "/dashboard/packs",
-        type: "DELETE",
-        data: { packId },
-        success: function () {
-          location.reload();
-        }
-      });
+      if (confirm('هل ترغب في حذف هذه الحزمة') === true) {
+        $.ajax({
+          url: "/dashboard/packs",
+          type: "DELETE",
+          data: { packId },
+          success: function () {
+            location.reload();
+          }
+        });
+      }
     });
 
     // Handeling the restoration event
