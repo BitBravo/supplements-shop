@@ -1,0 +1,55 @@
+<section class="container packs-section">
+
+  <div class="row">
+    {{#if Data.Packs }}
+      {{#each Data.Packs }}
+        <div class="col s12 m6 l6 xl4">
+          <div class="card sticky-action product-card">
+            {{#displayOldPrice this.Price this.Discount }}
+              <div class="z-depth-1 center-align green white-text product-card__product-discount">
+                <div class="product-discount__content">
+                  <small>
+                    -{{ formatCurrency this.Discount }}
+                  </small>
+                </div>
+              </div>
+            {{/displayOldPrice}}
+            <div class="card-image activator waves-effect waves-block waves-light ">
+              <a href="/packs/{{ this.PackID }}">
+                <div class="product-card__img"
+                  style="background-image: url({{ this.PackImage }}); background-position-x: center; background-repeat: no-repeat; background-size: contain;">
+                </div>
+              </a>
+            </div>
+            <div class="product-card__content">
+              <span class="card-title grey-text text-darken-4">
+                <a href="/packs/{{ this.PackId }}" class="black-text">
+                  {{ this.PackName }}
+                </a>
+              </span>
+            </div>
+            <div class="card-action right-align product-card__price">
+              <div class="row center-align">
+                <div class="col s12">
+                  <span>
+                    <b class="green-text">{{ formatCurrency this.Price }}</b>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="card-action right-align">
+              <a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري
+                الآن</a>
+              <a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
+                title="أضف إلى السلة">
+                <i class="fa fa-cart-plus"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    {{else}}
+      <h4 class="center-align">!&rlm;لا توجد حزم</h4>
+    {{/if}}
+  </div>
+</section>
