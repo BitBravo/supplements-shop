@@ -177,6 +177,7 @@ CREATE TABLE IF NOT EXISTS `Packs` (
 	`PackID`						INT NOT NULL AUTO_INCREMENT,
 	`PackImage`     		TEXT NULL,
 	`Discount`					DECIMAL(12, 2) NOT NULL DEFAULT 0,
+	`AddedDate`         DATETIME NOT NULL DEFAULT NOW(),
 	`Deleted`           BIT NOT NULL DEFAULT 0,
 
 	CONSTRAINT pk_packs_id PRIMARY KEY (`PackID`)
