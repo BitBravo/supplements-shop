@@ -254,13 +254,41 @@ $('document').ready(() => {
   // Pack edition
   (function () {
 
+    // Frequently used elements
+    var $packEditionModal = $('#pack-edition-modal');
+
+    // Adding the click event to open the pack edition modal
+    $('.packs-list tr').on('click', function () {
+      var packId = $(this).data('pack-id');
+
+      $.get('/dashboard/packs/' + packId, function (data) {
+
+        console.log(data);
+
+        // Setting the corresponding pack ID
+        $packEditionModal.data('pack-id', packId);
+
+        // Updating the UI
+        updateUI();
+
+        // Opening the modal
+        $packEditionModal.modal('open', {
+          preventScrolling: true
+        });
+      });
+    });
+
+    // UI update
+    function updateUI() {
+
+    }
   })();
 
   // Pack deletion
   (function () {
     // Handeling the delete event
-    $('.dashboard-packs .btn-delete').on('click', function () {
-      var packId = $(this).next().val();
+    $('#pack-delete-btn').on('click', function () {
+      var packId = $(this).closest('.modal').data('pack-id');
 
       $.ajax({
         url: "/dashboard/packs",
