@@ -20,7 +20,7 @@
   &__upper {
     display: flex;
     margin-bottom: 80px;
-    
+
     .product-info-table {
       display: flex;
       flex-direction: column;
@@ -52,7 +52,8 @@
       flex-direction: column;
       justify-content: start;
 
-      .product-variant-select, .product-flavor-select {
+      .product-variant-select,
+      .product-flavor-select {
         margin-top: 20px;
       }
 
@@ -77,14 +78,14 @@
           margin-left: 10px;
           text-align: center;
         }
-        
+
         input {
           font-size: 20px;
           text-align: center;
           font-weight: bold;
         }
       }
-      
+
       .product-section__buy {
         display: flex;
         align-items: flex-end;
@@ -116,6 +117,10 @@
     }
   }
 
+  &__recommendation {
+    margin-top: 80px;
+  }
+
   @media screen and (max-width: $break-point--tablet) {
     &__upper {
       margin-bottom: 20px;
@@ -134,7 +139,6 @@
 
       &__action {
         .product-section__price {
-
           del {
             font-size: 19px;
           }
