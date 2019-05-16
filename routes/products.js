@@ -329,13 +329,11 @@ router.get('/:variantID/:flavorID', function (req, res) {
 							`P`.`CategoryID` = (SELECT _P.CategoryID FROM ProductsVariants _PV INNER JOIN Products _P ON _PV.ProductID = _P.ProductID WHERE _PV.VariantID = '+ req.params['variantID'] + ') \
 							AND \
 							`PV`.`VariantID` <> '+ req.params['variantID'] + ' \
-							AND \
-              `PV`.`FeaturedVariant` = 1 \
               AND \
               `P`.`Deleted` = 0 \
               AND \
               (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0\
-        ORDER BY RAND() \
+        ORDER BY `PV`.`FeaturedVariant` DESC, RAND() \
         LIMIT 3; \
 					',
 				[
