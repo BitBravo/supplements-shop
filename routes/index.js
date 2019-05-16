@@ -44,9 +44,9 @@ router.get('/', function (req, res) {
         SELECT \
               `PV`.`VariantID`, \
               `P`.`ProductName`, \
-		  `PV`.`VariantValue`, \
-		  `PV`.`VariantType`, \
-		  (SELECT `B`.`BrandName` FROM `Brands` `B` WHERE `B`.`BrandID` = `P`.`BrandID`) AS `BrandName`, \
+							`PV`.`VariantValue`, \
+							`PV`.`VariantType`, \
+							(SELECT `B`.`BrandName` FROM `Brands` `B` WHERE `B`.`BrandID` = `P`.`BrandID`) AS `BrandName`, \
               (SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
               (SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
               (SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
@@ -66,10 +66,10 @@ router.get('/', function (req, res) {
         LIMIT 6; \
         SELECT `PV`.`VariantID`, \
               `P`.`ProductName`, \
-		  `PV`.`VariantValue`, \
-		  `PV`.`VariantType`, \
-		  (SELECT `B`.`BrandName` FROM `Brands` `B` WHERE `B`.`BrandID` = `P`.`BrandID`) AS `BrandName`, \
-              (SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
+							`PV`.`VariantValue`, \
+							`PV`.`VariantType`, \
+							(SELECT `B`.`BrandName` FROM `Brands` `B` WHERE `B`.`BrandID` = `P`.`BrandID`) AS `BrandName`, \
+							(SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
               (SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
               (SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
         FROM \

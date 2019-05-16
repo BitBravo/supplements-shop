@@ -30,7 +30,7 @@ conn.connect();
 
 
 
-/**
+/**v
  * Routing
  */
 // Setting up products route.
@@ -256,61 +256,88 @@ router.get('/:variantID/:flavorID', function (req, res) {
 
 		if (checkResults.length > 0) {
 			var stmt = conn.format(
-				`
-					SELECT ??, ??, ??, ??, ??, ??, ?? FROM ??; 
-					SELECT * FROM ??  WHERE ?? = 0;
-					SELECT 
-								*,
-								(SELECT PPH.Price FROM ProductsPriceHistory PPH WHERE PPH.VariantID = PV.VariantID ORDER BY PPH.ChangedDate DESC LIMIT 1) AS NewPrice, 
-								(SELECT DISTINCT PPH.Price FROM ProductsPriceHistory PPH WHERE PPH.VariantID = PV.VariantID ORDER BY PPH.ChangedDate DESC LIMIT 1, 1) AS OldPrice
-					FROM 
-							Products P 
-					INNER JOIN 
-							ProductsVariants PV 
-					ON 
-							P.ProductID = PV.ProductID 
-					INNER JOIN 
-							ProductsVariantsFlavors PVF 
-					ON 
-							PV.VariantID = PVF.VariantID 
-					INNER JOIN
-							Flavors F
-					ON
-							F.FlavorID = PVF.FlavorID
-					INNER JOIN
-							Brands B
-					ON
-							B.BrandID = P.BrandID
-					INNER JOIN
-							Categories C
-					ON
-							C.CategoryID = P.CategoryID
-					WHERE 
-							PV.VariantID = ? 
-							AND
-							PVF.FlavorID = ?;
-					SELECT DISTINCT 
-							PV.VariantID, 
-							PV.VariantValue,
-							PV.VariantType
-					FROM 
-							ProductsVariants PV
-					INNER JOIN 
-							ProductsVariantsFlavors PVF 
-					ON 
-							PV.VariantID = PVF.VariantID 
-					WHERE 
-							PV.ProductID = (SELECT _PV.ProductID FROM ProductsVariants _PV WHERE _PV.VariantID = ?) 
-							AND 
-							PV.Deleted = 0
-							AND
-							PVF.Quantity > 0
-					ORDER BY
-							PV.VariantType,
-							PV.VariantValue 
-							ASC;
-					SELECT * FROM ProductsVariantsFlavors PVF INNER JOIN Flavors F ON F.FlavorID = PVF.FlavorID WHERE PVF.VariantID = ? AND PVF.Deleted = 0 AND PVF.Quantity > 0;
-    `,
+				' \
+					SELECT ??, ??, ??, ??, ??, ??, ?? FROM ??; \
+					SELECT * FROM ??  WHERE ?? = 0; \
+					SELECT \
+								*, \
+								(SELECT PPH.Price FROM ProductsPriceHistory PPH WHERE PPH.VariantID = PV.VariantID ORDER BY PPH.ChangedDate DESC LIMIT 1) AS NewPrice, \
+								(SELECT DISTINCT PPH.Price FROM ProductsPriceHistory PPH WHERE PPH.VariantID = PV.VariantID ORDER BY PPH.ChangedDate DESC LIMIT 1, 1) AS OldPrice \
+					FROM  \
+							Products P \
+					INNER JOIN \
+							ProductsVariants PV  \
+					ON \
+							P.ProductID = PV.ProductID  \
+					INNER JOIN \
+							ProductsVariantsFlavors PVF  \
+					ON  \
+							PV.VariantID = PVF.VariantID  \
+					INNER JOIN \
+							Flavors F \
+					ON \
+							F.FlavorID = PVF.FlavorID \
+					INNER JOIN \
+							Brands B \
+					ON \
+							B.BrandID = P.BrandID \
+					INNER JOIN \
+							Categories C \
+					ON \
+							C.CategoryID = P.CategoryID \
+					WHERE  \
+							PV.VariantID = ?  \
+							AND \
+							PVF.FlavorID = ?; \
+					SELECT DISTINCT  \
+							PV.VariantID,  \
+							PV.VariantValue, \
+							PV.VariantType \
+					FROM  \
+							ProductsVariants PV \
+					INNER JOIN  \
+							ProductsVariantsFlavors PVF  \
+					ON  \
+							PV.VariantID = PVF.VariantID  \
+					WHERE  \
+							PV.ProductID = (SELECT _PV.ProductID FROM ProductsVariants _PV WHERE _PV.VariantID = ?)  \
+							AND  \
+							PV.Deleted = 0 \
+							AND \
+							PVF.Quantity > 0 \
+					ORDER BY \
+							PV.VariantType, \
+							PV.VariantValue  \
+							ASC; \
+					SELECT * FROM ProductsVariantsFlavors PVF INNER JOIN Flavors F ON F.FlavorID = PVF.FlavorID WHERE PVF.VariantID = ? AND PVF.Deleted = 0 AND PVF.Quantity > 0; \
+					SELECT \
+              `PV`.`VariantID`, \
+              `P`.`ProductName`, \
+							`PV`.`VariantValue`, \
+							`PV`.`VariantType`, \
+							(SELECT `B`.`BrandName` FROM `Brands` `B` WHERE `B`.`BrandID` = `P`.`BrandID`) AS `BrandName`, \
+              (SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `NewPrice`, \
+              (SELECT DISTINCT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1, 1) AS `OldPrice`, \
+              (SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `VariantImage`\
+        FROM \
+              `ProductsVariants` `PV` \
+        INNER JOIN \
+              `Products` `P` \
+        ON \
+              `PV`.`ProductID` = `P`.`ProductID` \
+				WHERE \
+							`P`.`CategoryID` = (SELECT _P.CategoryID FROM ProductsVariants _PV INNER JOIN Products _P ON _PV.ProductID = _P.ProductID WHERE _PV.VariantID = '+ req.params['variantID'] + ') \
+							AND \
+							`PV`.`VariantID` <> '+ req.params['variantID'] + ' \
+							AND \
+              `PV`.`FeaturedVariant` = 1 \
+              AND \
+              `P`.`Deleted` = 0 \
+              AND \
+              (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0\
+        ORDER BY RAND() \
+        LIMIT 3; \
+					',
 				[
 					// Config.
 					'PrimaryNumber',
@@ -360,7 +387,8 @@ router.get('/:variantID/:flavorID', function (req, res) {
 					Categories: formater.groupCategories(results[1]),
 					ProductInfo: results[2][0],
 					Variants: results[3],
-					Flavors: results[4]
+					Flavors: results[4],
+					RecommendedProducts: results[5]
 				};
 
 				// Getting the proper copyright date.
