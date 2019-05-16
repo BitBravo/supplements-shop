@@ -1,0 +1,26 @@
+/**
+    Brands - The brands page's styling rules.
+*/
+
+@charset 'utf-8';
+
+.brands-section {
+  padding: 200px 0 120px 0;
+
+  .card {
+    cursor: pointer;
+    opacity: 0.7;
+    transition-duration: 0.3s;
+    transition-property: opacity;
+
+    &:hover {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+
+    .card-image {
+      height: 300px;
+      padding: 0 20px;
+    }
+  }
+}

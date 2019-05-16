@@ -1,0 +1,20 @@
+<section class="container brands-section">
+
+  <div class="row">
+    {{#if Data.Brands }}
+      {{#each Data.Brands }}
+        <div class="col s12 m6 l6 xl4" title="{{ this.BrandName }}">
+          <a href='/products?brands=%5B"{{ this.BrandName }}"%5D'>
+            <div class="card">
+              <div class="card-image valign-wrapper">
+                <img src="{{ this.Logo }}" alt="{{this.BrandName }}'s logo">
+              </div>
+            </div>
+          </a>
+        </div>
+      {{/each}}
+    {{else}}
+      <h4 class="center-align">!&rlm;لا توجد علامات تجارية</h4>
+    {{/if}}
+  </div>
+</section>

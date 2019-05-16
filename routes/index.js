@@ -3,7 +3,6 @@
  */
 var express = require('express'),
 	mysql = require('mysql'),
-	sha1 = require('sha1'),
 	router = express.Router(),
 	databaseConfig = require('./../config/database'),
 	getCopyrightDate = require('./../helpers/copyright'),
