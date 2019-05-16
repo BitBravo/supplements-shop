@@ -51,6 +51,7 @@ var
 	// Getting the routes
 	routers = {
 		dashboard: require('./routes/dashboard/dashboard'),
+		brands: require('./routes/brands'),
 		index: require('./routes/index'),
 		packs: require('./routes/packs'),
 		products: require('./routes/products'),
@@ -135,6 +136,7 @@ app.use('/assets', express.static(path.join(__dirname + '/node_modules')));
  * Routing
  */
 app.use(routers.index);
+app.use('/brands', routers.brands);
 app.use('/packs', routers.packs);
 app.use('/products', routers.products);
 app.use('/dashboard', routers.dashboard);
