@@ -35,7 +35,7 @@
 		"dotenv-extended": "^2.4.0",
 		"express": "^4.16.4",
 		"express-favicon": "^2.0.1",
-		"express-handlebars": "^3.0.2",
+		"express-handlebars": "^3.1.0",
 		"express-session": "^1.15.6",
 		"jquery": "^3.4.0",
 		"materialize-css": "^1.0.0",
