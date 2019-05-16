@@ -8,6 +8,17 @@ $('document').ready(() => {
 	// Setting up the collapsible.
 	$('.product-section .collapsible').collapsible();
 
+	// Setting up the recommendation carousel
+	$('.recommendation-carousel').slick({
+		arrows: true,
+		autoplay: true,
+		infinite: true,
+		nextArrow: '<i class="fa fa-chevron-right fa-4x next slick-next slick-arrow"></i>',
+		prevArrow: '<i class="fa fa-chevron-left fa-4x prev slick-prev slick-arrow"></i>',
+		slidesToShow: 3,
+		slidesToScroll: 3
+	});
+
 	// Selecting the correct variant dropdown value.
 	$.each($('.product-variant-select option'), (i, v) => {
 		if ($(v).val() == $('.product-section').data('variant-id')) {
@@ -34,12 +45,12 @@ $('document').ready(() => {
 	$('.ql-editor').prop('contenteditable', false);
 
 	// Adding the page redirect action to the variants' select input.
-	$('.product-section .product-variant-select select').on('change', function() {
+	$('.product-section .product-variant-select select').on('change', function () {
 		window.location.href = '/products/' + $(this).val();
 	});
 
 	// Adding the page redirect action to the flavors' select inout.
-	$('.product-section .product-flavor-select select').on('change', function() {
+	$('.product-section .product-flavor-select select').on('change', function () {
 		window.location.href =
 			'/products/' + $('.product-section select').val() + '/' + $(this).val();
 	});

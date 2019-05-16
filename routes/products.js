@@ -334,7 +334,7 @@ router.get('/:variantID/:flavorID', function (req, res) {
               AND \
               (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0\
         ORDER BY `PV`.`FeaturedVariant` DESC, RAND() \
-        LIMIT 3; \
+        LIMIT 9; \
 					',
 				[
 					// Config.

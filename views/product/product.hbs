@@ -1,3 +1,8 @@
+{{!-- SlickJS --}}
+<script src="/assets/slick-carousel/slick/slick.min.js"></script>
+{{!-- <link rel="stylesheet" href="/assets/slick-carousel/slick/slick-theme.css"> --}}
+
+{{!-- The product' script --}}
 <script src="/assets/js/product.js"></script>
 
 <section class="container product-section" data-variant-id="{{ Data.ProductInfo.VariantID }}"
@@ -215,7 +220,7 @@
 					<h4 class="right-align">المنتوجات الموصى بها</h4>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row recommendation-carousel">
 				{{#each Data.RecommendedProducts }}
 					<div class="col s12 m6 l6 xl4">
 						<div class="card sticky-action product-card">

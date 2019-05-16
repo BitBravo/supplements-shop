@@ -119,6 +119,37 @@
 
   &__recommendation {
     margin-top: 80px;
+
+    .recommendation-carousel {
+      overflow: hidden;
+      position: relative;
+
+      .slick-arrow {
+        border: none;
+        cursor: pointer;
+        height: 50px;
+        opacity: 0.3;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        transition-duration: 0.3s;
+        transition-property: opacity;
+        width: 50px;
+        z-index: 5;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+
+      .slick-next {
+        right: -5px;
+      }
+
+      .slick-prev {
+        left: 6px;
+      }
+    }
   }
 
   @media screen and (max-width: $break-point--tablet) {
