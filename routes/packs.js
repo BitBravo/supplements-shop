@@ -117,7 +117,7 @@ router.get('/:packID', function (req, res) {
               `P`.`Deleted` = 0 \
               AND \
               (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0;\
-      SELECT \
+      SELECT DISTINCT \
             `PacksVariants`.`VariantID`, \
             `Flavors`.`FlavorID`, \
             `Flavors`.`FlavorName` \
