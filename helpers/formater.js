@@ -79,6 +79,34 @@ module.exports.groupVariants = function (collection) {
 };
 
 /**
+ * Groups a collection of flavors and variants accordingly.
+ *
+ * @param {Object[]} variants The variants.
+ * @param {Object[]} flavors The flavors.
+ */
+module.exports.groupFlavors = function (variants, flavors) {
+
+	for (var i = 0; i < variants.length; i++) {
+
+		// Adding the flavors key to the variant object
+		variants[i]['Flavors'] = [];
+
+		for (var j = 0; j < flavors.length; j++) {
+
+			if (variants[i]['VariantID'] === flavors[j]['VariantID']) {
+				variants[i]['Flavors'].push({
+					FlavorID: flavors[j]['FlavorID'],
+					FlavorName: flavors[j]['FlavorName']
+				});
+			}
+		}
+	}
+
+	console.log(variants[0]['Flavors']);
+	return variants;
+};
+
+/**
  * Truncates a message for it to properly fit the screen.
  *
  * @param {String} mail The message to truncate.
