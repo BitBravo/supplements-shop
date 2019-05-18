@@ -3,7 +3,7 @@
 
 <section class="container pack-section" data-pack-id="{{ Data.Pack.PackID }}">
   <div class="row pack-section__upper">
-    <div class="col s12 m7 l8  card-panel pack-section__upper__header">
+    <div class="col s12 m12 l8 card-panel pack-section__upper__header">
       <div class="row grey lighten-4 valign-wrapper">
         <div class="col s12">
           <h4 class="center-align">{{ Data.Pack.PackName }}</h4>
@@ -13,7 +13,7 @@
         <img src="{{ Data.Pack.PackImage }}" alt="Pack image." class="responsive-img materialboxed">
       </div>
     </div>
-    <div class="col s12 m4 l3 offset-m1 offset-l1 card-panel pack-section__upper__action">
+    <div class="col s12 m12 l3 offset-l1 card-panel pack-section__upper__action">
       <div class="row center-align pack-section__price">
         <div class="col s12">
           <div class="col s12">
@@ -50,24 +50,8 @@
       </div>
     </div>
   </div>
-  <div class="row product-section__lower">
-    <ul class="col s12 m8 l8 white collapsible product-section__lower__main">
-      <li class="active">
-        <div class="collapsible-header"><i class="material-icons">description</i>الوصف</div>
-        <div class="collapsible-body">{{{ Data.ProductInfo.Description }}}</div>
-      </li>
-      <li>
-        <div class="collapsible-header"><i class="material-icons">check</i>طريقة الاستخدام</div>
-        <div class="collapsible-body">{{{ Data.ProductInfo.Usage }}}</div>
-      </li>
-      <li>
-        <div class="collapsible-header"><i class="material-icons">warning</i>التحذيرات</div>
-        <div class="collapsible-body">{{{ Data.ProductInfo.Warning }}}</div>
-      </li>
-    </ul>
-    <div class="col s12 m3 l3 offset-m1 offset-l1 white card-panel product-section__lower__side">
-      <img class="responsive-img materialboxed" src="{{ Data.ProductInfo.NutritionInfo }}"
-        alt="{{ Data.ProductInfo.ProductName }}'s nutrition facts.">
+  <div class="row pack-section__lower">
+    <div class="col s12 card-panel">
     </div>
   </div>
 </section>
