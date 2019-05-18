@@ -33,7 +33,8 @@ conn.connect();
 /**
  * Routing
  */
-// Setting up products route.
+
+// Setting up packs route.
 router.get('/', function (req, res) {
   var stmt =
     '\
@@ -79,6 +80,58 @@ router.get('/', function (req, res) {
 
       // Rendering the packs page.
       res.render('packs/packs', {
+        Data: data
+      });
+    }
+  });
+});
+
+// Setting up the pack route.
+router.get('/:packID', function (req, res) {
+  var stmt =
+    '\
+      SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
+      SELECT * FROM `Categories` WHERE Deleted = 0; \
+      SELECT `PackID`, `PackImage`, `Discount` FROM `Packs` WHERE `PackID` = '+ req.params['packID'] + ' AND `Deleted` = 0; \
+';
+
+  conn.query(stmt, (error, results) => {
+    // Checking if there are any errors.
+    if (error || !results[2] || results[2].length === 0) {
+      console.error(error);
+      res.redirect('/error');
+    } else {
+      // Getting the data.
+      const data = {
+        Config: {
+          Phone: {
+            Primary: results[0][0].PrimaryNumber,
+            Secondary: results[0][0].SecondaryNumber,
+            Fixed: results[0][0].FixedNumber
+          },
+          Email: results[0][0].Email,
+          Facebook: {
+            Name: results[0][0].Facebook.split('|')[0],
+            Link: results[0][0].Facebook.split('|')[1]
+          },
+          Instagram: {
+            Name: results[0][0].Instagram.split('|')[0],
+            Link: results[0][0].Instagram.split('|')[1]
+          },
+          Youtube: {
+            Name: results[0][0].Youtube.split('|')[0],
+            Link: results[0][0].Youtube.split('|')[1]
+          }
+        },
+        Categories: formater.groupCategories(results[1]),
+        Pack: results[2]
+      };
+
+      // Getting the proper copyright date.
+      data.CopyrightDate = getCopyrightDate();
+
+      // Rendering the packs page.
+      res.render('packs/pack', {
         Data: data
       });
     }
