@@ -7,16 +7,6 @@
 .pack-section {
   padding: 200px 0 120px 0;
 
-  &__price {
-    del {
-      font-size: 15px;
-    }
-
-    b {
-      font-size: 20px;
-    }
-  }
-
   &__upper {
     display: flex;
     margin-bottom: 80px;
@@ -84,26 +74,58 @@
     }
   }
 
-  &__lower {
-    &__main {
-      .ql-editor {
-        width: 100%;
+  /*&__lower {
+  }*/
 
-        img {
-          width: 100%;
+  @media screen and (max-width: 1240px) {
+    padding: 130px 0 50px 0;
+
+    &__upper {
+      &__action {
+        .pack-section__price {
+          del {
+            font-size: 18px;
+          }
+
+          b {
+            font-size: 24px;
+          }
         }
       }
+    }
+  }
 
-      .ql-clipboard,
-      .ql-tooltip {
-        display: none;
+  @media screen and (max-width: $break-point--tablet) {
+    &__upper {
+      flex-direction: column;
+      margin-bottom: 20px;
+
+      &__action {
+        label {
+          margin-left: 53px !important;
+        }
       }
     }
+  }
 
-    &__side {
-      img {
-        margin: 12px 0 8px 0;
-        width: 100%;
+  @media screen and (max-width: $break-point--phone) {
+    padding: 70px 0 10px 0;
+
+    &__upper {
+      &__action {
+        .pack-section__price {
+          del {
+            font-size: 19px;
+          }
+
+          b {
+            font-size: 24px;
+          }
+        }
+
+        label {
+          margin-left: 25px !important;
+        }
       }
     }
   }
