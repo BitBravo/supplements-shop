@@ -105,12 +105,18 @@
                     </div>
                   </div>
                   <div class="card-action right-align">
-                    <a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري
-                      الآن</a>
-                    <a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
-                      title="أضف إلى السلة">
-                      <i class="fa fa-cart-plus"></i>
-                    </a>
+                    <div class="row">
+                      <div class="col s12">
+                        <div class="input-field col s12 product-variant-select">
+                          <select>
+                            {{#each Data.Variants }}
+                              <option value="{{ this.FlavorID }}">{{ formatMeasurement this.FlavorName }}</option>
+                            {{/each}}
+                          </select>
+                          <label>النكهات</label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
