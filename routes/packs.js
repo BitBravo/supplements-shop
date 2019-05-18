@@ -92,7 +92,7 @@ router.get('/:packID', function (req, res) {
     '\
       SELECT `PrimaryNumber`, `SecondaryNumber`, `FixedNumber`, `Email`, `Facebook`, `Instagram`, `Youtube` FROM `Config`; \
       SELECT * FROM `Categories` WHERE Deleted = 0; \
-      SELECT `PackID`, `PackImage`, `Discount` FROM `Packs` WHERE `PackID` = '+ req.params['packID'] + ' AND `Deleted` = 0; \
+      SELECT `Packs`.`PackImage`, `Packs`.`Discount`, `PacksVariants`.`PackID`, GROUP_CONCAT(`Products`.`ProductName` SEPARATOR " + ") AS `PackName`, (SELECT SUM((SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `p_v`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1)) FROM `PacksVariants` `p_v` WHERE `p_v`.`PackID` = `Packs`.`PackID`) AS `PriceWithoutDiscount`, ((SELECT SUM((SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `p_v`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1)) FROM `PacksVariants` `p_v` WHERE `p_v`.`PackID` = `Packs`.`PackID`) - `Packs`.`Discount`) AS `PriceWithDiscount` FROM `Packs` INNER JOIN `PacksVariants` ON `Packs`.`PackID` = `PacksVariants`.`PackID` INNER JOIN `ProductsVariants` ON `ProductsVariants`.`VariantID` = `PacksVariants`.`VariantID` INNER JOIN `Products` ON `Products`.`ProductID` = `ProductsVariants`.`ProductID` where `Packs`.`Deleted` = 0 AND `Packs`.`PackID` = '+ req.params['packID'] + ' GROUP BY `Packs`.`PackID` ORDER BY `Packs`.`AddedDate` DESC; \
 ';
 
   conn.query(stmt, (error, results) => {
@@ -124,7 +124,7 @@ router.get('/:packID', function (req, res) {
           }
         },
         Categories: formater.groupCategories(results[1]),
-        Pack: results[2]
+        Pack: results[2][0]
       };
 
       // Getting the proper copyright date.

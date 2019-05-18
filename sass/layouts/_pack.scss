@@ -6,4 +6,105 @@
 
 .pack-section {
   padding: 200px 0 120px 0;
+
+  &__price {
+    del {
+      font-size: 15px;
+    }
+
+    b {
+      font-size: 20px;
+    }
+  }
+
+  &__upper {
+    display: flex;
+    margin-bottom: 80px;
+
+    &__header {
+      h4 {
+        padding: 30px 0;
+      }
+
+      &__img {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        padding: 15px !important;
+      }
+    }
+
+    &__action {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+
+      .pack-section__price {
+        justify-self: end;
+        margin-top: 50px;
+
+        del {
+          font-size: 22px;
+        }
+
+        b {
+          font-size: 30px;
+        }
+      }
+
+      .pack-section__quantity {
+        align-items: flex-end;
+        display: flex;
+        height: 100%;
+
+        label {
+          margin-left: 10px;
+          text-align: center;
+        }
+
+        input {
+          font-size: 20px;
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+
+      .pack-section__buy {
+        align-items: flex-end;
+
+        .col {
+          display: flex;
+          flex-direction: column;
+
+          a:first-of-type {
+            margin-bottom: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  &__lower {
+    &__main {
+      .ql-editor {
+        width: 100%;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .ql-clipboard,
+      .ql-tooltip {
+        display: none;
+      }
+    }
+
+    &__side {
+      img {
+        margin: 12px 0 8px 0;
+        width: 100%;
+      }
+    }
+  }
 }
