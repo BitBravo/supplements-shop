@@ -102,7 +102,6 @@ module.exports.groupFlavors = function (variants, flavors) {
 		}
 	}
 
-	console.log(variants[0]['Flavors']);
 	return variants;
 };
 
