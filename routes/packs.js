@@ -116,7 +116,33 @@ router.get('/:packID', function (req, res) {
               AND \
               `P`.`Deleted` = 0 \
               AND \
-              (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0\
+              (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0;\
+      SELECT \
+            `PacksVariants`.`VariantID`, \
+            `Flavors`.`FlavorID`, \
+            `Flavors`.`FlavorName` \
+        FROM \
+              `PacksVariants` \
+        INNER JOIN \
+              `Packs` \
+        ON    `PacksVariants`.`PackID` = `Packs`.`PackID` \
+        INNER JOIN \
+              `ProductsVariants` \
+        ON    `PacksVariants`.`VariantID` = `ProductsVariants`.`VariantID` \
+        INNER JOIN \
+              `ProductsVariantsFlavors` \
+        ON    `PacksVariants`.`VariantID` = `ProductsVariantsFlavors`.`VariantID` \
+        INNER JOIN \
+              `Flavors` \
+        ON    `ProductsVariantsFlavors`.`FlavorID` = `Flavors`.`FlavorID` \
+        WHERE \
+              `Packs`.`Deleted` = 0 \
+              AND \
+              `ProductsVariants`.`Deleted` = 0 \
+              AND \
+              `Flavors`.`Deleted` = 0 \
+              AND \
+              `ProductsVariantsFlavors`.`Quantity` > 0 \
       ';
 
   conn.query(stmt, (error, results) => {
@@ -149,7 +175,7 @@ router.get('/:packID', function (req, res) {
         },
         Categories: formater.groupCategories(results[1]),
         Pack: results[2][0],
-        PackProducts: results[3]
+        PackProducts: formater.groupFlavors(results[3], results[4])
       };
 
       // Getting the proper copyright date.
