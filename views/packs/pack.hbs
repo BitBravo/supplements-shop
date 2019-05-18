@@ -1,189 +1,53 @@
-<section class="container pack-section" data-variant-id="{{ Data.ProductInfo.VariantID }}"
-  data-flavor-id="{{ Data.ProductInfo.FlavorID }}">
-  <div class="row product-section__upper">
-    <div class="col s12 m7 l8 card-panel product-section__upper__header">
-      <div class="row grey lighten-4 valign-wrapper hide-on-large-only">
+{{!-- The packs' script --}}
+<script src="/assets/js/pack.js"></script>
+
+<section class="container pack-section" data-pack-id="{{ Data.Pack.PackID }}">
+  <div class="row pack-section__upper">
+    <div class="col s12 m7 l8  card-panel pack-section__upper__header">
+      <div class="row grey lighten-4 valign-wrapper">
         <div class="col s12">
-          <h4 class="center-align">{{ Data.ProductInfo.ProductName }}</h4>
+          <h4 class="center-align">{{ Data.Pack.PackName }}</h4>
         </div>
       </div>
-      <div class="col s12 m12 l3 product-section__upper__header__img">
-        <img src="{{ Data.ProductInfo.VariantImage }}" alt="{{ Data.ProductInfo.ProductName }}'s image."
-          class="responsive-img materialboxed">
-      </div>
-      <div class="col s12 l9 hide-on-med-only hide-on-med-and-down product-info-table">
-        <div class="row grey lighten-4 valign-wrapper">
-          <div class="col s12">
-            <h4 class="center-align">{{ Data.ProductInfo.ProductName }}</h4>
-          </div>
-        </div>
-        <table class="centered striped grey lighten-4 hide-on-small-and-down">
-          <tbody>
-            <tr>
-              <td>
-                <div class="chip">
-                  &rlm;{{ formatMeasurement Data.ProductInfo.VariantValue Data.ProductInfo.VariantType }}
-                  {{ formatMeasurementUnit Data.ProductInfo.VariantType Data.ProductInfo.VariantValue }}
-                </div>
-              </td>
-              <td>
-                الوزن
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="chip">&rlm;{{ Data.ProductInfo.CategoryName }}</div>
-              </td>
-              <td>
-                الفئة
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="chip">&rlm;{{ Data.ProductInfo.FlavorName }}</div>
-              </td>
-              <td>النكهة</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="chip">&rlm;{{ Data.ProductInfo.BrandName }}</div>
-              </td>
-              <td>العلامة التجارية</td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="centered striped grey lighten-4 hide-on-med-and-up">
-          <tbody>
-            <tr>
-              <td>
-                <div class="chip">
-                  &rlm;{{ formatMeasurement Data.ProductInfo.VariantValue Data.ProductInfo.VariantType }}
-                  {{ formatMeasurementUnit Data.ProductInfo.VariantType Data.ProductInfo.VariantValue }}
-                </div>
-              </td>
-              <td>
-                الوزن
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="chip">&rlm;{{ Data.ProductInfo.CategoryName }}</div>
-              </td>
-              <td>
-                الفئة
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="chip">&rlm;{{ Data.ProductInfo.FlavorName }}</div>
-              </td>
-              <td>النكهة</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="chip">&rlm;{{ Data.ProductInfo.BrandName }}</div>
-              </td>
-              <td>العلامة التجارية</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="col s12 pack-section__upper__header__img">
+        <img src="{{ Data.Pack.PackImage }}" alt="Pack image." class="responsive-img materialboxed">
       </div>
     </div>
-    <div class="col s12 m4 l3 offset-m1 offset-l1 card-panel product-section__upper__action">
-      <div class="row">
+    <div class="col s12 m4 l3 offset-m1 offset-l1 card-panel pack-section__upper__action">
+      <div class="row center-align pack-section__price">
         <div class="col s12">
-          <div class="input-field col s12 product-variant-select">
-            <select>
-              {{#each Data.Variants }}
-                <option value="{{ this.VariantID }}">{{
-								formatMeasurementUnit this.VariantType this.VariantValue 
-								}} {{
-									formatMeasurement this.VariantValue this.VariantType 
-									}}</option>
-              {{/each}}
-            </select>
-            <label>أنواع أخرى</label>
+          <div class="col s12">
+            <span class="grey-text">
+              <del>{{ formatCurrency Data.Pack.PriceWithoutDiscount }}</del>
+            </span>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col s12">
-          <div class="input-field col s12 product-flavor-select">
-            <select>
-              {{#each Data.Flavors }}
-                <option value="{{ this.FlavorID }}">{{ this.FlavorName }}</option>
-              {{/each}}
-            </select>
-            <label>النكهات</label>
+          <div class="col s12">
+            <span class="green-text">
+              -{{ formatCurrency Data.Pack.Discount }}
+            </span>
           </div>
-        </div>
-      </div>
-      <div class="row center-align product-section__price">
-        <div class="col s12">
-          {{#displayOldPrice Data.ProductInfo.OldPrice Data.ProductInfo.NewPrice}}
-            <div class="col s12">
-              <span class="grey-text">
-                <del>{{ formatCurrency Data.ProductInfo.OldPrice }}</del>
-              </span>
-            </div>
-          {{/displayOldPrice}}
           <div class="col s12">
             <span>
-              <b class="green-text">{{ formatCurrency Data.ProductInfo.NewPrice }}</b>
+              <b class="green-text">{{ formatCurrency Data.Pack.PriceWithDiscount }}</b>
             </span>
           </div>
         </div>
       </div>
-      <div class="row center-align product-section__quantity">
+      <div class="row center-align pack-section__quantity">
         <div class="col s12 input-field">
-          <input type="number" id="product-quantity" class="validate" value="1" min="1"
+          <input type="number" id="pack-quantity" class="validate" value="1" min="1"
             max="{{ Data.ProductInfo.Quantity }}">
-          <label for="product-quantity">الكمية</label>
+          <label for="pack-quantity">الكمية</label>
         </div>
       </div>
-      <div class="row product-section__buy">
+      <div class="row pack-section__buy">
         <div class="col s12">
-          <a href="javascript:void(0)" class="btn btn-large waves-effect green product-card__btn">اشتري الآن</a>
-          <a href="javascript:void(0)" class="btn waves-effect white green-text product-card__btn"
-            title="أضف إلى السلة">
+          <a href="javascript:void(0)" class="btn btn-large waves-effect green pack-card__btn">اشتري الآن</a>
+          <a href="javascript:void(0)" class="btn waves-effect white green-text pack-card__btn" title="أضف إلى السلة">
             <i class="fa fa-cart-plus"></i>
           </a>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row hide-on-large-only hide-on-small-and-down">
-    <div class="col m12 card-panel">
-      <table class="centered striped grey lighten-4">
-        <tbody>
-          <tr>
-            <td>
-              <div class="chip">&rlm;{{ formatMeasurement Data.ProductInfo.VariantValue Data.ProductInfo.VariantType }}
-                {{ formatMeasurementUnit Data.ProductInfo.VariantType Data.ProductInfo.VariantValue }}
-              </div>
-            </td>
-            <td>
-              الوزن
-            </td>
-            <td>
-              <div class="chip">&rlm;{{ Data.ProductInfo.CategoryName }}</div>
-            </td>
-            <td>
-              الفئة
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="chip">&rlm;{{ Data.ProductInfo.FlavorName }}</div>
-            </td>
-            <td>النكهة</td>
-            <td>
-              <div class="chip">&rlm;{{ Data.ProductInfo.BrandName }}</div>
-            </td>
-            <td>العلامة التجارية</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
   <div class="row product-section__lower">
