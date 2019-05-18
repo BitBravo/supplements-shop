@@ -182,18 +182,6 @@ router.put('/', function (req, res) {
         return variant['PackVariantID'] == null ? variant : null;
       });
 
-      if (packsToInsert.length > 0) {
-        async.each(packsToInsert, function (packVariant) {
-          var stmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, ?, 0);', ['PacksVariants', 'PackID', 'VariantID', 'Deleted', req.body['pack-id'], packVariant['VariantID']]);
-
-          conn.query(stmt, function (errors, results) {
-            if (errors) {
-              console.error(errors);
-            }
-          });
-        });
-      }
-
       packsToDelete = req.body['pack-variants'].filter(function (variant) {
         return variant['PackVariantID'] != null ? variant : null;
       }).map(function (variant) {
@@ -207,6 +195,18 @@ router.put('/', function (req, res) {
           if (errors) {
             console.error(errors);
           }
+        });
+      }
+
+      if (packsToInsert.length > 0) {
+        async.each(packsToInsert, function (packVariant) {
+          var stmt = conn.format('INSERT INTO ?? (??, ??, ??) VALUES (?, ?, 0);', ['PacksVariants', 'PackID', 'VariantID', 'Deleted', req.body['pack-id'], packVariant['VariantID']]);
+
+          conn.query(stmt, function (errors, results) {
+            if (errors) {
+              console.error(errors);
+            }
+          });
         });
       }
 
