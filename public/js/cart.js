@@ -4,7 +4,8 @@ $(document).ready(function () {
   var
     $cartModal = $('#cart-modal'),
     $cartItemsCounter = $('#cart-item-count'),
-    $cartItemsContent = $('#cart-modal .collection');
+    $cartItemsContent = $('#cart-modal .collection'),
+    $navCartCounter = $('.cart-button__badge');
 
   $cartModal.modal({
     onOpenStart: function () {
@@ -57,8 +58,13 @@ $(document).ready(function () {
   $('.cart-product-add').on('click', function () {
     var productId = $(this).data('id');
 
-    $.post('/cart', { 'cart-item': productId, 'item-type': 1 }, function () {
-      M.toast({ html: 'تمت الإضافة السلة' })
+    $.post('/cart', { 'cart-item': productId, 'item-type': 1 }, function (cartItems) {
+
+      // Updating the cart badge counter
+      $navCartCounter.text(cartItems.length);
+
+      // Triggerig a toast message
+      M.toast({ html: 'تمت الإضافة السلة' });
     });
   });
 
@@ -66,8 +72,13 @@ $(document).ready(function () {
   $('.cart-pack-add').on('click', function () {
     var packId = $(this).data('id');
 
-    $.post('/cart', { 'cart-item': packId, 'item-type': 2 }, function () {
-      M.toast({ html: 'تمت الإضافة السلة' })
+    $.post('/cart', { 'cart-item': packId, 'item-type': 2 }, function (cartItems) {
+
+      // Updating the cart badge counter
+      $navCartCounter.text(cartItems.length);
+
+      // Triggerig a toast message
+      M.toast({ html: 'تمت الإضافة السلة' });
     });
   });
 });
