@@ -78,7 +78,7 @@ $(document).ready(function () {
       $navCartCounter.text(cartItems.length);
 
       // Triggerig a toast message
-      M.toast({ html: 'تمت الإضافة السلة' });
+      M.toast({ html: 'تمت الإضافة للسلة' });
     });
   });
 });
