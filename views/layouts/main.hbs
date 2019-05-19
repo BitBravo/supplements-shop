@@ -37,11 +37,15 @@
 	{{!-- The contact script. --}}
 	<script src="/assets/js/contact.js"></script>
 
+	{{!-- The cart script --}}
+	<script src="/assets/js/cart.js"></script>
+
 	{{!-- The title. --}}
 	<title>Supplements Maroc</title>
 </head>
 
 <body class="loading">
+	{{!-- The loader --}}
 	<div id="global-preloader" class="grey lighten-3">
 		<div class="row">
 			<div class="col s12">
@@ -97,6 +101,16 @@
 				<a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
 			</div>
 		</form>
+	</div>
+
+	{{!-- The cart modal --}}
+	<div id="cart-modal" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<h4 class="right-align">عربة التسوق</h4>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close waves-effect waves-green btn-flat">أغلق</a>
+		</div>
 	</div>
 
 	{{!-- Scroll back to top button. --}}
