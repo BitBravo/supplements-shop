@@ -52,6 +52,7 @@ var
 	routers = {
 		dashboard: require('./routes/dashboard/dashboard'),
 		brands: require('./routes/brands'),
+		cart: require('./routes/cart'),
 		index: require('./routes/index'),
 		packs: require('./routes/packs'),
 		products: require('./routes/products'),
@@ -63,6 +64,7 @@ var
 /**
  * Initializing the app
  */
+
 var app = express();
 
 // Connecting to the database.
@@ -116,9 +118,20 @@ app.use(flash());
 // Setting up the favicon.
 app.use(favicon(path.join(__dirname + '/public/img/favicon.ico')));
 
-// Updating the logg-in status.
+// Updating the request object
 app.use(function (req, res, next) {
-	res.locals.loggedIn = req.session.loggedIn;
+
+	// Updating the login status
+	res.locals['loggedIn'] = req.session['loggedIn'];
+
+	// Updating the cart object
+	if (!('cart' in req.session)) {
+		req.session['cart'] = [];
+		res.locals['cartItemsCount'] = 0;
+	} else {
+		res.locals['cartItemsCount'] = req.session['cart'].length;
+	}
+
 	next();
 });
 
@@ -137,6 +150,7 @@ app.use('/assets', express.static(path.join(__dirname + '/node_modules')));
  */
 app.use(routers.index);
 app.use('/brands', routers.brands);
+app.use('/cart', routers.cart);
 app.use('/packs', routers.packs);
 app.use('/products', routers.products);
 app.use('/dashboard', routers.dashboard);

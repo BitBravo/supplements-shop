@@ -33,6 +33,7 @@ conn.connect();
 /**
  * Routing
  */
+
 // Setting up index route.
 router.get('/', function (req, res) {
 	conn.query(
