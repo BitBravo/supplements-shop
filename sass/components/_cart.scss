@@ -9,6 +9,7 @@
     align-items: center;
     background-color: $color-light;
     display: none;
+    flex-direction: column;
     height: 100%;
     justify-content: center;
     left: 0;
@@ -16,6 +17,14 @@
     top: 0;
     width: 100%;
     z-index: 5;
+
+    *:not(:last-child) {
+      margin-bottom: 40px;
+    }
+
+    button {
+      width: 100px;
+    }
   }
 
   &.loading {
