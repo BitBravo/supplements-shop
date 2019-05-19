@@ -51,17 +51,17 @@ router.get('/read/:id', login, function (req, res) {
 		'\
         SELECT * FROM ?? WHERE ?? = ?;\
         UPDATE ?? SET ?? = ? WHERE ?? = ?;\
+        SELECT COUNT(*) AS ?? FROM ?? WHERE ?? = 0; \
         ',
-		['Mail', 'MailID', mailId, 'Mail', 'Read', 1, 'MailID', mailId]
+		['Mail', 'MailID', mailId, 'Mail', 'Read', 1, 'MailID', mailId, 'MailCount', 'Mail', 'Read']
 	);
 
 	conn.query(stmt, (error, results) => {
 		if (error) throw error;
 
-		results[0][0].IssueDate = moment(results[0][0].IssueDate).format(
-			'HH:MM - MMMM Do YYYY'
-		);
-		res.json({ ...results[0][0] });
+		results[0][0].IssueDate = moment(results[0][0].IssueDate).format('HH:MM - MMMM Do YYYY');
+
+		res.json({ email: { ...results[0][0] }, MailCount: results[2][0]['MailCount'] });
 	});
 });
 
@@ -167,36 +167,48 @@ router.post('/', function (req, res) {
 // Setting up the mail update (read) route.
 router.delete('/', login, function (req, res) {
 	const ids = req.body.ids,
-		stmt = mysql.format('UPDATE ?? SET ?? = ? WHERE ?? IN (?);', [
-			'Mail',
-			'Read',
-			1,
-			'MailID',
-			ids
-		]);
+		stmt = mysql.format(' \
+				UPDATE ?? SET ?? = ? WHERE ?? IN (?); \
+				SELECT COUNT(*) AS ?? FROM ?? WHERE ?? = 0; \
+			', [
+				'Mail',
+				'Read',
+				1,
+				'MailID',
+				ids,
+				'MailCount',
+				'Mail',
+				'Read'
+			]);
 
 	conn.query(stmt, (error, results) => {
 		if (error) throw error;
 
-		res.send();
+		res.json(results[1][0]['MailCount']);
 	});
 });
 
 // Setting up the mail update (unread) route.
 router.put('/', login, function (req, res) {
 	const ids = req.body.ids,
-		stmt = mysql.format('UPDATE ?? SET ?? = ? WHERE ?? IN (?);', [
-			'Mail',
-			'Read',
-			0,
-			'MailID',
-			ids
-		]);
+		stmt = mysql.format(' \
+				UPDATE ?? SET ?? = ? WHERE ?? IN (?); \
+				SELECT COUNT(*) AS ?? FROM ?? WHERE ?? = 0; \
+		', [
+				'Mail',
+				'Read',
+				0,
+				'MailID',
+				ids,
+				'MailCount',
+				'Mail',
+				'Read'
+			]);
 
 	conn.query(stmt, (error, results) => {
 		if (error) throw error;
 
-		res.send();
+		res.json(results[1][0]['MailCount']);
 	});
 });
 
