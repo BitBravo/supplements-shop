@@ -27,7 +27,7 @@ router.post('/', function (req, res) {
   }
 
   // Signaling the client
-  res.send();
+  res.json(req.session['cart']);
 });
 
 // Exporting the route.
