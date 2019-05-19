@@ -30,5 +30,15 @@ router.post('/', function (req, res) {
   res.json(req.session['cart']);
 });
 
+// Setting up the cart clearing route
+router.patch('/', function (req, res) {
+
+  // Clearing the cart
+  req.session['cart'] = [];
+
+  // Signaling the client
+  res.send();
+});
+
 // Exporting the route.
 module.exports = router;
