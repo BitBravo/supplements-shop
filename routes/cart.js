@@ -43,7 +43,29 @@ router.get('/', function (req, res) {
     async.each(req.session['cart'], function (cartItem) {
 
       if (parseInt(cartItem['type']) == 1) {
-        var stmt = conn.format('SELECT P.ProductName, ? AS Quantity FROM Products P INNER JOIN ProductsVariants PV ON P.ProductID = PV.ProductID WHERE PV.VariantID = ?;', [cartItem['quantity'], cartItem['id']]);
+        var stmt = conn.format(' \
+          SELECT \
+                `P`.`ProductName` AS `ItemName`, \
+                `PV`.`VariantValue`, \
+                `PV`.`VariantType`, \
+                ? AS `ID`, \
+                ? AS `Type`, \
+                ? AS `Quantity`, \
+                (SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `PV`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1) AS `ItemPrice`, \
+                (SELECT `PVF`.`VariantImage` FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0 LIMIT 1) AS `ItemImage`\
+          FROM \
+                `ProductsVariants` `PV` \
+          INNER JOIN \
+                `Products` `P` \
+          ON \
+                `PV`.`ProductID` = `P`.`ProductID` \
+          WHERE \
+          `PV`.`VariantID` = ? \
+                AND \
+                `P`.`Deleted` = 0 \
+                AND \
+                (SELECT SUM(`PVF`.`Quantity`) FROM `ProductsVariantsFlavors` `PVF` WHERE `PVF`.`VariantID` = `PV`.`VariantID` AND `PVF`.`Deleted` = 0) > 0 \
+        ;', [cartItem['id'], cartItem['type'], cartItem['quantity'], cartItem['id']]);
 
         conn.query(stmt, function (errors, results) {
           if (errors == null && results != null) {
@@ -88,6 +110,19 @@ router.post('/', function (req, res) {
 
   // Signaling the client
   res.json(req.session['cart']);
+});
+
+// Setting up the cart removal route
+router.delete('/', function (req, res) {
+
+  if ('cart' in req.session) {
+
+    // Clearing the cart
+    req.session['cart'].splice(parseInt(req.body['index']), 1);
+  }
+
+  // Signaling the client
+  res.send();
 });
 
 // Setting up the cart clearing route

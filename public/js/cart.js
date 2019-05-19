@@ -33,15 +33,32 @@ $(document).ready(function () {
           // Appending the items to the cart
           $.each(items, function (index, item) {
             $cartItemsContent.append(' \
-              <li class="collection-item avatar"> \
-                <img src="images/yuna.jpg" alt="The item\'s image" class="circle"> \
-                <span class="title"><b>'+ item['ProductName'] + '</b> x' + item['Quantity'] + '</span> \
+              <li class="collection-item avatar" data-index="'+ index + '" data-id="' + item['ID'] + '" data-type="' + item['Type'] + '" data-quantity="' + item['Quantity'] + '"> \
+                <img src="'+ item['ItemImage'] + '" alt="The item\'s image" class="circle"> \
+                <span class="title"><b>'+ item['ItemName'] + '</b> x' + item['Quantity'] + '</span> \
                 <p> \
-                  Second Line \
-                </p> \
-                <a href="#!" class="secondary-content"><i class="material-icons red-text">close</i></a> \
-              </li> \
+                  <span class="green-text">'+ formatCurrency(item['ItemPrice']) + '</span> \
+                </p > \
+                <a href="#!" class="secondary-content"><i class="material-icons red-text cart-item-remove">close</i></a> \
+              </li > \
             ');
+          });
+
+          // Adding the cart-item removal event
+          $('.cart-item-remove').on('click', function () {
+            var
+              $parentContainer = $(this).closest('.collection-item'),
+              itemIndex = $parentContainer.data('index');
+
+            $.ajax({
+              url: '/cart',
+              type: 'DELETE',
+              data: { index: itemIndex },
+              success: function () {
+                $cartModal.modal('close');
+                $cartModal.modal('open');
+              }
+            });
           });
         } else {
 
@@ -137,4 +154,11 @@ $(document).ready(function () {
       });
     }
   });
+
+  function formatCurrency(value) {
+    return new Intl.NumberFormat('ar-MA', {
+      style: 'currency',
+      currency: 'MAD'
+    }).format(value);
+  }
 });
