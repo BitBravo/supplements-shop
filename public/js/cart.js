@@ -1,3 +1,15 @@
 $(document).ready(function () {
-  console.log("Hello");
+
+  // Frequently used elements
+  var $cartModal = $('#cart-modal');
+
+  $cartModal.modal({
+    onOpenStart: function () {
+
+      // Add loader
+      $cartModal.addClass('loading');
+
+      // Ajax get data
+    }
+  });
 });
