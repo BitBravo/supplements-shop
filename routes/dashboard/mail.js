@@ -134,8 +134,10 @@ router.post('/', function (req, res) {
 		email: req.body.email,
 		message: req.body.message
 	},
-		stmt = mysql.format(
-			'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, NOW(), ?);',
+		stmt = mysql.format(' \
+				INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, NOW(), ?); \
+			 	SELECT COUNT(*) AS ?? FROM ?? WHERE ?? = 0; \
+			',
 			[
 				'Mail',
 				'SenderEmail',
@@ -146,7 +148,10 @@ router.post('/', function (req, res) {
 				mail.email,
 				mail.username,
 				mail.message,
-				0
+				0,
+				'MailCount',
+				'Mail',
+				'Read'
 			]
 		);
 
@@ -155,7 +160,7 @@ router.post('/', function (req, res) {
 
 		if (error) isSent = false;
 
-		res.json({ sent: isSent });
+		res.json({ sent: isSent, mailCount: results[1][0]['MailCount'] });
 	});
 });
 

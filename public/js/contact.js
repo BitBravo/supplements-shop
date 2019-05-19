@@ -19,6 +19,9 @@ $('document').ready(() => {
     $.post('/dashboard/mail', $(e.target).serialize(), function (data) {
       if (data.sent === true) {
         M.toast({ html: 'تم الارسال' });
+
+        // Updating the mail counter
+        $('.mailCounter').text(data.mailCount);
       } else {
         M.toast({ html: 'هناك خطأ ما' });
       }
