@@ -35,11 +35,11 @@ $(document).ready(function () {
             $cartItemsContent.append(' \
               <li class="collection-item avatar"> \
                 <img src="images/yuna.jpg" alt="The item\'s image" class="circle"> \
-                <span class="title">Title</span> \
-                <p>First Line <br> \
+                <span class="title"><b>'+ item['ProductName'] + '</b> x' + item['Quantity'] + '</span> \
+                <p> \
                   Second Line \
                 </p> \
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a> \
+                <a href="#!" class="secondary-content"><i class="material-icons red-text">close</i></a> \
               </li> \
             ');
           });
@@ -84,29 +84,57 @@ $(document).ready(function () {
 
   // Adding a click event to the pack product addition button
   $('.cart-product-add').on('click', function () {
-    var productId = $(this).data('id');
+    var
+      quantityInput = document.getElementById('product-quantity'),
+      productId = $(this).data('id'),
+      quantity = quantityInput != null ? quantityInput.value || 1 : 1;
 
-    $.post('/cart', { 'cart-item': productId, 'item-type': 1 }, function (cartItems) {
+    if (quantityInput != null && quantityInput.validity.valid) {
+      $.post('/cart', { 'item-id': productId, 'item-type': 1, 'quantity': quantity, 'type': 1 }, function (cartItems) {
 
-      // Updating the cart badge counter
-      $navCartCounter.text(cartItems.length);
+        // Updating the cart badge counter
+        $navCartCounter.text(cartItems.length);
 
-      // Triggerig a toast message
-      M.toast({ html: 'تمت الإضافة السلة' });
-    });
+        // Triggerig a toast message
+        M.toast({ html: 'تمت الإضافة السلة' });
+      });
+    } else {
+      $.post('/cart', { 'item-id': productId, 'item-type': 1, 'quantity': quantity, 'type': 1 }, function (cartItems) {
+
+        // Updating the cart badge counter
+        $navCartCounter.text(cartItems.length);
+
+        // Triggerig a toast message
+        M.toast({ html: 'تمت الإضافة السلة' });
+      });
+    }
   });
 
   // Adding a click event to the pack cart addition button
   $('.cart-pack-add').on('click', function () {
-    var packId = $(this).data('id');
+    var
+      quantityInput = document.getElementById('pack-quantity'),
+      packId = $(this).data('id'),
+      quantity = quantityInput != null ? quantityInput.value || 1 : 1;
 
-    $.post('/cart', { 'cart-item': packId, 'item-type': 2 }, function (cartItems) {
+    if (quantityInput != null && quantityInput.validity.valid) {
+      $.post('/cart', { 'item-id': packId, 'item-type': 2, 'quantity': quantity, 'type': 2 }, function (cartItems) {
 
-      // Updating the cart badge counter
-      $navCartCounter.text(cartItems.length);
+        // Updating the cart badge counter
+        $navCartCounter.text(cartItems.length);
 
-      // Triggerig a toast message
-      M.toast({ html: 'تمت الإضافة للسلة' });
-    });
+        // Triggerig a toast message
+        M.toast({ html: 'تمت الإضافة للسلة' });
+      });
+    } else {
+      $.post('/cart', { 'item-id': packId, 'item-type': 2, 'quantity': quantity, 'type': 2 }, function (cartItems) {
+
+        // Updating the cart badge counter
+        $navCartCounter.text(cartItems.length);
+
+        // Triggerig a toast message
+        M.toast({ html: 'تمت الإضافة للسلة' });
+      });
+    }
   });
 });
