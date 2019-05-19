@@ -1,144 +1,153 @@
 $('document').ready(() => {
 
-    // Setting up the dropdown.
-    $('select').formSelect();
-    
-    // Marking selected messages as read.
-    $('#email-read-btn').on('click', () => {
+	// Setting up the dropdown.
+	$('select').formSelect();
 
-        const selectedEmails = getSelectedEmails();
+	// Marking selected messages as read.
+	$('#email-read-btn').on('click', () => {
 
-        $.ajax({
-            url: '/dashboard/mail',
-            type: 'DELETE',
-            data: { ids: selectedEmails },
-            success: () => {
+		const selectedEmails = getSelectedEmails();
 
-                toggleReadStatus(selectedEmails, true);
-                M.toast({ html: 'تمت قراءة الرسائل' });
-            }
-        });
-    });
+		$.ajax({
+			url: '/dashboard/mail',
+			type: 'DELETE',
+			data: { ids: selectedEmails },
+			success: function (mailCount) {
 
-    // Marking selected messages as unread.
-    $('#email-unread-btn').on('click', () => {
+				// Updating the mail counter
+				$('.mailCounter').text(mailCount);
 
-        const selectedEmails = getSelectedEmails();
+				toggleReadStatus(selectedEmails, true);
+				M.toast({ html: 'تمت قراءة الرسائل' });
+			}
+		});
+	});
 
-        $.ajax({
-            url: '/dashboard/mail',
-            type: 'PUT',
-            data: { ids: selectedEmails },
-            success: () => {
+	// Marking selected messages as unread.
+	$('#email-unread-btn').on('click', () => {
 
-                toggleReadStatus(selectedEmails, false);
-                M.toast({ html: 'تم تعليم الرسائل كغير مقروءة' });
-            }
-        });
-    });
+		const selectedEmails = getSelectedEmails();
 
-    // Select all.
-    $('#select-all-mail-btn').on('change', (e) => {
+		$.ajax({
+			url: '/dashboard/mail',
+			type: 'PUT',
+			data: { ids: selectedEmails },
+			success: function (mailCount) {
 
-        if (e.target.checked) {
-            $('#select-all-label').text('Unselect all');
-        } else {
-            $('#select-all-label').text('Select all');
-        }
+				// Updating the mail counter
+				$('.mailCounter').text(mailCount);
 
-        $.each($('table tr td:first-of-type input'), (index, value) => {
+				toggleReadStatus(selectedEmails, false);
+				M.toast({ html: 'تم تعليم الرسائل كغير مقروءة' });
+			}
+		});
+	});
 
-            value.checked = e.target.checked;
-        });
-    });
+	// Select all.
+	$('#select-all-mail-btn').on('change', (e) => {
 
-    // Mail mode selection.
-    $('#mail-mode-select').on('change', (e) => {
+		if (e.target.checked) {
+			$('#select-all-label').text('Unselect all');
+		} else {
+			$('#select-all-label').text('Select all');
+		}
 
-        switch (e.target.value) {
+		$.each($('table tr td:first-of-type input'), (index, value) => {
 
-            case '2': {
-                location.href = '/dashboard/mail/1';
-                break;
-            }
+			value.checked = e.target.checked;
+		});
+	});
 
-            case '3': {
-                location.href = '/dashboard/mail/2';
-                break;
-            }
+	// Mail mode selection.
+	$('#mail-mode-select').on('change', (e) => {
 
-            default: location.href = '/dashboard/mail/0';
-        }
-    });
+		switch (e.target.value) {
 
-    // Preventing the modal from opening when checking a checkbox.
-    $('tr.mail label').on('click', function (e) {
+			case '2': {
+				location.href = '/dashboard/mail/1';
+				break;
+			}
 
-        e.stopPropagation();
-    });
+			case '3': {
+				location.href = '/dashboard/mail/2';
+				break;
+			}
 
-    $('tr.mail').on('click', function () {
+			default: location.href = '/dashboard/mail/0';
+		}
+	});
 
-        // Getting the mail ID.
-        const mailId = $(this).data('id');
+	// Preventing the modal from opening when checking a checkbox.
+	$('tr.mail label').on('click', function (e) {
 
-        // Requesting the e-mail's content.
-        $.get('/dashboard/mail/read/' + mailId, (email) => {
+		e.stopPropagation();
+	});
 
-            // Marking as read.
-            $(this).removeClass('new');
+	$('tr.mail').on('click', function () {
 
-            // Displaying the email's information.
-            $('.mail-content').html(`
-                <h5>
-                    ${email.SenderName} <span class="grey-text">(${email.SenderEmail})<small class="grey-text right">${email.IssueDate}</small></span>
-                    <br>
-                </h5>
-                <hr>
-                <textarea height="auto" sizeable=false readonly>${email.Message}</textarea>
-                <input type="hidden" value="${mailId}">
-            `);
+		// Getting the mail ID.
+		const mailId = $(this).data('id');
 
-            // Opening the email modal.
-            (M.Modal.getInstance($('#mail-modal'))).open();
-        });
-    });
+		// Requesting the e-mail's content.
+		$.get('/dashboard/mail/read/' + mailId, (data) => {
 
-    /**
-     * Returns a list of selected emails' IDs.
-     */
-    function getSelectedEmails() {
+			// Marking as read.
+			$(this).removeClass('new');
 
-        const selectedEmails = [];
+			// Displaying the email's information.
+			$('.mail-content').html(`
+				<h5>
+						${data.email.SenderName} <span class="grey-text">(${data.email.SenderEmail})<small class="grey-text right">${data.email.IssueDate}</small></span>
+						<br>
+				</h5>
+				<hr>
+				<textarea height="auto" sizeable=false readonly>${data.email.Message}</textarea>
+				<input type="hidden" value="${mailId}">
+			`);
 
-        $.each($('table tr td:first-of-type input'), (index, value) => {
+			// Updating the mail counter
+			$('.mailCounter').text(data.MailCount);
 
-            if (value.checked) {
-                selectedEmails.push($(value).closest('tr').data('id'));
-            }
-        });
+			// Opening the email modal.
+			(M.Modal.getInstance($('#mail-modal'))).open();
+		});
+	});
 
-        return selectedEmails;
-    }
+	/**
+	 * Returns a list of selected emails' IDs.
+	 */
+	function getSelectedEmails() {
 
-    /**
-     * Toggles the read status for a select group of emails.
-     * 
-     * @param {Array<Int>} ids The ids of the emails to toggle the read status for.
-     * @param {Boolean} status The status to toggle to.
-     */
-    function toggleReadStatus(ids, status) {
+		const selectedEmails = [];
 
-        $.each($('table tr'), (index, value) => {
+		$.each($('table tr td:first-of-type input'), (index, value) => {
 
-            if (ids.includes($(value).data('id'))) {
+			if (value.checked) {
+				selectedEmails.push($(value).closest('tr').data('id'));
+			}
+		});
 
-                if (status === true) {
-                    $(value).removeClass('new');
-                } else {
-                    $(value).addClass('new');
-                }
-            }
-        });
-    }
+		return selectedEmails;
+	}
+
+	/**
+	 * Toggles the read status for a select group of emails.
+	 * 
+	 * @param {Array<Int>} ids The ids of the emails to toggle the read status for.
+	 * @param {Boolean} status The status to toggle to.
+	 */
+	function toggleReadStatus(ids, status) {
+
+		$.each($('table tr'), (index, value) => {
+
+			if (ids.includes($(value).data('id'))) {
+
+				if (status === true) {
+					$(value).removeClass('new');
+				} else {
+					$(value).addClass('new');
+				}
+			}
+		});
+	}
 });
