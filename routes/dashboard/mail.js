@@ -33,13 +33,6 @@ conn.connect();
 
 
 /**
- * Using the login middleware
- */
-router.use(login);
-
-
-
-/**
  * Setting up the local timezone
  */
 moment.locale('ar-ma');
@@ -49,6 +42,7 @@ moment.locale('ar-ma');
 /**
  * Routing
  */
+
 // Setting up the mail retrieval route.
 router.get('/read/:id', login, function (req, res) {
 	const mailId = req.params.id;
@@ -135,7 +129,7 @@ router.get('/:mode', login, function (req, res) {
 
 // Setting up the mail creation route.
 router.post('/', function (req, res) {
-	const mail = {
+	var mail = {
 		username: req.body.username,
 		email: req.body.email,
 		message: req.body.message
