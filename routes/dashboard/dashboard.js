@@ -32,13 +32,6 @@ conn.connect();
 
 
 /**
- * Using the login middleware
- */
-router.use(login);
-
-
-
-/**
  * Settign up the routes
  */
 

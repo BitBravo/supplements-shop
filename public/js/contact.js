@@ -16,7 +16,7 @@ $('document').ready(() => {
     e.preventDefault();
 
     // Sending the mail to the server.
-    $.post('/dashboard/mail', $(e.target).serialize(), data => {
+    $.post('/dashboard/mail', $(e.target).serialize(), function (data) {
       if (data.sent === true) {
         M.toast({ html: 'تم الارسال' });
       } else {
