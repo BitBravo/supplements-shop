@@ -5,6 +5,7 @@ $(document).ready(function () {
     $cartModal = $('#cart-modal'),
     $cartItemsCounter = $('#cart-item-count'),
     $cartItemsContent = $('#cart-modal .collection'),
+    $cartClearBtn = $('#cart-clear-btn'),
     $navCartCounter = $('.cart-button__badge');
 
   $cartModal.modal({
@@ -50,6 +51,33 @@ $(document).ready(function () {
 
         // Removing the loader
         $cartModal.removeClass('loading');
+      });
+    }
+  });
+
+  // Adding a click event to the cart clearing button
+  $cartClearBtn.on('click', function () {
+    if (confirm('هل تريد حقًا مسح سلة التسوق الخاصة بك؟')) {
+      $.ajax({
+        url: '/cart',
+        type: 'PATCH',
+        success: function () {
+
+          // Updating the item counter
+          $cartItemsCounter.text('0');
+
+          // Updating the cart badge counter
+          $navCartCounter.text('0');
+
+          // Emptying the items list
+          $cartItemsContent.empty();
+
+          // Hiding the cart's content
+          $cartItemsContent.hide();
+
+          // Displaying a toast message
+          M.toast({ html: 'تم مسح العربة' });
+        }
       });
     }
   });
