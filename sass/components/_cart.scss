@@ -1,0 +1,12 @@
+/**
+	Cart - Styling rules for the shopping cart.
+*/
+
+@charset 'utf-8';
+
+.cart {
+  &.loading {
+    .loader {
+    }
+  }
+}

@@ -1,114 +1,118 @@
-<aside id="dashboard-dropdown" class="dropdown-content loggedin">
-	<ul class="collection">
-		<a href="/dashboard">
-			<li class="collection-item">
-				<div>
-					لوحة القيادة
-					<fa class="fa fa-columns fa-lg"></fa>
-				</div>
+{{#if loggedIn }}
+	<aside id="dashboard-dropdown" class="dropdown-content loggedin">
+		<ul class="collection">
+			<a href="/dashboard">
+				<li class="collection-item">
+					<div>
+						لوحة القيادة
+						<fa class="fa fa-columns fa-lg"></fa>
+					</div>
 
-			</li>
-		</a>
-		<a href="/dashboard/orders">
-			<li class="collection-item">
-				<div>
-					الطلبات
-					<fa class="fa fa-outdent fa-lg"></fa>
-					<span class="new badge left" data-badge-caption="جديد">3</span>
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/mail/0">
-			<li class="collection-item">
-				<div>
-					البريد
-					<fa class="fa fa-envelope fa-lg"></fa>
+				</li>
+			</a>
+			<a href="/dashboard/orders">
+				<li class="collection-item">
+					<div>
+						الطلبات
+						<fa class="fa fa-outdent fa-lg"></fa>
+						<span class="new badge left" data-badge-caption="جديد">3</span>
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/mail/0">
+				<li class="collection-item">
+					<div>
+						البريد
+						<fa class="fa fa-envelope fa-lg"></fa>
 
-					{{#if NewMail }}
-						<span class="new badge left" data-badge-caption="جديد">{{ NewMail }}</span>
-					{{/if}}
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/products">
-			<li class="collection-item">
-				<div>
-					المنتوجات
-					<fa class="fa fa-prescription-bottle fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/packs">
-			<li class="collection-item">
-				<div>
-					الحزم
-					<fa class="fa fa-box-open fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/brands">
-			<li class="collection-item">
-				<div>
-					العلامات التجارية
-					<fa class="fa fa-copyright fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/categories">
-			<li class="collection-item">
-				<div>
-					الفئات
-					<fa class="fa fa-layer-group fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/flavors">
-			<li class="collection-item">
-				<div>
-					النكهات
-					<fa class="fa fa-grin-tongue fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/coupons">
-			<li class="collection-item">
-				<div>
-					القسائم
-					<fa class="fa fa-tag fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/shipping">
-			<li class="collection-item">
-				<div>
-					الشحن
-					<fa class="fa fa-shipping-fast fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/carousel">
-			<li class="collection-item">
-				<div>
-					الصور المميزة
-					<fa class="fa fa-image fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-		<a href="/dashboard/config">
-			<li class="collection-item">
-				<div>
-					الإعدادات
-					<fa class="fa fa-cog fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-		<a href="/login/logout">
-			<li class="collection-item">
-				<div>
-					تسجيل الخروج
-					<fa class="fa fa-sign-out-alt fa-lg"></fa>
-				</div>
-			</li>
-		</a>
-	</ul>
-</aside>
+						{{#if NewMail }}
+							<span class="new badge left" data-badge-caption="جديد">{{ NewMail }}</span>
+						{{/if}}
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/products">
+				<li class="collection-item">
+					<div>
+						المنتوجات
+						<fa class="fa fa-prescription-bottle fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/packs">
+				<li class="collection-item">
+					<div>
+						الحزم
+						<fa class="fa fa-box-open fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/brands">
+				<li class="collection-item">
+					<div>
+						العلامات التجارية
+						<fa class="fa fa-copyright fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/categories">
+				<li class="collection-item">
+					<div>
+						الفئات
+						<fa class="fa fa-layer-group fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/flavors">
+				<li class="collection-item">
+					<div>
+						النكهات
+						<fa class="fa fa-grin-tongue fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/coupons">
+				<li class="collection-item">
+					<div>
+						القسائم
+						<fa class="fa fa-tag fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/shipping">
+				<li class="collection-item">
+					<div>
+						الشحن
+						<fa class="fa fa-shipping-fast fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/carousel">
+				<li class="collection-item">
+					<div>
+						الصور المميزة
+						<fa class="fa fa-image fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+			<a href="/dashboard/config">
+				<li class="collection-item">
+					<div>
+						الإعدادات
+						<fa class="fa fa-cog fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+			<a href="/login/logout">
+				<li class="collection-item">
+					<div>
+						تسجيل الخروج
+						<fa class="fa fa-sign-out-alt fa-lg"></fa>
+					</div>
+				</li>
+			</a>
+		</ul>
+	</aside>
+{{else}}
+	<div id="dashboard-dropdown" class="dropdown-content"></div>
+{{/if}}
