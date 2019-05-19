@@ -4,9 +4,23 @@
 
 @charset 'utf-8';
 
-.cart {
+#cart-modal {
+  .cart-loader {
+    align-items: center;
+    background-color: $color-light;
+    display: none;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+  }
+
   &.loading {
-    .loader {
+    .cart-loader {
+      display: flex;
     }
   }
 }
