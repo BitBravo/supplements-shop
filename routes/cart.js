@@ -80,7 +80,6 @@ router.get('/', function (req, res) {
           [cartItem['quantity'], cartItem['id']]);
 
         conn.query(stmt, function (errors, results) {
-          console.log(results);
           if (errors == null && results != null) {
             cart.push(results[0]);
           }
@@ -125,7 +124,7 @@ router.delete('/', function (req, res) {
   }
 
   // Signaling the client
-  res.send();
+  res.json(req.session['cart'].length || 0);
 });
 
 // Setting up the cart clearing route

@@ -16,7 +16,6 @@ $(document).ready(function () {
 
       // Getting the cart cata
       $.get('/cart', function (items) {
-        console.log(items);
 
         // Emptying the items list
         $cartItemsContent.empty();
@@ -54,9 +53,12 @@ $(document).ready(function () {
               url: '/cart',
               type: 'DELETE',
               data: { index: itemIndex },
-              success: function () {
+              success: function (itemCount) {
                 $cartModal.modal('close');
                 $cartModal.modal('open');
+
+                // Updating the cart's counter
+                $navCartCounter.text(itemCount);
               }
             });
           });
