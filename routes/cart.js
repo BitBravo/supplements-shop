@@ -75,11 +75,14 @@ router.get('/', function (req, res) {
       }
 
       if (parseInt(cartItem['type']) == 2) {
-        var stmt = conn.format('SELECT 2;', []);
+        var stmt = conn.format(' \
+        SELECT `Packs`.`PackImage` AS `ItemImage`, GROUP_CONCAT(`Products`.`ProductName` SEPARATOR " + ") AS `ItemName`, ? AS `Quantity`, ((SELECT SUM((SELECT `PPH`.`Price` FROM `ProductsPriceHistory` `PPH` WHERE `PPH`.`VariantID` = `p_v`.`VariantID` ORDER BY `PPH`.`ChangedDate` DESC LIMIT 1)) FROM `PacksVariants` `p_v` WHERE `p_v`.`PackID` = `Packs`.`PackID`) - `Packs`.`Discount`) AS `ItemPrice` FROM `Packs` INNER JOIN `PacksVariants` ON `Packs`.`PackID` = `PacksVariants`.`PackID` INNER JOIN `ProductsVariants` ON `ProductsVariants`.`VariantID` = `PacksVariants`.`VariantID` INNER JOIN `Products` ON `Products`.`ProductID` = `ProductsVariants`.`ProductID` where `Packs`.`Deleted` = 0 AND `Packs`.`PackID` = ? GROUP BY `Packs`.`PackID` ORDER BY `Packs`.`AddedDate` DESC; ',
+          [cartItem['quantity'], cartItem['id']]);
 
         conn.query(stmt, function (errors, results) {
+          console.log(results);
           if (errors == null && results != null) {
-            cart.push(results);
+            cart.push(results[0]);
           }
         });
       }
