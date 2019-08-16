@@ -1,7 +1,7 @@
 {
-	"name": "supplements-maroc",
+	"name": "supplements-shop",
 	"version": "1.0.0",
-	"description": "Online store for selling workout-related protein products.",
+	"description": "supplements-shop",
 	"main": "app.js",
 	"scripts": {
 		"start": "node ./bin/www",
@@ -11,7 +11,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/EOussama/supplments-maroc-store.git"
+		"url": "git@github.com:jsdev63/supplements-shop.git"
 	},
 	"keywords": [
 		"store",
@@ -19,10 +19,6 @@
 	],
 	"author": "EOussama (Oussama Essamadi at oussama.essamadi@gmail.com)",
 	"license": "GPL-3.0",
-	"bugs": {
-		"url": "https://github.com/EOussama/supplments-maroc-store/issues"
-	},
-	"homepage": "https://github.com/EOussama/supplments-maroc-store#readme",
 	"engines": {
 		"node": "11.9.0"
 	},
