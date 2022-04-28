@@ -24,7 +24,7 @@
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^5.8.1",
-		"async": "^2.6.2",
+		"async": "^2.6.4",
 		"body-parser": "^1.18.3",
 		"chart.js": "^2.8.0",
 		"connect-flash": "^0.1.1",
